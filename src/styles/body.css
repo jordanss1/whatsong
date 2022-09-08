@@ -1,0 +1,51 @@
+#mainContainer {
+  background-color: black;
+  height: 100vh;
+  grid-template-columns: 15vw 85vw;
+}
+
+#selectedContainer {
+  background-color: black;
+}
+
+#mainPortion {
+  background-color: rgb(38, 38, 38);
+  grid-template-rows: 20vh 80vh;
+}
+
+#headerContainer {
+  height: 100%;
+  grid-template-rows: 60% 40%;
+}
+
+#searchContainer {
+  margin-right: 150px;
+}
+
+#headerLogo {
+  color: white;
+  padding-right: 200px;
+  font-family: "Ubuntu", sans-serif;
+}
+
+#headerLogo {
+  background-color: black;
+  opacity: 0.5;
+}
+
+#headerLogo:hover {
+  background-color: black;
+  opacity: 0.7;
+}
+
+#header2 {
+  background-color: #00034f;
+  border-bottom: 1px solid black;
+}
+
+.searchInput {
+  background-color: black !important;
+  caret-color: white;
+  border-radius: 10px !important;
+  color: white !important;
+}
