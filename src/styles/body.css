@@ -9,7 +9,7 @@
 }
 
 #mainPortion {
-  background-color: rgb(38, 38, 38);
+  background-image: linear-gradient(rgb(64, 64, 64), rgb(13, 13, 13));
   grid-template-rows: 20vh 80vh;
 }
 
@@ -24,18 +24,20 @@
 
 #headerLogo {
   color: white;
-  padding-right: 200px;
   font-family: "Ubuntu", sans-serif;
-}
-
-#headerLogo {
   background-color: black;
-  opacity: 0.5;
+  opacity: 0.75;
+  transition: opacity 2s;
 }
 
 #headerLogo:hover {
   background-color: black;
-  opacity: 0.7;
+  opacity: 1;
+}
+
+.hoveredInput {
+  background-color: black;
+  opacity: 1 !important;
 }
 
 #header2 {
