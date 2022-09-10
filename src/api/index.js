@@ -12,9 +12,9 @@ const spotify = axios.create({
 
 export const accessToken = () => {
   spotify
-    .get("/api/token", {
+    .post("/api/token", {
       headers: {
-        Authorization: `Basic ${new Buffer.from(clientMix).toString("base64")}`,
+        Authorization: `Basic ${Buffer.from(clientMix).toString("base64")}`,
       },
       form: {
         grant_type: "client_credentials",
