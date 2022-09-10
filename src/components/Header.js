@@ -5,10 +5,10 @@ const Header = () => {
   return (
     <section id="headerContainer" className="d-grid">
       <h2
-        id="headerLogo"
-        className="ui header d-flex align-items-center justify-content-center mb-0"
+        id=""
+        className="ui header d-flex align-items-center justify-content-center mb-0 headerLogo"
       >
-        <div className="content fs-2 ps-0">WhatSong.</div>
+        <div className="content headerFont fs-3 ps-0">WhatSong.</div>
         <i className="play circle icon fs-5"></i>
       </h2>
       <div id="header2" className="d-flex align-items-center flex-row-reverse">

@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { accessToken } from "../api";
 import "../styles/body.css";
 
 const SearchBar = () => {
-  const [hovered, setHovered] = useState(false);
+  const [hover, setHover] = useState(false);
+  const [focus, setFocus] = useState(false);
 
   useEffect(() => {
-    const logo = document.getElementById("headerLogo");
+    const logo = document.getElementsByClassName("headerLogo")[0];
 
-    if (hovered) {
+    if (hover || focus) {
       logo.classList.add("hoveredInput");
     } else {
       logo.classList.remove("hoveredInput");
     }
-    accessToken();
-  }, [hovered]);
+  }, [hover, focus]);
 
   return (
     <div id="searchContainer" className="w-50 d-flex justify-content-end">
@@ -26,8 +25,10 @@ const SearchBar = () => {
           data-dashlane-rid="3640789f2356683f"
           data-form-type=""
           className="searchInput"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
         />
       </form>
     </div>
