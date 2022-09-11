@@ -1,25 +1,28 @@
 import axios from "axios";
 import { Buffer } from "buffer";
 
-const clientId = "2f877e3bf82f492a9a245429e2c385e0";
-const clientSecret = "e2c6d31e70a84b83814c90f67d962681";
+const clientId = process.env.REACT_APP_ID;
+const clientSecret = process.env.REACT_APP_SECRET;
 
-const spotify = axios.create({
+const clientMix =
+  "Basic " + Buffer(clientId + ":" + clientSecret).toString("base64");
+
+const spotifyToken = axios.create({
   baseURL: "https://accounts.spotify.com",
 });
 
+const spotifyAPI = axios.create({
+  baseURL: "https://api.spotify.com",
+});
+
 export const accessToken = () => {
-  spotify
-    .post("/api/token", {
+  const data = new URLSearchParams({ grant_type: "client_credentials" });
+
+  spotifyToken
+    .post("/api/token", data, {
       headers: {
-        Authorization:
-          "Basic " +
-          Buffer.from(clientId + ":" + clientSecret).toString("base64"),
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      form: {
-        grant_type: "client_credentials",
+        Authorization: clientMix,
       },
     })
-    .then((response) => console.log(response));
+    .then(({ data }) => console.log(data.access_token));
 };
