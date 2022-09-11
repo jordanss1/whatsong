@@ -15,18 +15,24 @@ const spotifyAPI = axios.create({
   baseURL: "https://api.spotify.com/v1",
 });
 
-export const spotifySearch = (token, q) => {
+export const spotifySearch = (token, q, type) => {
+  const typeString = `${type}s`;
+
   spotifyAPI
     .get("/search", {
-      header: {
+      headers: {
         Authorization: token,
       },
-      params: { q: q, type: "track" },
+      params: { q: q, type: type },
     })
-    .then((response) => console.log(response));
+    .then(({ data }) => {
+      const list = { [typeString]: data[typeString].items };
+      console.log(list);
+      return list;
+    });
 };
 
-export const spotifyTokenAndSearch = (q) => {
+export const spotifyTokenAndSearch = (q, type) => {
   const data = new URLSearchParams({ grant_type: "client_credentials" });
 
   spotifyToken
@@ -37,7 +43,6 @@ export const spotifyTokenAndSearch = (q) => {
     })
     .then(({ data }) => {
       const accessToken = `Bearer ${data.access_token}`;
-      console.log(accessToken);
-      spotifySearch(accessToken, q);
+      spotifySearch(accessToken, q, type);
     });
 };

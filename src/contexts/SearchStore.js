@@ -7,6 +7,7 @@ export const SearchStore = ({ children }) => {
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
   const [term, setTerm] = useState("");
+  const [items, setItems] = useState([]);
 
   const fullProviders = {
     term,
@@ -17,6 +18,14 @@ export const SearchStore = ({ children }) => {
     setTerm,
     spotifyTokenAndSearch,
   };
+
+  useEffect(() => {
+    const randomArtistInitial = [..."abcdefghijklmnopqrstuvwxyz"][
+      Math.floor(Math.random() * 10)
+    ];
+    setItems(spotifyTokenAndSearch(randomArtistInitial, "track"));
+    console.log(items);
+  }, []);
 
   return (
     <SearchContext.Provider value={fullProviders}>
