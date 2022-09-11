@@ -3,7 +3,15 @@ import SearchContext from "../contexts/SearchStore";
 import "../styles/body.css";
 
 const SearchBar = () => {
-  const { hover, setHover, focus, setFocus } = useContext(SearchContext);
+  const {
+    hover,
+    setHover,
+    focus,
+    setFocus,
+    term,
+    setTerm,
+    spotifyTokenAndSearch,
+  } = useContext(SearchContext);
 
   useEffect(() => {
     const logo = document.getElementsByClassName("headerLogo")[0];
@@ -15,9 +23,23 @@ const SearchBar = () => {
     }
   }, [hover, focus]);
 
+  const handleInputChange = (value) => {
+    setTerm(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (term) {
+      spotifyTokenAndSearch(term);
+    }
+  };
+
   return (
     <div id="searchContainer" className="w-50 d-flex justify-content-end">
-      <form className="ui left icon input w-50">
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className="ui left icon input w-50"
+      >
         <i className="inverted circular search link icon"></i>
         <input
           type="text"
@@ -25,6 +47,7 @@ const SearchBar = () => {
           data-dashlane-rid="3640789f2356683f"
           data-form-type=""
           className="searchInput"
+          onChange={({ target }) => handleInputChange(target.value)}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           onFocus={() => setFocus(true)}

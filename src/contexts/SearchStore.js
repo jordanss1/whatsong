@@ -1,21 +1,21 @@
 import React, { createContext, useEffect, useState } from "react";
-import { accessToken } from "../api";
+import { spotifyTokenAndSearch } from "../api";
 
 const SearchContext = createContext();
 
 export const SearchStore = ({ children }) => {
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
-
-  useEffect(() => {
-    accessToken();
-  }, []);
+  const [term, setTerm] = useState("");
 
   const fullProviders = {
+    term,
     hover,
     focus,
     setHover,
     setFocus,
+    setTerm,
+    spotifyTokenAndSearch,
   };
 
   return (
