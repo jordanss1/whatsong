@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
+import SearchContext from "../contexts/SearchStore";
 import "../styles/body.css";
 
 const SearchBar = () => {
-  const [hover, setHover] = useState(false);
-  const [focus, setFocus] = useState(false);
+  const { hover, setHover, focus, setFocus } = useContext(SearchContext);
 
   useEffect(() => {
     const logo = document.getElementsByClassName("headerLogo")[0];
