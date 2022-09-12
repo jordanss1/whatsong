@@ -10,12 +10,20 @@
 
 #mainPortion {
   background-image: linear-gradient(
-    #0015a0,
+    #0015a0 15%,
     rgb(30, 30, 30),
     rgb(26, 26, 26),
     rgb(13, 13, 13)
   );
   grid-template-rows: 20vh 80vh;
+}
+
+#portion2 {
+  grid-template-columns: repeat(3, 33%);
+  grid-auto-flow: row;
+  grid-template-rows: 70px;
+  grid-auto-rows: 400px;
+  overflow: scroll;
 }
 
 #headerContainer {
@@ -30,12 +38,12 @@
 .headerLogo {
   background: linear-gradient(
     to right,
-    black 20%,
-    rgb(0, 21, 160, 0) 40%,
-    black 100%
+    black 30%,
+    rgb(0, 21, 160, 0) 50%,
+    black 70%
   );
   color: white !important;
-  transition: 2s;
+  transition: 3s;
 }
 
 .headerFont {
@@ -43,7 +51,6 @@
   font-weight: 200;
   color: white;
   letter-spacing: 3px;
-  transition: 2s;
 }
 
 .headerLogo:hover {
@@ -52,6 +59,10 @@
 
 .hoveredInput {
   background-color: rgb(0, 0, 0, 1);
+}
+
+.scrolledHeader {
+  opacity: 0.5;
 }
 
 #header2 {
@@ -63,5 +74,45 @@
   background-color: black !important;
   caret-color: white;
   border-radius: 10px !important;
+  color: white !important;
+}
+
+.artistCard {
+  background-color: rgb(26, 26, 26) !important;
+  box-shadow: 0px 1px rgb(30, 30, 30) !important;
+  cursor: pointer;
+  width: 260px !important;
+}
+
+.artistCard img {
+  width: 240px !important;
+  height: 240px !important;
+  border-radius: 4px !important;
+  filter: contrast(120%) blur(0.2px);
+}
+
+.artistCard p {
+  color: rgb(210, 210, 210) !important;
+}
+
+.artistCard:hover {
+  background: linear-gradient(
+    to bottom,
+    black 10%,
+    rgb(0, 21, 160, 1) 50%,
+    black 80%
+  );
+}
+
+.listHeader {
+  grid-column: 1/4;
+  height: 40px;
+  width: 30%;
+  color: white !important;
+  border-color: white !important;
+}
+
+.noSongHeader,
+.noSongHeader div {
   color: white !important;
 }

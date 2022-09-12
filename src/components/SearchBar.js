@@ -10,7 +10,11 @@ const SearchBar = () => {
     setFocus,
     term,
     setTerm,
+    submittedTerm,
+    setSubmittedTerm,
     spotifyTokenAndSearch,
+    setItems,
+    setTypeString
   } = useContext(SearchContext);
 
   useEffect(() => {
@@ -23,14 +27,13 @@ const SearchBar = () => {
     }
   }, [hover, focus]);
 
-  const handleInputChange = (value) => {
-    setTerm(value);
-  };
-
   const handleSubmit = (e) => {
+    let stateSetters = [setTypeString, setItems];
     e.preventDefault();
-    if (term) {
-      spotifyTokenAndSearch(term);
+    setSubmittedTerm(term);
+
+    if (submittedTerm) {
+      spotifyTokenAndSearch(submittedTerm, "track", stateSetters, 20);
     }
   };
 
@@ -42,12 +45,13 @@ const SearchBar = () => {
       >
         <i className="inverted circular search link icon"></i>
         <input
+          value={term}
           type="text"
           placeholder="Search..."
           data-dashlane-rid="3640789f2356683f"
           data-form-type=""
           className="searchInput"
-          onChange={({ target }) => handleInputChange(target.value)}
+          onChange={({ target }) => setTerm(target.value)}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           onFocus={() => setFocus(true)}
