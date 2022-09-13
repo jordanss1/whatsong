@@ -54,12 +54,20 @@ const SearchList = () => {
             key={i}
             className="ui middle aligned selection divided list d-flex justify-content-center trackItemContainer"
           >
-            <div className="item w-75 trackItem">
+            <div className="item trackItem p-3">
               <div className="right floated content">
                 <div className="ui button">Details</div>
                 <div className="ui button">Listen</div>
               </div>
-              <h3 className="content fs-4">{`${item.name} by ${item.artists[0].name}`}</h3>
+              <img
+                class="ui avatar image"
+                src={item.album?.images[2].url}
+              ></img>
+              {item.artists?.slice(0, 1).map((artist) => {
+                return (
+                  <h3 className="content fs-4 pt-1">{`${artist.name} - ${item.name}`}</h3>
+                );
+              })}
             </div>
           </div>
         );
