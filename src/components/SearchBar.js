@@ -14,7 +14,7 @@ const SearchBar = () => {
     setSubmittedTerm,
     spotifyTokenAndSearch,
     setItems,
-    setTypeString
+    setTypeString,
   } = useContext(SearchContext);
 
   useEffect(() => {
@@ -27,20 +27,21 @@ const SearchBar = () => {
     }
   }, [hover, focus]);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
     let stateSetters = [setTypeString, setItems];
-    e.preventDefault();
-    setSubmittedTerm(term);
 
     if (submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, "track", stateSetters, 20);
     }
-  };
+  }, [submittedTerm]);
 
   return (
     <div id="searchContainer" className="w-50 d-flex justify-content-end">
       <form
-        onSubmit={(e) => handleSubmit(e)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          setSubmittedTerm(term);
+        }}
         className="ui left icon input w-50"
       >
         <i className="inverted circular search link icon"></i>

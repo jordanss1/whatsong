@@ -18,12 +18,30 @@
   grid-template-rows: 20vh 80vh;
 }
 
-#portion2 {
+.artists {
   grid-template-columns: repeat(3, 33%);
   grid-auto-flow: row;
   grid-template-rows: 70px;
   grid-auto-rows: 400px;
   overflow: scroll;
+}
+
+.tracks {
+  overflow: scroll;
+}
+
+.trackItemContainer {
+  cursor: default !important;
+}
+
+.trackItem {
+  background-color: rgb(26, 26, 26) !important;
+  box-shadow: 0px 1px rgb(30, 30, 30) !important;
+  color: white !important;
+}
+
+.trackItem .content {
+  height: 100%;
 }
 
 #headerContainer {

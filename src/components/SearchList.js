@@ -15,7 +15,7 @@ const SearchList = () => {
   };
 
   const renderSearchList = () => {
-    if (typeString === "artists" && !submittedTerm) {
+    if (typeString === "artists") {
       const popularList = items.sort((a, b) => {
         return b.popularity - a.popularity;
       });
@@ -47,10 +47,25 @@ const SearchList = () => {
           );
         }
       );
+    } else if (typeString === "tracks") {
+      return items.map((item, i) => {
+        return (
+          <div
+            key={i}
+            className="ui middle aligned selection divided list d-flex justify-content-center trackItemContainer"
+          >
+            <div className="item w-75 trackItem">
+              <div className="right floated content">
+                <div className="ui button">Details</div>
+                <div className="ui button">Listen</div>
+              </div>
+              <h3 className="content fs-4">{`${item.name} by ${item.artists[0].name}`}</h3>
+            </div>
+          </div>
+        );
+      });
     }
   };
-
-  console.log(items);
 
   return (
     <React.Fragment>
