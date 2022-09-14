@@ -4,8 +4,7 @@ import { spotifyTokenAndSearch } from "../api";
 const SearchContext = createContext();
 
 export const SearchStore = ({ children }) => {
-  const [hover, setHover] = useState(false);
-  const [focus, setFocus] = useState(false);
+  const [refState, setRefState] = useState({});
   const [term, setTerm] = useState("");
   const [submittedTerm, setSubmittedTerm] = useState("");
   const [items, setItems] = useState([]);
@@ -13,15 +12,13 @@ export const SearchStore = ({ children }) => {
   const [typeString, setTypeString] = useState("");
 
   const fullProviders = {
+    refState,
     term,
     selectedSong,
     submittedTerm,
-    hover,
-    focus,
     items,
     typeString,
-    setHover,
-    setFocus,
+    setRefState,
     setTerm,
     setSubmittedTerm,
     setItems,

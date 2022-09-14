@@ -1,10 +1,8 @@
-import React, { useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import SearchBar from "./SearchBar";
 
 const Header = () => {
   const logo = useRef();
-
-  console.log(logo);
 
   return (
     <section id="headerContainer" className="d-grid">
