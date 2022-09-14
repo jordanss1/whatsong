@@ -4,21 +4,18 @@ import { spotifyTokenAndSearch } from "../api";
 const SearchContext = createContext();
 
 export const SearchStore = ({ children }) => {
-  const [refState, setRefState] = useState({});
   const [term, setTerm] = useState("");
   const [submittedTerm, setSubmittedTerm] = useState("");
   const [items, setItems] = useState([]);
   const [selectedSong, setSelectedSong] = useState(null);
-  const [typeString, setTypeString] = useState("");
+  const [typeString, setTypeString] = useState("artist");
 
   const fullProviders = {
-    refState,
     term,
     selectedSong,
     submittedTerm,
     items,
     typeString,
-    setRefState,
     setTerm,
     setSubmittedTerm,
     setItems,
@@ -28,11 +25,10 @@ export const SearchStore = ({ children }) => {
   };
 
   useEffect(() => {
-    let stateSetters = [setTypeString, setItems];
     const randomArtistInitial = [..."abcdefghijklmnopqrstuvwxyz"][
       Math.floor(Math.random() * 25)
     ];
-    spotifyTokenAndSearch(randomArtistInitial, "artist", stateSetters, 12);
+    spotifyTokenAndSearch(randomArtistInitial, typeString, setItems, 12);
   }, []);
 
   return (

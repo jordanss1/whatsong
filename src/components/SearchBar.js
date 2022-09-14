@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useRef } from "react";
 import SearchContext from "../contexts/SearchStore";
 import "../styles/body.css";
 
-const SearchBar = ({ logo }) => {
+const SearchBar = () => {
   const hover = useRef(false);
   const focus = useRef(false);
 
@@ -11,16 +11,15 @@ const SearchBar = ({ logo }) => {
     setTerm,
     submittedTerm,
     setSubmittedTerm,
+    typeString,
     spotifyTokenAndSearch,
     setItems,
-    setTypeString,
+    setSelectedSong,
   } = useContext(SearchContext);
 
   const styleLogo = () => {
-    const classes = logo.current.classList;
     const logoHeader = document.getElementsByClassName("headerLogo")[0];
 
-    console.log(classes[0]);
     if (hover.current || focus.current) {
       logoHeader.classList.add("hoveredInput");
     } else {
@@ -29,21 +28,23 @@ const SearchBar = ({ logo }) => {
   };
 
   useEffect(() => {
-    let stateSetters = [setTypeString, setItems];
-
-    if (submittedTerm) {
-      spotifyTokenAndSearch(submittedTerm, "track", stateSetters, 20);
+    if (typeString === "artist" && submittedTerm) {
+      setSelectedSong(null);
+      spotifyTokenAndSearch(submittedTerm, typeString, setItems, 12);
+    } else if (typeString === "track" && submittedTerm) {
+      setSelectedSong(null);
+      spotifyTokenAndSearch(submittedTerm, typeString, setItems, 20);
     }
   }, [submittedTerm]);
 
   return (
-    <div id="searchContainer" className="w-50 d-flex justify-content-end">
+    <div id="searchContainer" className="w-25 d-flex justify-content-end ps-5">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           setSubmittedTerm(term);
         }}
-        className="ui left icon input w-50"
+        className="ui left icon input w-100"
       >
         <i className="inverted circular search link icon"></i>
         <input

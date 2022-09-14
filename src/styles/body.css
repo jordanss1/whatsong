@@ -1,11 +1,45 @@
-#mainContainer {
+.mainContainer {
   background-color: black;
   height: 100vh;
   grid-template-columns: 15vw 85vw;
+  transition: 2s;
+}
+
+.containerAnimate {
+  grid-template-columns: 25vw 75vw;
 }
 
 #selectedContainer {
   background-color: black;
+  height: 100%;
+}
+
+.selectedDiv {
+  height: 100% !important;
+}
+
+.selectedSongDiv {
+  height: 75% !important;
+}
+
+.songItem {
+  height: 100%;
+}
+
+.description {
+  height: 40%;
+}
+
+.description .item,
+.description .content {
+  height: 100%;
+  color: rgb(210, 210, 210) !important;
+  text-decoration: none !important;
+}
+
+.content span,
+.content .extra {
+  color: rgb(210, 210, 210) !important;
 }
 
 #mainPortion {
@@ -27,18 +61,19 @@
 }
 
 .tracks {
-  overflow: scroll;
-}
-
-.trackItemContainer {
-  cursor: default !important;
+  grid-template-columns: repeat(1, 100%);
+  grid-auto-flow: row;
+  grid-template-rows: 70px;
+  grid-auto-rows: 100px;
+  overflow-y: scroll;
 }
 
 .trackItem {
-  width: 90%;
+  width: 100%;
   background-color: rgb(26, 26, 26) !important;
   box-shadow: 0px 1px rgb(30, 30, 30) !important;
   color: white !important;
+  cursor: default !important;
 }
 
 .trackItem .content {
@@ -52,13 +87,13 @@
   box-shadow: black;
 }
 
+.trackItem h3 {
+  display: initial !important;
+}
+
 #headerContainer {
   height: 100%;
   grid-template-rows: 60% 40%;
-}
-
-#searchContainer {
-  margin-right: 150px;
 }
 
 .headerLogo {
@@ -130,7 +165,14 @@
   );
 }
 
-.listHeader {
+.songHeader {
+  height: 40px;
+  width: 30%;
+  color: white !important;
+  border-color: white !important;
+}
+
+.artistHeader {
   grid-column: 1/4;
   height: 40px;
   width: 30%;
@@ -141,4 +183,13 @@
 .noSongHeader,
 .noSongHeader div {
   color: white !important;
+}
+
+select {
+  height: 35px;
+}
+
+.iconRed {
+  color: red !important;
+  cursor: pointer;
 }

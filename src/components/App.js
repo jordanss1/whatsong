@@ -6,22 +6,36 @@ import "../styles/body.css";
 import SearchContext from "../contexts/SearchStore";
 
 const App = () => {
-  const { typeString } = useContext(SearchContext);
+  const { selectedSong, typeString, items } = useContext(SearchContext);
+
+  const addClass = () => {
+    if (
+      (typeString === "artist" && items.length === 12) ||
+      (typeString === "track" && items.length === 12)
+    ) {
+      return "artists";
+    } else if (
+      (typeString === "track" && items.length === 20) ||
+      (typeString === "artist" && items.length === 20)
+    ) {
+      return "tracks";
+    }
+  };
+
   return (
-    <main id="mainContainer" className="container-fluid px-0 d-grid">
-      <section id="selectedContainer" className="d-flex align-self-center">
+    <main
+      className={`container-fluid px-0 d-grid mainContainer ${
+        selectedSong ? "containerAnimate" : ""
+      }`}
+    >
+      <section id="selectedContainer" className="d-flex align-items-center">
         <SelectedSong />
       </section>
       <section id="mainPortion" className="d-grid">
         <div id="portion1">
           <Header />
         </div>
-        <div
-          id="portion2"
-          className={`d-grid p-5 ${
-            typeString === "artists" ? "artists" : "tracks"
-          }`}
-        >
+        <div id="portion2" className={`d-grid p-5 ${addClass()}`}>
           <SearchList />
         </div>
       </section>

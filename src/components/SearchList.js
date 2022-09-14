@@ -2,20 +2,52 @@ import React, { useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
 
 const SearchList = () => {
-  const { typeString, items, submittedTerm } = useContext(SearchContext);
+  const { typeString, items, submittedTerm, setSelectedSong } =
+    useContext(SearchContext);
 
   const renderHeader = () => {
-    if (typeString === "artists" && !submittedTerm) {
+    if (
+      (typeString === "artist" && !submittedTerm && items.length) ||
+      (typeString === "track" && !submittedTerm && items.length === 12)
+    ) {
+      return (
+        <h3 className="ui dividing header artistHeader ps-4 pt-2">
+          Popular artists from Spotify
+        </h3>
+      );
+    } else if (
+      (typeString === "artist" && submittedTerm && items.length === 12) ||
+      (typeString === "track" && items.length === 12 && submittedTerm)
+    ) {
+      return (
+        <h3 className="ui dividing header artistHeader ps-4 pt-2">
+          {`Search for ${submittedTerm} in artists`}
+        </h3>
+      );
+    } else if (
+      (typeString === "track" && submittedTerm && items.length === 20) ||
+      (typeString === "artist" && submittedTerm && items.length === 20)
+    ) {
+      return (
+        <h3 className="ui dividing header songHeader ps-4 pt-2">
+          {`Search for ${submittedTerm} in songs`}
+        </h3>
+      );
+    } else if (typeString && submittedTerm && !items.length) {
       return (
         <h3 className="ui dividing header listHeader ps-4 pt-2">
-          Popular artists from Spotify
+          {`No results for search term`}
         </h3>
       );
     }
   };
 
   const renderSearchList = () => {
-    if (typeString === "artists") {
+    if (
+      (typeString === "artist" && items.length === 12) ||
+      (typeString === "artist" && !items.length) ||
+      (typeString === "track" && items.length === 12)
+    ) {
       const popularList = items.sort((a, b) => {
         return b.popularity - a.popularity;
       });
@@ -28,12 +60,21 @@ const SearchList = () => {
                 className="ui raised card artistCard"
                 onClick={() => window.open(external_urls.spotify, "_blank")}
               >
-                <div
-                  className="image d-flex justify-content-center p-2 pb-0"
-                  href="#"
-                >
-                  <img src={images[1].url} />
-                </div>
+                {!images.length ? (
+                  <div
+                    className="image d-flex justify-content-center p-2 pb-0"
+                    href="#"
+                  >
+                    <h3>No image</h3>
+                  </div>
+                ) : (
+                  <div
+                    className="image d-flex justify-content-center p-2 pb-0"
+                    href="#"
+                  >
+                    <img src={images[1].url} />
+                  </div>
+                )}
                 <div className="content">
                   <p className="header" href="#">
                     {name}
@@ -47,7 +88,11 @@ const SearchList = () => {
           );
         }
       );
-    } else if (typeString === "tracks") {
+    } else if (
+      (typeString === "track" && submittedTerm) ||
+      (typeString === "track" && !submittedTerm) ||
+      (typeString === "artist" && items.length === 20)
+    ) {
       return items.map((item, i) => {
         return (
           <div
@@ -56,8 +101,21 @@ const SearchList = () => {
           >
             <div className="item trackItem p-3">
               <div className="right floated content">
-                <div className="ui button">Details</div>
-                <div className="ui button">Listen</div>
+                <div
+                  onClick={() => setSelectedSong(item)}
+                  className="ui button"
+                >
+                  Details
+                </div>
+                <div
+                  onClick={() =>
+                    window.open(item.external_urls.spotify, "blank")
+                  }
+                  className="ui button"
+                  title={item.external_urls.spotify}
+                >
+                  Listen
+                </div>
               </div>
               <img
                 class="ui avatar image"
