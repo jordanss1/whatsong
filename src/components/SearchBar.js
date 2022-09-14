@@ -38,7 +38,10 @@ const SearchBar = () => {
   }, [submittedTerm]);
 
   return (
-    <div id="searchContainer" className="w-25 d-flex justify-content-end ps-sm-5">
+    <div
+      id="searchContainer"
+      className="w-25 d-flex justify-content-end ps-sm-5"
+    >
       <form
         onSubmit={(e) => {
           e.preventDefault();

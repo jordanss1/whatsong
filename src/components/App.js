@@ -35,7 +35,10 @@ const App = () => {
         <div id="portion1">
           <Header />
         </div>
-        <div id="portion2" className={`d-flex flex-column align-items-center mt-3 d-lg-grid p-lg-5 ${addClass()}`}>
+        <div
+          id="portion2"
+          className={`d-flex flex-column align-items-center mt-3 d-lg-grid p-lg-5 ${addClass()}`}
+        >
           <SearchList />
         </div>
       </section>
