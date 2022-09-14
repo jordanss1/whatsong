@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import SearchContext from "../contexts/SearchStore";
 import "../styles/body.css";
 
-const SearchBar = () => {
+const SearchBar = (logo) => {
   const {
     hover,
     setHover,
@@ -17,15 +17,19 @@ const SearchBar = () => {
     setTypeString,
   } = useContext(SearchContext);
 
-  useEffect(() => {
-    const logo = document.getElementsByClassName("headerLogo")[0];
+  // useEffect(() => {
+  //   const logo = document.getElementsByClassName("headerLogo")[0];
 
-    if (hover || focus) {
-      logo.classList.add("hoveredInput");
-    } else {
-      logo.classList.remove("hoveredInput");
-    }
-  }, [hover, focus]);
+  //   if (hover || focus) {
+  //     logo.classList.add("hoveredInput");
+  //   } else {
+  //     logo.classList.remove("hoveredInput");
+  //   }
+  // }, [hover, focus]);
+
+  const styleLogo = () => {
+    console.log(logo.current);
+  };
 
   useEffect(() => {
     let stateSetters = [setTypeString, setItems];
@@ -53,10 +57,10 @@ const SearchBar = () => {
           data-form-type=""
           className="searchInput"
           onChange={({ target }) => setTerm(target.value)}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
+          onMouseEnter={styleLogo}
+          onMouseLeave={styleLogo}
+          onFocus={styleLogo}
+          onBlur={styleLogo}
         />
       </form>
     </div>
