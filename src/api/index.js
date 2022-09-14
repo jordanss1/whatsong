@@ -17,6 +17,7 @@ const spotifyAPI = axios.create({
 
 export const spotifySearch = (token, q, type, state, limit) => {
   const string = `${type}s`;
+
   spotifyAPI
     .get("/search", {
       headers: {
@@ -25,7 +26,6 @@ export const spotifySearch = (token, q, type, state, limit) => {
       params: { q, type, limit },
     })
     .then(({ data }) => {
-      console.log(data);
       state(data[string].items);
     });
 };

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import SearchContext from "../contexts/SearchStore";
 
 const SearchDropdown = () => {
-  const { setTypeString, submittedTerm } = useContext(SearchContext);
+  const { setTypeString } = useContext(SearchContext);
   const type = useRef("");
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const SearchDropdown = () => {
   }, [type.current]);
 
   return (
-    <div className="ui form">
+    <div className="ui form dropdownClass">
       <div className="field">
         <select
           onChange={({ target }) => {

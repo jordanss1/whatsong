@@ -193,3 +193,114 @@ select {
   color: red !important;
   cursor: pointer;
 }
+
+@media screen and (max-width: 1200px) {
+  .selectedDiv {
+    width: 100%;
+  }
+
+  #searchContainer {
+    width: 40% !important;
+  }
+
+  .songItem {
+    width: 100%;
+  }
+
+  .artistHeader {
+    text-align: center;
+    grid-column: 1/4;
+    height: 45px;
+    width: 50%;
+    color: white !important;
+    border-color: white !important;
+  }
+
+  .songHeader {
+    text-align: center;
+    height: 45px;
+    width: 50%;
+    color: white !important;
+    border-color: white !important;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  #selectedContainer {
+    display: none !important;
+  }
+
+  .mainContainer {
+    background-color: black;
+    height: 100vh;
+    grid-template-columns: 100vw;
+    transition: 2s;
+  }
+
+  #searchContainer {
+    width: 50% !important;
+  }
+
+  .artistHeader {
+    text-align: center;
+    grid-column: 1/4;
+    height: 100px;
+    width: 70%;
+    color: white !important;
+    border-color: white !important;
+  }
+
+  .songHeader {
+    text-align: center;
+    height: 40px;
+    width: 70%;
+    color: white !important;
+    border-color: white !important;
+  }
+
+  .trackItemContainer {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .mainContainer {
+    background-color: black;
+    height: 100vh;
+    grid-template-columns: 100vw;
+    transition: 2s;
+  }
+
+  #selectedContainer {
+    display: none !important;
+  }
+
+  #mainPortion {
+    grid-template-rows: 30vh 70vh;
+  }
+
+  .artistHeader {
+    text-align: center;
+    grid-column: 1/4;
+    height: 100px;
+    width: 70%;
+    color: white !important;
+    border-color: white !important;
+  }
+
+  #searchContainer {
+    width: 70% !important;
+  }
+
+  .songHeader {
+    text-align: center;
+    height: 40px;
+    width: 70%;
+    color: white !important;
+    border-color: white !important;
+  }
+
+  .trackItemContainer {
+    width: 80%;
+  }
+}

@@ -11,7 +11,7 @@ const Header = () => {
       </h2>
       <div
         id="header2"
-        className="d-flex align-items-center justify-content-center justify-content-evenly flex-row"
+        className="d-flex align-items-center justify-content-center justify-content-evenly flex-column flex-sm-row"
       >
         <SearchDropdown />
         <SearchBar />

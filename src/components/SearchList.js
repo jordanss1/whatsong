@@ -1,9 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import SearchContext from "../contexts/SearchStore";
 
 const SearchList = () => {
   const { typeString, items, submittedTerm, setSelectedSong } =
     useContext(SearchContext);
+
+  const mobile = () => {
+    if (window.innerWidth < 980) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const renderHeader = () => {
     if (
@@ -11,7 +19,7 @@ const SearchList = () => {
       (typeString === "track" && !submittedTerm && items.length === 12)
     ) {
       return (
-        <h3 className="ui dividing header artistHeader ps-4 pt-2">
+        <h3 className="ui dividing header artistHeader mt-0 pb-3 ps-sm-4 pt-2">
           Popular artists from Spotify
         </h3>
       );
@@ -20,7 +28,7 @@ const SearchList = () => {
       (typeString === "track" && items.length === 12 && submittedTerm)
     ) {
       return (
-        <h3 className="ui dividing header artistHeader ps-4 pt-2">
+        <h3 className="ui dividing header artistHeader mt-0 pb-3 ps-sm-4 pt-2">
           {`Search for ${submittedTerm} in artists`}
         </h3>
       );
@@ -29,13 +37,13 @@ const SearchList = () => {
       (typeString === "artist" && submittedTerm && items.length === 20)
     ) {
       return (
-        <h3 className="ui dividing header songHeader ps-4 pt-2">
+        <h3 className="ui dividing header songHeader mt-0 pb-3 ps-sm-4 pt-2">
           {`Search for ${submittedTerm} in songs`}
         </h3>
       );
     } else if (typeString && submittedTerm && !items.length) {
       return (
-        <h3 className="ui dividing header listHeader ps-4 pt-2">
+        <h3 className="ui dividing header listHeader mt-0 ps-sm-4 pt-2">
           {`No results for search term`}
         </h3>
       );
@@ -80,7 +88,10 @@ const SearchList = () => {
                     {name}
                   </p>
                   <div className="meta">
-                    <p>Followers: {followers.total}</p>
+                    <p>
+                      Followers:{" "}
+                      {new Intl.NumberFormat("en-US").format(followers.total)}
+                    </p>
                   </div>
                 </div>
               </article>
@@ -102,6 +113,7 @@ const SearchList = () => {
             <div className="item trackItem p-3">
               <div className="right floated content">
                 <div
+                  hidden={mobile()}
                   onClick={() => setSelectedSong(item)}
                   className="ui button"
                 >
