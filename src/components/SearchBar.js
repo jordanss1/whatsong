@@ -27,7 +27,7 @@ const SearchBar = () => {
     }
   };
 
-  useEffect(() => {
+  const searchConditions = () => {
     if (typeString === "artist" && submittedTerm) {
       setSelectedSong(null);
       spotifyTokenAndSearch(submittedTerm, typeString, setItems, 12);
@@ -35,6 +35,10 @@ const SearchBar = () => {
       setSelectedSong(null);
       spotifyTokenAndSearch(submittedTerm, typeString, setItems, 20);
     }
+  };
+
+  useEffect(() => {
+    searchConditions();
   }, [submittedTerm]);
 
   return (
@@ -56,7 +60,7 @@ const SearchBar = () => {
           placeholder="Search..."
           data-dashlane-rid="3640789f2356683f"
           data-form-type=""
-          className="searchInput"
+          className="searchInput me-3"
           onChange={({ target }) => setTerm(target.value)}
           onMouseEnter={() => {
             hover.current = true;
@@ -75,6 +79,12 @@ const SearchBar = () => {
             styleLogo();
           }}
         />
+        <button
+          onClick={() => searchConditions}
+          className="ui icon button searchButton d-flex align-items-center justify-content-center mt-1"
+        >
+          <i className="search icon fs-6"></i>
+        </button>
       </form>
     </div>
   );

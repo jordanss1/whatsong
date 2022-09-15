@@ -29,7 +29,7 @@ const SearchList = () => {
     ) {
       return (
         <h3 className="ui dividing header artistHeader mt-0 pb-3 ps-sm-4 pt-2">
-          {`Search for ${submittedTerm} in artists`}
+          {`Search for "${submittedTerm}" in artists`}
         </h3>
       );
     } else if (
@@ -38,7 +38,7 @@ const SearchList = () => {
     ) {
       return (
         <h3 className="ui dividing header songHeader mt-0 pb-3 ps-sm-4 pt-2">
-          {`Search for ${submittedTerm} in songs`}
+          {`Search for "${submittedTerm}" in songs`}
         </h3>
       );
     } else if (typeString && submittedTerm && !items.length) {

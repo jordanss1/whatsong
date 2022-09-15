@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import SelectedSong from "./SelectedSong";
 import Header from "./Header";
 import SearchList from "./SearchList";
@@ -7,6 +7,7 @@ import SearchContext from "../contexts/SearchStore";
 
 const App = () => {
   const { selectedSong, typeString, items } = useContext(SearchContext);
+  const scroll = useRef();
 
   const addClass = () => {
     if (
@@ -36,6 +37,7 @@ const App = () => {
           <Header />
         </div>
         <div
+          ref={scroll}
           id="portion2"
           className={`d-flex flex-column align-items-center mt-3 d-lg-grid p-lg-5 ${addClass()}`}
         >

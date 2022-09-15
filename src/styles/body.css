@@ -128,7 +128,12 @@
 
 #header2 {
   background-color: #00034f;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgb(140, 130, 115);
+}
+
+.searchButton {
+  width: 30px;
+  height: 30px;
 }
 
 .searchInput {
