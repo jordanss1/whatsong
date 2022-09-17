@@ -89,8 +89,9 @@ const SearchList = () => {
                   </p>
                   <div className="meta">
                     <p>
-                      Followers:{" "}
-                      {new Intl.NumberFormat("en-US").format(followers.total)}
+                      {`${new Intl.NumberFormat("en-US").format(
+                        followers.total
+                      )} followers`}
                     </p>
                   </div>
                 </div>
