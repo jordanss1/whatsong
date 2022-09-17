@@ -43,4 +43,7 @@ Press the red "X" icon in the top right to remove the details from the sidebar. 
 <li>ReactJS</li>
 <li>CSS</li>
 <li>BootStrap</li>
+<li>Semantic UI</li>
+<li>Axios</li>
+<li>NPM</li>
 </ul>
