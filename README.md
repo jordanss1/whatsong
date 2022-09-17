@@ -41,6 +41,8 @@ Press the red "X" icon in the top right to remove the details from the sidebar. 
 <h3><b>Technologies Used</b></h3>
 <ul>
 <li>ReactJS</li>
+<li>JavaScript</li>
+<li>HTML</li>
 <li>CSS</li>
 <li>BootStrap</li>
 <li>Semantic UI</li>
