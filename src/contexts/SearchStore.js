@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { spotifyTokenAndSearch } from "../api";
 
 const SearchContext = createContext();
@@ -23,13 +23,6 @@ export const SearchStore = ({ children }) => {
     setTypeString,
     setSelectedSong,
   };
-
-  useEffect(() => {
-    const randomArtistInitial = [..."abcdefghijklmnopqrstuvwxyz"][
-      Math.floor(Math.random() * 25)
-    ];
-    spotifyTokenAndSearch(randomArtistInitial, typeString, setItems, 12);
-  }, []);
 
   return (
     <SearchContext.Provider value={fullProviders}>
