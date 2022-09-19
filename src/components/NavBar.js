@@ -1,16 +1,15 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import "../styles/body.css";
+import "../styles/all.css";
 
-const NavBar = () => {
+const NavBar = ({ content }) => {
   return (
     <>
-      <div className="navClass d-flex justify-content-start">
+      <header className="navClass d-flex justify-content-center">
         <NavLink className="text-uppercase" to="/home">
-          ws
+          {content}
         </NavLink>
-      </div>
-      <Outlet />
+      </header>
     </>
   );
 };

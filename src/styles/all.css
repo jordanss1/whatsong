@@ -1,0 +1,188 @@
+#root {
+  background-color: black;
+}
+
+.landingContainer {
+  height: 100vh;
+  background-color: black;
+}
+
+.searchContainer {
+  height: 100vh;
+  background: linear-gradient(
+    to right,
+    black 20%,
+    rgb(0, 3, 79, 0.7) 50%,
+    black 70%
+  );
+}
+
+.mainDiv {
+  background-color: black;
+}
+
+.wrapper {
+  padding: 0px 20px;
+  background: linear-gradient(
+    to bottom,
+    black 10%,
+    rgb(0, 21, 160, 0) 50%,
+    black 90%
+  );
+}
+
+.wrapperLoad {
+  animation: border-effect 3s;
+}
+
+@keyframes border-effect {
+  0% {
+    background: linear-gradient(
+      to bottom,
+      rgb(0, 3, 79) 20%,
+      rgb(0, 21, 160, 0.7) 50%,
+      black 90%
+    );
+    background-position-y: 200px;
+  }
+  20% {
+    background-position-y: 1200px;
+  }
+  40% {
+    background-position-y: 200px;
+  }
+  60% {
+    background-position-y: 1200px;
+  }
+  80% {
+    background-position-y: 200px;
+  }
+  100% {
+    background-position-y: 1200px;
+  }
+}
+
+.extraText {
+  color: rgba(255, 255, 255, 0.25);
+  font-weight: 200;
+}
+
+.spotify {
+  position: relative;
+  bottom: 12px;
+}
+
+.spotifyHover {
+  color: green !important;
+}
+
+.poweredHover {
+  color: white !important;
+}
+
+.spotifyDiv {
+  position: relative;
+  opacity: 0;
+  bottom: 70px;
+  letter-spacing: 1px;
+  margin-bottom: 75px;
+  border-color: rgb(255, 255, 255, 0.05) !important;
+  transition: 1s;
+}
+
+.startButton {
+  color: white;
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  transition: 500ms;
+}
+
+.startButton:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.startButton:hover ~ .spotifyDiv {
+  opacity: 1;
+  position: relative;
+  bottom: 0px;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  letter-spacing: 3px;
+  padding: 15px 50px !important;
+}
+
+.submitButtons {
+  color: white;
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  transition: 1s;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.submitButtons:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255);
+}
+
+.navClass a {
+  text-decoration: none;
+  font-family: "Raleway", sans-serif;
+  color: white;
+  letter-spacing: 2px;
+  font-weight: 200;
+  font-size: 50px;
+}
+
+.navClass {
+  position: sticky;
+  height: 70px;
+  top: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to right,
+    black 20%,
+    rgb(0, 3, 79) 50%,
+    black 80%
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.navClassAnimate {
+  animation: move-bg 6s ease-in-out infinite;
+}
+
+@keyframes move-bg {
+  25% {
+    background-position: 400px;
+  }
+  50% {
+    background-position: -400px;
+  }
+  75% {
+    background-position: 400px;
+  }
+  100% {
+    background-position: 0px;
+  }
+}
+
+.searchInput {
+  background-color: black !important;
+  caret-color: white;
+  border-radius: 10px !important;
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.searchDiv {
+  height: 30px;
+  transition: 1s;
+}
+
+.searchDiv:hover {
+  height: 40px;
+  width: 52% !important;
+}
+
+.searchDivFocus {
+  height: 40px;
+  width: 52% !important;
+}

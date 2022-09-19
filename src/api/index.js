@@ -11,14 +11,18 @@ const spotifyToken = axios.create({
   baseURL: "https://accounts.spotify.com/api/token",
 });
 
-const spotifyAPI = axios.create({
+const spotifyQuery = axios.create({
   baseURL: "https://api.spotify.com/v1",
+});
+
+const spotifyArtist = axios.create({
+  baseURL: "https://api.spotify.com/artists",
 });
 
 export const spotifySearch = (token, q, type, state, limit) => {
   const string = `${type}s`;
 
-  spotifyAPI
+  spotifyQuery
     .get("/search", {
       headers: {
         Authorization: token,
@@ -26,6 +30,7 @@ export const spotifySearch = (token, q, type, state, limit) => {
       params: { q, type, limit },
     })
     .then(({ data }) => {
+      console.log(data);
       state(data[string].items);
     });
 };
@@ -42,5 +47,30 @@ export const spotifyTokenAndSearch = (q, type, state, limit) => {
     .then(({ data }) => {
       const accessToken = `Bearer ${data.access_token}`;
       spotifySearch(accessToken, q, type, state, limit);
+    });
+};
+
+export const spotifyArtistSearch = (token, id, state) => {
+  spotifyArtist
+    .get(id, {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then(({ data }) => console.log(data));
+};
+
+export const spotifyTokenAndArtist = (id, state) => {
+  const data = new URLSearchParams({ grant_type: "client_credentials" });
+
+  spotifyToken
+    .post("", data, {
+      headers: {
+        Authorization: clientMix,
+      },
+    })
+    .then(({ data }) => {
+      const accessToken = `Bearer ${data.access_token}`;
+      spotifyArtist(accessToken, id, state);
     });
 };

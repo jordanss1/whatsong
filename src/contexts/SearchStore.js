@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { spotifyTokenAndSearch } from "../api";
 
 const SearchContext = createContext();
@@ -8,20 +9,23 @@ export const SearchStore = ({ children }) => {
   const [submittedTerm, setSubmittedTerm] = useState("");
   const [items, setItems] = useState([]);
   const [selectedSong, setSelectedSong] = useState(null);
-  const [typeString, setTypeString] = useState("artist");
+  const [typeString, setTypeString] = useState("");
+  const [nav, setNav] = useState(false);
+  const navigate = useNavigate();
 
   const fullProviders = {
     term,
     selectedSong,
     submittedTerm,
     items,
-    typeString,
+    nav,
     setTerm,
     setSubmittedTerm,
     setItems,
     spotifyTokenAndSearch,
-    setTypeString,
+    setNav,
     setSelectedSong,
+    navigate,
   };
 
   return (
