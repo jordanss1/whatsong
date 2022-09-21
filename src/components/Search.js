@@ -1,31 +1,20 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SearchContext from "../contexts/SearchStore";
 
 const Search = () => {
-  const type = useRef("");
-  const [focus, setFocus] = useState(false);
-
   const {
+    focus,
+    typeString,
+    setTypeString,
     term,
+    setFocus,
     setTerm,
     setSubmittedTerm,
     submittedTerm,
     spotifyTokenAndSearch,
     setItems,
-    items,
     navigate,
   } = useContext(SearchContext);
-
-  const handleSubmit = (target) => {
-    setSubmittedTerm(term);
-    setTerm("");
-
-    if (target.textContent === "Artists") {
-      type.current = "artists";
-    } else if (target.textContent === "Songs") {
-      type.current = "songs";
-    }
-  };
 
   useEffect(() => {
     const div1 = document.getElementsByClassName("searchDiv")[0];
@@ -38,20 +27,27 @@ const Search = () => {
   }, [focus]);
 
   useEffect(() => {
-    if (type.current === "artists") {
-      spotifyTokenAndSearch(submittedTerm, "artist", setItems, 40);
-    } else if (type.current === "songs") {
-      spotifyTokenAndSearch(submittedTerm, "track", setItems, 40);
+    const container = document.getElementsByClassName("searchContainer")[0];
+    if (term || submittedTerm) {
+      container.classList.add("focusContainer");
+    } else {
+      container.classList.remove("focusContainer");
     }
-  }, [submittedTerm]);
+  }, [term]);
 
   useEffect(() => {
-    if (type.current === "artists") {
+    setTerm("");
+
+    if (typeString === "artist" && submittedTerm) {
+      spotifyTokenAndSearch(submittedTerm, typeString, setItems);
+      setSubmittedTerm("");
       navigate("/artists");
-    } else if (type.current === "songs") {
+    } else if (typeString === "track" && submittedTerm) {
+      spotifyTokenAndSearch(submittedTerm, typeString, setItems);
+      setSubmittedTerm("");
       navigate("/songs");
     }
-  }, [items]);
+  }, [submittedTerm]);
 
   return (
     <main className="searchContainer container-fluid d-flex align-items-center">
@@ -81,7 +77,10 @@ const Search = () => {
         <div>
           <button
             disabled={!term}
-            onClick={({ target }) => handleSubmit(target)}
+            onClick={() => {
+              setTypeString("artist");
+              setSubmittedTerm(term);
+            }}
             type="button"
             className="btn btn-outline-dark submitButtons fs-4 rounded-3 me-3 p-2 px-4 "
           >
@@ -89,7 +88,10 @@ const Search = () => {
           </button>
           <button
             disabled={!term}
-            onClick={({ target }) => handleSubmit(target)}
+            onClick={() => {
+              setTypeString("track");
+              setSubmittedTerm(term);
+            }}
             type="button"
             className="btn btn-outline-dark submitButtons fs-4 rounded-3 p-2 px-4 "
           >

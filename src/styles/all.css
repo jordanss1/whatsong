@@ -12,9 +12,41 @@
   background: linear-gradient(
     to right,
     black 20%,
-    rgb(0, 3, 79, 0.7) 50%,
+    rgb(0, 3, 79) 50%,
     black 70%
   );
+  opacity: 0.7;
+  transition: 2s;
+}
+
+.focusContainer {
+  background: linear-gradient(
+    to right,
+    black 10%,
+    rgb(0, 21, 160, 0.8) 50%,
+    black 80%
+  );
+  opacity: 1;
+}
+
+.wholeListContainer {
+  height: 100vh;
+  background: linear-gradient(
+    to right,
+    black 5%,
+    rgb(222, 90, 174, 0.4) 12%,
+    black 20%,
+    black 65%,
+    black 82%,
+    rgb(222, 90, 174, 0.4) 89%,
+    black 96%
+  );
+}
+
+.listContainer {
+  grid-template-rows: 15% 80%;
+  row-gap: 12px;
+  height: 85%;
 }
 
 .mainDiv {
@@ -67,7 +99,7 @@
   font-weight: 200;
 }
 
-.spotify {
+.spotifyNav {
   position: relative;
   bottom: 12px;
 }
@@ -80,6 +112,16 @@
   color: white !important;
 }
 
+.pink {
+  color: #de5aae;
+  font-weight: 200;
+  letter-spacing: 3px;
+}
+
+.w {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
 .spotifyDiv {
   position: relative;
   opacity: 0;
@@ -88,6 +130,27 @@
   margin-bottom: 75px;
   border-color: rgb(255, 255, 255, 0.05) !important;
   transition: 1s;
+}
+
+.listNavbar {
+  margin-left: 240px;
+  width: 400px;
+}
+
+.poweredList {
+  letter-spacing: 4px;
+  color: rgb(255, 255, 255, 0.4);
+}
+
+.spotifyIconList {
+  color: green;
+  position: relative;
+  bottom: 12px;
+}
+
+.underScore {
+  color: rgb(255, 255, 255, 0.4);
+  font-weight: 900;
 }
 
 .startButton {
@@ -145,6 +208,21 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.navClassList {
+  position: sticky;
+  height: 70px;
+  top: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to right,
+    black 20%,
+    rgb(0, 3, 79) 45%,
+    rgb(0, 3, 79) 65%,
+    black 80%
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 .navClassAnimate {
   animation: move-bg 6s ease-in-out infinite;
 }
@@ -185,4 +263,99 @@
 .searchDivFocus {
   height: 40px;
   width: 52% !important;
+}
+
+.listSearchDiv {
+  height: 30px;
+  transition: 1s;
+  width: 30% !important;
+}
+
+.listSearchDiv:hover {
+  height: 32px;
+  width: 35% !important;
+}
+
+.listSearchDivFocus {
+  height: 32px;
+  width: 35% !important;
+}
+
+.loading {
+  background-color: black !important;
+}
+
+.artistContainer {
+  width: 170px;
+}
+
+.artistContainer article {
+  background: linear-gradient(
+    to bottom,
+    rgb(26, 26, 26) 0%,
+    black 60%
+  ) !important;
+}
+
+.artistContainer article:hover {
+  position: relative;
+  bottom: 3px;
+  border: 1.5px solid rgb(0, 21, 160) !important;
+}
+
+.listGrid {
+  grid-auto-flow: row;
+  grid-template-columns: repeat(5, 150px);
+  justify-content: center;
+  row-gap: 10px;
+  column-gap: 23px;
+}
+
+.artistContent a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.7) !important;
+  max-width: 130px;
+  cursor: default !important;
+}
+
+.artistContent {
+  height: 50px;
+}
+
+.artistContent i {
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+}
+
+.artistImage {
+  width: 163px;
+  height: 163px !important;
+}
+
+.searchListDiv {
+  background: linear-gradient(
+    to right,
+    rgb(26, 26, 26) 0%,
+    rgb(13, 13, 13) 100%
+  ) !important;
+  height: 50px;
+}
+
+.searchButton {
+  width: 30px !important;
+}
+
+.typeHeader {
+  font-family: "Raleway", sans-serif;
+  color: rgba(255, 255, 255, 0.3) !important;
+  letter-spacing: 2px;
+}
+
+.pages {
+  font-family: "Raleway", sans-serif;
+}
+
+.pages p {
+  cursor: pointer;
+  margin-bottom: 0;
 }

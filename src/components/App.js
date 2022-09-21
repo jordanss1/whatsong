@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Landing from "./Landing";
 import Search from "./Search";
 import SearchList from "./SearchList";
-import SearchChoice from "./SearchChoice";
+import SelectedItem from "./SelectedItem";
 
 const App = () => {
   return (
@@ -12,10 +12,10 @@ const App = () => {
         <Route path="/" element={<Landing />} />
         <Route path="/search" element={<Search />} />
         <Route path="/artists" element={<SearchList />}>
-          <Route path=":id" element={<SearchChoice />} />
+          <Route path=":id" element={<SelectedItem />} />
         </Route>
         <Route path="/songs" element={<SearchList />}>
-          <Route path=":id" element={<SearchChoice />} />
+          <Route path=":id" element={<SelectedItem />} />
         </Route>
       </Routes>
     </>

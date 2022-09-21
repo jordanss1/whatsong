@@ -19,7 +19,7 @@ const spotifyArtist = axios.create({
   baseURL: "https://api.spotify.com/artists",
 });
 
-export const spotifySearch = (token, q, type, state, limit) => {
+export const spotifySearch = (token, q, type, state) => {
   const string = `${type}s`;
 
   spotifyQuery
@@ -27,7 +27,7 @@ export const spotifySearch = (token, q, type, state, limit) => {
       headers: {
         Authorization: token,
       },
-      params: { q, type, limit },
+      params: { q, type, limit: 40 },
     })
     .then(({ data }) => {
       console.log(data);
@@ -35,7 +35,7 @@ export const spotifySearch = (token, q, type, state, limit) => {
     });
 };
 
-export const spotifyTokenAndSearch = (q, type, state, limit) => {
+export const spotifyTokenAndSearch = (q, type, state) => {
   const data = new URLSearchParams({ grant_type: "client_credentials" });
 
   spotifyToken
@@ -46,7 +46,7 @@ export const spotifyTokenAndSearch = (q, type, state, limit) => {
     })
     .then(({ data }) => {
       const accessToken = `Bearer ${data.access_token}`;
-      spotifySearch(accessToken, q, type, state, limit);
+      spotifySearch(accessToken, q, type, state);
     });
 };
 

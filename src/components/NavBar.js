@@ -6,7 +6,7 @@ const NavBar = ({ content }) => {
   return (
     <>
       <header className="navClass d-flex justify-content-center">
-        <NavLink className="text-uppercase" to="/home">
+        <NavLink className="text-uppercase" to="/search">
           {content}
         </NavLink>
       </header>

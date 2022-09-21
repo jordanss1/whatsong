@@ -19,9 +19,9 @@ const Landing = () => {
   useEffect(() => {
     const navBg = document.getElementsByClassName("navClass")[0];
     const wrapper = document.getElementsByClassName("wrapper")[0];
-    navBg.classList.remove("navClassAnimate");
 
     if (nav) {
+      navBg.classList.remove("navClassAnimate");
       wrapper.classList.add("wrapperLoad");
       const intervalId = setInterval(() => {
         navigate("search");
@@ -41,7 +41,7 @@ const Landing = () => {
 
     hover.current = !hover.current;
 
-    if (hover.current || nav) {
+    if (hover.current) {
       icon.classList.add("spotifyHover");
       text.classList.add("poweredHover");
       navBg.classList.remove("navClassAnimate");
@@ -74,7 +74,7 @@ const Landing = () => {
           </button>
           <div className="d-flex border rounded-3 p-5 pt-3 pb-3 spotifyDiv">
             <h2 className="fs-5 me-2 mt-2 powered">Powered by</h2>
-            <i className="spotify icon fs-1"></i>
+            <i className="spotify icon fs-1 spotifyNav"></i>
           </div>
         </div>
       </div>
