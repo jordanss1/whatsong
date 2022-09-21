@@ -29,24 +29,43 @@
   opacity: 1;
 }
 
-.wholeListContainer {
+.artistWholeListContainer {
   height: 100vh;
   background: linear-gradient(
     to right,
-    black 5%,
-    rgb(222, 90, 174, 0.4) 12%,
-    black 20%,
+    black 0%,
+    rgb(222, 90, 174, 0.3) 12%,
+    black 24%,
     black 65%,
-    black 82%,
-    rgb(222, 90, 174, 0.4) 89%,
-    black 96%
+    black 78%,
+    rgb(222, 90, 174, 0.3) 89%,
+    black 100%
   );
 }
 
-.listContainer {
+.songWholeListContainer {
+  height: 650vh;
+  background: linear-gradient(
+    to right,
+    black 0%,
+    rgb(222, 90, 174, 0.3) 12%,
+    black 24%,
+    black 65%,
+    black 78%,
+    rgb(222, 90, 174, 0.3) 89%,
+    black 100%
+  );
+}
+
+.artistListContainer {
   grid-template-rows: 15% 80%;
+  grid-template-columns: 70%;
   row-gap: 12px;
-  height: 85%;
+}
+
+.songListContainer {
+  grid-template-rows: 2% 90%;
+  row-gap: 40px;
 }
 
 .mainDiv {
@@ -303,10 +322,9 @@
   border: 1.5px solid rgb(0, 21, 160) !important;
 }
 
-.listGrid {
+.artistGrid {
   grid-auto-flow: row;
   grid-template-columns: repeat(5, 150px);
-  justify-content: center;
   row-gap: 10px;
   column-gap: 23px;
 }
@@ -358,4 +376,29 @@
 .pages p {
   cursor: pointer;
   margin-bottom: 0;
+}
+
+.trackItemContainer {
+  width: 95%;
+}
+
+.trackItem {
+  width: 100%;
+  background-color: rgb(26, 26, 26) !important;
+  box-shadow: 0px 1px rgb(30, 30, 30) !important;
+  color: white !important;
+  cursor: default !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.trackItem .content {
+  max-width: 650px;
+  height: 100%;
+  color: rgb(210, 210, 210);
+  font-weight: 200;
+  font-family: "Barlow", sans-serif;
+}
+
+.songListGrid {
+  justify-items: center;
 }

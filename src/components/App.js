@@ -14,9 +14,7 @@ const App = () => {
         <Route path="/artists" element={<SearchList />}>
           <Route path=":id" element={<SelectedItem />} />
         </Route>
-        <Route path="/songs" element={<SearchList />}>
-          <Route path=":id" element={<SelectedItem />} />
-        </Route>
+        <Route path="/songs" element={<SearchList />} />
       </Routes>
     </>
   );

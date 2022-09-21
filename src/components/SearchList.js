@@ -43,10 +43,63 @@ const SearchList = () => {
     if (page === 4) {
       setElements([33, 43]);
     }
-  }, [page])
+  }, [page]);
 
   const renderSongs = () => {
-    if (!items) {
+    if (items.length === 0) {
+      return (
+        <div className="ui segment h-100 loading p-0 m-0">
+          <div className="ui active dimmer loading">
+            <div className="ui massive text loader"></div>
+          </div>
+        </div>
+      );
+    } else if (items.length > 0) {
+      return (
+        <section className="w-75 d-grid h-100 mt-5 songListContainer align-self-center mt-1">
+          <div className="d-flex align-items-center justify-content-center justify-content-between searchListDiv align-self-end border rounded-3">
+            <h2 className="ms-4 fs-3 pt-1 typeHeader">Songs</h2>
+            <SearchBar />
+          </div>
+          <div className="d-grid songListGrid">
+            {items.map((item, i) => {
+              return (
+                <div
+                  key={i}
+                  className="ui middle aligned selection divided list d-flex justify-content-center trackItemContainer"
+                >
+                  <div className="item trackItem border rounded-3 p-3">
+                    <div className="right floated content">
+                      <div className="ui button">Details</div>
+                      <div
+                        onClick={() =>
+                          window.open(item.external_urls.spotify, "blank")
+                        }
+                        className="ui button"
+                        title={item.external_urls.spotify}
+                      >
+                        Listen
+                      </div>
+                    </div>
+                    <img
+                      className="ui avatar image"
+                      src={item.album.images[2].url}
+                    ></img>
+                    {item.artists?.slice(0, 1).map((artist, i) => {
+                      return (
+                        <h3
+                          key={i + 1}
+                          className="content fs-4 pt-1"
+                        >{`${artist.name} - ${item.name}`}</h3>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      );
     }
   };
 
@@ -61,34 +114,42 @@ const SearchList = () => {
       );
     } else if (items.length > 0) {
       return (
-        <section className="w-100 d-grid listContainer align-items-center justify-content-center mt-1">
+        <section className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center mt-1">
           <div className="d-flex align-items-center justify-content-center justify-content-between searchListDiv align-self-end border rounded-3">
             <h2 className="ms-4 fs-3 pt-1 typeHeader">Artists</h2>
             <SearchBar />
           </div>
-          <div className="d-grid listGrid">
-            {items.slice(elements[0], elements[1]).map(({ external_urls, name, images }, i) => {
-              return (
-                <div className="artistContainer">
-                  <article class="ui fluid card">
-                    {!images.length ? (
-                      <div class="image p-5">
-                        <h3>No image</h3>
+          <div className="d-grid ms-2 artistGrid">
+            {items
+              .slice(elements[0], elements[1])
+              .map(({ external_urls, name, images }, i) => {
+                return (
+                  <div className="artistContainer" key={i}>
+                    <article className="ui fluid card">
+                      {!images.length ? (
+                        <div className="image p-5">
+                          <h3>No image</h3>
+                        </div>
+                      ) : (
+                        <div className="image pb-0">
+                          <img
+                            className="artistImage p-1"
+                            src={images ? images[0].url : ""}
+                          />
+                        </div>
+                      )}
+                      <div className="content artistContent ps-2 pt-1  d-flex justify-content-center justify-content-evenly align-content-center p-0">
+                        <i className="user outline icon fs-4"></i>
+                        <a className="header text-center fs-6 pt-2">{name}</a>
+                        <i
+                          onClick={() => window.open(external_urls, "_blank")}
+                          className="spotify icon fs-4"
+                        ></i>
                       </div>
-                    ) : (
-                      <div class="image pb-0">
-                        <img className="artistImage p-1" src={images[0].url} />
-                      </div>
-                    )}
-                    <div class="content artistContent ps-2 pt-1  d-flex justify-content-center justify-content-evenly align-content-center p-0">
-                      <i class="user outline icon fs-4"></i>
-                      <a class="header text-center fs-6 pt-2">{name}</a>
-                      <i class="spotify icon fs-4"></i>
-                    </div>
-                  </article>
-                </div>
-              );
-            })}
+                    </article>
+                  </div>
+                );
+              })}
           </div>
         </section>
       );
@@ -96,9 +157,16 @@ const SearchList = () => {
   };
 
   return (
-    <main className="wholeListContainer container-fluid d-flex flex-column">
+    <main
+      style={items.length === 0 ? { height: "100vh" } : {}}
+      className={`${
+        typeString === "artist"
+          ? "artistWholeListContainer"
+          : "songWholeListContainer"
+      } container-fluid d-flex flex-column`}
+    >
       <NavBar content={content} />
-      {renderArtists(elements)}
+      {typeString === "artist" ? renderArtists(elements) : renderSongs()}
       {typeString === "artist" ? (
         <div
           className={`w-100 justify-content-center mb-4 ${

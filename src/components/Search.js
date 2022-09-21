@@ -13,6 +13,7 @@ const Search = () => {
     submittedTerm,
     spotifyTokenAndSearch,
     setItems,
+    items,
     navigate,
   } = useContext(SearchContext);
 
@@ -40,14 +41,20 @@ const Search = () => {
 
     if (typeString === "artist" && submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
-      setSubmittedTerm("");
-      navigate("/artists");
     } else if (typeString === "track" && submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
+    }
+  }, [submittedTerm]);
+
+  useEffect(() => {
+    if (items.length > 0 && typeString === "artist" && submittedTerm) {
+      setSubmittedTerm("");
+      navigate("/artists");
+    } else if (items.length > 0 && typeString === "track" && submittedTerm) {
       setSubmittedTerm("");
       navigate("/songs");
     }
-  }, [submittedTerm]);
+  }, [items]);
 
   return (
     <main className="searchContainer container-fluid d-flex align-items-center">

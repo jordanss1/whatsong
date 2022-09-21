@@ -3,6 +3,7 @@ import SearchContext from "../contexts/SearchStore";
 
 const SearchBar = () => {
   const {
+    setPage,
     focus,
     setFocus,
     term,
@@ -34,10 +35,11 @@ const SearchBar = () => {
   };
 
   useEffect(() => {
-    if (typeString === "artist") {
+    if (typeString === "artist" && submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
       setSubmittedTerm("");
-    } else if (typeString === "track") {
+      setPage(1);
+    } else if (typeString === "track" && submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
       setSubmittedTerm("");
     }
@@ -55,7 +57,9 @@ const SearchBar = () => {
         value={term}
         onChange={({ target }) => setTerm(target.value)}
         type="text"
-        placeholder="Search artists"
+        placeholder={`${
+          typeString === "artist" ? "Search artists" : "Search songs"
+        }`}
         data-dashlane-rid="3640789f2356683f"
         data-form-type=""
         className="searchInput me-1"
