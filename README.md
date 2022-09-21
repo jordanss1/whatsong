@@ -37,8 +37,8 @@ Press the red "X" icon in the top right to remove the details from the sidebar. 
 
 </li>
 
-<li> You will need to gain a client Id and client secret from the Spotify Developer dashboard. Login to your spotify account
-     and go to developer.spotify.com and go to "Dashboard"
+<li> You will need to gain a client Id and client secret from the Spotify Developer dashboard. 
+     Login to your spotify account and go to developer.spotify.com and go to "Dashboard"
 
 </li>
 
@@ -46,9 +46,9 @@ Press the red "X" icon in the top right to remove the details from the sidebar. 
 
 </li>
 
-<li> Once inside your text editor you will need to add a .env file into the root directory and then add 
-    REACT_APP_ID= <client-Id>
-    REACT_APP_SECRET="<client-secret>
+<li> Once inside your text editor you will need to add a .env file into the root directory and then add:
+    REACT_APP_ID= [client-Id]
+    REACT_APP_SECRET=[client-secret]
     into the .env file.
 </li>
 
