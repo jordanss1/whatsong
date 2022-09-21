@@ -2,10 +2,21 @@ import React, { useContext, useEffect } from "react";
 import NavBar from "./NavBar";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
+import SelectedItem from "./SelectedItem";
 
 const SearchList = () => {
-  const { items, page, setPage, elements, setElements, typeString } =
-    useContext(SearchContext);
+  const {
+    items,
+    page,
+    setPage,
+    elements,
+    setElements,
+    selectedItem,
+    setSelectedItem,
+    typeString,
+  } = useContext(SearchContext);
+
+  const hidden = window.innerWidth < 900 ? true : false;
 
   const content = () => {
     return (
@@ -48,7 +59,7 @@ const SearchList = () => {
   const renderSongs = () => {
     if (items.length === 0) {
       return (
-        <div className="ui segment h-100 loading p-0 m-0">
+        <div style={{ height: "100vh" }} className="ui segment loading p-0 m-0">
           <div className="ui active dimmer loading">
             <div className="ui massive text loader"></div>
           </div>
@@ -56,47 +67,61 @@ const SearchList = () => {
       );
     } else if (items.length > 0) {
       return (
-        <section className="w-75 d-grid h-100 mt-5 songListContainer align-self-center mt-1">
-          <div className="d-flex align-items-center justify-content-center justify-content-between searchListDiv align-self-end border rounded-3">
-            <h2 className="ms-4 fs-3 pt-1 typeHeader">Songs</h2>
-            <SearchBar />
-          </div>
-          <div className="d-grid songListGrid">
-            {items.map((item, i) => {
-              return (
-                <div
-                  key={i}
-                  className="ui middle aligned selection divided list d-flex justify-content-center trackItemContainer"
-                >
-                  <div className="item trackItem border rounded-3 p-3">
-                    <div className="right floated content">
-                      <div className="ui button">Details</div>
-                      <div
-                        onClick={() =>
-                          window.open(item.external_urls.spotify, "blank")
-                        }
-                        className="ui button"
-                        title={item.external_urls.spotify}
-                      >
-                        Listen
+        <section
+          className={`${
+            selectedItem ? "containerAnimate" : ""
+          } w-100 d-grid selectedContainer`}
+        >
+          <SelectedItem />
+          <div className="d-grid h-100 pt-1 mt-3 mt-xl-0 songListContainer">
+            <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row searchListDiv align-self-lg-end border rounded-3">
+              <h2 className="ms-4 fs-3 pt-1 typeHeader">Songs</h2>
+              <SearchBar />
+            </div>
+            <div className="d-grid  songListGrid">
+              {items.map((item, i) => {
+                return (
+                  <div
+                    key={i}
+                    className="ui middle aligned selection divided list d-flex justify-content-center trackItemContainer"
+                  >
+                    <div className="item trackItem border rounded-3 p-3">
+                      <div className="right floated content">
+                        <div
+                          hidden={hidden}
+                          onClick={() => setSelectedItem(item)}
+                          className="ui button"
+                        >
+                          Details
+                        </div>
+                        <div
+                          onClick={() =>
+                            window.open(item.external_urls.spotify, "_blank")
+                          }
+                          className="ui button"
+                          title={item.external_urls.spotify}
+                        >
+                          Listen
+                        </div>
                       </div>
+                      <img
+                        className="ui avatar image"
+                        src={item.album.images[2].url}
+                      ></img>
+                      {item.artists?.slice(0, 1).map((artist, i) => {
+                        return (
+                          <h3
+                            style={selectedItem ? { maxWidth: "530px" } : {}}
+                            key={i + 1}
+                            className="content fs-4 pt-1"
+                          >{`${artist.name} - ${item.name}`}</h3>
+                        );
+                      })}
                     </div>
-                    <img
-                      className="ui avatar image"
-                      src={item.album.images[2].url}
-                    ></img>
-                    {item.artists?.slice(0, 1).map((artist, i) => {
-                      return (
-                        <h3
-                          key={i + 1}
-                          className="content fs-4 pt-1"
-                        >{`${artist.name} - ${item.name}`}</h3>
-                      );
-                    })}
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </section>
       );
@@ -115,11 +140,11 @@ const SearchList = () => {
     } else if (items.length > 0) {
       return (
         <section className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center mt-1">
-          <div className="d-flex align-items-center justify-content-center justify-content-between searchListDiv align-self-end border rounded-3">
+          <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row searchListDiv align-self-lg-end border rounded-3">
             <h2 className="ms-4 fs-3 pt-1 typeHeader">Artists</h2>
             <SearchBar />
           </div>
-          <div className="d-grid ms-2 artistGrid">
+          <div className="d-sm-grid d-flex flex-column ms-2 artistGrid">
             {items
               .slice(elements[0], elements[1])
               .map(({ external_urls, name, images }, i) => {
@@ -139,10 +164,11 @@ const SearchList = () => {
                         </div>
                       )}
                       <div className="content artistContent ps-2 pt-1  d-flex justify-content-center justify-content-evenly align-content-center p-0">
-                        <i className="user outline icon fs-4"></i>
-                        <a className="header text-center fs-6 pt-2">{name}</a>
+                        <a className="header text-center fs-5 pt-2">{name}</a>
                         <i
-                          onClick={() => window.open(external_urls, "_blank")}
+                          onClick={() =>
+                            window.open(external_urls.spotify, "_blank")
+                          }
                           className="spotify icon fs-4"
                         ></i>
                       </div>
@@ -161,15 +187,15 @@ const SearchList = () => {
       style={items.length === 0 ? { height: "100vh" } : {}}
       className={`${
         typeString === "artist"
-          ? "artistWholeListContainer"
-          : "songWholeListContainer"
-      } container-fluid d-flex flex-column`}
+          ? "artistWholeListContainer d-flex flex-column px-1"
+          : "songWholeListContainer d-grid"
+      } container-fluid `}
     >
       <NavBar content={content} />
       {typeString === "artist" ? renderArtists(elements) : renderSongs()}
       {typeString === "artist" ? (
         <div
-          className={`w-100 justify-content-center mb-4 ${
+          className={`w-100 justify-content-center mb-lg-4 ${
             items.length === 0 ? "d-none" : "d-flex"
           }`}
         >

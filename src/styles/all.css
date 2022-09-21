@@ -44,7 +44,7 @@
 }
 
 .songWholeListContainer {
-  height: 650vh;
+  height: 100vh;
   background: linear-gradient(
     to right,
     black 0%,
@@ -64,8 +64,10 @@
 }
 
 .songListContainer {
-  grid-template-rows: 2% 90%;
+  grid-template-rows: 15% 77%;
   row-gap: 40px;
+  width: 85%;
+  overflow: hidden;
 }
 
 .mainDiv {
@@ -152,7 +154,7 @@
 }
 
 .listNavbar {
-  margin-left: 240px;
+  margin-left: 200px;
   width: 400px;
 }
 
@@ -197,6 +199,10 @@
   font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
   transition: 1s;
   border-color: rgba(255, 255, 255, 0.7);
+}
+
+.submitButtons:disabled {
+  color: rgba(255, 255, 255, 0.25);
 }
 
 .submitButtons:hover {
@@ -334,6 +340,9 @@
   color: rgba(255, 255, 255, 0.7) !important;
   max-width: 130px;
   cursor: default !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden;
+  max-width: 200px;
 }
 
 .artistContent {
@@ -401,4 +410,241 @@
 
 .songListGrid {
   justify-items: center;
+  overflow: scroll;
+}
+
+.selectedContainer {
+  background: linear-gradient(
+    to right,
+    black 0%,
+    rgb(222, 90, 174, 0.3) 12%,
+    black 24%,
+    black 65%,
+    black 78%,
+    rgb(222, 90, 174, 0.3) 89%,
+    black 100%
+  );
+  height: 100%;
+  grid-template-columns: 14vw 85vw;
+  overflow: hidden;
+  column-gap: 35px;
+  transition: 1s;
+}
+
+.containerAnimate {
+  grid-template-columns: 25vw 75vw !important;
+}
+
+.iconRed {
+  color: red !important;
+  cursor: pointer;
+}
+
+.selectedDiv {
+  height: 100% !important;
+  background-color: black;
+  border-right: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.selectedSongDiv {
+  height: 75% !important;
+}
+
+.noSongHeader,
+.noSongHeader div {
+  color: white !important;
+}
+
+.songItem {
+  height: 100%;
+}
+
+.description {
+  height: 40%;
+}
+
+.description .item,
+.description .content {
+  height: 100%;
+  color: rgb(210, 210, 210) !important;
+  text-decoration: none !important;
+}
+
+@media screen and (max-width: 1200px) {
+  .songWholeListContainer {
+    padding: 0px;
+  }
+  .listNavbar {
+    width: 100%;
+    margin-left: 10px;
+  }
+
+  .artistWholeListContainer {
+    height: 100vh;
+  }
+
+  .artistListContainer {
+    grid-template-columns: 80%;
+    grid-template-rows: 12% 85%;
+    justify-items: center;
+    margin-bottom: -40px;
+  }
+
+  .listSearchDiv {
+    width: 60% !important;
+  }
+
+  .listSearchDiv:hover {
+    width: 65% !important;
+  }
+
+  .searchListDiv {
+    width: 90% !important;
+    height: 90px;
+    justify-content: initial;
+  }
+  .artistListContainer {
+    grid-template-columns: 80%;
+    grid-template-rows: 17% 73%;
+    justify-items: center;
+  }
+
+  .songListContainer {
+    justify-items: center;
+  }
+
+  .songItem {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .selectedDiv {
+
+  }
+  .searchListDiv {
+    width: 90% !important;
+    height: 90px;
+    justify-content: initial;
+  }
+
+  .searchDiv {
+    width: 70% !important;
+  }
+
+  .searchDiv:hover {
+    height: 40px;
+    width: 80% !important;
+  }
+
+  .searchDivFocus {
+    height: 40px;
+    width: 80% !important;
+  }
+
+  .listSearchDiv {
+    width: 80% !important;
+  }
+
+  .listSearchDiv:hover {
+    width: 85% !important;
+  }
+
+  .artistGrid {
+    grid-template-columns: repeat(2, 150px);
+  }
+
+  .listNavbar {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .artistWholeListContainer {
+    height: 170vh;
+  }
+
+  .artistListContainer {
+    grid-template-columns: 80%;
+    grid-template-rows: 12% 85%;
+    justify-items: center;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .selectedDiv {
+    display: none!important;
+  }
+  .selectedContainer {
+    grid-template-columns: 100%;
+    justify-items: center;
+  }
+
+  .trackItem .content {
+    max-width: 70%;
+  }
+
+  .songListGrid {
+    grid-template-columns: 96%;
+    padding-left: 20px;
+  }
+
+  .songListContainer {
+    grid-template-rows: 10% 80%;
+    justify-items: center;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .trackItem .content {
+    max-width: 50%;
+  }
+  .artistListContainer {
+    grid-template-columns: 100%;
+  }
+
+  .searchDiv {
+    width: 70% !important;
+  }
+
+  .searchDiv:hover {
+    height: 40px;
+    width: 80% !important;
+  }
+
+  .searchDivFocus {
+    height: 40px;
+    width: 80% !important;
+  }
+
+  .searchListDiv {
+    width: 90% !important;
+    height: 90px;
+    justify-content: initial;
+  }
+
+  .navClassList {
+    position: sticky;
+  }
+
+  .listNavbar {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .artistListContainer {
+    grid-template-rows: 6% 92%;
+    justify-items: center;
+  }
+
+  .artistWholeListContainer {
+    height: 300vh;
+  }
+
+  .listSearchDiv {
+    width: 80% !important;
+  }
+
+  .listSearchDiv:hover {
+    width: 85% !important;
+  }
 }
