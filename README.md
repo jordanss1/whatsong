@@ -41,16 +41,19 @@ Press the red "X" icon in the top right to remove the details from the sidebar. 
      Login to your spotify account and go to developer.spotify.com and go to "Dashboard"
 
 </li>
+    
 
 <li> In the dashboard you will need to create an app and from there you will be able to access your client Id and secret
 
 </li>
+    
 
 <li> Once inside your text editor you will need to add a .env file into the root directory and then add:
     REACT_APP_ID= [client-Id]
     REACT_APP_SECRET=[client-secret]
     into the .env file.
 </li>
+    
 
 </ul>
 
