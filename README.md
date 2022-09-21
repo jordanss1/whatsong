@@ -36,8 +36,10 @@ Press the red "X" icon in the top right to remove the details from the sidebar. 
     $ npm start
 
 </li>
+    
+    <i>You will need to gain a client Id and client secret from the Spotify Developer dashboard. </i>
 
-<li> You will need to gain a client Id and client secret from the Spotify Developer dashboard. 
+<li> 
      Login to your spotify account and go to developer.spotify.com and go to "Dashboard"
 
 </li>
