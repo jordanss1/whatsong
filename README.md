@@ -39,7 +39,7 @@ Press the red "X" icon in the top right to remove the details from the sidebar. 
     
 </ul>
     
- <i>You will need to gain a client Id and client secret from the Spotify Developer dashboard. </i>
+<h4> <b>You will need to gain a client Id and client secret from the Spotify Developer dashboard. </b> </h4>
  
 <ul>
 
