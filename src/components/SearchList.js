@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
 import SelectedItem from "./SelectedItem";
+import { motion } from "framer-motion";
 
 const SearchList = () => {
   const {
@@ -39,6 +40,7 @@ const SearchList = () => {
   useEffect(() => {
     const nav = document.getElementsByClassName("navClass")[0];
     nav.classList.add("navClassList");
+    const intervalId = setInterval(() => {}, 2000);
   });
 
   useEffect(() => {
@@ -131,7 +133,7 @@ const SearchList = () => {
   const renderArtists = (elements) => {
     if (items.length === 0) {
       return (
-        <div className="ui segment h-100 loading p-0 m-0">
+        <div style={{ height: "100vh" }} className="ui segment loading p-0 m-0">
           <div className="ui active dimmer loading">
             <div className="ui massive text loader"></div>
           </div>
@@ -139,7 +141,14 @@ const SearchList = () => {
       );
     } else if (items.length > 0) {
       return (
-        <section className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center mt-1">
+        <motion.section
+          initial={{
+            opacity: 0,
+          }}
+          animate={{ opacity: 1, transition: { duration: 2 } }}
+          exit={{ opacity: 0, transition: { duration: 0.5 } }}
+          className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center mt-1"
+        >
           <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row searchListDiv align-self-lg-end border rounded-3">
             <h2 className="ms-4 fs-3 pt-1 typeHeader">Artists</h2>
             <SearchBar />
@@ -177,13 +186,33 @@ const SearchList = () => {
                 );
               })}
           </div>
-        </section>
+          <div
+            className={`w-100 pages justify-content-center  mb-lg-4 ${
+              items.length === 0 ? "d-none" : "d-flex"
+            }`}
+          >
+            <div className="d-flex justify-content-center justify-content-between pages w-75 fs-1">
+              <p onClick={() => setPage(1)}>1</p>
+              <p onClick={() => setPage(2)}>2</p>
+              <p onClick={() => setPage(3)}>3</p>
+              <p onClick={() => setPage(4)}>4</p>
+            </div>
+          </div>
+        </motion.section>
       );
     }
   };
 
   return (
-    <main
+    <motion.main
+      initial={{
+        position: "relative",
+        top: "500px",
+        opacity: 0,
+        transition: { duration: 0.5 },
+      }}
+      animate={{ top: "0px", opacity: 1, transition: { duration: 0.5 } }}
+      exit={{ top: "500px", opacity: 0, transition: { duration: 1 } }}
       style={items.length === 0 ? { height: "100vh" } : {}}
       className={`${
         typeString === "artist"
@@ -193,23 +222,7 @@ const SearchList = () => {
     >
       <NavBar content={content} />
       {typeString === "artist" ? renderArtists(elements) : renderSongs()}
-      {typeString === "artist" ? (
-        <div
-          className={`w-100 justify-content-center mb-lg-4 ${
-            items.length === 0 ? "d-none" : "d-flex"
-          }`}
-        >
-          <div className="d-flex justify-content-center justify-content-between pages w-25 fs-1">
-            <p onClick={() => setPage(1)}>1</p>
-            <p onClick={() => setPage(2)}>2</p>
-            <p onClick={() => setPage(3)}>3</p>
-            <p onClick={() => setPage(4)}>4</p>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-    </main>
+    </motion.main>
   );
 };
 

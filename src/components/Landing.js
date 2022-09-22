@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useContext } from "react";
 import SearchContext from "../contexts/SearchStore";
 import NavBar from "./NavBar";
 import "../styles/all.css";
+import { motion } from "framer-motion";
 
 const Landing = () => {
   const { navigate, nav, setNav } = useContext(SearchContext);
@@ -59,7 +60,17 @@ const Landing = () => {
   }, []);
 
   return (
-    <main className="landingContainer d-flex flex-column">
+    <motion.main
+      initial={{
+        position: "relative",
+        top: "900px",
+        opacity: 0,
+        transition: { duration: 1 },
+      }}
+      animate={{ top: "0px", opacity: 1, transition: { duration: 0.5 } }}
+      exit={{ top: "900px", opacity: 1, transition: { duration: 0.5 } }}
+      className="landingContainer d-flex flex-column"
+    >
       <NavBar content={content} />
       <div className="wrapper h-100">
         <div className="d-flex h-100 justify-content-center align-items-center flex-column-reverse mainDiv">
@@ -78,7 +89,7 @@ const Landing = () => {
           </div>
         </div>
       </div>
-    </main>
+    </motion.main>
   );
 };
 

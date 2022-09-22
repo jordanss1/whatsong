@@ -1,22 +1,22 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Landing from "./Landing";
 import Search from "./Search";
 import SearchList from "./SearchList";
-import SelectedItem from "./SelectedItem";
+import { AnimatePresence } from "framer-motion";
 
 const App = () => {
+  const location = useLocation();
+
   return (
-    <>
-      <Routes>
+    <AnimatePresence>
+      <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Landing />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/artists" element={<SearchList />}>
-          <Route path=":id" element={<SelectedItem />} />
-        </Route>
+        <Route path="/artists" element={<SearchList />} />
         <Route path="/songs" element={<SearchList />} />
       </Routes>
-    </>
+    </AnimatePresence>
   );
 };
 

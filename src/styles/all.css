@@ -16,7 +16,7 @@
     black 70%
   );
   opacity: 0.7;
-  transition: 2s;
+  transition: opacity 2s;
 }
 
 .focusContainer {
@@ -30,7 +30,6 @@
 }
 
 .artistWholeListContainer {
-  height: 100vh;
   background: linear-gradient(
     to right,
     black 0%,
@@ -202,7 +201,7 @@
 }
 
 .submitButtons:disabled {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .submitButtons:hover {
@@ -383,6 +382,7 @@
 }
 
 .pages p {
+  color: rgba(255, 255, 255, 0.662);
   cursor: pointer;
   margin-bottom: 0;
 }
@@ -480,14 +480,11 @@
   }
 
   .artistWholeListContainer {
-    height: 100vh;
   }
-
   .artistListContainer {
     grid-template-columns: 80%;
     grid-template-rows: 12% 85%;
     justify-items: center;
-    margin-bottom: -40px;
   }
 
   .listSearchDiv {
@@ -519,9 +516,6 @@
 }
 
 @media screen and (max-width: 992px) {
-  .selectedDiv {
-
-  }
   .searchListDiv {
     width: 90% !important;
     height: 90px;
@@ -560,19 +554,17 @@
   }
 
   .artistWholeListContainer {
-    height: 170vh;
   }
 
   .artistListContainer {
     grid-template-columns: 80%;
     grid-template-rows: 12% 85%;
     justify-items: center;
+    overflow: scroll;
   }
-}
 
-@media screen and (max-width: 900px) {
   .selectedDiv {
-    display: none!important;
+    display: none !important;
   }
   .selectedContainer {
     grid-template-columns: 100%;
@@ -596,11 +588,9 @@
 
 @media screen and (max-width: 576px) {
   .trackItem .content {
-    max-width: 50%;
+    max-width: 55%;
   }
-  .artistListContainer {
-    grid-template-columns: 100%;
-  }
+
 
   .searchDiv {
     width: 70% !important;
@@ -632,12 +622,12 @@
   }
 
   .artistListContainer {
-    grid-template-rows: 6% 92%;
+    grid-template-columns: 100%;
+    grid-template-rows: 6% 90% 4%;
     justify-items: center;
   }
 
   .artistWholeListContainer {
-    height: 300vh;
   }
 
   .listSearchDiv {

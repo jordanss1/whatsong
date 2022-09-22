@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
+import { motion } from "framer-motion";
 
 const Search = () => {
   const {
@@ -57,7 +58,17 @@ const Search = () => {
   }, [items]);
 
   return (
-    <main className="searchContainer container-fluid d-flex align-items-center">
+    <motion.main
+      initial={{
+        position: "relative",
+        bottom: "800px",
+        opacity: 0,
+        transition: { duration: .5 },
+      }}
+      animate={{ top: "0px", opacity: 1, transition: { duration: 0.5 } }}
+      exit={{ top: "1000px", opacity: 0, transition: { duration: 0.5 } }}
+      className="searchContainer container-fluid d-flex align-items-center"
+    >
       <form
         onSubmit={(e) => e.preventDefault()}
         className="d-flex flex-column justify-content-center justify-content-evenly align-items-center mt-5 w-100 h-50"
@@ -106,7 +117,7 @@ const Search = () => {
           </button>
         </div>
       </form>
-    </main>
+    </motion.main>
   );
 };
 
