@@ -150,7 +150,7 @@ const SearchList = () => {
           className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center mt-1"
         >
           <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row searchListDiv align-self-lg-end border rounded-3">
-            <h2 className="ms-4 fs-3 pt-1 typeHeader">Artists</h2>
+            <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Artists</h2>
             <SearchBar />
           </div>
           <div className="d-sm-grid d-flex flex-column ms-2 artistGrid">

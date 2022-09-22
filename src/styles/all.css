@@ -58,7 +58,6 @@
 
 .artistListContainer {
   grid-template-rows: 15% 80%;
-  grid-template-columns: 70%;
   row-gap: 12px;
 }
 
@@ -365,6 +364,7 @@
     rgb(13, 13, 13) 100%
   ) !important;
   height: 50px;
+  margin-left: 20px;
 }
 
 .searchButton {
@@ -482,7 +482,6 @@
   .artistWholeListContainer {
   }
   .artistListContainer {
-    grid-template-columns: 80%;
     grid-template-rows: 12% 85%;
     justify-items: center;
   }
@@ -499,9 +498,9 @@
     width: 90% !important;
     height: 90px;
     justify-content: initial;
+    margin-left: 10px;
   }
   .artistListContainer {
-    grid-template-columns: 80%;
     grid-template-rows: 17% 73%;
     justify-items: center;
   }
@@ -517,7 +516,8 @@
 
 @media screen and (max-width: 992px) {
   .searchListDiv {
-    width: 90% !important;
+    margin-left: 10px;
+    width: 420px !important;
     height: 90px;
     justify-content: initial;
   }
@@ -557,7 +557,6 @@
   }
 
   .artistListContainer {
-    grid-template-columns: 80%;
     grid-template-rows: 12% 85%;
     justify-items: center;
     overflow: scroll;
@@ -606,7 +605,7 @@
   }
 
   .searchListDiv {
-    width: 90% !important;
+    width: 300px !important;
     height: 90px;
     justify-content: initial;
   }
@@ -621,7 +620,6 @@
   }
 
   .artistListContainer {
-    grid-template-columns: 100%;
     grid-template-rows: 6% 90% 4%;
     justify-items: center;
   }
