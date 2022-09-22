@@ -36,11 +36,41 @@ Press the red "X" icon in the top right to remove the details from the sidebar. 
     $ npm start
 
 </li>
+    
+</ul>
+    
+<h4> <b>You will need to gain a client Id and client secret from the Spotify Developer dashboard. </b> </h4>
+ 
+<ul>
+
+<li> 
+     Login to your spotify account and go to developer.spotify.com and go to "Dashboard"
+
+</li>
+    
+
+<li> In the dashboard you will need to create an app and from there you will be able to access your client Id and secret
+
+</li>
+    
+
+<li> Once inside your text editor you will need to add a .env file into the root directory and then add:
+    REACT_APP_ID= [client-Id]
+    REACT_APP_SECRET=[client-secret]
+    into the .env file.
+</li>
+    
+
 </ul>
 
 <h3><b>Technologies Used</b></h3>
 <ul>
 <li>ReactJS</li>
+<li>JavaScript</li>
+<li>HTML</li>
 <li>CSS</li>
 <li>BootStrap</li>
+<li>Semantic UI</li>
+<li>Axios</li>
+<li>NPM</li>
 </ul>
