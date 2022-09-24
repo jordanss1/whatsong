@@ -8,9 +8,9 @@ A web application that makes use of the search endpoint of the Spotify API and g
 
 <h3><b>How to use app</b></h3>
 
-Use the dropdown to select from two categories and either make a search for artists or tracks in Spotify. On the initial render of the page you will see some of the most popular artists on Spotify at the moment.
+Press get started and you will be taken to the main search box. Here you can choose to search for "Artists" or "Songs". 
 
-After choosing your category enter your search term into the search bar and you will be returned a list of artists or tracks. With artists you can click on them and be taken to their Spotify page.
+After entering your search term and choosing your category you will be returned a list of artists or tracks. With artists you can click on the spotify icon and be taken to their Spotify page.
 
 There is more functionality with tracks. After your search for tracks you can see more track detail by pressing the "Details" button and the sidebar will expand giving more track details.
 
