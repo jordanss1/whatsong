@@ -70,11 +70,22 @@ const SearchList = () => {
   const renderSongs = () => {
     if (items.length === 0) {
       return (
-        <div style={{ height: "100vh" }} className="ui segment loading p-0 m-0">
-          <div className="ui active dimmer loading">
-            <div className="ui massive text loader"></div>
+        <motion.section
+          initial={{
+            opacity: 0,
+          }}
+          animate={{ opacity: 1, transition: { duration: 2 } }}
+          exit={{ opacity: 0, transition: { duration: 0.5 } }}
+          className="w-100 d-flex flex-column align-items-center justify-content-between justify-content-center pt-4 noResultsSong"
+        >
+          <div className="d-flex align-items-center justify-content-center justify-content-between  flex-column flex-xl-row noResultsSearch border rounded-3">
+            <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Songs</h2>
+            <SearchBar />
           </div>
-        </div>
+          <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0">
+            <h3>No results found</h3>
+          </div>
+        </motion.section>
       );
     } else if (items.length > 0) {
       return (
@@ -245,7 +256,9 @@ const SearchList = () => {
       className={`${
         typeString === "artist"
           ? "artistWholeListContainer d-flex flex-column px-1"
-          : "songWholeListContainer d-grid"
+          : `songWholeListContainer ${
+              items.length === 0 ? "d-flex flex-column" : "d-grid"
+            }`
       } container-fluid `}
     >
       <NavBar content={content} />

@@ -40,7 +40,7 @@ const Search = () => {
 
   useEffect(() => {
     sessionStorage.clear();
-  }, [])
+  }, []);
 
   useEffect(() => {
     setTerm("");

@@ -49,7 +49,7 @@ const SearchBar = () => {
   useEffect(() => {
     if (typeString === "artist") {
       sessionStorage.setItem("artists", JSON.stringify(items));
-    } else {
+    } else if (typeString === "track") {
       sessionStorage.setItem("tracks", JSON.stringify(items));
     }
   }, [items]);
