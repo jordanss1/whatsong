@@ -13,6 +13,8 @@ const SearchList = () => {
     elements,
     setElements,
     selectedItem,
+    setTypeString,
+    setItems,
     setSelectedItem,
     typeString,
   } = useContext(SearchContext);
@@ -40,8 +42,15 @@ const SearchList = () => {
   useEffect(() => {
     const nav = document.getElementsByClassName("navClass")[0];
     nav.classList.add("navClassList");
-    const intervalId = setInterval(() => {}, 2000);
-  });
+
+    if (JSON.parse(sessionStorage.getItem("artists"))) {
+      setTypeString("artist");
+      setItems(JSON.parse(sessionStorage.getItem("artists")));
+    } else if (JSON.parse(sessionStorage.getItem("tracks"))) {
+      setTypeString("track");
+      setItems(JSON.parse(sessionStorage.getItem("tracks")));
+    }
+  }, []);
 
   useEffect(() => {
     if (page === 1) {
@@ -108,7 +117,7 @@ const SearchList = () => {
                       </div>
                       <img
                         className="ui avatar image"
-                        src={item.album.images[2].url}
+                        src={item.album?.images[2].url}
                       ></img>
                       {item.artists?.slice(0, 1).map((artist, i) => {
                         return (
@@ -131,13 +140,26 @@ const SearchList = () => {
   };
 
   const renderArtists = (elements) => {
+    console.log(items);
+
     if (items.length === 0) {
       return (
-        <div style={{ height: "100vh" }} className="ui segment loading p-0 m-0">
-          <div className="ui active dimmer loading">
-            <div className="ui massive text loader"></div>
+        <motion.section
+          initial={{
+            opacity: 0,
+          }}
+          animate={{ opacity: 1, transition: { duration: 2 } }}
+          exit={{ opacity: 0, transition: { duration: 0.5 } }}
+          className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center pt-4"
+        >
+          <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row noResultsSearch border rounded-3">
+            <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Artists</h2>
+            <SearchBar />
           </div>
-        </div>
+          <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0 artistGrid">
+            <h3>No results found</h3>
+          </div>
+        </motion.section>
       );
     } else if (items.length > 0) {
       return (
@@ -147,13 +169,13 @@ const SearchList = () => {
           }}
           animate={{ opacity: 1, transition: { duration: 2 } }}
           exit={{ opacity: 0, transition: { duration: 0.5 } }}
-          className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center mt-1"
+          className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center pt-4"
         >
           <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row searchListDiv align-self-lg-end border rounded-3">
             <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Artists</h2>
             <SearchBar />
           </div>
-          <div className="d-sm-grid d-flex flex-column ms-2 artistGrid">
+          <div className="d-sm-grid d-flex flex-column ms-2 align-items-center justify-content-md-center p-5 p-xl-0  artistGrid">
             {items
               .slice(elements[0], elements[1])
               .map(({ external_urls, name, images }, i) => {
@@ -193,9 +215,15 @@ const SearchList = () => {
           >
             <div className="d-flex justify-content-center justify-content-between pages w-75 fs-1">
               <p onClick={() => setPage(1)}>1</p>
-              <p onClick={() => setPage(2)}>2</p>
-              <p onClick={() => setPage(3)}>3</p>
-              <p onClick={() => setPage(4)}>4</p>
+              <p hidden={Boolean(items.length < 11)} onClick={() => setPage(2)}>
+                2
+              </p>
+              <p hidden={Boolean(items.length < 21)} onClick={() => setPage(3)}>
+                3
+              </p>
+              <p hidden={Boolean(items.length < 31)} onClick={() => setPage(4)}>
+                4
+              </p>
             </div>
           </div>
         </motion.section>

@@ -3,6 +3,7 @@ import SearchContext from "../contexts/SearchStore";
 
 const SearchBar = () => {
   const {
+    items,
     setPage,
     focus,
     setFocus,
@@ -44,6 +45,14 @@ const SearchBar = () => {
       setSubmittedTerm("");
     }
   }, [submittedTerm]);
+
+  useEffect(() => {
+    if (typeString === "artist") {
+      sessionStorage.setItem("artists", JSON.stringify(items));
+    } else {
+      sessionStorage.setItem("tracks", JSON.stringify(items));
+    }
+  }, [items]);
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="ui input listSearchDiv">

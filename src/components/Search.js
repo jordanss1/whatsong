@@ -30,6 +30,7 @@ const Search = () => {
 
   useEffect(() => {
     const container = document.getElementsByClassName("searchContainer")[0];
+
     if (term || submittedTerm) {
       container.classList.add("focusContainer");
     } else {
@@ -38,11 +39,17 @@ const Search = () => {
   }, [term]);
 
   useEffect(() => {
+    sessionStorage.clear();
+  }, [])
+
+  useEffect(() => {
     setTerm("");
 
     if (typeString === "artist" && submittedTerm) {
+      sessionStorage.removeItem("artists");
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
     } else if (typeString === "track" && submittedTerm) {
+      sessionStorage.removeItem("tracks");
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
     }
   }, [submittedTerm]);
@@ -50,9 +57,11 @@ const Search = () => {
   useEffect(() => {
     if (items.length > 0 && typeString === "artist" && submittedTerm) {
       setSubmittedTerm("");
+      sessionStorage.setItem("artists", JSON.stringify(items));
       navigate("/artists");
     } else if (items.length > 0 && typeString === "track" && submittedTerm) {
       setSubmittedTerm("");
+      sessionStorage.setItem("tracks", JSON.stringify(items));
       navigate("/songs");
     }
   }, [items]);
@@ -62,7 +71,7 @@ const Search = () => {
       initial={{
         position: "relative",
         bottom: "800px",
-        opacity: 0,
+        opacity: 0.5,
         transition: { duration: 0.5 },
       }}
       animate={{ top: "0px", opacity: 1, transition: { duration: 0.5 } }}
