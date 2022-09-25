@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import NavBar from "./NavBar";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
@@ -6,6 +6,8 @@ import SelectedItem from "./SelectedItem";
 import { motion } from "framer-motion";
 
 const SearchList = () => {
+  const hidden = window.innerWidth < 900 ? true : false;
+
   const {
     items,
     page,
@@ -18,26 +20,6 @@ const SearchList = () => {
     setSelectedItem,
     typeString,
   } = useContext(SearchContext);
-
-  const hidden = window.innerWidth < 900 ? true : false;
-
-  const content = () => {
-    return (
-      <div className="d-flex listNavbar">
-        <div className="text-lowercase">
-          <span className="w">w.</span>
-          <span className="pink me-2">s</span>
-        </div>
-        <span className="underScore ms-1">_</span>
-        <div className="d-flex align-items-end ps-2 pe-2 pb-3 listSpotify">
-          <h2 className="fs-6 me-2 mt-3 poweredList text-lowercase">
-            powered by
-          </h2>
-          <i className="spotify icon mb-1 fs-1 pe-1 spotifyIconList"></i>
-        </div>
-      </div>
-    );
-  };
 
   useEffect(() => {
     const nav = document.getElementsByClassName("navClass")[0];
@@ -66,6 +48,34 @@ const SearchList = () => {
       setElements([33, 43]);
     }
   }, [page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, []);
+
+  const handleClick = () => {
+    document
+      .getElementsByClassName("artistGrid")[0]
+      .scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const content = () => {
+    return (
+      <div className="d-flex listNavbar">
+        <div className="text-lowercase">
+          <span className="w">w.</span>
+          <span className="pink me-2">s</span>
+        </div>
+        <span className="underScore ms-1">_</span>
+        <div className="d-flex align-items-end ps-2 pe-2 pb-3 listSpotify">
+          <h2 className="fs-6 me-2 mt-3 poweredList text-lowercase">
+            powered by
+          </h2>
+          <i className="spotify icon mb-1 fs-1 pe-1 spotifyIconList"></i>
+        </div>
+      </div>
+    );
+  };
 
   const renderSongs = () => {
     if (items.length === 0) {
@@ -151,8 +161,6 @@ const SearchList = () => {
   };
 
   const renderArtists = (elements) => {
-    console.log(items);
-
     if (items.length === 0) {
       return (
         <motion.section
@@ -192,13 +200,24 @@ const SearchList = () => {
               .map(({ external_urls, name, images }, i) => {
                 return (
                   <div className="artistContainer" key={i}>
-                    <article className="ui fluid card">
+                    <article
+                      onClick={() =>
+                        window.open(external_urls.spotify, "_blank")
+                      }
+                      className="ui fluid card"
+                    >
                       {!images.length ? (
-                        <div className="image p-5">
+                        <div
+                          style={{ cursor: "pointer" }}
+                          className="image p-5"
+                        >
                           <h3>No image</h3>
                         </div>
                       ) : (
-                        <div className="image pb-0">
+                        <div
+                          style={{ cursor: "pointer" }}
+                          className="image pb-0"
+                        >
                           <img
                             className="artistImage p-1"
                             src={images ? images[0].url : ""}
@@ -225,14 +244,39 @@ const SearchList = () => {
             }`}
           >
             <div className="d-flex justify-content-center justify-content-between pages w-75 fs-1">
-              <p onClick={() => setPage(1)}>1</p>
-              <p hidden={Boolean(items.length < 11)} onClick={() => setPage(2)}>
+              <p
+                onClick={() => {
+                  setPage(1);
+                  handleClick();
+                }}
+              >
+                1
+              </p>
+              <p
+                hidden={Boolean(items.length < 11)}
+                onClick={() => {
+                  setPage(2);
+                  handleClick();
+                }}
+              >
                 2
               </p>
-              <p hidden={Boolean(items.length < 21)} onClick={() => setPage(3)}>
+              <p
+                hidden={Boolean(items.length < 21)}
+                onClick={() => {
+                  setPage(3);
+                  handleClick();
+                }}
+              >
                 3
               </p>
-              <p hidden={Boolean(items.length < 31)} onClick={() => setPage(4)}>
+              <p
+                hidden={Boolean(items.length < 31)}
+                onClick={() => {
+                  setPage(4);
+                  handleClick();
+                }}
+              >
                 4
               </p>
             </div>
@@ -250,6 +294,7 @@ const SearchList = () => {
         opacity: 0,
         transition: { duration: 0.5 },
       }}
+      id="main"
       animate={{ top: "0px", opacity: 1, transition: { duration: 0.5 } }}
       exit={{ top: "500px", opacity: 0, transition: { duration: 1 } }}
       style={items.length === 0 ? { height: "100vh" } : {}}

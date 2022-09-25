@@ -55,11 +55,11 @@ const Search = () => {
   }, [submittedTerm]);
 
   useEffect(() => {
-    if (items.length > 0 && typeString === "artist" && submittedTerm) {
+    if (typeString === "artist" && submittedTerm) {
       setSubmittedTerm("");
       sessionStorage.setItem("artists", JSON.stringify(items));
       navigate("/artists");
-    } else if (items.length > 0 && typeString === "track" && submittedTerm) {
+    } else if (typeString === "track" && submittedTerm) {
       setSubmittedTerm("");
       sessionStorage.setItem("tracks", JSON.stringify(items));
       navigate("/songs");
