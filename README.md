@@ -59,6 +59,9 @@ Press the red "X" icon in the top right to remove the details from the sidebar. 
     REACT_APP_SECRET=[client-secret]
     into the .env file.
 </li>
+
+<li> Then, ctrl + C inside of your terminal to stop running the application and then npm start back into the application
+</li>
     
 
 </ul>
