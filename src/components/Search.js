@@ -46,10 +46,8 @@ const Search = () => {
     setTerm("");
 
     if (typeString === "artist" && submittedTerm) {
-      sessionStorage.removeItem("artists");
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
     } else if (typeString === "track" && submittedTerm) {
-      sessionStorage.removeItem("tracks");
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
     }
   }, [submittedTerm]);

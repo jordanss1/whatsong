@@ -26,7 +26,6 @@ export const spotifySearch = (token, q, type, state) => {
       params: { q, type, limit: 40 },
     })
     .then(({ data }) => {
-      console.log(data);
       state(data[string].items);
     });
 };
