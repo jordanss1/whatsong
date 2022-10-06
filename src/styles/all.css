@@ -486,6 +486,10 @@
   text-decoration: none !important;
 }
 
+.artistPage {
+  height: 100vh;
+}
+
 @media screen and (max-width: 1200px) {
   .songWholeListContainer {
     padding: 0px;

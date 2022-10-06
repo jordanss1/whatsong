@@ -4,6 +4,7 @@ import Landing from "./Landing";
 import Search from "./Search";
 import SearchList from "./SearchList";
 import { AnimatePresence } from "framer-motion";
+import SelectedItem from "./SelectedItem";
 
 const App = () => {
   const location = useLocation();
@@ -13,7 +14,10 @@ const App = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Landing />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/artists" element={<SearchList />} />
+        <Route path="/artists">
+          <Route index element={<SearchList />} />
+          <Route path="/artists/:id" element={<SelectedItem />} />
+        </Route>
         <Route path="/songs" element={<SearchList />} />
       </Routes>
     </AnimatePresence>

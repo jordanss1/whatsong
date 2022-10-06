@@ -15,18 +15,37 @@ const spotifyQuery = axios.create({
   baseURL: "https://api.spotify.com/v1",
 });
 
-export const spotifySearch = (token, q, type, state) => {
-  const string = `${type}s`;
+export const spotifyArtistAndAlbum = (id, state) => {
+  const data = new URLSearchParams({ grant_type: "client_credentials" });
 
-  spotifyQuery
-    .get("/search", {
+  const artistAndAlbum = [
+    `https://api.spotify.com/v1/artists/${id}`,
+    `https://api.spotify.com/v1/artists/${id}/albums?limit=6&include_groups=album`,
+  ];
+
+  spotifyToken
+    .post("", data, {
       headers: {
-        Authorization: token,
+        Authorization: clientMix,
       },
-      params: { q, type, limit: 40 },
     })
     .then(({ data }) => {
-      state(data[string].items);
+      const accessToken = `Bearer ${data.access_token}`;
+
+      axios
+        .all(
+          artistAndAlbum.map((object) =>
+            axios.get(object, {
+              headers: {
+                Authorization: accessToken,
+              },
+            })
+          )
+        )
+        .then((responses) => {
+          const data = [responses[0].data, responses[1].data.items];
+          console.log(data);
+        });
     });
 };
 
@@ -41,6 +60,18 @@ export const spotifyTokenAndSearch = (q, type, state) => {
     })
     .then(({ data }) => {
       const accessToken = `Bearer ${data.access_token}`;
-      spotifySearch(accessToken, q, type, state);
+      const string = `${type}s`;
+
+      spotifyQuery
+        .get("/search", {
+          headers: {
+            Authorization: accessToken,
+          },
+          params: { q, type, limit: 40 },
+        })
+        .then(({ data }) => {
+          console.log(data);
+          state(data[string].items);
+        });
     });
 };

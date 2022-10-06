@@ -19,6 +19,7 @@ const SearchList = () => {
     setItems,
     setSelectedItem,
     typeString,
+    spotifyArtistAndAlbum,
   } = useContext(SearchContext);
 
   useEffect(() => {
@@ -51,7 +52,11 @@ const SearchList = () => {
     }
   }, [page]);
 
-  const handleClick = () => {
+  const handleProfileClick = (id) => {
+    spotifyArtistAndAlbum(id)
+  };
+
+  const handlePageClick = () => {
     document
       .getElementsByClassName("artistGrid")[0]
       .scrollTo({ top: 0, behavior: "smooth" });
@@ -195,20 +200,12 @@ const SearchList = () => {
           <div className="d-sm-grid d-flex flex-column ms-2 align-items-center justify-content-md-center p-5 p-xl-0  artistGrid">
             {items
               .slice(elements[0], elements[1])
-              .map(({ external_urls, name, images }, i) => {
+              .map(({ external_urls, name, images, id }, i) => {
                 return (
                   <div className="artistContainer" key={i}>
-                    <article
-                      onClick={() =>
-                        window.open(external_urls.spotify, "_blank")
-                      }
-                      className="ui fluid card"
-                    >
+                    <article className="ui fluid card">
                       {!images.length ? (
-                        <div
-                          style={{ cursor: "pointer" }}
-                          className="image p-5"
-                        >
+                        <div className="image p-5">
                           <h3>No image</h3>
                         </div>
                       ) : (
@@ -223,8 +220,14 @@ const SearchList = () => {
                         </div>
                       )}
                       <div className="content artistContent ps-2 pt-1  d-flex justify-content-center justify-content-evenly align-content-center p-0">
+                        <i
+                          onClick={() => handleProfileClick(id)}
+                          title="View artist profile"
+                          className="user icon fs-4"
+                        ></i>
                         <a className="header text-center fs-5 pt-2">{name}</a>
                         <i
+                          title={external_urls.spotify}
                           onClick={() =>
                             window.open(external_urls.spotify, "_blank")
                           }
@@ -245,7 +248,7 @@ const SearchList = () => {
               <p
                 onClick={() => {
                   setPage(1);
-                  handleClick();
+                  handlePageClick();
                 }}
               >
                 1
@@ -254,7 +257,7 @@ const SearchList = () => {
                 hidden={Boolean(items.length < 11)}
                 onClick={() => {
                   setPage(2);
-                  handleClick();
+                  handlePageClick();
                 }}
               >
                 2
@@ -263,7 +266,7 @@ const SearchList = () => {
                 hidden={Boolean(items.length < 21)}
                 onClick={() => {
                   setPage(3);
-                  handleClick();
+                  handlePageClick();
                 }}
               >
                 3
@@ -272,7 +275,7 @@ const SearchList = () => {
                 hidden={Boolean(items.length < 31)}
                 onClick={() => {
                   setPage(4);
-                  handleClick();
+                  handlePageClick();
                 }}
               >
                 4

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { spotifyTokenAndSearch } from "../api";
+import { spotifyTokenAndSearch, spotifyArtistAndAlbum } from "../api";
 
 const SearchContext = createContext();
 
@@ -33,6 +33,7 @@ export const SearchStore = ({ children }) => {
     setSubmittedTerm,
     setItems,
     spotifyTokenAndSearch,
+    spotifyArtistAndAlbum,
     setSelectedItem,
     navigate,
   };
