@@ -4,11 +4,10 @@ import { motion } from "framer-motion";
 
 const Search = () => {
   const {
-    focus,
+    focused,
     typeString,
     setTypeString,
     term,
-    setFocus,
     setTerm,
     setSubmittedTerm,
     submittedTerm,
@@ -17,16 +16,6 @@ const Search = () => {
     items,
     navigate,
   } = useContext(SearchContext);
-
-  useEffect(() => {
-    const div1 = document.getElementsByClassName("searchDiv")[0];
-
-    if (focus === true) {
-      div1.classList.add("searchDivFocus");
-    } else {
-      div1.classList.remove("searchDivFocus");
-    }
-  }, [focus]);
 
   useEffect(() => {
     const container = document.getElementsByClassName("searchContainer")[0];
@@ -39,6 +28,7 @@ const Search = () => {
   }, [term]);
 
   useEffect(() => {
+    focused.current = false;
     sessionStorage.clear();
   }, []);
 
@@ -64,6 +54,18 @@ const Search = () => {
     }
   }, [items]);
 
+  const handleFocus = () => {
+    const div1 = document.getElementsByClassName("searchDiv")[0];
+
+    focused.current = !focused.current;
+
+    if (focused.current === true) {
+      div1.classList.add("searchDivFocus");
+    } else {
+      div1.classList.remove("searchDivFocus");
+    }
+  };
+
   return (
     <motion.main
       initial={{
@@ -83,12 +85,8 @@ const Search = () => {
         <div className="w-100 d-flex justify-content-center">
           <div className="ui input searchDiv w-50">
             <input
-              onFocus={() => {
-                setFocus(true);
-              }}
-              onBlur={() => {
-                setFocus(false);
-              }}
+              onFocus={() => handleFocus()}
+              onBlur={() => handleFocus()}
               value={term}
               onChange={({ target }) => setTerm(target.value)}
               type="text"

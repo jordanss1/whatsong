@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { spotifyTokenAndSearch } from "../api";
 
@@ -10,32 +10,29 @@ export const SearchStore = ({ children }) => {
   const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [typeString, setTypeString] = useState("");
-  const [nav, setNav] = useState(false);
   const [page, setPage] = useState(1);
-  const [focus, setFocus] = useState(false);
   const [elements, setElements] = useState([0, 10]);
+
+  const focused = useRef(false);
 
   const navigate = useNavigate();
 
   const fullProviders = {
+    focused,
     elements,
     page,
-    focus,
     typeString,
     term,
     selectedItem,
     submittedTerm,
     items,
-    nav,
     setElements,
     setPage,
-    setFocus,
     setTypeString,
     setTerm,
     setSubmittedTerm,
     setItems,
     spotifyTokenAndSearch,
-    setNav,
     setSelectedItem,
     navigate,
   };

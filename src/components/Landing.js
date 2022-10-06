@@ -5,35 +5,26 @@ import "../styles/all.css";
 import { motion } from "framer-motion";
 
 const Landing = () => {
-  const { navigate, nav, setNav } = useContext(SearchContext);
+  const { navigate } = useContext(SearchContext);
   const hover = useRef(false);
 
-  const content = () => {
-    return (
-      <>
-        w<span className="me-1 pt-2 extraText fs-5">.hat</span>s
-        <span className="ms-2 extraText fs-5">.ong</span>
-      </>
-    );
-  };
-
   useEffect(() => {
+    const nav = document.getElementsByClassName("navClass")[0];
+
+    nav.classList.add("navClassAnimate");
+  }, []);
+
+  const handleClick = () => {
     const navBg = document.getElementsByClassName("navClass")[0];
     const wrapper = document.getElementsByClassName("wrapper")[0];
 
-    if (nav) {
-      navBg.classList.remove("navClassAnimate");
-      wrapper.classList.add("wrapperLoad");
-      const intervalId = setInterval(() => {
-        navigate("search");
-      }, 1000);
+    navBg.classList.remove("navClassAnimate");
+    wrapper.classList.add("wrapperLoad");
 
-      return () => {
-        clearInterval(intervalId);
-        setNav(false);
-      };
-    }
-  }, [nav]);
+    setTimeout(() => {
+      navigate("search");
+    }, 1000);
+  };
 
   const handleHover = () => {
     const icon = document.getElementsByClassName("spotify")[0];
@@ -53,11 +44,14 @@ const Landing = () => {
     }
   };
 
-  useEffect(() => {
-    const nav = document.getElementsByClassName("navClass")[0];
-
-    nav.classList.add("navClassAnimate");
-  }, []);
+  const content = () => {
+    return (
+      <>
+        w<span className="me-1 pt-2 extraText fs-5">.hat</span>s
+        <span className="ms-2 extraText fs-5">.ong</span>
+      </>
+    );
+  };
 
   return (
     <motion.main
@@ -77,7 +71,7 @@ const Landing = () => {
           <button
             onMouseEnter={() => handleHover()}
             onMouseLeave={() => handleHover()}
-            onClick={() => setNav(true)}
+            onClick={() => handleClick()}
             type="button"
             className="btn btn-outline-dark fs-4 rounded-pill p-3 px-5 startButton"
           >

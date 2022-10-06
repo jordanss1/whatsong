@@ -5,8 +5,7 @@ const SearchBar = () => {
   const {
     items,
     setPage,
-    focus,
-    setFocus,
+    focused,
     term,
     setTerm,
     setItems,
@@ -17,25 +16,8 @@ const SearchBar = () => {
   } = useContext(SearchContext);
 
   useEffect(() => {
-    const div1 = document.getElementsByClassName("listSearchDiv")[0];
+    focused.current = false;
 
-    if (focus === true) {
-      div1.classList.add("listSearchDivFocus");
-    } else {
-      div1.classList.remove("listSearchDivFocus");
-    }
-  }, [focus]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (term) {
-      setSubmittedTerm(term);
-      setTerm("");
-    }
-  };
-
-  useEffect(() => {
     if (typeString === "artist" && submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
       setSubmittedTerm("");
@@ -54,14 +36,35 @@ const SearchBar = () => {
     }
   }, [items]);
 
+  const handleFocus = () => {
+    const div1 = document.getElementsByClassName("listSearchDiv")[0];
+
+    focused.current = !focused.current;
+
+    if (focused.current === true) {
+      div1.classList.add("listSearchDivFocus");
+    } else {
+      div1.classList.remove("listSearchDivFocus");
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (term) {
+      setSubmittedTerm(term);
+      setTerm("");
+    }
+  };
+
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="ui input listSearchDiv">
       <input
         onFocus={() => {
-          setFocus(true);
+          handleFocus();
         }}
         onBlur={() => {
-          setFocus(false);
+          handleFocus();
         }}
         value={term}
         onChange={({ target }) => setTerm(target.value)}

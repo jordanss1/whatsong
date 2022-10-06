@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect } from "react";
 import NavBar from "./NavBar";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
@@ -23,12 +23,14 @@ const SearchList = () => {
 
   useEffect(() => {
     const nav = document.getElementsByClassName("navClass")[0];
+
+    setPage(1);
     nav.classList.add("navClassList");
 
-    if (JSON.parse(sessionStorage.getItem("artists"))) {
+    if (sessionStorage.getItem("artists")) {
       setTypeString("artist");
       setItems(JSON.parse(sessionStorage.getItem("artists")));
-    } else if (JSON.parse(sessionStorage.getItem("tracks"))) {
+    } else if (sessionStorage.getItem("tracks")) {
       setTypeString("track");
       setItems(JSON.parse(sessionStorage.getItem("tracks")));
     }
@@ -48,10 +50,6 @@ const SearchList = () => {
       setElements([33, 43]);
     }
   }, [page]);
-
-  useEffect(() => {
-    setPage(1);
-  }, []);
 
   const handleClick = () => {
     document
