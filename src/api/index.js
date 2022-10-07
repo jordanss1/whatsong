@@ -43,8 +43,15 @@ export const spotifyArtistAndAlbum = (id, state) => {
           )
         )
         .then((responses) => {
-          const data = [responses[0].data, responses[1].data.items];
+          const albums = [
+            ...new Map(
+              responses[1].data.items.map((item) => [item.name, item])
+            ).values(),
+          ];
+          const data = [responses[0].data, albums];
           console.log(data);
+          state(data);
+          sessionStorage.setItem("selectedItem", JSON.stringify(data));
         });
     });
 };
@@ -70,7 +77,6 @@ export const spotifyTokenAndSearch = (q, type, state) => {
           params: { q, type, limit: 40 },
         })
         .then(({ data }) => {
-          console.log(data);
           state(data[string].items);
         });
     });

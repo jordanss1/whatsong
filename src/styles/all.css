@@ -84,6 +84,14 @@
   overflow: hidden;
 }
 
+.artistPage {
+  grid-template-columns: 50% 50%;
+}
+
+.artistBg {
+
+}
+
 .mainDiv {
   background-color: black;
 }

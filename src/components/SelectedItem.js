@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
 import { motion } from "framer-motion";
 
@@ -7,6 +7,12 @@ const SelectedItem = () => {
     useContext(SearchContext);
 
   const classFlex = selectedItem ? "flex-column" : "";
+
+  useEffect(() => {
+    if (sessionStorage.getItem("selectedItem")) {
+      setSelectedItem(JSON.parse(sessionStorage.getItem("selectedItem")));
+    }
+  }, []);
 
   const durationConvert = (milliseconds) => {
     const seconds = Math.floor((milliseconds / 1000) % 60);
@@ -69,11 +75,47 @@ const SelectedItem = () => {
   };
 
   const renderArtist = () => {
-    return (
-      <main className="artistPage">
-        <h2>Artist</h2>
-      </main>
-    );
+    if (selectedItem) {
+      const { external_urls, name, followers, images } = selectedItem[0];
+      const styles = {
+        background: `linear-gradient(
+        to right,
+        rgb(0, 0, 0) 0%,
+        rgb(0, 0, 0, 0.8) 10%,
+        rgb(0, 0, 0, 0.5) 25%,
+        rgb(0, 0, 0, 0.5) 75%,
+        rgb(0, 0, 0, 0.8) 90%,
+        rgb(0, 0, 0) 100%),
+        linear-gradient(to top,
+          rgb(0, 0, 0) 0%,
+          rgb(0, 0, 0) 5%,
+        rgb(0, 0, 0, 0.7) 10%,
+        rgb(0, 0, 0, 0.2) 25%,
+        rgb(0, 0, 0, 0) 100%),
+        linear-gradient(to bottom,
+          rgb(0, 0, 0) 0%,
+          rgb(0, 0, 0) 5%,
+        rgb(0, 0, 0, 0.9) 10%,
+        rgb(0, 0, 0, 0.2) 25%,
+        rgb(0, 0, 0, 0) 100%),
+        url(${images[0].url}) no-repeat 0px/ 640px`,
+      };
+
+      return (
+        <main className="artistPage d-grid">
+          <section className="w-100 artistLeft d-flex justify-content-end">
+            <div className="artistBg w-100 h-100" style={styles}></div>
+          </section>
+          <section className="w-100">
+            {selectedItem[1].map(
+              ({ external_urls, images, name, release_date, total_tracks }) => {
+                return;
+              }
+            )}
+          </section>
+        </main>
+      );
+    }
   };
 
   return <>{typeString === "track" ? renderSong() : renderArtist()}</>;

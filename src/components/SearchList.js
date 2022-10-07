@@ -9,6 +9,7 @@ const SearchList = () => {
   const hidden = window.innerWidth < 900 ? true : false;
 
   const {
+    navigate,
     items,
     page,
     setPage,
@@ -53,7 +54,10 @@ const SearchList = () => {
   }, [page]);
 
   const handleProfileClick = (id) => {
-    spotifyArtistAndAlbum(id)
+    spotifyArtistAndAlbum(id, setSelectedItem);
+    setTimeout(() => {
+      navigate(`/artists/${id}`);
+    }, 1000);
   };
 
   const handlePageClick = () => {
