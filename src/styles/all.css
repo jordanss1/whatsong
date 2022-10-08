@@ -88,8 +88,35 @@
   grid-template-columns: 50% 50%;
 }
 
-.artistBg {
+.artistRight {
+  grid-template-rows: 25% 37% 37%;
+}
 
+hr {
+  color: white;
+}
+
+.artistHeading h1 {
+  font-family: "Barlow", sans-serif !important;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.632);
+}
+
+.artistHeading h2 {
+  font-family: "Barlow", sans-serif !important;
+  font-weight: 200;
+  color: white;
+}
+
+.artistHeading i {
+  position: relative;
+  bottom: 10px;
+  color: green;
+  cursor: pointer;
+}
+
+.vl {
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .mainDiv {

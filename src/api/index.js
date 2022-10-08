@@ -21,6 +21,7 @@ export const spotifyArtistAndAlbum = (id, state) => {
   const artistAndAlbum = [
     `https://api.spotify.com/v1/artists/${id}`,
     `https://api.spotify.com/v1/artists/${id}/albums?limit=6&include_groups=album`,
+    `https://api.spotify.com/v1/artists/${id}/top-tracks?market=US`,
   ];
 
   spotifyToken
@@ -43,15 +44,19 @@ export const spotifyArtistAndAlbum = (id, state) => {
           )
         )
         .then((responses) => {
+          console.log(responses);
           const albums = [
             ...new Map(
               responses[1].data.items.map((item) => [item.name, item])
             ).values(),
           ];
-          const data = [responses[0].data, albums];
-          console.log(data);
-          state(data);
-          sessionStorage.setItem("selectedItem", JSON.stringify(data));
+          const artist = responses[0].data;
+          const tracks = responses[2].data.tracks;
+          state[0](artist);
+          state[1](albums);
+          state[2](tracks);
+          const arr = [artist, albums, tracks];
+          sessionStorage.setItem("artist-details", JSON.stringify(arr));
         });
     });
 };

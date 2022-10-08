@@ -1,16 +1,17 @@
 import React, { useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
+import { gradient1 } from "../styles/inline";
 import { motion } from "framer-motion";
 
 const SelectedItem = () => {
-  const { selectedItem, setSelectedItem, typeString } =
+  const { selectedItem, setSelectedItem, artist, setArtist, typeString } =
     useContext(SearchContext);
 
   const classFlex = selectedItem ? "flex-column" : "";
 
   useEffect(() => {
-    if (sessionStorage.getItem("selectedItem")) {
-      setSelectedItem(JSON.parse(sessionStorage.getItem("selectedItem")));
+    if (sessionStorage.getItem("artist-details")) {
+      setArtist(JSON.parse(sessionStorage.getItem("artist-details"))[0]);
     }
   }, []);
 
@@ -75,43 +76,44 @@ const SelectedItem = () => {
   };
 
   const renderArtist = () => {
-    if (selectedItem) {
-      const { external_urls, name, followers, images } = selectedItem[0];
+    if (!artist) {
+      return (
+        <main className="artistPage d-grid">
+          <section className="w-100 artistLeft d-flex justify-content-end align-items-center">
+            <div class="ui active centered inline loader"></div>
+          </section>
+          <section className="w-100 h-100 d-grid artistRight">
+            <div className="d-flex flex-column align-items-center justify-content-end artistHeading">
+              <div class="ui active centered inline loader"></div>
+            </div>
+          </section>
+        </main>
+      );
+    } else {
+      const { external_urls, name, followers, images } = artist;
       const styles = {
-        background: `linear-gradient(
-        to right,
-        rgb(0, 0, 0) 0%,
-        rgb(0, 0, 0, 0.8) 10%,
-        rgb(0, 0, 0, 0.5) 25%,
-        rgb(0, 0, 0, 0.5) 75%,
-        rgb(0, 0, 0, 0.8) 90%,
-        rgb(0, 0, 0) 100%),
-        linear-gradient(to top,
-          rgb(0, 0, 0) 0%,
-          rgb(0, 0, 0) 5%,
-        rgb(0, 0, 0, 0.7) 10%,
-        rgb(0, 0, 0, 0.2) 25%,
-        rgb(0, 0, 0, 0) 100%),
-        linear-gradient(to bottom,
-          rgb(0, 0, 0) 0%,
-          rgb(0, 0, 0) 5%,
-        rgb(0, 0, 0, 0.9) 10%,
-        rgb(0, 0, 0, 0.2) 25%,
-        rgb(0, 0, 0, 0) 100%),
-        url(${images[0].url}) no-repeat 0px/ 640px`,
+        background: `${gradient1}
+        url(${images[0]?.url}) no-repeat 0px/ 640px`,
       };
-
       return (
         <main className="artistPage d-grid">
           <section className="w-100 artistLeft d-flex justify-content-end">
             <div className="artistBg w-100 h-100" style={styles}></div>
           </section>
-          <section className="w-100">
-            {selectedItem[1].map(
-              ({ external_urls, images, name, release_date, total_tracks }) => {
-                return;
-              }
-            )}
+          <section className="w-100 h-100 d-grid artistRight">
+            <div className="d-flex flex-column align-items-center justify-content-end artistHeading">
+              <h1 className="fs-1">{name}</h1>
+              <hr className="w-50 mt-2" />
+              <div className="d-flex flex-row w-75 justify-content-center ms-5">
+                <i
+                  title={external_urls.spotify}
+                  onClick={() => window.open(external_urls.spotify, "_blank")}
+                  className="spotify icon fs-1 pe-5 me-3"
+                ></i>
+                <div className="vl"></div>
+                <h2 className="fs-5 ps-4">{`${followers.total} followers`}</h2>
+              </div>
+            </div>
           </section>
         </main>
       );
