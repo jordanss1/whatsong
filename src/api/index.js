@@ -20,7 +20,7 @@ export const spotifyArtistAndAlbum = (id, state) => {
 
   const artistAndAlbum = [
     `https://api.spotify.com/v1/artists/${id}`,
-    `https://api.spotify.com/v1/artists/${id}/albums?limit=6&include_groups=album`,
+    `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album`,
     `https://api.spotify.com/v1/artists/${id}/top-tracks?market=US`,
   ];
 
@@ -44,12 +44,14 @@ export const spotifyArtistAndAlbum = (id, state) => {
           )
         )
         .then((responses) => {
-          console.log(responses);
-          const albums = [
+          let albums = [
             ...new Map(
               responses[1].data.items.map((item) => [item.name, item])
             ).values(),
           ];
+          albums =
+            albums.length === 0 ? { noAlbums: "no albums available" } : albums;
+          console.log(albums);
           const artist = responses[0].data;
           const tracks = responses[2].data.tracks;
           state[0](artist);

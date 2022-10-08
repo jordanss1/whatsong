@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import SearchContext from "../contexts/SearchStore";
 
 const Pages = () => {
-  const { setElements, setPage, page, items } = useContext(SearchContext);
+  const { setSlicedElements, setPage, page, items } = useContext(SearchContext);
 
   useEffect(() => {
     setPage(1);
@@ -10,16 +10,16 @@ const Pages = () => {
 
   useEffect(() => {
     if (page === 1) {
-      setElements([0, 10]);
+      setSlicedElements([0, 10]);
     }
     if (page === 2) {
-      setElements([11, 21]);
+      setSlicedElements([11, 21]);
     }
     if (page === 3) {
-      setElements([22, 32]);
+      setSlicedElements([22, 32]);
     }
     if (page === 4) {
-      setElements([33, 43]);
+      setSlicedElements([33, 43]);
     }
   }, [page]);
 

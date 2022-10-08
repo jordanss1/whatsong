@@ -4,8 +4,14 @@ import SearchBar from "./SearchBar";
 import { spotifyArtistAndAlbum } from "../api";
 
 const ArtistList = () => {
-  const { elements, items, navigate, setAlbums, setArtist, setTopTracks } =
-    useContext(SearchContext);
+  const {
+    slicedElements,
+    items,
+    navigate,
+    setAlbums,
+    setArtist,
+    setTopTracks,
+  } = useContext(SearchContext);
 
   const handleProfileClick = (id) => {
     spotifyArtistAndAlbum(id, [setArtist, setAlbums, setTopTracks]);
@@ -20,7 +26,7 @@ const ArtistList = () => {
       </div>
       <div className="d-sm-grid d-flex flex-column ms-2 align-items-center justify-content-md-center p-5 p-xl-0  artistGrid">
         {items
-          .slice(elements[0], elements[1])
+          .slice(slicedElements[0], slicedElements[1])
           .map(({ external_urls, name, images, id }, i) => {
             return (
               <div className="artistContainer" key={i}>

@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
+import ArtistAlbums from "./ArtistAlbums";
+import ArtistTopTracks from "./ArtistTopTracks";
 import { gradient1 } from "../styles/inline";
 import { motion } from "framer-motion";
 
@@ -93,7 +95,7 @@ const SelectedItem = () => {
       const { external_urls, name, followers, images } = artist;
       const styles = {
         background: `${gradient1}
-        url(${images[0]?.url}) no-repeat 0px/ 640px`,
+        url(${images[0]?.url}) no-repeat 40px/ 640px`,
       };
       return (
         <main className="artistPage d-grid">
@@ -101,9 +103,9 @@ const SelectedItem = () => {
             <div className="artistBg w-100 h-100" style={styles}></div>
           </section>
           <section className="w-100 h-100 d-grid artistRight">
-            <div className="d-flex flex-column align-items-center justify-content-end artistHeading">
+            <div className="d-flex flex-column align-items-center justify-content-center artistHeading">
               <h1 className="fs-1">{name}</h1>
-              <hr className="w-50 mt-2" />
+              <hr className="w-50 mt-1" />
               <div className="d-flex flex-row w-75 justify-content-center ms-5">
                 <i
                   title={external_urls.spotify}
@@ -111,9 +113,13 @@ const SelectedItem = () => {
                   className="spotify icon fs-1 pe-5 me-3"
                 ></i>
                 <div className="vl"></div>
-                <h2 className="fs-5 ps-4">{`${followers.total} followers`}</h2>
+                <h2 className="fs-5 pt-1 ps-4">{`${followers.total.toLocaleString(
+                  "US"
+                )} followers`}</h2>
               </div>
             </div>
+            <ArtistAlbums />
+            <ArtistTopTracks />
           </section>
         </main>
       );

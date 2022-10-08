@@ -11,31 +11,34 @@ export const SearchStore = ({ children }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [typeString, setTypeString] = useState("");
   const [page, setPage] = useState(1);
-  const [elements, setElements] = useState([0, 10]);
+  const [slicedElements, setSlicedElements] = useState([0, 10]);
   const [topTracks, setTopTracks] = useState(null);
   const [albums, setAlbums] = useState(null);
   const [artist, setArtist] = useState(null);
+  const [filteredElement, setFilteredElement] = useState(0);
 
   const focused = useRef(false);
 
   const navigate = useNavigate();
 
   const fullProviders = {
+    filteredElement,
     topTracks,
     artist,
     albums,
     focused,
-    elements,
+    slicedElements,
     page,
     typeString,
     term,
     selectedItem,
     submittedTerm,
     items,
+    setFilteredElement,
     setTopTracks,
     setArtist,
     setAlbums,
-    setElements,
+    setSlicedElements,
     setPage,
     setTypeString,
     setTerm,
