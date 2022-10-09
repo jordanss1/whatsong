@@ -1,8 +1,16 @@
 import React, { useContext, useEffect } from "react";
+import LeftArrow from "./Arrows/LeftArrow";
+import RightArrow from "./Arrows/RightArrow";
+import {
+  leftStyle,
+  leftDisabledStyle,
+  rightStyle,
+  rightDisabledStyle,
+} from "../styles/inline";
 import SearchContext from "../contexts/SearchStore";
 
 const ArtistAlbums = () => {
-  const { albums, setAlbums, filteredElement, setFilteredElement } =
+  const { albums, setAlbums, filteredAlbum, setFilteredAlbum } =
     useContext(SearchContext);
 
   useEffect(() => {
@@ -11,6 +19,34 @@ const ArtistAlbums = () => {
       setAlbums(JSON.parse(sessionStorage.getItem("artist-details"))[1]);
     }
   }, []);
+
+  const arrowProps = {
+    leftClick: () => setFilteredAlbum((prev) => prev - 1),
+    rightClick: () => setFilteredAlbum((prev) => prev + 1),
+  };
+
+  const renderLeftArrow = () => {
+    if (!albums) {
+      return <div class="ui active centered inline loader"></div>;
+    } else if (filteredAlbum === 0 || albums.noAlbums) {
+      return <LeftArrow style={leftDisabledStyle} />;
+    } else {
+      return <LeftArrow func={arrowProps.leftClick} style={leftStyle} />;
+    }
+  };
+
+  const renderRightArrow = () => {
+    if (!albums) {
+      return <div class="ui active centered inline loader"></div>;
+    } else if (
+      albums[filteredAlbum] === albums[albums.length - 1] ||
+      albums.noAlbums
+    ) {
+      return <RightArrow style={rightDisabledStyle} />;
+    } else {
+      return <RightArrow func={arrowProps.rightClick} style={rightStyle} />;
+    }
+  };
 
   const renderAlbums = () => {
     if (!albums) {
@@ -21,17 +57,17 @@ const ArtistAlbums = () => {
         <div className="content"></div>
       </div>;
     } else if (albums.noAlbums) {
-      return;
-    } else if (albums.length > 0) {
-      console.log(albums);
-      const { name, images } = albums[filteredElement];
+      return <h3 className="align-self-center">No albums</h3>;
+    } else if (albums.length > 0 && !albums.noAlbums) {
+      const { name, images } = albums[filteredAlbum];
+
       return (
         <div className="ui raised card albumCard">
           <div className="image d-flex justify-content-center pt-1 ps-1">
-            <img src={`${images[1].url}`} />
+            {images[1] ? <img src={`${images[1].url}`} /> : <h3>No image</h3>}
           </div>
           <div className="content d-flex align-items-center justify-content-center p-0">
-            <h3 className="header text-center w-100">{name}</h3>
+            <h3 className="header fs-5 text-center w-100 px-1">{name}</h3>
           </div>
         </div>
       );
@@ -39,14 +75,10 @@ const ArtistAlbums = () => {
   };
 
   return (
-    <section className="d-flex flex-row justify-content-center justify-content-evenly">
-      <div className="h-100 d-flex align-items-center">
-        <i className="left chevron icon  mb-5"></i>
-      </div>
+    <section className="d-flex flex-row justify-content-center justify-content-evenly mt-4">
+      {renderLeftArrow()}
       {renderAlbums()}
-      <div className="h-100 d-flex align-items-center">
-        <i className="right chevron icon align-self-center mb-5"></i>
-      </div>
+      {renderRightArrow()}
     </section>
   );
 };

@@ -44,16 +44,15 @@ export const spotifyArtistAndAlbum = (id, state) => {
           )
         )
         .then((responses) => {
+          const artist = responses[0].data;
+          let tracks = responses[2].data.tracks;
           let albums = [
             ...new Map(
               responses[1].data.items.map((item) => [item.name, item])
             ).values(),
           ];
-          albums =
-            albums.length === 0 ? { noAlbums: "no albums available" } : albums;
-          console.log(albums);
-          const artist = responses[0].data;
-          const tracks = responses[2].data.tracks;
+          albums = albums.length === 0 ? { noAlbums: "no albums" } : albums;
+          tracks = tracks.length === 0 ? { noTracks: "no tracks" } : tracks;
           state[0](artist);
           state[1](albums);
           state[2](tracks);

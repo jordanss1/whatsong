@@ -15,14 +15,16 @@ export const SearchStore = ({ children }) => {
   const [topTracks, setTopTracks] = useState(null);
   const [albums, setAlbums] = useState(null);
   const [artist, setArtist] = useState(null);
-  const [filteredElement, setFilteredElement] = useState(0);
+  const [filteredAlbum, setFilteredAlbum] = useState(0);
+  const [filteredTrack, setFilteredTrack] = useState(0);
 
   const focused = useRef(false);
 
   const navigate = useNavigate();
 
   const fullProviders = {
-    filteredElement,
+    filteredAlbum,
+    filteredTrack,
     topTracks,
     artist,
     albums,
@@ -34,7 +36,8 @@ export const SearchStore = ({ children }) => {
     selectedItem,
     submittedTerm,
     items,
-    setFilteredElement,
+    setFilteredAlbum,
+    setFilteredTrack,
     setTopTracks,
     setArtist,
     setAlbums,
