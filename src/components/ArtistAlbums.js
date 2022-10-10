@@ -14,15 +14,40 @@ const ArtistAlbums = () => {
     useContext(SearchContext);
 
   useEffect(() => {
+    setFilteredAlbum(0);
+
     if (sessionStorage.getItem("artist-details")) {
       console.log(JSON.parse(sessionStorage.getItem("artist-details")));
       setAlbums(JSON.parse(sessionStorage.getItem("artist-details"))[1]);
     }
   }, []);
 
-  const arrowProps = {
-    leftClick: () => setFilteredAlbum((prev) => prev - 1),
-    rightClick: () => setFilteredAlbum((prev) => prev + 1),
+  const handleRightArrow = () => {
+    const album = document.getElementsByClassName("albumCard")[0];
+    album.classList.add("rightClick");
+
+    setTimeout(() => {
+      if (filteredAlbum < albums.length - 2) {
+        setFilteredAlbum((prev) => prev + 1);
+      } else {
+        setFilteredAlbum(albums.length - 1);
+      }
+      album.classList.remove("rightClick");
+    }, 300);
+  };
+
+  const handleLeftArrow = () => {
+    const album = document.getElementsByClassName("albumCard")[0];
+    album.classList.add("leftClick");
+
+    setTimeout(() => {
+      if (filteredAlbum > 1) {
+        setFilteredAlbum((prev) => prev - 1);
+      } else {
+        setFilteredAlbum(0);
+      }
+      album.classList.remove("leftClick");
+    }, 300);
   };
 
   const renderLeftArrow = () => {
@@ -31,20 +56,17 @@ const ArtistAlbums = () => {
     } else if (filteredAlbum === 0 || albums.noAlbums) {
       return <LeftArrow style={leftDisabledStyle} />;
     } else {
-      return <LeftArrow func={arrowProps.leftClick} style={leftStyle} />;
+      return <LeftArrow func={handleLeftArrow} style={leftStyle} />;
     }
   };
 
   const renderRightArrow = () => {
     if (!albums) {
       return <div class="ui active centered inline loader"></div>;
-    } else if (
-      albums[filteredAlbum] === albums[albums.length - 1] ||
-      albums.noAlbums
-    ) {
+    } else if (filteredAlbum === albums.length - 1 || albums.noAlbums) {
       return <RightArrow style={rightDisabledStyle} />;
     } else {
-      return <RightArrow func={arrowProps.rightClick} style={rightStyle} />;
+      return <RightArrow func={handleRightArrow} style={rightStyle} />;
     }
   };
 
@@ -58,7 +80,7 @@ const ArtistAlbums = () => {
       </div>;
     } else if (albums.noAlbums) {
       return <h3 className="align-self-center">No albums</h3>;
-    } else if (albums.length > 0 && !albums.noAlbums) {
+    } else if (albums.length > 0 && !albums.noAlbums && albums[filteredAlbum]) {
       const { name, images } = albums[filteredAlbum];
 
       return (
@@ -75,7 +97,7 @@ const ArtistAlbums = () => {
   };
 
   return (
-    <section className="d-flex flex-row justify-content-center justify-content-evenly mt-4">
+    <section className="d-flex flex-row justify-content-center justify-content-evenly pt-4">
       {renderLeftArrow()}
       {renderAlbums()}
       {renderRightArrow()}

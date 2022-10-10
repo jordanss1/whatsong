@@ -86,6 +86,11 @@
 
 .artistPage {
   grid-template-columns: 50% 50%;
+  height: 100vh;
+}
+
+.artistPageOneColumn {
+  height: 100vh;
 }
 
 .artistRight {
@@ -122,7 +127,11 @@ hr {
 .albumCard {
   width: 185px !important;
   height: 200px;
+  position: relative;
+  left: 0;
+  right: 0;
   box-shadow: 2px 2px 2px 2px rgba(255, 255, 255) !important;
+  transition: 0.5s;
 }
 
 .albumCard img {
@@ -141,6 +150,49 @@ hr {
   white-space: nowrap !important;
 }
 
+.rightClick {
+  animation: right-click 400ms;
+}
+
+@keyframes right-click {
+  0% {
+    left: 0;
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0;
+    left: 70;
+  }
+  100% {
+    opacity: 0;
+    left: 90px;
+  }
+}
+
+.leftClick {
+  animation: left-click 400ms;
+}
+
+@keyframes left-click {
+  0% {
+    left: 0;
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.2;
+  }
+  50% {
+    left: -70px;
+  }
+  100% {
+    opacity: 0;
+    left: -90px;
+  }
+}
+
 .arrows {
   cursor: pointer;
   width: 100px;
@@ -151,6 +203,10 @@ hr {
   cursor: pointer;
   width: 45px;
   transition: 0.5s;
+}
+
+.smallArrowDiv {
+  width: 35%;
 }
 
 .leftArrow {
@@ -172,9 +228,7 @@ hr {
   );
   border: 5px solid rgb(26, 26, 26) !important;
   border-radius: 10px;
-  position: absolute;
   height: 45px;
-  right: 500px;
   transition: 0.5s;
 }
 
@@ -198,8 +252,6 @@ hr {
   border: 5px solid rgb(26, 26, 26) !important;
   border-radius: 10px;
   height: 45px;
-  position: absolute;
-  left: 1135px;
   transition: 0.5s;
 }
 
@@ -235,8 +287,6 @@ hr {
 
 .leftSmallArrow:hover {
   border: 1px solid rgb(26, 26, 26) !important;
-  position: absolute;
-  right: 500px;
 }
 
 .rightArrow:hover {
@@ -275,7 +325,7 @@ hr {
     rgba(255, 255, 255, 0) 30%,
     rgba(255, 255, 255, 0.155) 100%
   );
-  border: 35px solid black !important;
+  border: 35px solid rgb(0, 0, 0) !important;
   border-radius: 40px;
   cursor: default !important;
 }
@@ -288,8 +338,7 @@ hr {
   );
   border: 7px solid rgb(26, 26, 26) !important;
   border-radius: 13px;
-  position: absolute;
-  right: 500px;
+
   transition: 0.5s;
   cursor: default !important;
 }
@@ -323,9 +372,7 @@ hr {
   );
   border: 7px solid rgb(26, 26, 26) !important;
   border-radius: 10px;
-  position: absolute;
   width: 30px;
-  left: 1160px;
   transition: 0.5s;
   cursor: default !important;
 }
@@ -766,10 +813,6 @@ hr {
   height: 100%;
   color: rgb(210, 210, 210) !important;
   text-decoration: none !important;
-}
-
-.artistPage {
-  height: 100vh;
 }
 
 @media screen and (max-width: 1200px) {

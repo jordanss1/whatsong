@@ -1,15 +1,24 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import SearchContext from "../contexts/SearchStore";
 import ArtistAlbums from "./ArtistAlbums";
 import ArtistTopTracks from "./ArtistTopTracks";
-import { gradient1 } from "../styles/inline";
-import { motion } from "framer-motion";
+import { gradient1, gradient2, gradient3 } from "../styles/inline";
 
 const SelectedItem = () => {
   const { selectedItem, setSelectedItem, artist, setArtist, typeString } =
     useContext(SearchContext);
 
+  const section = useRef();
+
   const classFlex = selectedItem ? "flex-column" : "";
+
+  const noImageOrResponsive = "artistPageOneColumn d-flex flex-column";
+
+  const responsiveFunc = (image) => {
+    if (!image || window.innerWidth < 992) {
+      return "d-none";
+    }
+  };
 
   useEffect(() => {
     if (sessionStorage.getItem("artist-details")) {
@@ -93,16 +102,40 @@ const SelectedItem = () => {
       );
     } else {
       const { external_urls, name, followers, images } = artist;
+
       const styles = {
-        background: `${gradient1}
-        url(${images[0]?.url}) no-repeat 40px/ 640px`,
+        background: `${
+          window.innerWidth > 992
+            ? `${gradient1} url(${images[0]?.url})`
+            : `${window.innerHeight < 1000 ? gradient2 : gradient3} url(${
+                images[1]?.url
+              })`
+        }
+         no-repeat ${
+           window.innerWidth > 992
+             ? "50px"
+             : `center ${window.innerHeight > 1000 ? "230px" : "130px"}`
+         }/ ${window.innerWidth > 992 ? "640px" : "300px"}`,
       };
+
       return (
-        <main className="artistPage d-grid">
-          <section className="w-100 artistLeft d-flex justify-content-end">
+        <main
+          className={`${
+            !images[0]?.url || window.innerWidth < 992
+              ? noImageOrResponsive
+              : "artistPage d-grid"
+          } `}
+          style={window.innerWidth < 992 ? styles : {}}
+        >
+          <section
+            className={`w-100 artistLeft ${responsiveFunc(
+              images[0]?.url
+            )} d-flex
+             justify-content-end`}
+          >
             <div className="artistBg w-100 h-100" style={styles}></div>
           </section>
-          <section className="w-100 h-100 d-grid artistRight">
+          <section ref={section} className="w-100 h-100 d-grid artistRight">
             <div className="d-flex flex-column align-items-center justify-content-center artistHeading">
               <h1 className="fs-1">{name}</h1>
               <hr className="w-50 mt-1" />
@@ -119,7 +152,7 @@ const SelectedItem = () => {
               </div>
             </div>
             <ArtistAlbums />
-            <ArtistTopTracks />
+            <ArtistTopTracks section={section} />
           </section>
         </main>
       );
