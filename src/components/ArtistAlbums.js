@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import Loader from "./Loader";
 import LeftArrow from "./Arrows/LeftArrow";
 import RightArrow from "./Arrows/RightArrow";
 import {
@@ -54,7 +55,7 @@ const ArtistAlbums = () => {
 
   const renderLeftArrow = () => {
     if (!albums) {
-      return <div class="ui active centered inline loader"></div>;
+      <Loader />;
     } else if (filteredAlbum === 0 || albums.noAlbums) {
       return <LeftArrow style={leftDisabledStyle} />;
     } else {
@@ -64,7 +65,7 @@ const ArtistAlbums = () => {
 
   const renderRightArrow = () => {
     if (!albums) {
-      return <div class="ui active centered inline loader"></div>;
+      <Loader />;
     } else if (filteredAlbum === albums.length - 1 || albums.noAlbums) {
       return <RightArrow style={rightDisabledStyle} />;
     } else {
@@ -76,7 +77,7 @@ const ArtistAlbums = () => {
     if (!albums) {
       <div className="ui raised centered card albumCard">
         <div className="image">
-          <div class="ui active centered inline loader"></div>
+          <Loader />
         </div>
         <div className="content"></div>
       </div>;

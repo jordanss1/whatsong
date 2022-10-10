@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
 import ArtistAlbums from "./ArtistAlbums";
 import ArtistTopTracks from "./ArtistTopTracks";
+import Loader from "./Loader";
 import { gradient1, gradient2, gradient3 } from "../styles/inline";
 
 const SelectedItem = () => {
@@ -89,11 +90,11 @@ const SelectedItem = () => {
       return (
         <main className="artistPage d-grid">
           <section className="w-100 artistLeft d-flex justify-content-end align-items-center">
-            <div class="ui active centered inline loader"></div>
+            <Loader />
           </section>
           <section className="w-100 h-100 d-grid artistRight">
             <div className="d-flex flex-column align-items-center justify-content-end artistHeading">
-              <div class="ui active centered inline loader"></div>
+              <Loader />
             </div>
           </section>
         </main>

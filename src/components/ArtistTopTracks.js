@@ -37,7 +37,7 @@ const ArtistTopTracks = () => {
         </div>
       );
     } else if (topTracks.noTracks) {
-      <h3>No tracks</h3>;
+      return <h3>No tracks</h3>;
     } else if (topTracks.length > 0 && !topTracks.noTracks) {
       const { album, name } = topTracks[filteredTrack];
 
