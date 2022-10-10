@@ -26,28 +26,30 @@ const ArtistAlbums = () => {
     const album = document.getElementsByClassName("albumCard")[0];
     album.classList.add("rightClick");
 
+    if (filteredAlbum < albums.length - 2) {
+      setFilteredAlbum((prev) => prev + 1);
+    } else {
+      setFilteredAlbum(albums.length - 1);
+    }
+
     setTimeout(() => {
-      if (filteredAlbum < albums.length - 2) {
-        setFilteredAlbum((prev) => prev + 1);
-      } else {
-        setFilteredAlbum(albums.length - 1);
-      }
       album.classList.remove("rightClick");
-    }, 300);
+    }, 220);
   };
 
   const handleLeftArrow = () => {
     const album = document.getElementsByClassName("albumCard")[0];
     album.classList.add("leftClick");
 
+    if (filteredAlbum > 1) {
+      setFilteredAlbum((prev) => prev - 1);
+    } else {
+      setFilteredAlbum(0);
+    }
+
     setTimeout(() => {
-      if (filteredAlbum > 1) {
-        setFilteredAlbum((prev) => prev - 1);
-      } else {
-        setFilteredAlbum(0);
-      }
       album.classList.remove("leftClick");
-    }, 300);
+    }, 220);
   };
 
   const renderLeftArrow = () => {

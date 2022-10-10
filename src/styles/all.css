@@ -185,11 +185,12 @@ hr {
     opacity: 0.2;
   }
   50% {
+    opacity: 0;
     left: -70px;
   }
   100% {
     opacity: 0;
-    left: -90px;
+    left: -70px;
   }
 }
 
