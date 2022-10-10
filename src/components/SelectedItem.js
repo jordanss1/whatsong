@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
 import ArtistAlbums from "./ArtistAlbums";
 import ArtistTopTracks from "./ArtistTopTracks";
@@ -7,8 +7,6 @@ import { gradient1, gradient2, gradient3 } from "../styles/inline";
 const SelectedItem = () => {
   const { selectedItem, setSelectedItem, artist, setArtist, typeString } =
     useContext(SearchContext);
-
-  const section = useRef();
 
   const classFlex = selectedItem ? "flex-column" : "";
 
@@ -135,7 +133,7 @@ const SelectedItem = () => {
           >
             <div className="artistBg w-100 h-100" style={styles}></div>
           </section>
-          <section ref={section} className="w-100 h-100 d-grid artistRight">
+          <section className="w-100 h-100 d-grid artistRight">
             <div className="d-flex flex-column align-items-center justify-content-center artistHeading">
               <h1 className="fs-1">{name}</h1>
               <hr className="w-50 mt-1" />
@@ -152,7 +150,7 @@ const SelectedItem = () => {
               </div>
             </div>
             <ArtistAlbums />
-            <ArtistTopTracks section={section} />
+            <ArtistTopTracks />
           </section>
         </main>
       );

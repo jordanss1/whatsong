@@ -4,7 +4,7 @@ export const gradient1 =
 export const gradient2 =
   "linear-gradient(to right, rgb(0, 0, 0) 30%, rgb(0, 0, 0, 0.4) 40%, rgb(0, 0, 0, 0.4) 60%, rgb(0, 0, 0, 1) 70%),linear-gradient(to top, rgb(0, 0, 0) 17%, rgb(0, 0, 0, 0.8) 37%, rgb(0, 0, 0, 0) 50%),linear-gradient(to bottom,rgb(0, 0, 0) 19%, rgb(0, 0, 0, 0.2) 30%, rgb(0, 0, 0, 0) 60%, rgb(0, 0, 0, 0) 100%),";
 
-  export const gradient3 =
+export const gradient3 =
   "linear-gradient(to right, rgb(0, 0, 0) 32%, rgb(0, 0, 0, 0.4) 40%, rgb(0, 0, 0, 0.4) 50%, rgb(0, 0, 0) 67%),linear-gradient(to top, rgb(0, 0, 0) 45%, rgb(0, 0, 0, 0.6 ) 50%, rgb(0, 0, 0, 0) 70%),linear-gradient(to bottom,rgb(0, 0, 0) 19%, rgb(0, 0, 0, 0.2) 30%, rgb(0, 0, 0, 0) 60%, rgb(0, 0, 0, 0) 100%),";
 
 export const leftStyle =

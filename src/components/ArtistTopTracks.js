@@ -9,7 +9,7 @@ import {
 } from "../styles/inline";
 import SearchContext from "../contexts/SearchStore";
 
-const ArtistTopTracks = ({ section }) => {
+const ArtistTopTracks = () => {
   const { topTracks, setTopTracks, filteredTrack, setFilteredTrack } =
     useContext(SearchContext);
 
@@ -20,26 +20,6 @@ const ArtistTopTracks = ({ section }) => {
       setTopTracks(JSON.parse(sessionStorage.getItem("artist-details"))[2]);
     }
   }, []);
-
-  const handleRightArrow = () => {
-    const album = document.getElementsByClassName("albumCard")[0];
-    album.classList.add("rightClick");
-
-    setTimeout(() => {
-      setFilteredTrack((prev) => prev + 1);
-      album.classList.remove("rightClick");
-    }, 300);
-  };
-
-  const handleLeftArrow = () => {
-    const album = document.getElementsByClassName("albumCard")[0];
-    album.classList.add("leftClick");
-
-    setTimeout(() => {
-      setFilteredTrack((prev) => prev - 1);
-      album.classList.remove("leftClick");
-    }, 300);
-  };
 
   const arrowProps = {
     leftClick: () => setFilteredTrack((prev) => prev - 1),
@@ -60,12 +40,9 @@ const ArtistTopTracks = ({ section }) => {
       <h3>No tracks</h3>;
     } else if (topTracks.length > 0 && !topTracks.noTracks) {
       const { album, name } = topTracks[filteredTrack];
-      console.log(section.current);
-      const width = section.current.clientWidth > 700 ? "w-50" : "w-75";
+
       return (
-        <div
-          className={`item d-flex topTrackItem justify-content-center align-items-center p-1 ${width}`}
-        >
+        <div className="item d-flex topTrackItem justify-content-center align-items-center w-50 p-1">
           <div className="d-flex justify-content-start smallArrowDiv">
             {filteredTrack === 0 ? (
               <LeftArrow style={leftSmallDisabled} />
