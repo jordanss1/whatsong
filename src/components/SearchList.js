@@ -43,7 +43,7 @@ const SearchList = () => {
       setTypeString("artist");
       setItems(JSON.parse(sessionStorage.getItem("artists")));
       setAnimateStateSearch({
-        initial: { opacity: 0, x: 300 },
+        initial: { opacity: 0.5, x: 300 },
         exit: { opacity: 0, x: 300 },
       });
       setAnimateStateList({

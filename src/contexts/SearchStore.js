@@ -18,7 +18,7 @@ export const SearchStore = ({ children }) => {
   const [filteredAlbum, setFilteredAlbum] = useState(0);
   const [filteredTrack, setFilteredTrack] = useState(0);
   const [animateStateSearch, setAnimateStateSearch] = useState({
-    initial: { opacity: 0, y: 100 },
+    initial: { opacity: 0.5, y: 100 },
     exit: { opacity: 0, y: 0 },
   });
   const [animateStateList, setAnimateStateList] = useState({
