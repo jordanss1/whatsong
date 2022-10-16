@@ -8,9 +8,14 @@ const Landing = () => {
   const { navigate } = useContext(SearchContext);
   const hover = useRef(false);
 
+  const animations = {
+    initial: { opacity: 0.5, y: 0 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -200 },
+  };
+
   useEffect(() => {
     const nav = document.getElementsByClassName("navClass")[0];
-
     nav.classList.add("navClassAnimate");
   }, []);
 
@@ -55,14 +60,10 @@ const Landing = () => {
 
   return (
     <motion.main
-      initial={{
-        position: "relative",
-        top: "900px",
-        opacity: 0,
-        transition: { duration: 1 },
-      }}
-      animate={{ top: "0px", opacity: 1, transition: { duration: 0.5 } }}
-      exit={{ top: "900px", opacity: 1, transition: { duration: 0.5 } }}
+      variants={animations}
+      initial="initial"
+      animate="animate"
+      exit="exit"
       className="landingContainer d-flex flex-column"
     >
       <NavBar content={content} />

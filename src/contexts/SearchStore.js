@@ -17,12 +17,22 @@ export const SearchStore = ({ children }) => {
   const [artist, setArtist] = useState(null);
   const [filteredAlbum, setFilteredAlbum] = useState(0);
   const [filteredTrack, setFilteredTrack] = useState(0);
+  const [animateStateSearch, setAnimateStateSearch] = useState({
+    initial: { opacity: 0, y: 100 },
+    exit: { opacity: 0, y: 0 },
+  });
+  const [animateStateList, setAnimateStateList] = useState({
+    initial: { x: -300, opacity: 0 },
+    exit: { x: -300, opacity: 0 },
+  });
 
   const focused = useRef(false);
 
   const navigate = useNavigate();
 
   const fullProviders = {
+    animateStateSearch,
+    animateStateList,
     filteredAlbum,
     filteredTrack,
     topTracks,
@@ -36,6 +46,8 @@ export const SearchStore = ({ children }) => {
     selectedItem,
     submittedTerm,
     items,
+    setAnimateStateList,
+    setAnimateStateSearch,
     setFilteredAlbum,
     setFilteredTrack,
     setTopTracks,

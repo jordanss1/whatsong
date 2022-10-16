@@ -10,7 +10,9 @@ const NavBar = ({ content }) => {
     <>
       <header className="navClass d-flex justify-content-center">
         <NavLink
-          onClick={() => setTerm("")}
+          onClick={() => {
+            setTerm("");
+          }}
           className="text-uppercase"
           to="/search"
         >

@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 
 const Search = () => {
   const {
+    animateStateSearch,
     focused,
     typeString,
     setTypeString,
     term,
+    setAnimateStateSearch,
     setTerm,
     setSubmittedTerm,
     submittedTerm,
@@ -16,6 +18,12 @@ const Search = () => {
     items,
     navigate,
   } = useContext(SearchContext);
+
+  const animations = {
+    initial: (animateStateSearch) => ({ ...animateStateSearch.initial }),
+    animate: { opacity: 1, y: 0, x: 0 },
+    exit: (animateStateSearch) => ({ ...animateStateSearch.exit }),
+  };
 
   useEffect(() => {
     const container = document.getElementsByClassName("searchContainer")[0];
@@ -30,6 +38,10 @@ const Search = () => {
   useEffect(() => {
     focused.current = false;
     sessionStorage.clear();
+    setAnimateStateSearch({
+      initial: { opacity: 0.5, y: 100 },
+      exit: { opacity: 0, y: 0 },
+    });
   }, []);
 
   useEffect(() => {
@@ -43,15 +55,19 @@ const Search = () => {
   }, [submittedTerm]);
 
   useEffect(() => {
-    if (typeString === "artist" && submittedTerm) {
-      setSubmittedTerm("");
-      sessionStorage.setItem("artists", JSON.stringify(items));
-      navigate("/artists");
-    } else if (typeString === "track" && submittedTerm) {
-      setSubmittedTerm("");
-      sessionStorage.setItem("tracks", JSON.stringify(items));
-      navigate("/songs");
-    }
+    const timerID = setTimeout(() => {
+      if (typeString === "artist" && submittedTerm) {
+        setSubmittedTerm("");
+        sessionStorage.setItem("artists", JSON.stringify(items));
+        navigate("/artists");
+      } else if (typeString === "track" && submittedTerm) {
+        setSubmittedTerm("");
+        sessionStorage.setItem("tracks", JSON.stringify(items));
+        navigate("/songs");
+      }
+    }, 200);
+
+    return () => clearTimeout(timerID);
   }, [items]);
 
   const handleFocus = () => {
@@ -68,14 +84,12 @@ const Search = () => {
 
   return (
     <motion.main
-      initial={{
-        position: "relative",
-        bottom: "800px",
-        opacity: 0.5,
-        transition: { duration: 0.5 },
-      }}
-      animate={{ top: "0px", opacity: 1, transition: { duration: 0.5 } }}
-      exit={{ top: "1000px", opacity: 0, transition: { duration: 0.5 } }}
+      variants={animations}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      custom={animateStateSearch}
+      transition={{ duration: 0.1 }}
       className="searchContainer container-fluid d-flex align-items-center"
     >
       <form
@@ -103,9 +117,13 @@ const Search = () => {
             onClick={() => {
               setTypeString("artist");
               setSubmittedTerm(term);
+              setAnimateStateSearch({
+                initial: { opacity: 0, x: 300 },
+                exit: { opacity: 0, x: 300 },
+              });
             }}
             type="button"
-            className="btn btn-outline-dark submitButtons fs-4 rounded-3 me-3 p-2 px-4 "
+            className="btn btn-outline-dark submitButtons fs-4 rounded-3 me-3 p-1 px-3 "
           >
             Artists
           </button>
@@ -114,9 +132,13 @@ const Search = () => {
             onClick={() => {
               setTypeString("track");
               setSubmittedTerm(term);
+              setAnimateStateSearch({
+                initial: { opacity: 0, x: -300 },
+                exit: { opacity: 0, x: -300 },
+              });
             }}
             type="button"
-            className="btn btn-outline-dark submitButtons fs-4 rounded-3 p-2 px-4 "
+            className="btn btn-outline-dark submitButtons fs-4 rounded-3 p-1 px-3 "
           >
             Songs
           </button>

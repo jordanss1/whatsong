@@ -8,6 +8,7 @@ const ArtistList = () => {
     slicedElements,
     items,
     navigate,
+    setAnimateStateList,
     setAlbums,
     setArtist,
     setTopTracks,
@@ -15,7 +16,13 @@ const ArtistList = () => {
 
   const handleProfileClick = (id) => {
     spotifyArtistAndAlbum(id, [setArtist, setAlbums, setTopTracks]);
-    navigate(`/artists/${id}`);
+    setAnimateStateList({
+      initial: { x: 300, opacity: 0 },
+      exit: { x: 300, opacity: 0 },
+    });
+    setTimeout(() => {
+      navigate(`/artists/${id}`);
+    }, 200);
   };
 
   return (
@@ -24,7 +31,7 @@ const ArtistList = () => {
         <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Artists</h2>
         <SearchBar />
       </div>
-      <div className="d-sm-grid d-flex flex-column ms-2 align-items-center justify-content-md-center p-5 p-xl-0  artistGrid">
+      <div className="d-sm-grid d-flex flex-column ms-2 align-items-center justify-content-md-center p-5 p-xl-0 artistGrid">
         {items
           .slice(slicedElements[0], slicedElements[1])
           .map(({ external_urls, name, images, id }, i) => {

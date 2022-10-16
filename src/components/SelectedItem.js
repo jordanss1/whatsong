@@ -6,8 +6,14 @@ import Loader from "./Loader";
 import { gradient1, gradient2, gradient3 } from "../styles/inline";
 
 const SelectedItem = () => {
-  const { selectedItem, setSelectedItem, artist, setArtist, typeString } =
-    useContext(SearchContext);
+  const {
+    selectedItem,
+    setSelectedItem,
+    artist,
+    setArtist,
+    typeString,
+    navigate,
+  } = useContext(SearchContext);
 
   const classFlex = selectedItem ? "flex-column" : "";
 
@@ -136,6 +142,12 @@ const SelectedItem = () => {
           </section>
           <section className="w-100 h-100 d-grid artistRight">
             <div className="d-flex flex-column align-items-center justify-content-center artistHeading">
+              <div className="w-100 d-flex justify-content-end pe-5 pb-2">
+                <i
+                  onClick={() => navigate("artists")}
+                  className="window close outline icon iconRed fs-1"
+                ></i>
+              </div>
               <h1 className="fs-1">{name}</h1>
               <hr className="w-50 mt-1" />
               <div className="d-flex flex-row w-75 justify-content-center ms-5">

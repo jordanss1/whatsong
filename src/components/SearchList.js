@@ -9,8 +9,29 @@ import Pages from "./Pages";
 import { motion } from "framer-motion";
 
 const SearchList = () => {
-  const { items, selectedItem, setTypeString, setItems, typeString } =
-    useContext(SearchContext);
+  const {
+    items,
+    animateStateList,
+    selectedItem,
+    setTypeString,
+    setItems,
+    typeString,
+    setAnimateStateList,
+    setAnimateStateSearch,
+  } = useContext(SearchContext);
+
+  let animations = [
+    {
+      initial: (animateStateList) => ({ ...animateStateList.initial }),
+      animate: { x: 0, opacity: 1 },
+      exit: (animateStateList) => ({ ...animateStateList.exit }),
+    },
+    {
+      initial: { x: 300, opacity: 0 },
+      animate: { x: 0, opacity: 1 },
+      exit: { x: 300, opacity: 0 },
+    },
+  ];
 
   useEffect(() => {
     const nav = document.getElementsByClassName("navClass")[0];
@@ -21,9 +42,21 @@ const SearchList = () => {
     if (sessionStorage.getItem("artists")) {
       setTypeString("artist");
       setItems(JSON.parse(sessionStorage.getItem("artists")));
+      setAnimateStateSearch({
+        initial: { opacity: 0, x: 300 },
+        exit: { opacity: 0, x: 300 },
+      });
+      setAnimateStateList({
+        initial: { x: -300, opacity: 0 },
+        exit: { x: -300, opacity: 0 },
+      });
     } else if (sessionStorage.getItem("tracks")) {
       setTypeString("track");
       setItems(JSON.parse(sessionStorage.getItem("tracks")));
+      setAnimateStateSearch({
+        initial: { opacity: 0, x: -300 },
+        exit: { opacity: 0, x: -300 },
+      });
     }
   }, []);
 
@@ -118,16 +151,14 @@ const SearchList = () => {
 
   return (
     <motion.main
-      initial={{
-        position: "relative",
-        top: "500px",
-        opacity: 0,
-        transition: { duration: 0.5 },
-      }}
-      id="main"
-      animate={{ top: "0px", opacity: 1, transition: { duration: 0.5 } }}
-      exit={{ top: "500px", opacity: 0, transition: { duration: 1 } }}
+      variants={typeString === "artist" ? animations[0] : animations[1]}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      custom={animateStateList}
+      transition={{ duration: 0.2 }}
       style={items.length === 0 ? { height: "100vh" } : {}}
+      id="main"
       className={`${
         typeString === "artist"
           ? "artistWholeListContainer d-flex flex-column px-1"
