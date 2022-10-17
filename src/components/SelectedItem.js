@@ -3,6 +3,7 @@ import SearchContext from "../contexts/SearchStore";
 import ArtistAlbums from "./ArtistAlbums";
 import ArtistTopTracks from "./ArtistTopTracks";
 import Loader from "./Loader";
+import { motion } from "framer-motion";
 import { gradient1, gradient2, gradient3 } from "../styles/inline";
 
 const SelectedItem = () => {
@@ -24,6 +25,12 @@ const SelectedItem = () => {
     if (!image || window.innerWidth < 992) {
       return "d-none";
     }
+  };
+
+  const animations = {
+    initial: { opacity: 0, x: -300 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -300 },
   };
 
   useEffect(() => {
@@ -129,7 +136,12 @@ const SelectedItem = () => {
       };
 
       return (
-        <main
+        <motion.main
+          variants={animations}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.2 }}
           className={`${
             !images[0]?.url || window.innerWidth < 992
               ? noImageOrResponsive
@@ -170,7 +182,7 @@ const SelectedItem = () => {
             <ArtistAlbums />
             <ArtistTopTracks />
           </section>
-        </main>
+        </motion.main>
       );
     }
   };

@@ -37,6 +37,8 @@ const Pages = () => {
     >
       <div className="d-flex justify-content-center justify-content-between pages w-75 fs-1">
         <p
+          style={page === 1 ? { cursor: "default" } : { cursor: "pointer" }}
+          hidden={items.length < 11}
           onClick={() => {
             setPage(1);
             handlePageClick();
@@ -45,7 +47,8 @@ const Pages = () => {
           1
         </p>
         <p
-          hidden={Boolean(items.length < 11)}
+          style={page === 2 ? { cursor: "default" } : { cursor: "pointer" }}
+          hidden={items.length < 11}
           onClick={() => {
             setPage(2);
             handlePageClick();
@@ -54,7 +57,8 @@ const Pages = () => {
           2
         </p>
         <p
-          hidden={Boolean(items.length < 21)}
+          style={page === 3 ? { cursor: "default" } : { cursor: "pointer" }}
+          hidden={items.length < 21}
           onClick={() => {
             setPage(3);
             handlePageClick();
@@ -63,7 +67,8 @@ const Pages = () => {
           3
         </p>
         <p
-          hidden={Boolean(items.length < 31)}
+          style={page === 4 ? { cursor: "default" } : { cursor: "pointer" }}
+          hidden={items.length < 31}
           onClick={() => {
             setPage(4);
             handlePageClick();
