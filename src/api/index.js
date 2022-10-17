@@ -83,7 +83,11 @@ export const spotifyTokenAndSearch = (q, type, state) => {
           params: { q, type, limit: 40 },
         })
         .then(({ data }) => {
-          state(data[string].items);
+          state(
+            data[string].items.length === 0
+              ? { noItems: "noItems" }
+              : data[string].items
+          );
         });
     });
 };

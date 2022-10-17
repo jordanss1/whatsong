@@ -21,7 +21,7 @@ const SongList = () => {
               className="ui middle aligned selection divided list d-flex justify-content-center trackItemContainer"
             >
               <div className="item trackItem border rounded-3 p-3">
-                <div className="right floated content">
+                <div className="right floated content d-flex align-items-center">
                   <div
                     hidden={hidden}
                     onClick={() => setSelectedItem(item)}

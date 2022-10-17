@@ -66,7 +66,7 @@ const SelectedItem = () => {
         <div
           className={`selectedDiv d-flex align-items-center ${classFlex} justify-content-evenly`}
         >
-          <div className="w-100 d-flex justify-content-end align-items-center mt-2">
+          <div className="w-100 d-flex justify-content-end align-items-center mt-2 pb-3">
             <i
               onClick={() => setSelectedItem(null)}
               className="window close outline icon iconRed fs-4"

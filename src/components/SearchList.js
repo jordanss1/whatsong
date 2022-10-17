@@ -6,6 +6,7 @@ import SelectedItem from "./SelectedItem";
 import ArtistList from "./ArtistList";
 import SongList from "./SongList";
 import Pages from "./Pages";
+import Loader from "./Loader";
 import { motion } from "framer-motion";
 
 const SearchList = () => {
@@ -79,7 +80,7 @@ const SearchList = () => {
   };
 
   const renderSongs = () => {
-    if (items.length === 0) {
+    if (items.noItems) {
       return (
         <motion.section
           initial={{
@@ -98,6 +99,23 @@ const SearchList = () => {
           </div>
         </motion.section>
       );
+    } else if (items.length === 0) {
+      <motion.section
+        initial={{
+          opacity: 0,
+        }}
+        animate={{ opacity: 1, transition: { duration: 2 } }}
+        exit={{ opacity: 0, transition: { duration: 0.5 } }}
+        className="w-100 d-flex flex-column align-items-center justify-content-between justify-content-center pt-4 noResultsSong"
+      >
+        <div className="d-flex align-items-center justify-content-center justify-content-between  flex-column flex-xl-row noResultsSearch border rounded-3">
+          <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Songs</h2>
+          <SearchBar />
+        </div>
+        <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0">
+          <Loader />
+        </div>
+      </motion.section>;
     } else if (items.length > 0) {
       return (
         <section
@@ -111,9 +129,9 @@ const SearchList = () => {
       );
     }
   };
-
+  console.log(items);
   const renderArtists = () => {
-    if (items.length === 0) {
+    if (items.noItems) {
       return (
         <motion.section
           initial={{
@@ -129,6 +147,25 @@ const SearchList = () => {
           </div>
           <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0 artistGrid">
             <h3>No results found</h3>
+          </div>
+        </motion.section>
+      );
+    } else if (items.length === 0) {
+      return (
+        <motion.section
+          initial={{
+            opacity: 0,
+          }}
+          animate={{ opacity: 1, transition: { duration: 2 } }}
+          exit={{ opacity: 0, transition: { duration: 0.5 } }}
+          className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center pt-4"
+        >
+          <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row noResultsSearch border rounded-3">
+            <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Artists</h2>
+            <SearchBar />
+          </div>
+          <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0 artistGrid">
+            <Loader />
           </div>
         </motion.section>
       );
@@ -162,9 +199,7 @@ const SearchList = () => {
       className={`${
         typeString === "artist"
           ? "artistWholeListContainer d-flex flex-column px-1"
-          : `songWholeListContainer ${
-              items.length === 0 ? "d-flex flex-column" : "d-grid"
-            }`
+          : `songWholeListContainer ${items.length > 0 ? "d-grid" : ""}`
       } container-fluid `}
     >
       <NavBar content={content} />

@@ -57,7 +57,6 @@ const Search = () => {
 
   useEffect(() => {
     if (typeString === "artist" && submittedTerm) {
-      console.log(animateStateSearch);
       setSubmittedTerm("");
       sessionStorage.setItem("artists", JSON.stringify(items));
       navigate("/artists");
@@ -90,8 +89,8 @@ const Search = () => {
       custom={animateStateSearch}
       className="searchContainer container-fluid d-flex flex-column justify-content-center align-items-center"
     >
-      <div className="instructionsDiv d-flex flex-column justify-content-center w-25">
-        <h1 className="text-center fs-4">Search artist or songs</h1>
+      <div className="instructionsDiv d-flex flex-column justify-content-center p-4">
+        <h1 className="text-center fs-4">Search artists or songs</h1>
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}

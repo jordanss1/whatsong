@@ -18,7 +18,6 @@ const ArtistAlbums = () => {
     setFilteredAlbum(0);
 
     if (sessionStorage.getItem("artist-details")) {
-      console.log(JSON.parse(sessionStorage.getItem("artist-details")));
       setAlbums(JSON.parse(sessionStorage.getItem("artist-details"))[1]);
     }
   }, []);
