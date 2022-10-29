@@ -80,34 +80,44 @@
   }
   20% {
     top: 0;
-    left: 0;
     opacity: 1;
-    height: 70px;
+  }
+  50% {
+    opacity: 0;
+    width: 262px;
+    height: 30px;
+  }
+  70% {
+    width: 200px;
+    height: 0;
   }
   100% {
-    top: 40px;
+    width: 0;
+    height: 0;
+    top: 0px;
     opacity: 0;
-    left: 300px;
+    left: 70px;
   }
 }
 
 .wholeForm {
-  margin-bottom: 0;
+  position: relative;
+  bottom: 0;
 }
 
 .wholeFormMoved {
-  animation: margin 1s forwards;
+  animation: bottom 1s forwards;
 }
 
-@keyframes margin {
+@keyframes bottom {
   0% {
-    margin-bottom: 0;
+    bottom: 0;
   }
   20% {
-    margin-bottom: 10px;
+    bottom: 10px;
   }
   100% {
-    margin-bottom: 100px;
+    bottom: 40px;
   }
 }
 
@@ -864,6 +874,12 @@ hr {
   color: rgb(210, 210, 210) !important;
   text-decoration: none !important;
 }
+@media screen and (max-width: 1280px) {
+  .arrows {
+    height: 70% !important;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .songWholeListContainer {
     padding: 0px;

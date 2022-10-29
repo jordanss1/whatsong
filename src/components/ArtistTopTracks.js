@@ -29,10 +29,10 @@ const ArtistTopTracks = () => {
   const renderTopTracks = () => {
     if (!topTracks) {
       return (
-        <div class="ui placeholder">
-          <div class="header">
-            <div class="line"></div>
-            <div class="line"></div>
+        <div className="ui placeholder">
+          <div className="header">
+            <div className="line"></div>
+            <div className="line"></div>
           </div>
         </div>
       );

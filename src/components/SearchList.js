@@ -129,7 +129,6 @@ const SearchList = () => {
       );
     }
   };
-  console.log(items);
   const renderArtists = () => {
     if (items.noItems) {
       return (

@@ -124,15 +124,15 @@ const SelectedItem = () => {
         background: `${
           window.innerWidth > 992
             ? `${gradient1} url(${images[0]?.url})`
-            : `${window.innerHeight < 1000 ? gradient2 : gradient3} url(${
-                images[1]?.url
+            : `${window.innerHeight < 1025 ? gradient2 : gradient3} url(${
+                images[0]?.url
               })`
         }
          no-repeat ${
            window.innerWidth > 992
              ? "50px"
              : `center ${window.innerHeight > 1000 ? "230px" : "130px"}`
-         }/ ${window.innerWidth > 992 ? "640px" : "300px"}`,
+         }/ ${window.innerWidth > 992 ? "640px" : "400px"}`,
       };
 
       return (
