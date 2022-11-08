@@ -1,6 +1,7 @@
 import React, { createContext, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { spotifyTokenAndSearch, spotifyArtistAndAlbum } from "../api";
+import { useAnimateSearchManager, useAnimateListManager } from "./AnimateState";
 
 const SearchContext = createContext();
 
@@ -17,11 +18,15 @@ export const SearchStore = ({ children }) => {
   const [artist, setArtist] = useState(null);
   const [filteredAlbum, setFilteredAlbum] = useState(0);
   const [filteredTrack, setFilteredTrack] = useState(0);
-  const [animateStateSearch, setAnimateStateSearch] = useState({
-    initial: { opacity: 0.5, y: 100 },
-    exit: { opacity: 0, y: 0 },
-  });
-  const [animateStateList, setAnimateStateList] = useState({
+
+  const { animateStateSearch, setAnimateStateSearch } = useAnimateSearchManager(
+    {
+      initial: { opacity: 0.5, y: 100 },
+      exit: { opacity: 0, y: 0 },
+    }
+  );
+
+  const { animateStateList, setAnimateStateList } = useAnimateListManager({
     initial: { x: -300, opacity: 0 },
     exit: { x: -300, opacity: 0 },
   });

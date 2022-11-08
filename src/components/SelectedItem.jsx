@@ -36,10 +36,7 @@ const SelectedItem = () => {
   useEffect(() => {
     if (sessionStorage.getItem("artist-details")) {
       setArtist(JSON.parse(sessionStorage.getItem("artist-details"))[0]);
-      setAnimateStateList({
-        initial: { x: 300, opacity: 0 },
-        exit: { x: 300, opacity: 0 },
-      });
+      setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
     }
   }, []);
 

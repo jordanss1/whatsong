@@ -16,10 +16,7 @@ const ArtistList = () => {
 
   const handleProfileClick = (id) => {
     spotifyArtistAndAlbum(id, [setArtist, setAlbums, setTopTracks]);
-    setAnimateStateList({
-      initial: { x: 300, opacity: 0 },
-      exit: { x: 300, opacity: 0 },
-    });
+    setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
     setTimeout(() => {
       navigate(`/artists/${id}`);
     }, 200);

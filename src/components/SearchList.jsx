@@ -43,21 +43,12 @@ const SearchList = () => {
     if (sessionStorage.getItem("artists")) {
       setTypeString("artist");
       setItems(JSON.parse(sessionStorage.getItem("artists")));
-      setAnimateStateSearch({
-        initial: { opacity: 0.5, x: 300 },
-        exit: { opacity: 0, x: 300 },
-      });
-      setAnimateStateList({
-        initial: { x: -300, opacity: 0 },
-        exit: { x: -300, opacity: 0 },
-      });
+      setAnimateStateSearch({ opacity: 0.5, x: 300 }, { opacity: 0, x: 300 });
+      setAnimateStateList({ x: -300, opacity: 0 }, { x: -300, opacity: 0 });
     } else if (sessionStorage.getItem("tracks")) {
       setTypeString("track");
       setItems(JSON.parse(sessionStorage.getItem("tracks")));
-      setAnimateStateSearch({
-        initial: { opacity: 0, x: -300 },
-        exit: { opacity: 0, x: -300 },
-      });
+      setAnimateStateSearch({ opacity: 0, x: -300 }, { opacity: 0, x: -300 });
     }
   }, []);
 

@@ -29,10 +29,7 @@ const Search = () => {
     focused.current = false;
     sessionStorage.clear();
 
-    setAnimateStateSearch({
-      initial: { opacity: 0.5, y: 300 },
-      exit: { opacity: 0, y: 0 },
-    });
+    setAnimateStateSearch({ opacity: 0.5, y: 300 }, { opacity: 0, y: 0 });
   }, []);
 
   useEffect(() => {
@@ -117,10 +114,10 @@ const Search = () => {
             onClick={() => {
               setTypeString("artist");
               setSubmittedTerm(term);
-              setAnimateStateSearch({
-                initial: { opacity: 0.5, x: 300 },
-                exit: { opacity: 0, x: 300 },
-              });
+              setAnimateStateSearch(
+                { opacity: 0.5, x: 300 },
+                { opacity: 0, x: 300 }
+              );
             }}
             type="button"
             className="btn btn-outline-dark submitButtons fs-4 rounded-3 me-3 p-1 px-3 "
@@ -132,10 +129,10 @@ const Search = () => {
             onClick={() => {
               setTypeString("track");
               setSubmittedTerm(term);
-              setAnimateStateSearch({
-                initial: { opacity: 0, x: -300 },
-                exit: { opacity: 0, x: -300 },
-              });
+              setAnimateStateSearch(
+                { opacity: 0, x: -300 },
+                { opacity: 0, x: -300 }
+              );
             }}
             type="button"
             className="btn btn-outline-dark submitButtons fs-4 rounded-3 p-1 px-3 "
