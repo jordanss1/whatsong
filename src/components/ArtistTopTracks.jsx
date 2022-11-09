@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useMemo } from "react";
 import RightArrow from "./Arrows/RightArrow";
 import LeftArrow from "./Arrows/LeftArrow";
 import {
@@ -10,15 +10,11 @@ import {
 import SearchContext from "../contexts/SearchStore";
 
 const ArtistTopTracks = () => {
-  const { topTracks, setTopTracks, filteredTrack, setFilteredTrack } =
+  const { topTracks, filteredTrack, setFilteredTrack } =
     useContext(SearchContext);
 
   useEffect(() => {
     setFilteredTrack(0);
-
-    if (sessionStorage.getItem("artist-details")) {
-      setTopTracks(JSON.parse(sessionStorage.getItem("artist-details"))[2]);
-    }
   }, []);
 
   const arrowProps = {
@@ -26,7 +22,7 @@ const ArtistTopTracks = () => {
     rightClick: () => setFilteredTrack((prev) => prev + 1),
   };
 
-  const renderTopTracks = () => {
+  const renderTopTracks = useCallback(() => {
     if (!topTracks) {
       return (
         <div className="ui placeholder">
@@ -71,13 +67,13 @@ const ArtistTopTracks = () => {
         </div>
       );
     }
-  };
+  }, [filteredTrack]);
 
   return (
     <section className="d-flex align-items-center justify-content-center flex-column topTrackContainer">
       <h2 className="fs-2">Top tracks</h2>
       <hr className="w-25 mt-1" />
-      {renderTopTracks()}
+      {useMemo(() => renderTopTracks(), [filteredTrack])}
     </section>
   );
 };

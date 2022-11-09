@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useMemo } from "react";
 import SearchContext from "../contexts/SearchStore";
 import ArtistAlbums from "./ArtistAlbums";
 import ArtistTopTracks from "./ArtistTopTracks";
@@ -11,7 +11,7 @@ const SelectedItem = () => {
     selectedItem,
     setSelectedItem,
     artist,
-    setArtist,
+    setProfile,
     typeString,
     navigate,
     setAnimateStateList,
@@ -35,20 +35,26 @@ const SelectedItem = () => {
 
   useEffect(() => {
     if (sessionStorage.getItem("artist-details")) {
-      setArtist(JSON.parse(sessionStorage.getItem("artist-details"))[0]);
+      const [artist, albums, topTracks] = JSON.parse(
+        sessionStorage.getItem("artist-details")
+      );
+      setProfile(artist, albums, topTracks);
       setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
     }
   }, []);
 
-  const durationConvert = (milliseconds) => {
-    const seconds = Math.floor((milliseconds / 1000) % 60);
-    const minutes = Math.floor((milliseconds / 1000 / 60) % 60);
+  const durationConvert = useCallback(
+    (milliseconds) => {
+      const seconds = Math.floor((milliseconds / 1000) % 60);
+      const minutes = Math.floor((milliseconds / 1000 / 60) % 60);
 
-    return [
-      minutes.toString().padStart(2, "0"),
-      seconds.toString().padStart(2, "0"),
-    ].join(":");
-  };
+      return [
+        minutes.toString().padStart(2, "0"),
+        seconds.toString().padStart(2, "0"),
+      ].join(":");
+    },
+    [selectedItem]
+  );
 
   const renderSong = () => {
     if (!selectedItem) {
@@ -100,7 +106,7 @@ const SelectedItem = () => {
     }
   };
 
-  const renderArtist = () => {
+  const renderArtist = useCallback(() => {
     if (!artist) {
       return (
         <main className="artistPage d-grid">
@@ -182,7 +188,7 @@ const SelectedItem = () => {
         </motion.main>
       );
     }
-  };
+  }, [setProfile, artist]);
 
   return <>{typeString === "track" ? renderSong() : renderArtist()}</>;
 };

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useMemo } from "react";
 import Loader from "./Loader";
 import LeftArrow from "./Arrows/LeftArrow";
 import RightArrow from "./Arrows/RightArrow";
@@ -11,15 +11,10 @@ import {
 import SearchContext from "../contexts/SearchStore";
 
 const ArtistAlbums = () => {
-  const { albums, setAlbums, filteredAlbum, setFilteredAlbum } =
-    useContext(SearchContext);
+  const { albums, filteredAlbum, setFilteredAlbum } = useContext(SearchContext);
 
   useEffect(() => {
     setFilteredAlbum(0);
-
-    if (sessionStorage.getItem("artist-details")) {
-      setAlbums(JSON.parse(sessionStorage.getItem("artist-details"))[1]);
-    }
   }, []);
 
   const handleRightArrow = () => {
@@ -32,11 +27,11 @@ const ArtistAlbums = () => {
       } else {
         setFilteredAlbum(albums.length - 1);
       }
-    }, 80);
+    }, 100);
 
     setTimeout(() => {
       album.classList.remove("rightClick");
-    }, 220);
+    }, 200);
   };
 
   const handleLeftArrow = () => {
@@ -56,7 +51,7 @@ const ArtistAlbums = () => {
     }, 220);
   };
 
-  const renderLeftArrow = () => {
+  const renderLeftArrow = useCallback(() => {
     if (!albums) {
       <Loader />;
     } else if (filteredAlbum === 0 || albums.noAlbums) {
@@ -64,9 +59,9 @@ const ArtistAlbums = () => {
     } else {
       return <LeftArrow func={handleLeftArrow} style={leftStyle} />;
     }
-  };
+  }, [filteredAlbum]);
 
-  const renderRightArrow = () => {
+  const renderRightArrow = useCallback(() => {
     if (!albums) {
       <Loader />;
     } else if (filteredAlbum === albums.length - 1 || albums.noAlbums) {
@@ -74,9 +69,9 @@ const ArtistAlbums = () => {
     } else {
       return <RightArrow func={handleRightArrow} style={rightStyle} />;
     }
-  };
+  }, [filteredAlbum]);
 
-  const renderAlbums = () => {
+  const renderAlbums = useCallback(() => {
     if (!albums) {
       <div className="ui raised centered card albumCard">
         <div className="image">
@@ -100,7 +95,7 @@ const ArtistAlbums = () => {
         </div>
       );
     }
-  };
+  }, [filteredAlbum]);
 
   return (
     <section className="d-flex flex-row justify-content-center justify-content-evenly pt-4">

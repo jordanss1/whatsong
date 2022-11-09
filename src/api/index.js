@@ -45,19 +45,23 @@ export const spotifyArtistAndAlbum = (id, state) => {
         )
         .then((responses) => {
           const artist = responses[0].data;
-          let tracks = responses[2].data.tracks;
+          let topTracks = responses[2].data.tracks;
           let albums = [
             ...new Map(
               responses[1].data.items.map((item) => [item.name, item])
             ).values(),
           ];
+
           albums = albums.length === 0 ? { noAlbums: "no albums" } : albums;
-          tracks = tracks.length === 0 ? { noTracks: "no tracks" } : tracks;
-          state[0](artist);
-          state[1](albums);
-          state[2](tracks);
-          const arr = [artist, albums, tracks];
-          sessionStorage.setItem("artist-details", JSON.stringify(arr));
+
+          topTracks =
+            topTracks.length === 0 ? { noTracks: "no tracks" } : topTracks;
+
+          state(artist, albums, topTracks);
+          sessionStorage.setItem(
+            "artist-details",
+            JSON.stringify([artist, albums, topTracks])
+          );
         });
     });
 };

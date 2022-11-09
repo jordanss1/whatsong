@@ -1,7 +1,11 @@
 import React, { createContext, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { spotifyTokenAndSearch, spotifyArtistAndAlbum } from "../api";
-import { useAnimateSearchManager, useAnimateListManager } from "./AnimateState";
+import {
+  useAnimateSearchManager,
+  useAnimateListManager,
+} from "./AnimateStateHooks";
+import { useArtistResults } from "./SearchResultHooks";
 
 const SearchContext = createContext();
 
@@ -13,9 +17,6 @@ export const SearchStore = ({ children }) => {
   const [typeString, setTypeString] = useState("");
   const [page, setPage] = useState(1);
   const [slicedElements, setSlicedElements] = useState([0, 10]);
-  const [topTracks, setTopTracks] = useState(null);
-  const [albums, setAlbums] = useState(null);
-  const [artist, setArtist] = useState(null);
   const [filteredAlbum, setFilteredAlbum] = useState(0);
   const [filteredTrack, setFilteredTrack] = useState(0);
 
@@ -30,6 +31,13 @@ export const SearchStore = ({ children }) => {
     initial: { x: -300, opacity: 0 },
     exit: { x: -300, opacity: 0 },
   });
+
+  const { artist, albums, topTracks, setProfile, deleteProfile } =
+    useArtistResults({
+      artist: null,
+      albums: null,
+      tracks: null,
+    });
 
   const focused = useRef(false);
 
@@ -55,9 +63,8 @@ export const SearchStore = ({ children }) => {
     setAnimateStateSearch,
     setFilteredAlbum,
     setFilteredTrack,
-    setTopTracks,
-    setArtist,
-    setAlbums,
+    setProfile,
+    deleteProfile,
     setSlicedElements,
     setPage,
     setTypeString,

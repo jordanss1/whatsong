@@ -34,7 +34,7 @@ const SearchBar = () => {
     } else if (typeString === "track") {
       sessionStorage.setItem("tracks", JSON.stringify(items));
     }
-  }, [items]);
+  }, [items, typeString]);
 
   const handleFocus = () => {
     const div1 = document.getElementsByClassName("listSearchDiv")[0];

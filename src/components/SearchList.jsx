@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useCallback, useMemo } from "react";
 import NavBar from "./NavBar";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
@@ -52,7 +52,7 @@ const SearchList = () => {
     }
   }, []);
 
-  const content = () => {
+  const content = useMemo(() => {
     return (
       <div className="d-flex listNavbar">
         <div className="text-lowercase">
@@ -68,9 +68,9 @@ const SearchList = () => {
         </div>
       </div>
     );
-  };
+  }, [typeString]);
 
-  const renderSongs = () => {
+  const renderSongs = useCallback(() => {
     if (items.noItems) {
       return (
         <motion.section
@@ -119,8 +119,9 @@ const SearchList = () => {
         </section>
       );
     }
-  };
-  const renderArtists = () => {
+  }, [items]);
+
+  const renderArtists = useCallback(() => {
     if (items.noItems) {
       return (
         <motion.section
@@ -174,7 +175,7 @@ const SearchList = () => {
         </motion.section>
       );
     }
-  };
+  }, [items]);
 
   return (
     <motion.main

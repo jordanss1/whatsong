@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
 import { spotifyArtistAndAlbum } from "../api";
@@ -8,19 +8,21 @@ const ArtistList = () => {
     slicedElements,
     items,
     navigate,
+    setProfile,
+    deleteProfile,
+    artist,
     setAnimateStateList,
-    setAlbums,
-    setArtist,
-    setTopTracks,
   } = useContext(SearchContext);
 
-  const handleProfileClick = (id) => {
-    spotifyArtistAndAlbum(id, [setArtist, setAlbums, setTopTracks]);
+  const handleProfileClick = useCallback((id) => {
+    spotifyArtistAndAlbum(id, setProfile);
     setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
-    setTimeout(() => {
-      navigate(`/artists/${id}`);
-    }, 200);
-  };
+    navigate(`/artists/${id}`);
+  }, []);
+
+  useEffect(() => {
+    deleteProfile();
+  }, []);
 
   return (
     <>
@@ -40,7 +42,11 @@ const ArtistList = () => {
                       <h3>No image</h3>
                     </div>
                   ) : (
-                    <div style={{ cursor: "pointer" }} className="image pb-0">
+                    <div
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleProfileClick(id)}
+                      className="image pb-0"
+                    >
                       <img
                         className="artistImage p-1"
                         src={images ? images[0].url : ""}

@@ -19,6 +19,7 @@ const Search = () => {
     navigate,
   } = useContext(SearchContext);
 
+
   const animations = {
     initial: (animateStateSearch) => ({ ...animateStateSearch.initial }),
     animate: { opacity: 1, y: 0, x: 0 },

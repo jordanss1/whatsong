@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useCallback } from "react";
 import SearchContext from "../contexts/SearchStore";
 
 const Pages = () => {
@@ -7,6 +7,13 @@ const Pages = () => {
   useEffect(() => {
     setPage(1);
   }, []);
+
+  const handlePageClick = useCallback(() => {
+    if (window.innerWidth < 992)
+      document
+        .getElementsByClassName("artistGrid")[0]
+        .scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
 
   useEffect(() => {
     if (page === 1) {
@@ -22,12 +29,6 @@ const Pages = () => {
       setSlicedElements([33, 43]);
     }
   }, [page]);
-
-  const handlePageClick = () => {
-    document
-      .getElementsByClassName("artistGrid")[0]
-      .scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <div
