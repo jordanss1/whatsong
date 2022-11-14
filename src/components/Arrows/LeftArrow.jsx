@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 const LeftArrow = ({ func, style }) => {
   return (
@@ -8,4 +8,4 @@ const LeftArrow = ({ func, style }) => {
   );
 };
 
-export default LeftArrow;
+export default memo(LeftArrow);

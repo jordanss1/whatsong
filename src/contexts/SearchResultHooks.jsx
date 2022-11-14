@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useReducer, useMemo } from "react";
 
 export const useArtistResults = (initialState) => {
   const [items, dispatch] = useReducer((state, action) => {
@@ -33,7 +33,7 @@ export const useArtistResults = (initialState) => {
     dispatch({ type: "DELETE" });
   });
 
-  const { artist, albums, topTracks } = items;
+  const { artist, albums, topTracks } = useMemo(() => items, [items]);
 
   return { artist, albums, topTracks, setProfile, deleteProfile };
 };

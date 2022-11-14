@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
 import { spotifyArtistAndAlbum } from "../api";
@@ -10,15 +10,14 @@ const ArtistList = () => {
     navigate,
     setProfile,
     deleteProfile,
-    artist,
     setAnimateStateList,
   } = useContext(SearchContext);
 
-  const handleProfileClick = useCallback((id) => {
+  const handleProfileClick = (id) => {
     spotifyArtistAndAlbum(id, setProfile);
     setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
     navigate(`/artists/${id}`);
-  }, []);
+  };
 
   useEffect(() => {
     deleteProfile();

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useCallback, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, memo } from "react";
 import NavBar from "./NavBar";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
@@ -21,18 +21,20 @@ const SearchList = () => {
     setAnimateStateSearch,
   } = useContext(SearchContext);
 
-  let animations = [
-    {
-      initial: (animateStateList) => ({ ...animateStateList.initial }),
-      animate: { x: 0, opacity: 1 },
-      exit: (animateStateList) => ({ ...animateStateList.exit }),
-    },
-    {
-      initial: { x: 300, opacity: 0 },
-      animate: { x: 0, opacity: 1 },
-      exit: { x: 300, opacity: 0 },
-    },
-  ];
+  let animations = useMemo(() => {
+    return [
+      {
+        initial: (animateStateList) => ({ ...animateStateList.initial }),
+        animate: { x: 0, opacity: 1 },
+        exit: (animateStateList) => ({ ...animateStateList.exit }),
+      },
+      {
+        initial: { x: 300, opacity: 0 },
+        animate: { x: 0, opacity: 1 },
+        exit: { x: 300, opacity: 0 },
+      },
+    ];
+  }, [animateStateList]);
 
   useEffect(() => {
     const nav = document.getElementsByClassName("navClass")[0];
@@ -52,7 +54,7 @@ const SearchList = () => {
     }
   }, []);
 
-  const content = useMemo(() => {
+  const content = () => {
     return (
       <div className="d-flex listNavbar">
         <div className="text-lowercase">
@@ -68,9 +70,9 @@ const SearchList = () => {
         </div>
       </div>
     );
-  }, [typeString]);
+  };
 
-  const renderSongs = useCallback(() => {
+  const renderSongs = () => {
     if (items.noItems) {
       return (
         <motion.section
@@ -114,14 +116,14 @@ const SearchList = () => {
             selectedItem ? "containerAnimate" : ""
           } w-100 d-grid selectedContainer`}
         >
-          <SelectedItem />
+          <SelectedItem selectedItem={selectedItem} />
           <SongList />
         </section>
       );
     }
-  }, [items]);
+  };
 
-  const renderArtists = useCallback(() => {
+  const renderArtists = () => {
     if (items.noItems) {
       return (
         <motion.section
@@ -175,7 +177,7 @@ const SearchList = () => {
         </motion.section>
       );
     }
-  }, [items]);
+  };
 
   return (
     <motion.main

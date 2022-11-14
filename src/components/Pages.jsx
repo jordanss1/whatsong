@@ -1,19 +1,19 @@
-import React, { useEffect, useContext, useCallback } from "react";
+import React, { useEffect, useContext } from "react";
 import SearchContext from "../contexts/SearchStore";
 
 const Pages = () => {
-  const { setSlicedElements, setPage, page, items } = useContext(SearchContext);
+  const { setSlicedElements, page, setPage, items } = useContext(SearchContext);
 
   useEffect(() => {
     setPage(1);
   }, []);
 
-  const handlePageClick = useCallback(() => {
+  const handlePageClick = () => {
     if (window.innerWidth < 992)
       document
         .getElementsByClassName("artistGrid")[0]
         .scrollTo({ top: 0, behavior: "smooth" });
-  }, [page]);
+  };
 
   useEffect(() => {
     if (page === 1) {

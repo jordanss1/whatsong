@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useMemo } from "react";
+import React, { useEffect, memo, useCallback } from "react";
 import Loader from "./Loader";
 import LeftArrow from "./Arrows/LeftArrow";
 import RightArrow from "./Arrows/RightArrow";
@@ -8,70 +8,51 @@ import {
   rightStyle,
   rightDisabledStyle,
 } from "../styles/inline";
-import SearchContext from "../contexts/SearchStore";
 
-const ArtistAlbums = () => {
-  const { albums, filteredAlbum, setFilteredAlbum } = useContext(SearchContext);
-
+const ArtistAlbums = ({ albums, setFilteredAlbum, filteredAlbum }) => {
   useEffect(() => {
     setFilteredAlbum(0);
   }, []);
 
-  const handleRightArrow = () => {
+  const handleClick = (classString, func) => {
     const album = document.getElementsByClassName("albumCard")[0];
-    album.classList.add("rightClick");
-
-    setTimeout(() => {
-      if (filteredAlbum < albums.length - 2) {
-        setFilteredAlbum((prev) => prev + 1);
-      } else {
-        setFilteredAlbum(albums.length - 1);
-      }
-    }, 100);
-
-    setTimeout(() => {
-      album.classList.remove("rightClick");
-    }, 200);
+    album.classList.add(`${classString}`);
+    setTimeout(() => setFilteredAlbum(func), 100);
+    setTimeout(() => album.classList.remove(`${classString}`), 200);
   };
 
-  const handleLeftArrow = () => {
-    const album = document.getElementsByClassName("albumCard")[0];
-    album.classList.add("leftClick");
-
-    setTimeout(() => {
-      if (filteredAlbum > 1) {
-        setFilteredAlbum((prev) => prev - 1);
-      } else {
-        setFilteredAlbum(0);
-      }
-    }, 180);
-
-    setTimeout(() => {
-      album.classList.remove("leftClick");
-    }, 220);
+  const arrowProps = {
+    leftClick: useCallback(
+      () => handleClick("leftClick", (prev) => prev - 1),
+      []
+    ),
+    rightClick: useCallback(
+      () => handleClick("rightClick", (prev) => prev + 1),
+      []
+    ),
   };
 
-  const renderLeftArrow = useCallback(() => {
+  const renderLeftArrow = () => {
     if (!albums) {
       <Loader />;
     } else if (filteredAlbum === 0 || albums.noAlbums) {
       return <LeftArrow style={leftDisabledStyle} />;
     } else {
-      return <LeftArrow func={handleLeftArrow} style={leftStyle} />;
+      return <LeftArrow func={arrowProps.leftClick} style={leftStyle} />;
     }
-  }, [filteredAlbum]);
+  };
 
-  const renderRightArrow = useCallback(() => {
+  const renderRightArrow = () => {
     if (!albums) {
       <Loader />;
     } else if (filteredAlbum === albums.length - 1 || albums.noAlbums) {
       return <RightArrow style={rightDisabledStyle} />;
     } else {
-      return <RightArrow func={handleRightArrow} style={rightStyle} />;
+      return <RightArrow func={arrowProps.rightClick} style={rightStyle} />;
     }
-  }, [filteredAlbum]);
+  };
 
-  const renderAlbums = useCallback(() => {
+  const renderAlbums = () => {
     if (!albums) {
       <div className="ui raised centered card albumCard">
         <div className="image">
@@ -95,10 +76,10 @@ const ArtistAlbums = () => {
         </div>
       );
     }
-  }, [filteredAlbum]);
+  };
 
   return (
-    <section className="d-flex flex-row justify-content-center justify-content-evenly pt-4">
+    <section className="d-flex flex-row justify-content-center justify-content-evenly">
       {renderLeftArrow()}
       {renderAlbums()}
       {renderRightArrow()}
@@ -106,4 +87,4 @@ const ArtistAlbums = () => {
   );
 };
 
-export default ArtistAlbums;
+export default memo(ArtistAlbums);

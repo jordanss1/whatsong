@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useMemo } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
 import ArtistAlbums from "./ArtistAlbums";
 import ArtistTopTracks from "./ArtistTopTracks";
@@ -11,6 +11,12 @@ const SelectedItem = () => {
     selectedItem,
     setSelectedItem,
     artist,
+    albums,
+    filteredTrack,
+    topTracks,
+    filteredAlbum,
+    setFilteredAlbum,
+    setFilteredTrack,
     setProfile,
     typeString,
     navigate,
@@ -18,8 +24,6 @@ const SelectedItem = () => {
   } = useContext(SearchContext);
 
   const classFlex = selectedItem ? "flex-column" : "";
-
-  const noImageOrResponsive = "artistPageOneColumn d-flex flex-column";
 
   const responsiveFunc = (image) => {
     if (!image || window.innerWidth < 992) {
@@ -106,7 +110,7 @@ const SelectedItem = () => {
     }
   };
 
-  const renderArtist = useCallback(() => {
+  const renderArtist = () => {
     if (!artist) {
       return (
         <main className="artistPage d-grid">
@@ -147,7 +151,7 @@ const SelectedItem = () => {
           transition={{ duration: 0.2 }}
           className={`${
             !images[0]?.url || window.innerWidth < 992
-              ? noImageOrResponsive
+              ? "artistPageOneColumn d-flex flex-column"
               : "artistPage d-grid"
           } `}
           style={window.innerWidth < 992 ? styles : {}}
@@ -162,7 +166,7 @@ const SelectedItem = () => {
           </section>
           <section className="w-100 h-100 d-grid artistRight">
             <div className="d-flex flex-column align-items-center justify-content-center artistHeading">
-              <div className="w-100 d-flex justify-content-end pe-5 pb-2">
+              <div className="w-100 d-flex justify-content-end pe-5">
                 <i
                   onClick={() => navigate("artists")}
                   className="window close outline icon iconRed fs-1"
@@ -182,13 +186,21 @@ const SelectedItem = () => {
                 )} followers`}</h2>
               </div>
             </div>
-            <ArtistAlbums />
-            <ArtistTopTracks />
+            <ArtistAlbums
+              albums={albums}
+              filteredAlbum={filteredAlbum}
+              setFilteredAlbum={setFilteredAlbum}
+            />
+            <ArtistTopTracks
+              topTracks={topTracks}
+              filteredTrack={filteredTrack}
+              setFilteredTrack={setFilteredTrack}
+            />
           </section>
         </motion.main>
       );
     }
-  }, [setProfile, artist]);
+  };
 
   return <>{typeString === "track" ? renderSong() : renderArtist()}</>;
 };

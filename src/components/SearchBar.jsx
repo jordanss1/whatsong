@@ -3,11 +3,11 @@ import SearchContext from "../contexts/SearchStore";
 
 const SearchBar = () => {
   const {
+    term,
     items,
     setPage,
-    focused,
-    term,
     setTerm,
+    focused,
     setItems,
     typeString,
     spotifyTokenAndSearch,
