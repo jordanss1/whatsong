@@ -43,7 +43,6 @@ const SongList = ({ items, handleSelectedItem }) => {
                 {item.artists?.slice(0, 1).map((artist, i) => {
                   return (
                     <h3
-                      style={{ maxWidth: "530px" }}
                       key={i + 1}
                       className="content fs-4 pt-1"
                     >{`${artist.name} - ${item.name}`}</h3>
