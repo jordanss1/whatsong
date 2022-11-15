@@ -1,10 +1,7 @@
-import React, { useContext } from "react";
+import React, { memo } from "react";
 import SearchBar from "./SearchBar";
-import SearchContext from "../contexts/SearchStore";
 
-const SongList = () => {
-  const { items, setSelectedItem, selectedItem } = useContext(SearchContext);
-
+const SongList = ({ items, handleSelectedItem }) => {
   const hidden = window.innerWidth < 992 ? true : false;
 
   return (
@@ -24,7 +21,7 @@ const SongList = () => {
                 <div className="right floated content d-flex align-items-center">
                   <div
                     hidden={hidden}
-                    onClick={() => setSelectedItem(item)}
+                    onClick={() => handleSelectedItem(item)}
                     className="ui button"
                   >
                     Details
@@ -46,7 +43,7 @@ const SongList = () => {
                 {item.artists?.slice(0, 1).map((artist, i) => {
                   return (
                     <h3
-                      style={selectedItem ? { maxWidth: "530px" } : {}}
+                      style={{ maxWidth: "530px" }}
                       key={i + 1}
                       className="content fs-4 pt-1"
                     >{`${artist.name} - ${item.name}`}</h3>
@@ -61,4 +58,4 @@ const SongList = () => {
   );
 };
 
-export default SongList;
+export default memo(SongList);

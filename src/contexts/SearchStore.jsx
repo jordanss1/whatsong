@@ -1,4 +1,4 @@
-import React, { createContext, useState, useRef, useMemo } from "react";
+import React, { createContext, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { spotifyTokenAndSearch, spotifyArtistAndAlbum } from "../api";
 import {
@@ -12,7 +12,7 @@ const SearchContext = createContext();
 export const SearchStore = ({ children }) => {
   const [term, setTerm] = useState("");
   const [submittedTerm, setSubmittedTerm] = useState("");
-  let [items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [typeString, setTypeString] = useState("");
   const [page, setPage] = useState(1);
@@ -42,8 +42,6 @@ export const SearchStore = ({ children }) => {
   const focused = useRef(false);
 
   const navigate = useNavigate();
-
-  items = useMemo(() => items, [items]);
 
   const fullProviders = {
     animateStateSearch,

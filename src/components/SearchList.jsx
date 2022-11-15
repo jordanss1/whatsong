@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, memo } from "react";
+import React, { useContext, useEffect, useMemo, useCallback } from "react";
 import NavBar from "./NavBar";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
@@ -19,22 +19,13 @@ const SearchList = () => {
     typeString,
     setAnimateStateList,
     setAnimateStateSearch,
+    setSelectedItem,
+    deleteProfile,
+    spotifyArtistAndAlbum,
+    navigate,
+    setProfile,
+    slicedElements,
   } = useContext(SearchContext);
-
-  let animations = useMemo(() => {
-    return [
-      {
-        initial: (animateStateList) => ({ ...animateStateList.initial }),
-        animate: { x: 0, opacity: 1 },
-        exit: (animateStateList) => ({ ...animateStateList.exit }),
-      },
-      {
-        initial: { x: 300, opacity: 0 },
-        animate: { x: 0, opacity: 1 },
-        exit: { x: 300, opacity: 0 },
-      },
-    ];
-  }, [animateStateList]);
 
   useEffect(() => {
     const nav = document.getElementsByClassName("navClass")[0];
@@ -54,6 +45,27 @@ const SearchList = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (typeString === "artist") {
+      deleteProfile();
+    }
+  }, []);
+
+  let animations = useMemo(() => {
+    return [
+      {
+        initial: (animateStateList) => ({ ...animateStateList.initial }),
+        animate: { x: 0, opacity: 1 },
+        exit: (animateStateList) => ({ ...animateStateList.exit }),
+      },
+      {
+        initial: { x: 300, opacity: 0 },
+        animate: { x: 0, opacity: 1 },
+        exit: { x: 300, opacity: 0 },
+      },
+    ];
+  }, [animateStateList]);
+
   const content = () => {
     return (
       <div className="d-flex listNavbar">
@@ -71,6 +83,16 @@ const SearchList = () => {
       </div>
     );
   };
+
+  const handleProfileClick = useCallback((id) => {
+    spotifyArtistAndAlbum(id, setProfile);
+    setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
+    navigate(`/artists/${id}`);
+  }, []);
+
+  const handleSelectedItem = useCallback((item) => {
+    setSelectedItem(item);
+  }, []);
 
   const renderSongs = () => {
     if (items.noItems) {
@@ -116,8 +138,8 @@ const SearchList = () => {
             selectedItem ? "containerAnimate" : ""
           } w-100 d-grid selectedContainer`}
         >
-          <SelectedItem selectedItem={selectedItem} />
-          <SongList />
+          <SelectedItem />
+          <SongList items={items} handleSelectedItem={handleSelectedItem} />
         </section>
       );
     }
@@ -172,7 +194,15 @@ const SearchList = () => {
           exit={{ opacity: 0, transition: { duration: 0.5 } }}
           className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center pt-4"
         >
-          <ArtistList />
+          <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row searchListDiv align-self-lg-end border rounded-3">
+            <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Artists</h2>
+            <SearchBar />
+          </div>
+          <ArtistList
+            handleProfileClick={handleProfileClick}
+            slicedElements={slicedElements}
+            items={items}
+          />
           <Pages />
         </motion.section>
       );

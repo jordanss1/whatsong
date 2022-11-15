@@ -1,34 +1,8 @@
-import React, { useContext, useEffect } from "react";
-import SearchContext from "../contexts/SearchStore";
-import SearchBar from "./SearchBar";
-import { spotifyArtistAndAlbum } from "../api";
+import React, { memo } from "react";
 
-const ArtistList = () => {
-  const {
-    slicedElements,
-    items,
-    navigate,
-    setProfile,
-    deleteProfile,
-    setAnimateStateList,
-  } = useContext(SearchContext);
-
-  const handleProfileClick = (id) => {
-    spotifyArtistAndAlbum(id, setProfile);
-    setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
-    navigate(`/artists/${id}`);
-  };
-
-  useEffect(() => {
-    deleteProfile();
-  }, []);
-
+const ArtistList = ({ handleProfileClick, slicedElements, items }) => {
   return (
     <>
-      <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row searchListDiv align-self-lg-end border rounded-3">
-        <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Artists</h2>
-        <SearchBar />
-      </div>
       <div className="d-sm-grid d-flex flex-column ms-2 align-items-center justify-content-md-center p-5 p-xl-0 artistGrid">
         {items
           .slice(slicedElements[0], slicedElements[1])
@@ -76,4 +50,4 @@ const ArtistList = () => {
   );
 };
 
-export default ArtistList;
+export default memo(ArtistList);

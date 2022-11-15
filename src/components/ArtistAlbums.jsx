@@ -61,7 +61,7 @@ const ArtistAlbums = ({ albums, setFilteredAlbum, filteredAlbum }) => {
         <div className="content"></div>
       </div>;
     } else if (albums.noAlbums) {
-      return <h3 className="align-self-center">No albums</h3>;
+      return <h3 className="align-self-center pb-5">No albums</h3>;
     } else if (albums.length > 0 && !albums.noAlbums && albums[filteredAlbum]) {
       const { name, images } = albums[filteredAlbum];
 
