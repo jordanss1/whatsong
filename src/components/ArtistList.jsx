@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 
 const ArtistList = ({ handleProfileClick, slicedElements, items }) => {
   return (
@@ -50,4 +50,4 @@ const ArtistList = ({ handleProfileClick, slicedElements, items }) => {
   );
 };
 
-export default memo(ArtistList);
+export default ArtistList;
