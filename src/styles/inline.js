@@ -19,13 +19,13 @@ export const rightDisabledStyle =
   "h-100 d-flex align-items-center arrows rightArrowDisabled";
 
 export const leftSmall =
-  "d-flex align-items-center smallArrows leftSmallArrow w-75 pb-1";
+  "d-flex align-items-center smallArrows leftSmallArrow w-100 pb-1";
 
 export const leftSmallDisabled =
   " d-flex align-items-center smallArrows leftSmallArrowDisabled pb-1";
 
 export const rightSmall =
-  " d-flex align-items-center justify-content-end smallArrows rightSmallArrow  w-75 pb-1";
+  " d-flex align-items-center justify-content-end smallArrows rightSmallArrow  w-100 pb-1";
 
 export const rightSmallDisabled =
   "d-flex align-items-center smallArrows rightSmallArrowDisabled pb-1";

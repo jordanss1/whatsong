@@ -36,7 +36,7 @@ export const SearchStore = ({ children }) => {
     useArtistResults({
       artist: null,
       albums: null,
-      tracks: null,
+      topTracks: null,
     });
 
   const focused = useRef(false);

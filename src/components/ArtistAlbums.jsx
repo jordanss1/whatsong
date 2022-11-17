@@ -14,12 +14,12 @@ const ArtistAlbums = ({ albums, setFilteredAlbum, filteredAlbum }) => {
     setFilteredAlbum(0);
   }, []);
 
-  const handleClick = (classString, func) => {
+  const handleClick = useCallback((classString, func) => {
     const album = document.getElementsByClassName("albumCard")[0];
     album.classList.add(`${classString}`);
     setTimeout(() => setFilteredAlbum(func), 100);
-    setTimeout(() => album.classList.remove(`${classString}`), 200);
-  };
+    setTimeout(() => album.classList.remove(`${classString}`), 250);
+  }, []);
 
   const arrowProps = {
     leftClick: useCallback(

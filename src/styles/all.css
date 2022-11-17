@@ -266,7 +266,7 @@ hr {
 }
 
 .smallArrowDiv {
-  width: 35%;
+  width: 25%;
 }
 
 .leftArrow {
@@ -467,10 +467,19 @@ hr {
   border: 2px solid white !important;
 }
 
+.trackContentContainer {
+  min-width: 350px;
+}
+
 .topTrackContent {
+  max-width: 350px;
+  min-width: 75px;
   font-family: "Barlow", sans-serif !important;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.744);
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
 }
 
 .mainDiv {
@@ -1029,6 +1038,21 @@ hr {
     row-gap: 40px;
     width: 95%;
     overflow: hidden;
+  }
+
+  .topTrackContent {
+    max-width: 250px;
+    min-width: 75px;
+    font-family: "Barlow", sans-serif !important;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.744);
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+  }
+
+  .trackContentContainer {
+    min-width: 150px;
   }
 
   .trackItem .content {

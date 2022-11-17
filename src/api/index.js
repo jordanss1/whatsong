@@ -20,7 +20,7 @@ export const spotifyArtistAndAlbum = (id, state) => {
 
   const artistAndAlbum = [
     `https://api.spotify.com/v1/artists/${id}`,
-    `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album`,
+    `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album&limit=50`,
     `https://api.spotify.com/v1/artists/${id}/top-tracks?market=US`,
   ];
 
@@ -35,8 +35,8 @@ export const spotifyArtistAndAlbum = (id, state) => {
 
       axios
         .all(
-          artistAndAlbum.map((object) =>
-            axios.get(object, {
+          artistAndAlbum.map((endpoint) =>
+            axios.get(endpoint, {
               headers: {
                 Authorization: accessToken,
               },

@@ -57,7 +57,7 @@ const ArtistTopTracks = ({ topTracks, filteredTrack, setFilteredTrack }) => {
     } else if (topTracks.length > 0 && !topTracks.noTracks) {
       const { album, name } = topTracks[filteredTrack];
       return (
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center justify-content-center trackContentContainer">
           {album.images[2] ? (
             <img
               className="ui avatar image me-2"
@@ -76,7 +76,7 @@ const ArtistTopTracks = ({ topTracks, filteredTrack, setFilteredTrack }) => {
     <section className="d-flex align-items-center justify-content-center flex-column topTrackContainer">
       <h2 className="fs-2">Top tracks</h2>
       <hr className="w-25 mt-1" />
-      <div className="item d-flex topTrackItem justify-content-center align-items-center w-50 p-1">
+      <div className="item d-flex topTrackItem justify-content-center align-items-center w-75 p-1">
         {renderLeftArrow()}
         {renderTopTracks()}
         {renderRightArrow()}
