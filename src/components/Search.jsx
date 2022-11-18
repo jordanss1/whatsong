@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
 import { motion } from "framer-motion";
 
@@ -19,13 +19,11 @@ const Search = () => {
     navigate,
   } = useContext(SearchContext);
 
-  const animations = useMemo(() => {
-    return {
-      initial: (animateStateSearch) => ({ ...animateStateSearch.initial }),
-      animate: { opacity: 1, y: 0, x: 0 },
-      exit: (animateStateSearch) => ({ ...animateStateSearch.exit }),
-    };
-  }, [animateStateSearch]);
+  const animations = {
+    initial: (animateStateSearch) => ({ ...animateStateSearch.initial }),
+    animate: { opacity: 1, y: 0, x: 0 },
+    exit: (animateStateSearch) => ({ ...animateStateSearch.exit }),
+  };
 
   useEffect(() => {
     focused.current = false;
@@ -81,7 +79,7 @@ const Search = () => {
   const handleButtonClick = (category, term, object) => {
     setTypeString(category);
     setSubmittedTerm(term);
-    setAnimateStateSearch(object);
+    setAnimateStateSearch(object.initial, object.exit);
   };
 
   return (
@@ -120,12 +118,10 @@ const Search = () => {
           <button
             disabled={!term}
             onClick={() =>
-              handleButtonClick(
-                "artist",
-                term,
-                { opacity: 0.5, x: 300 },
-                { opacity: 0, x: 300 }
-              )
+              handleButtonClick("artist", term, {
+                initial: { opacity: 0.5, x: 300 },
+                exit: { opacity: 0, x: 300 },
+              })
             }
             type="button"
             className="btn btn-outline-dark submitButtons fs-4 rounded-3 me-3 p-1 px-3 "
@@ -135,12 +131,10 @@ const Search = () => {
           <button
             disabled={!term}
             onClick={() =>
-              handleButtonClick(
-                "track",
-                term,
-                { opacity: 0, x: -300 },
-                { opacity: 0, x: -300 }
-              )
+              handleButtonClick("track", term, {
+                initial: { opacity: 0, x: -300 },
+                exit: { opacity: 0, x: -300 },
+              })
             }
             type="button"
             className="btn btn-outline-dark submitButtons fs-4 rounded-3 p-1 px-3 "

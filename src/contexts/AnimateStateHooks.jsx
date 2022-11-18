@@ -5,6 +5,7 @@ export const useAnimateSearchManager = (initialState) => {
     switch (action.type) {
       case "ANIMATE":
         return {
+          ...state,
           initial: action.initial,
           exit: action.exit,
         };
@@ -27,6 +28,7 @@ export const useAnimateListManager = (initialState) => {
     switch (action.type) {
       case "ANIMATE":
         return {
+          ...state,
           initial: action.initial,
           exit: action.exit,
         };
