@@ -43,8 +43,8 @@ const SelectedItem = () => {
         sessionStorage.getItem("artist-details")
       );
       setProfile(artist, albums, topTracks);
-      setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
     }
+    setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
   }, []);
 
   const durationConvert = useCallback(

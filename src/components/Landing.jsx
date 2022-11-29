@@ -32,19 +32,19 @@ const Landing = () => {
   };
 
   const handleHover = () => {
-    const icon = document.getElementsByClassName("spotify")[0];
+    const spotifyDiv = document.getElementsByClassName("spotifyDiv")[0];
+    const icon = document.getElementsByClassName("spotifyNav")[0];
     const text = document.getElementsByClassName("powered")[0];
     const navBg = document.getElementsByClassName("navClass")[0];
 
     hover.current = !hover.current;
 
     if (hover.current) {
+      spotifyDiv.classList.add("spotifyLoad");
       icon.classList.add("spotifyHover");
       text.classList.add("poweredHover");
       navBg.classList.remove("navClassAnimate");
     } else if (!hover.current) {
-      icon.classList.remove("spotifyHover");
-      text.classList.remove("poweredHover");
       navBg.classList.add("navClassAnimate");
     }
   };

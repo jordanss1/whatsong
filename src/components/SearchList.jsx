@@ -20,7 +20,6 @@ const SearchList = () => {
     setAnimateStateList,
     setAnimateStateSearch,
     setSelectedItem,
-    deleteProfile,
     spotifyArtistAndAlbum,
     navigate,
     setProfile,
@@ -42,12 +41,6 @@ const SearchList = () => {
       setTypeString("track");
       setItems(JSON.parse(sessionStorage.getItem("tracks")));
       setAnimateStateSearch({ opacity: 0, x: -300 }, { opacity: 0, x: -300 });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeString === "artist") {
-      deleteProfile();
     }
   }, []);
 
