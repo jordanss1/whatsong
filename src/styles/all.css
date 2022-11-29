@@ -571,7 +571,7 @@ hr {
   bottom: 70px;
   letter-spacing: 1px;
   margin-bottom: 75px;
-  border-color: rgb(255, 255, 255, 0.05) !important;
+  border-color: rgb(255, 255, 255, 0.3) !important;
 }
 
 .spotifyLoad {
@@ -584,12 +584,10 @@ hr {
     bottom: 70px;
     letter-spacing: 1px;
     margin-bottom: 75px;
-    border-color: rgb(255, 255, 255, 0.05) !important;
   }
   100% {
     opacity: 1;
     bottom: 0px;
-    border-color: rgba(255, 255, 255, 0.6) !important;
     letter-spacing: 3px;
     padding: 15px 50px !important;
   }
