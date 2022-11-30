@@ -18,28 +18,42 @@ const ArtistTopTracks = ({ topTracks, filteredTrack, setFilteredTrack }) => {
     rightClick: useCallback(() => setFilteredTrack((prev) => prev + 1), []),
   };
 
+  const containerWidth = () => {
+    if (topTracks.noTracks && window.innerWidth > 992) {
+      return "w-50";
+    }
+  };
+
   const renderLeftArrow = () => {
-    return (
-      <div className="d-flex justify-content-start smallArrowDiv">
-        {filteredTrack === 0 ? (
+    if (filteredTrack === 0 || topTracks.noTracks) {
+      return (
+        <div className="d-flex justify-content-start smallArrowDiv">
           <LeftArrow style={leftSmallDisabled} />
-        ) : (
+        </div>
+      );
+    } else {
+      return (
+        <div className="d-flex justify-content-start smallArrowDiv">
           <LeftArrow style={leftSmall} func={arrowProps.leftClick} />
-        )}
-      </div>
-    );
+        </div>
+      );
+    }
   };
 
   const renderRightArrow = () => {
-    return (
-      <div className="d-flex justify-content-end smallArrowDiv">
-        {filteredTrack === topTracks.length - 1 ? (
+    if (filteredTrack === topTracks.length - 1 || topTracks.noTracks) {
+      return (
+        <div className="d-flex justify-content-end smallArrowDiv">
           <RightArrow style={rightSmallDisabled} />
-        ) : (
+        </div>
+      );
+    } else {
+      return (
+        <div className="d-flex justify-content-end smallArrowDiv">
           <RightArrow style={rightSmall} func={arrowProps.rightClick} />
-        )}
-      </div>
-    );
+        </div>
+      );
+    }
   };
 
   const renderTopTracks = () => {
@@ -53,7 +67,7 @@ const ArtistTopTracks = ({ topTracks, filteredTrack, setFilteredTrack }) => {
         </div>
       );
     } else if (topTracks.noTracks) {
-      return <h3>No tracks</h3>;
+      return <h3 className="fs-4">No tracks</h3>;
     } else if (topTracks.length > 0 && !topTracks.noTracks) {
       const { album, name } = topTracks[filteredTrack];
       return (
@@ -76,7 +90,9 @@ const ArtistTopTracks = ({ topTracks, filteredTrack, setFilteredTrack }) => {
     <section className="d-flex align-items-center justify-content-center flex-column topTrackContainer">
       <h2 className="fs-2">Top tracks</h2>
       <hr className="w-25 mt-1" />
-      <div className="item d-flex topTrackItem justify-content-center align-items-center w-75 p-1">
+      <div
+        className={`item d-flex topTrackItem justify-content-center align-items-center ${containerWidth()}  p-1`}
+      >
         {renderLeftArrow()}
         {renderTopTracks()}
         {renderRightArrow()}

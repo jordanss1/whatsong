@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useMemo, useCallback } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import NavBar from "./NavBar";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
@@ -12,6 +18,8 @@ import { motion } from "framer-motion";
 const SearchList = () => {
   const {
     items,
+    albums,
+    topTracks,
     animateStateList,
     selectedItem,
     setTypeString,
@@ -20,16 +28,21 @@ const SearchList = () => {
     setAnimateStateList,
     setAnimateStateSearch,
     setSelectedItem,
-    deleteProfile,
     spotifyArtistAndAlbum,
+    setFilteredAlbum,
+    setFilteredTrack,
     navigate,
     setProfile,
     slicedElements,
   } = useContext(SearchContext);
 
+  const idRef = useRef(null);
+
   useEffect(() => {
     const nav = document.getElementsByClassName("navClass")[0];
     sessionStorage.removeItem("artist-details");
+    setFilteredTrack(0);
+    setFilteredAlbum(0);
 
     nav.classList.add("navClassList");
 
@@ -44,6 +57,14 @@ const SearchList = () => {
       setAnimateStateSearch({ opacity: 0, x: -300 }, { opacity: 0, x: -300 });
     }
   }, []);
+
+  useEffect(() => {
+    if (albums && topTracks && idRef.current) {
+      console.log(idRef.current);
+      navigate(`/artists/${idRef.current}`);
+      idRef.current = null;
+    }
+  }, [albums && topTracks]);
 
   let animations = useMemo(() => {
     return [
@@ -79,9 +100,9 @@ const SearchList = () => {
   };
 
   const handleProfileClick = useCallback((id) => {
+    idRef.current = id;
     spotifyArtistAndAlbum(id, setProfile);
     setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
-    navigate(`/artists/${id}`);
   }, []);
 
   const handleSelectedItem = useCallback((item) => {

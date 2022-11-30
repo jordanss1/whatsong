@@ -11,6 +11,7 @@ const Search = () => {
     term,
     setAnimateStateSearch,
     setTerm,
+    setPage,
     setSubmittedTerm,
     submittedTerm,
     spotifyTokenAndSearch,
@@ -54,6 +55,7 @@ const Search = () => {
 
   useEffect(() => {
     if (typeString === "artist" && submittedTerm) {
+      setPage(1);
       setSubmittedTerm("");
       sessionStorage.setItem("artists", JSON.stringify(items));
       navigate("/artists");

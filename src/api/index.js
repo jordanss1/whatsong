@@ -5,7 +5,7 @@ const clientId = process.env.REACT_APP_ID;
 const clientSecret = process.env.REACT_APP_SECRET;
 
 const clientMix =
-  "Basic " + Buffer(clientId + ":" + clientSecret).toString("base64");
+  "Basic " + Buffer.from(clientId + ":" + clientSecret).toString("base64");
 
 const spotifyToken = axios.create({
   baseURL: "https://accounts.spotify.com/api/token",

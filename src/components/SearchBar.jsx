@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import SearchContext from "../contexts/SearchStore";
 
 const SearchBar = () => {
@@ -15,13 +15,15 @@ const SearchBar = () => {
     setSubmittedTerm,
   } = useContext(SearchContext);
 
+  const pageChange = useRef(false);
+
   useEffect(() => {
     focused.current = false;
 
     if (typeString === "artist" && submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
       setSubmittedTerm("");
-      setPage(1);
+      pageChange.current = true;
     } else if (typeString === "track" && submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
       setSubmittedTerm("");
@@ -29,8 +31,10 @@ const SearchBar = () => {
   }, [submittedTerm]);
 
   useEffect(() => {
-    if (typeString === "artist") {
+    if (typeString === "artist" && pageChange.current) {
       sessionStorage.setItem("artists", JSON.stringify(items));
+      setPage(1);
+      pageChange.current = false;
     } else if (typeString === "track") {
       sessionStorage.setItem("tracks", JSON.stringify(items));
     }

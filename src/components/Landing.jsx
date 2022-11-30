@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 const Landing = () => {
   const { navigate } = useContext(SearchContext);
   const hover = useRef(false);
+  const timeoutId = useRef(null);
 
   const animations = {
     initial: { opacity: 0.5, y: 0 },
@@ -17,6 +18,10 @@ const Landing = () => {
   useEffect(() => {
     const nav = document.getElementsByClassName("navClass")[0];
     nav.classList.add("navClassAnimate");
+
+    return () => {
+      clearTimeout(timeoutId.current);
+    };
   }, []);
 
   const handleClick = () => {
@@ -26,7 +31,7 @@ const Landing = () => {
     navBg.classList.remove("navClassAnimate");
     wrapper.classList.add("wrapperLoad");
 
-    setTimeout(() => {
+    timeoutId.current = setTimeout(() => {
       navigate("search");
     }, 1000);
   };
