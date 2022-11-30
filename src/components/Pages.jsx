@@ -4,10 +4,6 @@ import SearchContext from "../contexts/SearchStore";
 const Pages = () => {
   const { setSlicedElements, page, setPage, items } = useContext(SearchContext);
 
-  useEffect(() => {
-    setPage(1);
-  }, []);
-
   const handlePageClick = () => {
     if (window.innerWidth < 992)
       document
@@ -38,7 +34,11 @@ const Pages = () => {
     >
       <div className="d-flex justify-content-center justify-content-between pages w-75 fs-1">
         <p
-          style={page === 1 ? { cursor: "default" } : { cursor: "pointer" }}
+          style={
+            page === 1
+              ? { cursor: "default", color: "white" }
+              : { cursor: "pointer" }
+          }
           hidden={items.length < 11}
           onClick={() => {
             setPage(1);
@@ -48,7 +48,11 @@ const Pages = () => {
           1
         </p>
         <p
-          style={page === 2 ? { cursor: "default" } : { cursor: "pointer" }}
+          style={
+            page === 2
+              ? { cursor: "default", color: "white" }
+              : { cursor: "pointer" }
+          }
           hidden={items.length < 11}
           onClick={() => {
             setPage(2);
@@ -58,7 +62,11 @@ const Pages = () => {
           2
         </p>
         <p
-          style={page === 3 ? { cursor: "default" } : { cursor: "pointer" }}
+          style={
+            page === 3
+              ? { cursor: "default", color: "white" }
+              : { cursor: "pointer" }
+          }
           hidden={items.length < 21}
           onClick={() => {
             setPage(3);
@@ -68,7 +76,11 @@ const Pages = () => {
           3
         </p>
         <p
-          style={page === 4 ? { cursor: "default" } : { cursor: "pointer" }}
+          style={
+            page === 4
+              ? { cursor: "default", color: "white" }
+              : { cursor: "pointer" }
+          }
           hidden={items.length < 31}
           onClick={() => {
             setPage(4);

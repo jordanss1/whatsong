@@ -60,6 +60,14 @@ const SelectedItem = () => {
     [selectedItem]
   );
 
+  const oneColumnWidth = (image) => {
+    if (!image && window.innerWidth > 576) {
+      return "w-75";
+    } else if (image && window.innerWidth > 1200) {
+      return "w-100";
+    }
+  };
+
   const renderSong = () => {
     if (!selectedItem) {
       return (
@@ -119,6 +127,12 @@ const SelectedItem = () => {
           </section>
           <section className="w-100 h-100 d-grid artistRight">
             <div className="d-flex flex-column align-items-center justify-content-end artistHeading">
+              <div className="w-100 d-flex justify-content-end pe-5">
+                <i
+                  onClick={() => navigate("artists")}
+                  className="window close outline icon iconRed fs-1"
+                ></i>
+              </div>
               <Loader />
             </div>
           </section>
@@ -151,7 +165,7 @@ const SelectedItem = () => {
           transition={{ duration: 0.2 }}
           className={`${
             !images[0]?.url || window.innerWidth < 992
-              ? "artistPageOneColumn d-flex flex-column"
+              ? "artistPageOneColumn d-flex flex-column align-items-center"
               : "artistPage d-grid"
           } `}
           style={window.innerWidth < 992 ? styles : {}}
@@ -164,7 +178,7 @@ const SelectedItem = () => {
           >
             <div className="artistBg w-100 h-100" style={styles}></div>
           </section>
-          <section className="w-100 h-100 d-grid artistRight">
+          <section className={`w-100 h-100 d-grid artistRight`}>
             <div className="d-flex flex-column align-items-center justify-content-center artistHeading">
               <div className="w-100 d-flex justify-content-end pe-5">
                 <i

@@ -11,7 +11,11 @@ const ArtistList = ({ handleProfileClick, slicedElements, items }) => {
               <div className="artistContainer" key={i}>
                 <article className="ui fluid card">
                   {!images.length ? (
-                    <div className="image p-5">
+                    <div
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleProfileClick(id)}
+                      className="image p-5"
+                    >
                       <h3>No image</h3>
                     </div>
                   ) : (
