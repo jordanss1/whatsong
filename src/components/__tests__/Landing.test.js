@@ -7,7 +7,7 @@ import SearchContext from "../../contexts/SearchStore";
 import Landing from "../Landing";
 
 test("On hover the classes are added to the spotify div", () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   render(
     <SearchContext.Provider value={navigate}>
       <Landing />
