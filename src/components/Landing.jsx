@@ -78,7 +78,7 @@ const Landing = () => {
           >
             Get started!
           </button>
-          <div className="d-flex border rounded-3 p-5 pt-3 pb-3 spotifyDiv">
+          <div data-testid="div-powered" className="d-flex border rounded-3 p-5 pt-3 pb-3 spotifyDiv">
             <h2 className="fs-5 me-2 mt-2 powered">Powered by</h2>
             <i className="spotify icon fs-1 spotifyNav"></i>
           </div>
