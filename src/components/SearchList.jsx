@@ -45,12 +45,6 @@ const SearchList = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (typeString === "artist") {
-      deleteProfile();
-    }
-  }, []);
-
   let animations = useMemo(() => {
     return [
       {
