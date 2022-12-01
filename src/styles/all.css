@@ -210,7 +210,7 @@ hr {
 }
 
 .rightClick {
-  animation: right-click 300ms;
+  animation: right-click 500ms;
 }
 
 @keyframes right-click {
@@ -218,21 +218,22 @@ hr {
     left: 0;
     opacity: 1;
   }
-  35% {
-    opacity: 0.2;
-  }
-  50% {
+  25% {
     opacity: 0;
-    left: 70;
+    left: 50px;
+  }
+  75% {
+    opacity: 0;
+    left: 30px;
   }
   100% {
-    opacity: 0;
-    left: 90px;
+    opacity: 1;
+    left: 0;
   }
 }
 
 .leftClick {
-  animation: left-click 300ms;
+  animation: left-click 500ms;
 }
 
 @keyframes left-click {
@@ -241,15 +242,16 @@ hr {
     opacity: 1;
   }
   25% {
-    opacity: 0.2;
+    opacity: 0;
+    left: -50px;
   }
   50% {
     opacity: 0;
-    left: -70px;
+    left: -30px;
   }
   100% {
-    opacity: 0;
-    left: -90px;
+    opacity: 1;
+    left: 0;
   }
 }
 

@@ -18,14 +18,13 @@ const ArtistAlbums = ({ albums, setFilteredAlbum, filteredAlbum }) => {
 
   useEffect(() => {
     clearTimeout(timeoutId.current);
-    timeoutId.current = 0;
   }, [filteredAlbum]);
 
   const handleClick = (classString, func) => {
     const album = document.getElementsByClassName("albumCard")[0];
     album.classList.add(`${classString}`);
     timeoutId.current = setTimeout(() => setFilteredAlbum(func), 100);
-    setTimeout(() => album.classList.remove(`${classString}`), 250);
+    setTimeout(() => album.classList.remove(`${classString}`), 500);
   };
 
   const arrowProps = {
