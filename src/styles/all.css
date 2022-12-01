@@ -1078,6 +1078,12 @@ hr {
 }
 
 @media screen and (max-width: 576px) {
+  .arrows {
+    cursor: pointer;
+    width: 90px;
+    transition: 0.5s;
+  }
+
   .songListContainer {
     row-gap: 40px;
     width: 95%;
