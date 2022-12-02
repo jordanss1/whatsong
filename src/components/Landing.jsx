@@ -32,7 +32,7 @@ const Landing = () => {
     wrapper.classList.add("wrapperLoad");
 
     timeoutId.current = setTimeout(() => {
-      navigate("search");
+      navigate("/search");
     }, 1000);
   };
 

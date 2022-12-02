@@ -1,4 +1,4 @@
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Router } from "react-router-dom";
 import { useContext } from "react";
 
 //This component is great for wrapping the context in the store for a test
@@ -10,22 +10,45 @@ export const Store = ({ children, store }) => {
 };
 
 //This component great for testing <Link/> components as it uses MemoryRouter
-//Only for route testing, no context, so provide the entry prop for initial route (initialEntries)
+//Only for route testing of Links (not useNavigate), no context, so provide the entry prop for initial route (initialEntries)
 
-export const RouterProvider = ({ children, entry }) => {
+export const LinkRouterProvider = ({ children, entry }) => {
   return <MemoryRouter initialEntries={entry}>{children}</MemoryRouter>;
 };
 
 //This component great for testing <Link/> components as it uses MemoryRouter
 //Dynamically provide props for the store component and the initial route (initialEntries)
 
-export const RouterAndStore = ({ children, entry, store }) => {
+export const LinkRouterAndStore = ({ children, entry, store }) => {
   const StoreComponent = store;
 
   return (
     <MemoryRouter initialEntries={entry}>
       <StoreComponent>{children}</StoreComponent>
     </MemoryRouter>
+  );
+};
+
+//This component great for testing navigation using useNavigate hook
+//Provide customer history object as prop
+
+export const NavigationRouter = ({ children, history }) => {
+  return (
+    <Router location={pathname} navigator={history}>
+      {children}
+    </Router>
+  );
+};
+
+//Same as above but also dynamically provide store component as prop
+
+export const NavigationAndStore = ({ children, history, store, pathname }) => {
+  const StoreComponent = store;
+
+  return (
+    <Router location={pathname} navigator={history}>
+      <StoreComponent>{children}</StoreComponent>
+    </Router>
   );
 };
 

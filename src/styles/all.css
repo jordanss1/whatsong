@@ -210,7 +210,7 @@ hr {
 }
 
 .rightClick {
-  animation: right-click 500ms;
+  animation: right-click 400ms;
 }
 
 @keyframes right-click {
@@ -233,7 +233,7 @@ hr {
 }
 
 .leftClick {
-  animation: left-click 500ms;
+  animation: left-click 400ms;
 }
 
 @keyframes left-click {

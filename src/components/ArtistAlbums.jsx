@@ -24,7 +24,7 @@ const ArtistAlbums = ({ albums, setFilteredAlbum, filteredAlbum }) => {
     const album = document.getElementsByClassName("albumCard")[0];
     album.classList.add(`${classString}`);
     timeoutId.current = setTimeout(() => setFilteredAlbum(func), 100);
-    setTimeout(() => album.classList.remove(`${classString}`), 500);
+    setTimeout(() => album.classList.remove(`${classString}`), 400);
   };
 
   const arrowProps = {
