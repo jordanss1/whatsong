@@ -4,21 +4,25 @@ import { Route, Routes } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import SearchContext, { SearchStore } from "../../contexts/SearchStore";
-import { RouterAndStore, Context } from "../../../test-utils";
+import { NavigationAndStore, Context } from "../../../test/test-utils";
+import { history } from "../../../test";
 import Landing from "../Landing";
-import "../../styles/all.css";
 import Search from "../Search";
 
 const MemoryWrapper = ({ children }) => {
   return (
-    <RouterAndStore store={SearchStore} entry={["/"]}>
+    <NavigationAndStore
+      pathname={history.location}
+      history={history}
+      store={SearchStore}
+    >
       {children}
-    </RouterAndStore>
+    </NavigationAndStore>
   );
 };
 
-const testComponent = (...component) => {
-  return <Context context={SearchContext}>{component}</Context>;
+const testComponent = (components) => {
+  return <Context context={SearchContext}>{components}</Context>;
 };
 
 const routeTest = () => {
@@ -30,10 +34,21 @@ const routeTest = () => {
   );
 };
 
+beforeEach(() => {
+  history.push("/");
+});
+
 test("On hover the div is visible/class added and the class removed from Nav", async () => {
-  const { container } = render(testComponent(<Landing />), {
-    wrapper: MemoryWrapper,
-  });
+  const { container } = render(
+    testComponent(
+      <Routes>
+        <Route path={"/"} element={<Landing />} />
+      </Routes>
+    ),
+    {
+      wrapper: MemoryWrapper,
+    }
+  );
 
   const button = screen.getByRole("button", { name: "Get started!" });
   const div = container.getElementsByClassName("spotifyDiv")[0];
@@ -41,21 +56,24 @@ test("On hover the div is visible/class added and the class removed from Nav", a
 
   expect(div).not.toHaveClass("spotifyLoad");
 
-  userEvent.hover(button);
+  await userEvent.hover(button);
 
-  await waitFor(() => {
-    expect(div).toHaveClass("spotifyLoad");
-    expect(nav).not.toHaveClass("navClassAnimate");
-  });
+  expect(div).toHaveClass("spotifyLoad");
+  expect(nav).not.toHaveClass("navClassAnimate");
 });
 
 test("On click of button, the Search component is mounted", async () => {
   render(testComponent(routeTest()), { wrapper: MemoryWrapper });
   const button = screen.getByRole("button", { name: "Get started!" });
 
-  expect(button).toBeInTheDocument();
+  expect(history.location.pathname).toBe("/");
 
   userEvent.click(button);
 
-  screen.debug();
+  await waitFor(
+    () => {
+      expect(history.location.pathname).toBe("/search");
+    },
+    { timeout: 1500 }
+  );
 });

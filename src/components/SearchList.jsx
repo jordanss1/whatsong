@@ -60,7 +60,6 @@ const SearchList = () => {
 
   useEffect(() => {
     if (albums && topTracks && idRef.current) {
-      console.log(idRef.current);
       navigate(`/artists/${idRef.current}`);
       idRef.current = null;
     }
