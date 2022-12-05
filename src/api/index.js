@@ -4,7 +4,7 @@ import { Buffer } from "buffer";
 const clientId = process.env.REACT_APP_ID;
 const clientSecret = process.env.REACT_APP_SECRET;
 
-const clientMix =
+export const clientMix =
   "Basic " + Buffer.from(clientId + ":" + clientSecret).toString("base64");
 
 const spotifyToken = axios.create({

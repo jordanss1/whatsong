@@ -179,25 +179,6 @@ const SearchList = () => {
           </div>
         </motion.section>
       );
-    } else if (items.length === 0) {
-      return (
-        <motion.section
-          initial={{
-            opacity: 0,
-          }}
-          animate={{ opacity: 1, transition: { duration: 2 } }}
-          exit={{ opacity: 0, transition: { duration: 0.5 } }}
-          className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center pt-4"
-        >
-          <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row noResultsSearch border rounded-3">
-            <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Artists</h2>
-            <SearchBar />
-          </div>
-          <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0 artistGrid">
-            <Loader />
-          </div>
-        </motion.section>
-      );
     } else if (items.length > 0) {
       return (
         <motion.section

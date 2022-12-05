@@ -104,6 +104,7 @@ const Search = () => {
         <div className="w-100 d-flex justify-content-center pb-5">
           <div className="ui input searchDiv w-50">
             <input
+              role="search-all-input"
               onFocus={() => handleFocus()}
               onBlur={() => handleFocus()}
               value={term}

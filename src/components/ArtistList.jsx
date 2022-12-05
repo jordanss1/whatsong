@@ -8,9 +8,9 @@ const ArtistList = ({ handleProfileClick, slicedElements, items }) => {
           .slice(slicedElements[0], slicedElements[1])
           .map(({ external_urls, name, images, id }, i) => {
             return (
-              <div className="artistContainer" key={i}>
+              <div role="artist-card" className="artistContainer" key={i}>
                 <article className="ui fluid card">
-                  {!images.length ? (
+                  {!images[0] ? (
                     <div
                       style={{ cursor: "pointer" }}
                       onClick={() => handleProfileClick(id)}
