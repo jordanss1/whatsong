@@ -95,7 +95,11 @@ const SelectedItem = () => {
             ></i>
           </div>
           <div className="d-flex flex-column ms-0 mb-5 songItem justify-content-evenly">
-            <img className="rounded" src={album.images[1].url} />
+            {album.images[1].url ? (
+              <img className="rounded" src={album.images[1].url} />
+            ) : (
+              <h3>No album cover</h3>
+            )}
             <div className="ui items mt-0 description">
               <div className="item">
                 <ul className="content d-flex flex-column justify-content-start justify-content-evenly align-content-center contentDescription">

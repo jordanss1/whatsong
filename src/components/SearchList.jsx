@@ -40,7 +40,6 @@ const SearchList = () => {
 
   useEffect(() => {
     const nav = document.getElementsByClassName("navClass")[0];
-    sessionStorage.removeItem("artist-details");
     setFilteredTrack(0);
     setFilteredAlbum(0);
 
@@ -80,7 +79,7 @@ const SearchList = () => {
     ];
   }, [animateStateList]);
 
-  const content = () => {
+  const navContent = () => {
     return (
       <div className="d-flex listNavbar">
         <div className="text-lowercase">
@@ -108,6 +107,13 @@ const SearchList = () => {
     setSelectedItem(item);
   }, []);
 
+  const songOrArtistContainer =
+    typeString === "artist"
+      ? "artistWholeListContainer d-flex flex-column px-1"
+      : `songWholeListContainer ${
+          items.length > 0 ? "d-grid" : ""
+        } container-fluid`;
+
   const renderSongs = () => {
     if (items.noItems) {
       return (
@@ -128,24 +134,7 @@ const SearchList = () => {
           </div>
         </motion.section>
       );
-    } else if (items.length === 0) {
-      <motion.section
-        initial={{
-          opacity: 0,
-        }}
-        animate={{ opacity: 1, transition: { duration: 2 } }}
-        exit={{ opacity: 0, transition: { duration: 0.5 } }}
-        className="w-100 d-flex flex-column align-items-center justify-content-between justify-content-center pt-4 noResultsSong"
-      >
-        <div className="d-flex align-items-center justify-content-center justify-content-between  flex-column flex-xl-row noResultsSearch border rounded-3">
-          <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Songs</h2>
-          <SearchBar />
-        </div>
-        <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0">
-          <Loader />
-        </div>
-      </motion.section>;
-    } else if (items.length > 0) {
+    } else if (items.length > 0 && !items.noItems) {
       return (
         <section
           className={`${
@@ -179,7 +168,7 @@ const SearchList = () => {
           </div>
         </motion.section>
       );
-    } else if (items.length > 0) {
+    } else if (items.length > 0 && !items.noItems) {
       return (
         <motion.section
           initial={{
@@ -214,13 +203,9 @@ const SearchList = () => {
       transition={{ duration: 0.2 }}
       style={items.length === 0 ? { height: "100vh" } : {}}
       id="main"
-      className={`${
-        typeString === "artist"
-          ? "artistWholeListContainer d-flex flex-column px-1"
-          : `songWholeListContainer ${items.length > 0 ? "d-grid" : ""}`
-      } container-fluid `}
+      className={songOrArtistContainer}
     >
-      <NavBar content={content} />
+      <NavBar content={navContent} />
       {typeString === "artist" ? renderArtists() : renderSongs()}
     </motion.main>
   );

@@ -15,6 +15,7 @@ const SongList = ({ items, handleSelectedItem }) => {
           return (
             <div
               key={i}
+              role="song-item"
               className="ui middle aligned selection divided list d-flex justify-content-center trackItemContainer"
             >
               <div className="item trackItem border rounded-3 p-3">
@@ -36,18 +37,18 @@ const SongList = ({ items, handleSelectedItem }) => {
                     Listen
                   </div>
                 </div>
-                <img
-                  className="ui avatar image"
-                  src={item.album?.images[2].url}
-                ></img>
-                {item.artists?.slice(0, 1).map((artist, i) => {
-                  return (
-                    <h3
-                      key={i + 1}
-                      className="content fs-4 pt-1"
-                    >{`${artist.name} - ${item.name}`}</h3>
-                  );
-                })}
+                {item.album?.images[2]?.url ? (
+                  <img
+                    className="ui avatar image"
+                    src={item.album?.images[2].url}
+                  ></img>
+                ) : (
+                  <h6>No album</h6>
+                )}
+                <h3
+                  key={i + 1}
+                  className="content fs-4 pt-1"
+                >{`${item.artists[0]?.name} - ${item.name}`}</h3>
               </div>
             </div>
           );

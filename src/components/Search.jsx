@@ -28,8 +28,6 @@ const Search = () => {
 
   useEffect(() => {
     focused.current = false;
-    sessionStorage.clear();
-
     setAnimateStateSearch({ opacity: 0.5, y: 300 }, { opacity: 0, y: 0 });
   }, []);
 
@@ -120,12 +118,13 @@ const Search = () => {
         <div>
           <button
             disabled={!term}
-            onClick={() =>
+            onClick={() => {
+              sessionStorage.removeItem("tracks");
               handleButtonClick("artist", term, {
                 initial: { opacity: 0.5, x: 300 },
                 exit: { opacity: 0, x: 300 },
-              })
-            }
+              });
+            }}
             type="button"
             className="btn btn-outline-dark submitButtons fs-4 rounded-3 me-3 p-1 px-3 "
           >
@@ -133,12 +132,13 @@ const Search = () => {
           </button>
           <button
             disabled={!term}
-            onClick={() =>
+            onClick={() => {
+              sessionStorage.removeItem("artists");
               handleButtonClick("track", term, {
                 initial: { opacity: 0, x: -300 },
                 exit: { opacity: 0, x: -300 },
-              })
-            }
+              });
+            }}
             type="button"
             className="btn btn-outline-dark submitButtons fs-4 rounded-3 p-1 px-3 "
           >

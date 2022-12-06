@@ -3,20 +3,13 @@ import { Route, Routes } from "react-router-dom";
 import { NavigationAndStore } from "../../../test-utils/test-utils";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import SearchContext, { SearchStore } from "../../contexts/SearchStore";
 import Search from "../Search";
 import SearchList from "../SearchList";
-import { artistServer } from "../../mocks/servers";
-import { artistHandlers } from "../../mocks/handlers";
+import { server } from "../../mocks/server";
+import { artistHandler2, trackHandler } from "../../mocks/handlers";
 import { history } from "../../../test-utils";
-import { artistResultsNone } from "../../api/mock";
-
-beforeAll(() => artistServer.listen());
-
-afterEach(() => artistServer.resetHandlers());
-
-afterAll(() => artistServer.close());
 
 const WrapperComponent = ({ children }) => {
   return (
@@ -44,7 +37,7 @@ test("Each Artists and Songs button disabled on render but enabled after enterin
   buttons.forEach((button) => expect(button).toBeEnabled());
 });
 
-test("When a search term is entered, submitted and the API call is successful (array of artists)", async () => {
+test("When a search term is entered, submitted and the API call is successful and artists are returned", async () => {
   const user = userEvent.setup();
 
   const { getByRole, findAllByRole } = customRender(
@@ -65,9 +58,8 @@ test("When a search term is entered, submitted and the API call is successful (a
   expect(await findAllByRole("artist-card")).toHaveLength(10);
 });
 
-test("When the API call is successful but no results are returned", async () => {
-  artistServer.use(...artistHandlers(artistResultsNone));
-
+test("When the API call is successful but no artists are returned", async () => {
+  server.use(...artistHandler2());
   const user = userEvent.setup();
 
   const { getByRole, findByRole } = customRender(
@@ -88,4 +80,28 @@ test("When the API call is successful but no results are returned", async () => 
   expect(
     await findByRole("heading", { name: "No results found" })
   ).toBeInTheDocument();
+});
+
+test("When a search term is entered, submitted and the API call is successful and songs are returned", async () => {
+  server.use(...trackHandler());
+  const user = userEvent.setup();
+
+  const { getByRole, findAllByRole, debug } = customRender(
+    WrapperComponent,
+    <>
+      <Search />
+      <SearchList />
+    </>
+  );
+
+  const input = getByRole("search-all-input");
+  const submitButton = getByRole("button", { name: "Songs" });
+
+  await user.type(input, "hi");
+
+  user.click(submitButton);
+
+  const cards = await findAllByRole("song-item");
+
+  expect(cards).toHaveLength(5);
 });
