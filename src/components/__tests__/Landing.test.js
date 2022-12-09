@@ -17,10 +17,6 @@ const WrapperComponent = ({ children }) => {
   );
 };
 
-beforeEach(() => {
-  history.push("/");
-});
-
 test("On hover the div is visible/class added and the class removed from Nav", async () => {
   const user = userEvent.setup();
 
@@ -49,7 +45,6 @@ test("On click of button, the Search component is mounted", async () => {
   const { getByRole } = render(
     <Routes>
       <Route path={"/"} element={<Landing />} />
-      <Route path={"/search"} element={<Search />} />
     </Routes>,
     { wrapper: WrapperComponent }
   );

@@ -1,5 +1,6 @@
 import { MemoryRouter, Router } from "react-router-dom";
 import { useContext } from "react";
+import { render } from "@testing-library/react";
 import { history } from ".";
 
 //This component great for testing <Link/> components as it uses MemoryRouter
@@ -82,4 +83,10 @@ export const LinkAndStoreWrapper = ({
       </StoreComponent>
     </MemoryRouter>
   );
+};
+
+//Creates customer component with a wrapper component
+
+export const customRender = (wrapper, components) => {
+  return render(components, { wrapper: wrapper });
 };

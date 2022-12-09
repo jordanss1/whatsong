@@ -117,6 +117,8 @@ const Search = () => {
         </div>
         <div>
           <button
+            placeholder="button"
+            role="search-button-artists"
             disabled={!term}
             onClick={() => {
               sessionStorage.removeItem("tracks");
@@ -131,6 +133,8 @@ const Search = () => {
             Artists
           </button>
           <button
+            placeholder="button"
+            role="search-button-songs"
             disabled={!term}
             onClick={() => {
               sessionStorage.removeItem("artists");

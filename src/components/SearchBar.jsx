@@ -72,6 +72,7 @@ const SearchBar = () => {
         }}
         value={term}
         onChange={({ target }) => setTerm(target.value)}
+        role="searchList-input"
         type="text"
         placeholder={`${
           typeString === "artist" ? "Search artists" : "Search songs"
@@ -81,6 +82,7 @@ const SearchBar = () => {
         className="searchInput me-1"
       />
       <button
+        role="searchList-button"
         disabled={!term ? true : false}
         className="ui inverted pink basic button px-1 searchButton d-flex align-items-center justify-content-center"
       >
