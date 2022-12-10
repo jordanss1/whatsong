@@ -1,7 +1,7 @@
 import { setupServer } from "msw/node";
-import { artistResultsSuccess } from "../api/mock";
+import { artistResults } from "../api/mock";
 import { artistAndTrackHandlers } from "./handlers";
 
-const data = artistAndTrackHandlers(artistResultsSuccess);
+const data = artistAndTrackHandlers(artistResults);
 
 export const server = setupServer(...data);

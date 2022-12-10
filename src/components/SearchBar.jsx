@@ -19,6 +19,8 @@ const SearchBar = () => {
 
   useEffect(() => {
     focused.current = false;
+    console.log(typeString);
+    console.log(submittedTerm);
 
     if (typeString === "artist" && submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);

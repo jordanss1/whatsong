@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { fireEvent, waitFor, render } from "@testing-library/react";
@@ -6,22 +6,24 @@ import { Routes, Route } from "react-router-dom";
 import {
   NavigationAndStore,
   customRender,
+  NavigationRouter,
 } from "../../../test-utils/test-utils";
 import SearchList from "../SearchList";
-import Search from "../Search";
-import SelectedItem from "../SelectedItem";
 import SearchContext, { SearchStore } from "../../contexts/SearchStore";
 import { server } from "../../mocks/server";
 import { history } from "../../../test-utils";
 import { artistAndTrackHandlers } from "../../mocks/handlers";
 import {
-  artistResultsNone,
-  artistResultsSuccessFull,
+  artistResults,
+  artistResultsFull,
   songResultsNone,
-  songResultsSuccess,
+  songResults,
+  songResultsDouble,
 } from "../../api/mock";
+import { selectedItems } from "../../mocks/providers";
+import SearchBar from "../SearchBar";
 
-const WrapperComponent = ({ children }) => {
+const DefaultStoreAndContext = ({ children }) => {
   return (
     <NavigationAndStore store={SearchStore} context={SearchContext}>
       {children}
@@ -29,7 +31,16 @@ const WrapperComponent = ({ children }) => {
   );
 };
 
+const customContext = (ui, providers, options) => {
+  return render(
+    <SearchContext.Provider value={providers}>{ui}</SearchContext.Provider>,
+    options
+  );
+};
+
 const user = userEvent.setup();
+
+//Search function that executes an automatic search; created to reduce repeated code in tests
 
 const renderComponentSearched = async (query, button, input) => {
   const searchComponentInput = query(input);
@@ -40,41 +51,57 @@ const renderComponentSearched = async (query, button, input) => {
 };
 
 describe("The SearchList component on the /artists path", () => {
-  describe("All tests where there are artists rendered", () => {
-    it("The input makes a search and returns artists when there are already previous received", async () => {
-      const { getByRole, debug, findAllByRole } = customRender(
-        WrapperComponent,
-        <>
-          <Search />
-          <SearchList />
-        </>
-      );
+  it("The input in SearchList makes a search and returns artists when there's existing artists", async () => {
+    let data = artistAndTrackHandlers(artistResultsFull);
+    server.use(...data);
 
-      //First search from the default handlers
+    selectedItems.items = artistResults.artists.items;
 
-      await renderComponentSearched(
-        getByRole,
-        "search-button-artists",
-        "search-all-input"
-      );
+    const { getByRole, getAllByRole, debug, findAllByRole } = customContext(
+      <SearchList />,
+      selectedItems,
+      { wrapper: NavigationRouter }
+    );
 
-      expect(await findAllByRole("artist-card")).toHaveLength(10);
+    expect(getAllByRole("artist-card")).toHaveLength(10);
 
-      //Change handlers to receive different mocked results
+    await renderComponentSearched(
+      getByRole,
+      "searchList-button",
+      "searchList-input"
+    );
 
-      const data = artistAndTrackHandlers(artistResultsSuccessFull);
-      server.use(...data);
+    // expect(await findAllByRole("artist-card")).toHaveLength(37);
+  });
+});
 
-      //Make new search for the changed response
+describe("The SearchList component on the /songs path", () => {
+  beforeEach(() => {
+    selectedItems.typeString = "track";
+  });
 
-      await renderComponentSearched(
-        getByRole,
-        "searchList-button",
-        "searchList-input"
-      );
+  it("The input in SearchList makes a search and returns songs when there's existing songs", async () => {
+    let data = artistAndTrackHandlers(songResults);
+    server.use(...data);
 
-      //The new handler should respond with an array of length 37
-      //expect(await findAllByRole("artist-card")).toHaveLength(37);
-    });
+    selectedItems.items = songResultsDouble.tracks.items;
+
+    const { getByRole, getAllByRole, findAllByRole } = customContext(
+      <SearchList />,
+      selectedItems,
+      {
+        wrapper: NavigationRouter,
+      }
+    );
+
+    expect(getAllByRole("song-item")).toHaveLength(10);
+
+    await renderComponentSearched(
+      getByRole,
+      "searchList-button",
+      "searchList-input"
+    );
+
+    // expect(await findAllByRole("song-item")).toHaveLength(5);
   });
 });

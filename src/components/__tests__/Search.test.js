@@ -3,10 +3,6 @@ import { fireEvent, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { Route, Routes } from "react-router-dom";
-import {
-  NavigationAndStore,
-  customRender,
-} from "../../../test-utils/test-utils";
 import SearchContext, { SearchStore } from "../../contexts/SearchStore";
 import Search from "../Search";
 import SearchList from "../SearchList";
@@ -16,8 +12,12 @@ import { history } from "../../../test-utils";
 import {
   artistResultsNone,
   songResultsNone,
-  songResultsSuccess,
+  songResults,
 } from "../../api/mock";
+import {
+  NavigationAndStore,
+  customRender,
+} from "../../../test-utils/test-utils";
 
 const WrapperComponent = ({ children }) => {
   return (
@@ -29,17 +29,25 @@ const WrapperComponent = ({ children }) => {
 
 beforeEach(() => history.push("/search"));
 
-const returnInputAndButton = (query, button) => {
-  return {
-    input: query("search-all-input"),
-    submitButton: query(button),
-  };
-};
-
 const user = userEvent.setup();
 
+//Search function that executes an automatic search; created to reduce repeated code in tests
+
+const renderComponentSearched = async (query, button) => {
+  const input = query("search-all-input");
+  const submitButton = query(button);
+
+  await act(async () => {
+    await user.type(input, "hi");
+  });
+
+  await act(async () => {
+    await user.click(submitButton);
+  });
+};
+
 test("Each Artists and Songs button disabled on render but enabled after entering text", () => {
-  const { getAllByRole, getByRole, getAllByPlaceholderText } = customRender(
+  const { getByRole, getAllByPlaceholderText } = customRender(
     WrapperComponent,
     <Search />
   );
@@ -53,7 +61,7 @@ test("Each Artists and Songs button disabled on render but enabled after enterin
 });
 
 describe("All possibilities where artists are returned from the Search component", () => {
-  it("On click of Artists button, the SearchList component is mounted and Artist JSX rendered", async () => {
+  it("On click of Artists button, the SearchList component is mounted and the pathname is /artists", async () => {
     const { getByRole } = customRender(
       WrapperComponent,
       <Routes>
@@ -61,25 +69,16 @@ describe("All possibilities where artists are returned from the Search component
       </Routes>
     );
 
-    const { input, submitButton } = returnInputAndButton(
-      getByRole,
-      "search-button-artists"
-    );
-
     expect(history.location.pathname).toBe("/search");
 
-    user.click(submitButton);
-
-    await user.type(input, "hi");
-
-    user.click(submitButton);
+    await renderComponentSearched(getByRole, "search-button-artists");
 
     await waitFor(() => {
       expect(history.location.pathname).toBe("/artists");
     });
   });
 
-  it("When a search term is entered, submitted and the API call is successful and artists are returned", async () => {
+  it("When a search term is entered, submitted, artists are returned and the user can see them", async () => {
     const { getByRole, findAllByRole } = customRender(
       WrapperComponent,
       <>
@@ -88,14 +87,7 @@ describe("All possibilities where artists are returned from the Search component
       </>
     );
 
-    const { input, submitButton } = returnInputAndButton(
-      getByRole,
-      "search-button-artists"
-    );
-
-    await user.type(input, "hi");
-
-    user.click(submitButton);
+    await renderComponentSearched(getByRole, "search-button-artists");
 
     expect(await findAllByRole("artist-card")).toHaveLength(10);
   });
@@ -107,7 +99,7 @@ describe("All possibilities where no artists are returned", () => {
     server.use(...data);
   });
 
-  test("When a search term is entered, submitted and the API call is successful and no artists are returned", async () => {
+  test("When a search term is entered, submitted, no artists were returned and the component displays this", async () => {
     const { getByRole, findByRole } = customRender(
       WrapperComponent,
       <>
@@ -116,14 +108,7 @@ describe("All possibilities where no artists are returned", () => {
       </>
     );
 
-    const { input, submitButton } = returnInputAndButton(
-      getByRole,
-      "search-button-artists"
-    );
-
-    await user.type(input, "hi");
-
-    user.click(submitButton);
+    await renderComponentSearched(getByRole, "search-button-artists");
 
     expect(
       await findByRole("heading", { name: "No results found" })
@@ -133,11 +118,11 @@ describe("All possibilities where no artists are returned", () => {
 
 describe("All possibilities where song results are returned from Search component", () => {
   beforeEach(() => {
-    let data = artistAndTrackHandlers(songResultsSuccess);
+    let data = artistAndTrackHandlers(songResults);
     server.use(...data);
   });
 
-  it("When a search term is entered, submitted and the API call is successful and songs are returned", async () => {
+  it("When a search term is entered, submitted, songs are returned and the user can see these", async () => {
     const { getByRole, findAllByRole } = customRender(
       WrapperComponent,
       <>
@@ -146,14 +131,7 @@ describe("All possibilities where song results are returned from Search componen
       </>
     );
 
-    const { input, submitButton } = returnInputAndButton(
-      getByRole,
-      "search-button-songs"
-    );
-
-    await user.type(input, "hi");
-
-    user.click(submitButton);
+    await renderComponentSearched(getByRole, "search-button-songs");
 
     const cards = await findAllByRole("song-item");
 
@@ -175,27 +153,16 @@ describe("All possibilities when no song results are returned from Search compon
       </Routes>
     );
 
-    const { input, submitButton } = returnInputAndButton(
-      getByRole,
-      "search-button-songs"
-    );
-
     expect(history.location.pathname).toBe("/search");
 
-    await act(async () => {
-      await user.type(input, "hi");
-    });
-
-    await act(async () => {
-      await user.click(submitButton);
-    });
+    await renderComponentSearched(getByRole, "search-button-songs");
 
     await waitFor(() => {
       expect(history.location.pathname).toBe("/songs");
     });
   });
 
-  it("A search term is entered, a search is made and no songs are returned", async () => {
+  it("A search term is entered, no songs are returned and the component displays this", async () => {
     const { getByRole, findByRole } = customRender(
       WrapperComponent,
       <>
@@ -204,14 +171,7 @@ describe("All possibilities when no song results are returned from Search compon
       </>
     );
 
-    const { input, submitButton } = returnInputAndButton(
-      getByRole,
-      "search-button-songs"
-    );
-
-    await user.type(input, "hi");
-
-    user.click(submitButton);
+    await renderComponentSearched(getByRole, "search-button-songs");
 
     expect(
       await findByRole("heading", { name: "No results found" })

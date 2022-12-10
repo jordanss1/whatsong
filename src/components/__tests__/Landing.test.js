@@ -7,7 +7,6 @@ import SearchContext, { SearchStore } from "../../contexts/SearchStore";
 import { NavigationAndStore } from "../../../test-utils/test-utils";
 import { history } from "../../../test-utils";
 import Landing from "../Landing";
-import Search from "../Search";
 
 const WrapperComponent = ({ children }) => {
   return (

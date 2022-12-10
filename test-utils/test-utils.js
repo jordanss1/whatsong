@@ -15,20 +15,8 @@ export const LinkRouterProvider = ({ children, entry }) => {
 
 export const NavigationRouter = ({ children }) => {
   return (
-    <Router location={pathname} navigator={history}>
-      {children}
-    </Router>
-  );
-};
-
-//Import this to destructure/customize Context
-
-export const StoreAndNavWithoutContext = ({ children, store }) => {
-  const StoreComponent = store;
-
-  return (
     <Router location={history.location} navigator={history}>
-      <StoreComponent>{children}</StoreComponent>
+      {children}
     </Router>
   );
 };
@@ -36,7 +24,7 @@ export const StoreAndNavWithoutContext = ({ children, store }) => {
 //These are HOCs that provide either useContext by itself or a mix of Context/useNavigate or Context/Link components
 //Dynamically provide the required store/context
 
-const Context = ({ children, context }) => {
+export const Context = ({ children, context }) => {
   const ContextComponent = context;
   const fullProviders = useContext(context);
 

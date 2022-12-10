@@ -1,4 +1,4 @@
-export const artistResultsSuccess = {
+export const artistResults = {
   artists: {
     items: [
       {
@@ -65,7 +65,7 @@ export const artistResultsSuccess = {
   },
 };
 
-export const artistResultsSuccessFull = {
+export const artistResultsFull = {
   artists: {
     items: [
       {
@@ -298,7 +298,7 @@ export const artistResultsNone = {
   artists: { items: [] },
 };
 
-export const songResultsSuccess = {
+export const songResults = {
   tracks: {
     items: [
       {
@@ -363,6 +363,143 @@ export const songResultsSuccess = {
           total_tracks: 0,
         },
         artists: [{ name: "Test 5" }],
+        track_number: 1,
+        duration_ms: 10000,
+      },
+    ],
+  },
+};
+
+export const songResultsDouble = {
+  tracks: {
+    items: [
+      {
+        name: "Test 1",
+        external_urls: { spotify: "www.spotify.com" },
+        album: {
+          images: [0, 0, 0],
+          album_type: "single",
+          name: "Test 1",
+          total_tracks: 0,
+        },
+        artists: [{ name: "Test 1" }],
+        track_number: 1,
+        duration_ms: 10000,
+      },
+      {
+        name: "Test 2",
+        external_urls: { spotify: "www.spotify.com" },
+        album: {
+          images: [0, 0, 0],
+          album_type: "single",
+          name: "Test 2",
+          total_tracks: 0,
+        },
+        artists: [{ name: "Test 2" }],
+        track_number: 1,
+        duration_ms: 10000,
+      },
+      {
+        name: "Test 3",
+        external_urls: { spotify: "www.spotify.com" },
+        album: {
+          images: [0, 0, 0],
+          album_type: "single",
+          name: "Test 3",
+          total_tracks: 0,
+        },
+        artists: [{ name: "Test 3" }],
+        track_number: 1,
+        duration_ms: 10000,
+      },
+      {
+        name: "Test 4",
+        external_urls: { spotify: "www.spotify.com" },
+        album: {
+          images: [0, 0, 0],
+          album_type: "single",
+          name: "Test 4",
+          total_tracks: 0,
+        },
+        artists: [{ name: "Test 4" }],
+        track_number: 1,
+        duration_ms: 10000,
+      },
+      {
+        name: "Test 5",
+        external_urls: { spotify: "www.spotify.com" },
+        album: {
+          images: [0, 0, 0],
+          album_type: "single",
+          name: "Test 5",
+          total_tracks: 0,
+        },
+        artists: [{ name: "Test 5" }],
+        track_number: 1,
+        duration_ms: 10000,
+      },
+      {
+        name: "Test 6",
+        external_urls: { spotify: "www.spotify.com" },
+        album: {
+          images: [0, 0, 0],
+          album_type: "single",
+          name: "Test 6",
+          total_tracks: 0,
+        },
+        artists: [{ name: "Test 6" }],
+        track_number: 1,
+        duration_ms: 10000,
+      },
+      {
+        name: "Test 7",
+        external_urls: { spotify: "www.spotify.com" },
+        album: {
+          images: [0, 0, 0],
+          album_type: "single",
+          name: "Test 7",
+          total_tracks: 0,
+        },
+        artists: [{ name: "Test 7" }],
+        track_number: 1,
+        duration_ms: 10000,
+      },
+      {
+        name: "Test 8",
+        external_urls: { spotify: "www.spotify.com" },
+        album: {
+          images: [0, 0, 0],
+          album_type: "single",
+          name: "Test 8",
+          total_tracks: 0,
+        },
+        artists: [{ name: "Test 8" }],
+        track_number: 1,
+        duration_ms: 10000,
+      },
+      {
+        name: "Test 9",
+        external_urls: { spotify: "www.spotify.com" },
+        album: {
+          images: [0, 0, 0],
+          album_type: "single",
+          name: "Test 9",
+          total_tracks: 0,
+        },
+        artists: [{ name: "Test 9" }],
+        track_number: 1,
+        duration_ms: 10000,
+      },
+      {
+        name: "Test 10",
+        external_urls: { spotify: "www.spotify.com" },
+        album: {
+          images: [0, 0, 0],
+          album_type: "single",
+          name: "Test 10",
+          total_tracks: 0,
+        },
+        artists: [{ name: "Test 10" }],
         track_number: 1,
         duration_ms: 10000,
       },

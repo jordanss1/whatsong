@@ -12,7 +12,6 @@ import SelectedItem from "./SelectedItem";
 import ArtistList from "./ArtistList";
 import SongList from "./SongList";
 import Pages from "./Pages";
-import Loader from "./Loader";
 import { motion } from "framer-motion";
 
 const SearchList = () => {
@@ -62,7 +61,7 @@ const SearchList = () => {
       navigate(`/artists/${idRef.current}`);
       idRef.current = null;
     }
-  }, [albums && topTracks]);
+  }, [albums, topTracks]);
 
   let animations = useMemo(() => {
     return [
@@ -77,7 +76,7 @@ const SearchList = () => {
         exit: { x: 300, opacity: 0 },
       },
     ];
-  }, [animateStateList]);
+  }, []);
 
   const navContent = () => {
     return (
@@ -97,15 +96,21 @@ const SearchList = () => {
     );
   };
 
-  const handleProfileClick = useCallback((id) => {
-    idRef.current = id;
-    spotifyArtistAndAlbum(id, setProfile);
-    setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
-  }, []);
+  const handleProfileClick = useCallback(
+    (id) => {
+      idRef.current = id;
+      spotifyArtistAndAlbum(id, setProfile);
+      setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
+    },
+    [setAnimateStateList, setProfile, spotifyArtistAndAlbum]
+  );
 
-  const handleSelectedItem = useCallback((item) => {
-    setSelectedItem(item);
-  }, []);
+  const handleSelectedItem = useCallback(
+    (item) => {
+      setSelectedItem(item);
+    },
+    [setSelectedItem]
+  );
 
   const songOrArtistContainer =
     typeString === "artist"
