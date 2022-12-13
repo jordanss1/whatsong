@@ -41,6 +41,8 @@ export const SearchStore = ({ children }) => {
 
   const focused = useRef(false);
 
+  const pageChange = useRef(false);
+
   const navigate = useNavigate();
 
   const fullProviders = {
@@ -52,6 +54,7 @@ export const SearchStore = ({ children }) => {
     artist,
     albums,
     focused,
+    pageChange,
     slicedElements,
     page,
     typeString,

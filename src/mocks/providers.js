@@ -16,6 +16,7 @@ export const selectedItems = {
   albums: null,
   topTracks: null,
   animateStateList: { initial: "", exit: "" },
+  animateStateSearch: { initial: "", exit: "" },
   selectedItem: null,
   setTypeString: (typeString) => (selectedItems.typeString = typeString),
   setItems: (items) => (selectedItems.items = items),

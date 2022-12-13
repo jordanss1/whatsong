@@ -13,14 +13,11 @@ const SearchBar = () => {
     spotifyTokenAndSearch,
     submittedTerm,
     setSubmittedTerm,
+    pageChange,
   } = useContext(SearchContext);
-
-  const pageChange = useRef(false);
 
   useEffect(() => {
     focused.current = false;
-    console.log(typeString);
-    console.log(submittedTerm);
 
     if (typeString === "artist" && submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, typeString, setItems);
@@ -56,7 +53,6 @@ const SearchBar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (term) {
       setSubmittedTerm(term);
       setTerm("");
@@ -74,7 +70,6 @@ const SearchBar = () => {
         }}
         value={term}
         onChange={({ target }) => setTerm(target.value)}
-        role="searchList-input"
         type="text"
         placeholder={`${
           typeString === "artist" ? "Search artists" : "Search songs"

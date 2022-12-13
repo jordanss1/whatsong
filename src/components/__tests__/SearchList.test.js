@@ -14,14 +14,13 @@ import { server } from "../../mocks/server";
 import { history } from "../../../test-utils";
 import { artistAndTrackHandlers } from "../../mocks/handlers";
 import {
-  artistResults,
   artistResultsFull,
   songResultsNone,
   songResults,
   songResultsDouble,
-} from "../../api/mock";
+} from "../../mocks/api";
 import { selectedItems } from "../../mocks/providers";
-import SearchBar from "../SearchBar";
+import Search from "../Search";
 
 const DefaultStoreAndContext = ({ children }) => {
   return (
@@ -42,9 +41,9 @@ const user = userEvent.setup();
 
 //Search function that executes an automatic search; created to reduce repeated code in tests
 
-const renderComponentSearched = async (query, button, input) => {
-  const searchComponentInput = query(input);
-  const searchComponentButton = query(button);
+const renderComponentSearched = async (queries) => {
+  const searchComponentInput = queries[0];
+  const searchComponentButton = queries[1];
 
   await user.type(searchComponentInput, "hi");
   user.click(searchComponentButton);
@@ -52,24 +51,37 @@ const renderComponentSearched = async (query, button, input) => {
 
 describe("The SearchList component on the /artists path", () => {
   it("The input in SearchList makes a search and returns artists when there's existing artists", async () => {
-    let data = artistAndTrackHandlers(artistResultsFull);
+    const {
+      getByRole,
+      findByPlaceholderText,
+      findByRole,
+      debug,
+      findAllByRole,
+    } = customRender(
+      DefaultStoreAndContext,
+      <>
+        <Search />
+        <SearchList />
+      </>
+    );
+
+    await renderComponentSearched([
+      getByRole("search-all-input"),
+      getByRole("search-button-artists"),
+    ]);
+
+    expect(await findAllByRole("artist-card")).toHaveLength(10);
+
+    const data = artistAndTrackHandlers(artistResultsFull);
     server.use(...data);
 
-    selectedItems.items = artistResults.artists.items;
+    await renderComponentSearched([
+      await findByPlaceholderText("Search artists"),
+      await findByRole("searchList-button"),
+    ]);
 
-    const { getByRole, getAllByRole, debug, findAllByRole } = customContext(
-      <SearchList />,
-      selectedItems,
-      { wrapper: NavigationRouter }
-    );
-
-    expect(getAllByRole("artist-card")).toHaveLength(10);
-
-    await renderComponentSearched(
-      getByRole,
-      "searchList-button",
-      "searchList-input"
-    );
+    //This below should come back as true but it doesn't, even though when you console log
+    //it shows the new array with 37 objects
 
     // expect(await findAllByRole("artist-card")).toHaveLength(37);
   });

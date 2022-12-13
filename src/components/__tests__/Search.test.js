@@ -13,7 +13,7 @@ import {
   artistResultsNone,
   songResultsNone,
   songResults,
-} from "../../api/mock";
+} from "../../mocks/api";
 import {
   NavigationAndStore,
   customRender,
