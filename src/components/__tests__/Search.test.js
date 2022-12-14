@@ -3,7 +3,7 @@ import { fireEvent, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { Route, Routes } from "react-router-dom";
-import SearchContext, { SearchStore } from "../../contexts/SearchStore";
+import { SearchStore } from "../../contexts/SearchStore";
 import Search from "../Search";
 import SearchList from "../SearchList";
 import { server } from "../../mocks/server";
@@ -21,9 +21,7 @@ import {
 
 const WrapperComponent = ({ children }) => {
   return (
-    <NavigationAndStore context={SearchContext} store={SearchStore}>
-      {children}
-    </NavigationAndStore>
+    <NavigationAndStore store={SearchStore}>{children}</NavigationAndStore>
   );
 };
 
@@ -99,7 +97,7 @@ describe("All possibilities where no artists are returned", () => {
     server.use(...data);
   });
 
-  test("When a search term is entered, submitted, no artists were returned and the component displays this", async () => {
+  it("When a search term is entered, submitted, no artists were returned and the component displays this", async () => {
     const { getByRole, findByRole } = customRender(
       WrapperComponent,
       <>

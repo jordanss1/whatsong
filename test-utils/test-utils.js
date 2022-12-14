@@ -1,5 +1,4 @@
 import { MemoryRouter, Router } from "react-router-dom";
-import { useContext } from "react";
 import { render } from "@testing-library/react";
 import { history } from ".";
 
@@ -22,37 +21,20 @@ export const NavigationRouter = ({ children }) => {
 };
 
 //These are HOCs that provide either useContext by itself or a mix of Context/useNavigate or Context/Link components
-//Dynamically provide the required store/context
+//Dynamically provide the required store
 
-export const Context = ({ children, context }) => {
-  const ContextComponent = context;
-  const fullProviders = useContext(context);
-
-  return (
-    <ContextComponent.Provider value={fullProviders}>
-      {children}
-    </ContextComponent.Provider>
-  );
-};
-
-export const Store = ({ children, store, context }) => {
+export const Store = ({ children, store }) => {
   const StoreComponent = store;
 
-  return (
-    <StoreComponent>
-      <Context context={context}>{children}</Context>
-    </StoreComponent>
-  );
+  return <StoreComponent>{children}</StoreComponent>;
 };
 
-export const NavigationAndStore = ({ children, store, context }) => {
+export const NavigationAndStore = ({ children, store }) => {
   const StoreComponent = store;
 
   return (
     <Router location={history.location} navigator={history}>
-      <StoreComponent>
-        <Context context={context}>{children}</Context>
-      </StoreComponent>
+      <StoreComponent>{children}</StoreComponent>
     </Router>
   );
 };
@@ -61,14 +43,11 @@ export const LinkAndStoreWrapper = ({
   children,
   initialEntriesForMemRouter,
   store,
-  context,
 }) => {
   const StoreComponent = store;
   return (
     <MemoryRouter entry={initialEntriesForMemRouter}>
-      <StoreComponent>
-        <Context context={context}>{children}</Context>
-      </StoreComponent>
+      <StoreComponent>{children}</StoreComponent>
     </MemoryRouter>
   );
 };

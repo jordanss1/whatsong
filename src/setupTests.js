@@ -5,14 +5,18 @@ import { cleanup } from "@testing-library/react";
 
 beforeAll(() => {
   server.listen();
-  cleanup();
+  server.resetHandlers();
 });
 
 // Reset any request handlers that we may add during the tests,
 
 // so they don't affect other tests.
 
-afterEach(() => server.resetHandlers());
+afterEach(() => {
+  window.sessionStorage.clear();
+  server.resetHandlers();
+  cleanup();
+});
 
 // Clean up after the tests are finished.
 

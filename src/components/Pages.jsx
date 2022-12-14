@@ -26,13 +26,25 @@ const Pages = () => {
     }
   }, [page]);
 
+  const pagesWidth = () => {
+    if (items.length < 21) {
+      return "w-25";
+    } else if (items.length < 31) {
+      return "w-50";
+    } else if (items.length > 31) {
+      return "w-75";
+    }
+  };
+
   return (
     <div
       className={`w-100 pages justify-content-center  mb-lg-4 ${
         items.length === 0 ? "d-none" : "d-flex"
       }`}
     >
-      <div className="d-flex justify-content-center justify-content-between pages w-75 fs-1">
+      <div
+        className={`d-flex justify-content-center justify-content-between pages ${pagesWidth()} fs-1`}
+      >
         <p
           style={
             page === 1
