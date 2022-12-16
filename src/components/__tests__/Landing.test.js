@@ -1,6 +1,5 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
-import { Route, Routes } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import SearchContext, { SearchStore } from "../../contexts/SearchStore";
@@ -19,12 +18,9 @@ const WrapperComponent = ({ children }) => {
 test("On hover the div is visible/class added and the class removed from Nav", async () => {
   const user = userEvent.setup();
 
-  const { getByRole, container } = render(
-    <Routes>
-      <Route path={"/"} element={<Landing />} />
-    </Routes>,
-    { wrapper: WrapperComponent }
-  );
+  const { getByRole, container } = render(<Landing />, {
+    wrapper: WrapperComponent,
+  });
 
   const button = getByRole("button", { name: "Get started!" });
   const div = container.getElementsByClassName("spotifyDiv")[0];
@@ -41,12 +37,7 @@ test("On hover the div is visible/class added and the class removed from Nav", a
 test("On click of button, the Search component is mounted", async () => {
   const user = userEvent.setup();
 
-  const { getByRole } = render(
-    <Routes>
-      <Route path={"/"} element={<Landing />} />
-    </Routes>,
-    { wrapper: WrapperComponent }
-  );
+  const { getByRole } = render(<Landing />, { wrapper: WrapperComponent });
   const button = getByRole("button", { name: "Get started!" });
 
   expect(history.location.pathname).toBe("/");

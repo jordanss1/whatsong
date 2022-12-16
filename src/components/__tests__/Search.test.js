@@ -2,7 +2,6 @@ import React from "react";
 import { fireEvent, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import { Route, Routes } from "react-router-dom";
 import { SearchStore } from "../../contexts/SearchStore";
 import Search from "../Search";
 import SearchList from "../SearchList";
@@ -25,8 +24,6 @@ const WrapperComponent = ({ children }) => {
   );
 };
 
-beforeEach(() => history.push("/search"));
-
 const user = userEvent.setup();
 
 //Search function that executes an automatic search; created to reduce repeated code in tests
@@ -44,6 +41,13 @@ const renderComponentSearched = async (query, button) => {
   });
 };
 
+export const changeHandlers = (array, handlers) => {
+  let data = handlers(array);
+  server.use(...data);
+};
+
+beforeEach(() => history.push("/search"));
+
 test("Each Artists and Songs button disabled on render but enabled after entering text", () => {
   const { getByRole, getAllByPlaceholderText } = customRender(
     WrapperComponent,
@@ -60,12 +64,7 @@ test("Each Artists and Songs button disabled on render but enabled after enterin
 
 describe("All possibilities where artists are returned from the Search component", () => {
   it("On click of Artists button, the SearchList component is mounted and the pathname is /artists", async () => {
-    const { getByRole } = customRender(
-      WrapperComponent,
-      <Routes>
-        <Route path={"/search"} element={<Search />} />
-      </Routes>
-    );
+    const { getByRole } = customRender(WrapperComponent, <Search />);
 
     expect(history.location.pathname).toBe("/search");
 
@@ -93,8 +92,7 @@ describe("All possibilities where artists are returned from the Search component
 
 describe("All possibilities where no artists are returned", () => {
   beforeEach(() => {
-    let data = artistAndTrackHandlers(artistResultsNone);
-    server.use(...data);
+    changeHandlers(artistResultsNone, artistAndTrackHandlers);
   });
 
   it("When a search term is entered, submitted, no artists were returned and the component displays this", async () => {
@@ -116,8 +114,7 @@ describe("All possibilities where no artists are returned", () => {
 
 describe("All possibilities where song results are returned from Search component", () => {
   beforeEach(() => {
-    let data = artistAndTrackHandlers(songResults);
-    server.use(...data);
+    changeHandlers(songResults, artistAndTrackHandlers);
   });
 
   it("When a search term is entered, submitted, songs are returned and the user can see these", async () => {
@@ -139,17 +136,11 @@ describe("All possibilities where song results are returned from Search componen
 
 describe("All possibilities when no song results are returned from Search component", () => {
   beforeEach(() => {
-    const data = artistAndTrackHandlers(songResultsNone);
-    server.use(...data);
+    changeHandlers(songResultsNone, artistAndTrackHandlers);
   });
 
   it("On click of Songs button, the SearchList component is mounted and Songs JSX rendered", async () => {
-    const { getByRole } = customRender(
-      WrapperComponent,
-      <Routes>
-        <Route path={"/search"} element={<Search />} />
-      </Routes>
-    );
+    const { getByRole } = customRender(WrapperComponent, <Search />);
 
     expect(history.location.pathname).toBe("/search");
 

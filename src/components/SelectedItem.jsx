@@ -90,6 +90,7 @@ const SelectedItem = () => {
         >
           <div className="w-100 d-flex justify-content-end align-items-center mt-2 pb-3">
             <i
+              data-testid="x-icon"
               onClick={() => setSelectedItem(null)}
               className="window close outline icon iconRed fs-4"
             ></i>

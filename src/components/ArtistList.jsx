@@ -30,13 +30,15 @@ const ArtistList = ({ handleProfileClick, slicedElements, items }) => {
                       />
                     </div>
                   )}
-                  <div className="content artistContent ps-2 pt-1  d-flex justify-content-center justify-content-evenly align-content-center p-0">
+                  <div className="content artistContent ps-2 pt-1 d-flex justify-content-center justify-content-evenly align-content-center p-0">
                     <i
                       onClick={() => handleProfileClick(id)}
                       title="View artist profile"
                       className="user icon fs-4"
                     ></i>
-                    <a className="header text-center fs-5 pt-2">{name}</a>
+                    <a href="" className="header text-center fs-5 pt-2">
+                      {name}
+                    </a>
                     <i
                       title={external_urls.spotify}
                       onClick={() =>
