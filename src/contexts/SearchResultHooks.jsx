@@ -10,13 +10,6 @@ export const useArtistResults = (initialState) => {
           albums: action.albums,
           topTracks: action.topTracks,
         };
-      case "DELETE":
-        return {
-          ...state,
-          artist: null,
-          albums: null,
-          topTracks: null,
-        };
     }
   }, initialState);
 
@@ -29,11 +22,7 @@ export const useArtistResults = (initialState) => {
     });
   });
 
-  const deleteProfile = useCallback(() => {
-    dispatch({ type: "DELETE" });
-  });
-
   const { artist, albums, topTracks } = items;
 
-  return { artist, albums, topTracks, setProfile, deleteProfile };
+  return { artist, albums, topTracks, setProfile };
 };

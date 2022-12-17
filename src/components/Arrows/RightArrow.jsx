@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 
-const RightArrow = ({ func, style }) => {
+const RightArrow = ({ func, style, testId }) => {
   return (
-    <div onClick={func} className={style}>
+    <div data-testid={testId} onClick={func} className={style}>
       <i className="right chevron icon align-self-center"></i>
     </div>
   );

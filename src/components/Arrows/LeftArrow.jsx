@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 
-const LeftArrow = ({ func, style }) => {
+const LeftArrow = ({ func, style, testId }) => {
   return (
-    <div onClick={func} className={style}>
+    <div data-testid={testId} onClick={func} className={style}>
       <i className="left chevron icon"></i>
     </div>
   );

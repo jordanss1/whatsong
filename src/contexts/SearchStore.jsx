@@ -32,12 +32,11 @@ export const SearchStore = ({ children }) => {
     exit: { x: -300, opacity: 0 },
   });
 
-  const { artist, albums, topTracks, setProfile, deleteProfile } =
-    useArtistResults({
-      artist: null,
-      albums: null,
-      topTracks: null,
-    });
+  const { artist, albums, topTracks, setProfile } = useArtistResults({
+    artist: null,
+    albums: null,
+    topTracks: null,
+  });
 
   const focused = useRef(false);
 
@@ -67,7 +66,6 @@ export const SearchStore = ({ children }) => {
     setFilteredAlbum,
     setFilteredTrack,
     setProfile,
-    deleteProfile,
     setSlicedElements,
     setPage,
     setTypeString,

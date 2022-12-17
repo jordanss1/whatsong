@@ -28,13 +28,17 @@ const ArtistTopTracks = ({ topTracks, filteredTrack, setFilteredTrack }) => {
     if (filteredTrack === 0 || topTracks.noTracks) {
       return (
         <div className="d-flex justify-content-start smallArrowDiv">
-          <LeftArrow style={leftSmallDisabled} />
+          <LeftArrow testId="smallLeft" style={leftSmallDisabled} />
         </div>
       );
     } else {
       return (
         <div className="d-flex justify-content-start smallArrowDiv">
-          <LeftArrow style={leftSmall} func={arrowProps.leftClick} />
+          <LeftArrow
+            testId="smallLeft"
+            style={leftSmall}
+            func={arrowProps.leftClick}
+          />
         </div>
       );
     }
@@ -44,13 +48,17 @@ const ArtistTopTracks = ({ topTracks, filteredTrack, setFilteredTrack }) => {
     if (filteredTrack === topTracks.length - 1 || topTracks.noTracks) {
       return (
         <div className="d-flex justify-content-end smallArrowDiv">
-          <RightArrow style={rightSmallDisabled} />
+          <RightArrow testId="smallRight" style={rightSmallDisabled} />
         </div>
       );
     } else {
       return (
         <div className="d-flex justify-content-end smallArrowDiv">
-          <RightArrow style={rightSmall} func={arrowProps.rightClick} />
+          <RightArrow
+            testId="smallRight"
+            style={rightSmall}
+            func={arrowProps.rightClick}
+          />
         </div>
       );
     }

@@ -187,6 +187,7 @@ const SelectedItem = () => {
             <div className="d-flex flex-column align-items-center justify-content-center artistHeading">
               <div className="w-100 d-flex justify-content-end pe-5">
                 <i
+                  data-testid="red-x"
                   onClick={() => navigate("artists")}
                   className="window close outline icon iconRed fs-1"
                 ></i>

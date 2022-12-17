@@ -513,45 +513,39 @@ export const songResultsNone = {
 
 export const albumAndTracks = [
   {
-    external_urls: "www.spotify.com",
-    name: "Test 1",
+    external_urls: { spotify: "www.spotify.com/1" },
+    name: "Name",
     followers: { total: 1000 },
     images: [{ url: "" }],
   },
   {
     items: [
-      { name: "Test 1", images: ["a", { url: "" }] },
-      { name: "Test 2", images: ["a", { url: "" }] },
-      { name: "Test 3", images: ["a", { url: "" }] },
+      { name: "Album 1", images: ["a", { url: "" }] },
+      { name: "Album 2", images: ["a", { url: "" }] },
+      { name: "Album 3", images: ["a", { url: "" }] },
     ],
   },
 
   {
     tracks: [
-      { album: { images: [0, 0, { url: "" }] }, name: "Test 1" },
-      { album: { images: [0, 0, { url: "" }] }, name: "Test 2" },
-      { album: { images: [0, 0, { url: "" }] }, name: "Test 3" },
+      { album: { images: [0, 0, { url: "" }] }, name: "Track 1" },
+      { album: { images: [0, 0, { url: "" }] }, name: "Track 2" },
+      { album: { images: [0, 0, { url: "" }] }, name: "Track 3" },
     ],
   },
 ];
 
 export const albumAndTracksNoResults = [
   {
-    data: {
-      external_urls: "www.spotify.com",
-      name: "Test 1",
-      followers: 1000,
-      images: [{ url: "" }],
-    },
+    external_urls: { spotify: "www.spotify.com/1" },
+    name: "Name",
+    followers: { total: 1000 },
+    images: [{ url: "" }],
   },
   {
-    data: {
-      items: [],
-    },
+    items: [],
   },
   {
-    data: {
-      tracks: [],
-    },
+    tracks: [],
   },
 ];

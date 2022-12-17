@@ -40,17 +40,29 @@ const ArtistAlbums = ({ albums, setFilteredAlbum, filteredAlbum }) => {
 
   const renderLeftArrow = () => {
     if (filteredAlbum === 0 || albums.noAlbums) {
-      return <LeftArrow style={leftDisabledStyle} />;
+      return <LeftArrow testId="bigLeft" style={leftDisabledStyle} />;
     } else {
-      return <LeftArrow func={arrowProps.leftClick} style={leftStyle} />;
+      return (
+        <LeftArrow
+          testId="bigLeft"
+          func={arrowProps.leftClick}
+          style={leftStyle}
+        />
+      );
     }
   };
 
   const renderRightArrow = () => {
     if (filteredAlbum === albums.length - 1 || albums.noAlbums) {
-      return <RightArrow style={rightDisabledStyle} />;
+      return <RightArrow testId="bigRight" style={rightDisabledStyle} />;
     } else {
-      return <RightArrow func={arrowProps.rightClick} style={rightStyle} />;
+      return (
+        <RightArrow
+          testId="bigRight"
+          func={arrowProps.rightClick}
+          style={rightStyle}
+        />
+      );
     }
   };
 
