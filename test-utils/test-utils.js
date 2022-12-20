@@ -20,7 +20,7 @@ export const NavigationRouter = ({ children }) => {
   );
 };
 
-//These are HOCs that provide either useContext by itself or a mix of Context/useNavigate or Context/Link components
+//These are HOCs that provide a mix of Context/useNavigate or Context/Link components
 //Dynamically provide the required store
 
 export const Store = ({ children, store }) => {

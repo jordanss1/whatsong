@@ -1,7 +1,7 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import { waitFor, act, fireEvent } from "@testing-library/react";
+import { waitFor, act } from "@testing-library/react";
 import {
   NavigationAndStore,
   customRender,
@@ -9,6 +9,7 @@ import {
 import Search from "../Search";
 import SearchList from "../SearchList";
 import SelectedItem from "../SelectedItem";
+import { searchComponent } from "./SearchList.test";
 import { SearchStore } from "../../contexts/SearchStore";
 import { history } from "../../../test-utils";
 import { changeHandlers } from "./Search.test";
@@ -24,14 +25,6 @@ const WrapperComponent = ({ children }) => {
 const user = userEvent.setup();
 
 //Search function that executes an automatic search; created to reduce repeated code in tests
-
-const searchComponent = async (queries) => {
-  const input = queries[0];
-  const button = queries[1];
-
-  await act(async () => await user.type(input, "hi"));
-  await act(async () => await user.click(button));
-};
 
 describe("SelectedItem component when there are albums and songs", () => {
   it("The artist's name, followers, albums and top tracks are displayed", async () => {

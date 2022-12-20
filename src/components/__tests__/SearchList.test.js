@@ -36,7 +36,7 @@ const user = userEvent.setup();
 
 //Search function that executes an automatic search; created to reduce repeated code in tests
 
-const searchComponent = async (queries) => {
+export const searchComponent = async (queries) => {
   const input = queries[0];
   const button = queries[1];
 
