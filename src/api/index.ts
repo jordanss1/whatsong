@@ -1,5 +1,8 @@
+import React from "react";
 import axios from "axios";
 import { Buffer } from "buffer";
+import { TrackAndArtistDetailsType } from "../types";
+import { ArtistAndAlbumStateSetter } from "../contexts/SearchResultHooks";
 
 const clientId = process.env.REACT_APP_ID;
 const clientSecret = process.env.REACT_APP_SECRET;
@@ -15,7 +18,10 @@ const spotifyQuery = axios.create({
   baseURL: "https://api.spotify.com/v1",
 });
 
-export const spotifyArtistAndAlbum = (id: string, state: () => {}): Promise<> => {
+export const spotifyArtistAndAlbum = (
+  id: string,
+  state: ArtistAndAlbumStateSetter
+): void => {
   const data = new URLSearchParams({ grant_type: "client_credentials" });
 
   const artistAndAlbum = [
@@ -44,29 +50,31 @@ export const spotifyArtistAndAlbum = (id: string, state: () => {}): Promise<> =>
           )
         )
         .then((responses) => {
-          const artist = responses[0].data;
-          let topTracks = responses[2].data.tracks;
-          let albums = [
-            ...new Map(
-              responses[1].data.items.map((item) => [item.name, item])
-            ).values(),
-          ];
-
-          albums = albums.length === 0 ? { noAlbums: "no albums" } : albums;
-
-          topTracks =
-            topTracks.length === 0 ? { noTracks: "no tracks" } : topTracks;
-
-          state(artist, albums, topTracks);
-          sessionStorage.setItem(
-            "artist-details",
-            JSON.stringify([artist, albums, topTracks])
+          state(
+            responses[0].data,
+            responses[1].data.items,
+            responses[2].data.tracks
           );
+        })
+        .catch((err) => {
+          if (err instanceof Error) {
+            throw new Error(err.message);
+          }
         });
     });
 };
 
-export const spotifyTokenAndSearch = (q, type, state) => {
+export type SpotifyTokenAndSearchType = (
+  q: string,
+  type: "artist" | "tracks",
+  state: React.Dispatch<React.SetStateAction<TrackAndArtistDetailsType | null>>
+) => void;
+
+export const spotifyTokenAndSearch: SpotifyTokenAndSearchType = (
+  q,
+  type,
+  state
+) => {
   const data = new URLSearchParams({ grant_type: "client_credentials" });
 
   spotifyToken
