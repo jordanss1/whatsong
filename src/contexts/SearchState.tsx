@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { spotifyTokenAndSearch, spotifyArtistAndAlbum } from "../api";
 import {
@@ -10,7 +10,7 @@ import {
 import { useArtistResults, artistInitState } from "./SearchResultHooks";
 import { TopTracksDetailsType, TrackAndArtistDetailsType } from "../types";
 
-const SearchState = () => {
+export const SearchState = () => {
   const [term, setTerm] = useState<string>("");
   const [submittedTerm, setSubmittedTerm] = useState<string>("");
   const [items, setItems] = useState<TrackAndArtistDetailsType | null>(null);
@@ -32,10 +32,6 @@ const SearchState = () => {
   const { artist, albums, topTracks, setProfile } =
     useArtistResults(artistInitState);
 
-  const focused = useRef<boolean>(false);
-
-  const pageChange = useRef<boolean>(false);
-
   const navigate = useNavigate();
 
   const providerValues = {
@@ -46,8 +42,6 @@ const SearchState = () => {
     topTracks,
     artist,
     albums,
-    focused,
-    pageChange,
     slicedElements,
     page,
     typeString,
@@ -85,8 +79,6 @@ const initSearchContextState: UseSearchStateContext = {
   topTracks: [],
   artist: artistInitState.artist,
   albums: [],
-  focused: useRef(false),
-  pageChange: useRef(false),
   slicedElements: [0, 10],
   page: 0,
   typeString: "",
@@ -111,4 +103,8 @@ const initSearchContextState: UseSearchStateContext = {
   navigate: () => {},
 };
 
-export default SearchState;
+const SearchContext = createContext<UseSearchStateContext>(
+  initSearchContextState
+);
+
+export default SearchContext;

@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import SearchContext from "../contexts/SearchStore";
 import { motion } from "framer-motion";
 
 const Search = () => {
   const {
     animateStateSearch,
-    focused,
     typeString,
     setTypeString,
     term,
@@ -19,6 +18,8 @@ const Search = () => {
     items,
     navigate,
   } = useContext(SearchContext);
+
+  const focused = useRef(false);
 
   const animations = {
     initial: (animateStateSearch) => ({ ...animateStateSearch.initial }),
