@@ -7,14 +7,15 @@ const SearchBar = () => {
     items,
     setPage,
     setTerm,
-    focused,
     setItems,
     typeString,
     spotifyTokenAndSearch,
     submittedTerm,
     setSubmittedTerm,
-    pageChange,
   } = useContext(SearchContext);
+
+  const focused = useRef(false);
+  const pageChange = useRef(false);
 
   useEffect(() => {
     focused.current = false;
