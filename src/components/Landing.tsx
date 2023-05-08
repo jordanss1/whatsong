@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useContext } from "react";
+import { useEffect, useRef, useContext, ReactElement } from "react";
 import SearchContext from "../contexts/SearchStore";
 import NavBar from "./NavBar";
 import "../styles/all.css";
 import { motion } from "framer-motion";
+import { UseSearchStateContext } from "../contexts/SearchState";
 
-const Landing = () => {
-  const { navigate } = useContext(SearchContext);
-  const hover = useRef(false);
-  const timeoutId = useRef(null);
+const Landing = (): ReactElement => {
+  const { navigate } = useContext<UseSearchStateContext>(SearchContext);
+  const hover = useRef<boolean>(false);
+  const timeoutId = useRef<NodeJS.Timeout | number | null>(null);
 
   const animations = {
     initial: { opacity: 0.5, y: 0 },
@@ -16,17 +17,19 @@ const Landing = () => {
   };
 
   useEffect(() => {
-    const nav = document.getElementsByClassName("navClass")[0];
+    const nav = document.getElementsByClassName("navClass")[0] as HTMLElement;
     nav.classList.add("navClassAnimate");
 
     return () => {
-      clearTimeout(timeoutId.current);
+      clearTimeout(timeoutId.current as number);
     };
   }, []);
 
-  const handleClick = () => {
-    const navBg = document.getElementsByClassName("navClass")[0];
-    const wrapper = document.getElementsByClassName("wrapper")[0];
+  const handleClick = (): void => {
+    const navBg = document.getElementsByClassName("navClass")[0] as HTMLElement;
+    const wrapper = document.getElementsByClassName(
+      "wrapper"
+    )[0] as HTMLDivElement;
 
     navBg.classList.remove("navClassAnimate");
     wrapper.classList.add("wrapperLoad");
@@ -36,11 +39,17 @@ const Landing = () => {
     }, 1000);
   };
 
-  const handleHover = () => {
-    const spotifyDiv = document.getElementsByClassName("spotifyDiv")[0];
-    const icon = document.getElementsByClassName("spotifyNav")[0];
-    const text = document.getElementsByClassName("powered")[0];
-    const navBg = document.getElementsByClassName("navClass")[0];
+  const handleHover = (): void => {
+    const spotifyDiv = document.getElementsByClassName(
+      "spotifyDiv"
+    )[0] as HTMLDivElement;
+    const icon = document.getElementsByClassName(
+      "spotifyNav"
+    )[0] as HTMLElement;
+    const text = document.getElementsByClassName(
+      "powered"
+    )[0] as HTMLHeadingElement;
+    const navBg = document.getElementsByClassName("navClass")[0] as HTMLElement;
 
     hover.current = !hover.current;
 
@@ -54,14 +63,12 @@ const Landing = () => {
     }
   };
 
-  const content = () => {
-    return (
-      <>
-        w<span className="me-1 pt-2 extraText fs-5">.hat</span>s
-        <span className="ms-2 extraText fs-5">.ong</span>
-      </>
-    );
-  };
+  const content: ReactElement = (
+    <>
+      w<span className="me-1 pt-2 extraText fs-5">.hat</span>s
+      <span className="ms-2 extraText fs-5">.ong</span>
+    </>
+  );
 
   return (
     <motion.main

@@ -10,13 +10,13 @@ const animateActionsArray = [
 
 type AnimateActionReturnedTypes = (typeof animateActionsArray)[number];
 
-interface SearchAnimationObject {
+export interface SearchAnimationObject {
   opacity: number;
   y?: number;
   x?: number;
 }
 
-type SearchAnimateState = {
+export type SearchAnimateState = {
   initial: SearchAnimationObject;
   exit: SearchAnimationObject;
 };
@@ -76,9 +76,11 @@ export const useAnimateSearchManager = (initialState: SearchAnimateState) => {
   return { animateStateSearch, setAnimateStateSearch };
 };
 
-type SearchListAnimationObject = Required<Omit<SearchAnimationObject, "y">>;
+export type SearchListAnimationObject = Required<
+  Omit<SearchAnimationObject, "y">
+>;
 
-type SearchListAnimateState = {
+export type SearchListAnimateState = {
   initial: SearchListAnimationObject;
   exit: SearchListAnimationObject;
 };

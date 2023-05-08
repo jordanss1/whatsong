@@ -29,11 +29,7 @@ export type AlbumDetailsType = {
 };
 
 export type TopTracksDetailsType = {
-  album: {
-    album_group: string;
-    album_type: string;
-    href: string;
-  };
+  album: AlbumDetailsType;
   artists: Partial<ArtistDetailsType>[];
   available_markets?: string[];
   disc_number: number;
@@ -55,7 +51,9 @@ export type TopTracksDetailsType = {
   uri: string;
 };
 
-export type TrackAndArtistDetailsType =
-  | ArtistDetailsType[]
-  | Required<TopTracksDetailsType>[]
-  | { noItems: "noItems" };
+export interface TrackAndArtistDetailsType {
+  [index: string]:
+    | ArtistDetailsType[]
+    | Required<TopTracksDetailsType>[]
+    | number;
+}

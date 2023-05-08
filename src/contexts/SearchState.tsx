@@ -1,4 +1,4 @@
-import { useState, useRef, createContext } from "react";
+import { useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { spotifyTokenAndSearch, spotifyArtistAndAlbum } from "../api";
 import {
@@ -6,21 +6,28 @@ import {
   useAnimateListManager,
   searchAnimateInit,
   searchListAnimateInit,
-} from "./AnimateStateHooks";
-import { useArtistResults, artistInitState } from "./SearchResultHooks";
+} from "../hooks/AnimateStateHooks";
+import {
+  useArtistResults,
+  artistInitState,
+} from "../hooks/DetailedArtistResultHooks";
 import { TopTracksDetailsType, TrackAndArtistDetailsType } from "../types";
+import { useArtistsOrTracks } from "../hooks/ArtistsAndTracksHook";
 
 export const SearchState = () => {
   const [term, setTerm] = useState<string>("");
   const [submittedTerm, setSubmittedTerm] = useState<string>("");
   const [items, setItems] = useState<TrackAndArtistDetailsType | null>(null);
-  const [selectedItem, setSelectedItem] =
+  const [selectedSong, setSelectedSong] =
     useState<Required<TopTracksDetailsType> | null>(null);
   const [typeString, setTypeString] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [slicedElements, setSlicedElements] = useState<number[]>([0, 10]);
   const [filteredAlbum, setFilteredAlbum] = useState<number>(0);
   const [filteredTrack, setFilteredTrack] = useState<number>(0);
+
+  const { artists, totalArtists, tracks, totalTracks, setArtists, setTracks } =
+    useArtistsOrTracks();
 
   const { animateStateSearch, setAnimateStateSearch } =
     useAnimateSearchManager(searchAnimateInit);
@@ -29,8 +36,14 @@ export const SearchState = () => {
     searchListAnimateInit
   );
 
-  const { artist, albums, topTracks, setProfile } =
-    useArtistResults(artistInitState);
+  const {
+    artistDetail,
+    albums,
+    totalAlbums,
+    topTracks,
+    totalTopTracks,
+    setProfile,
+  } = useArtistResults(artistInitState);
 
   const navigate = useNavigate();
 
@@ -40,15 +53,23 @@ export const SearchState = () => {
     filteredAlbum,
     filteredTrack,
     topTracks,
-    artist,
+    totalTopTracks,
+    artistDetail,
     albums,
+    totalAlbums,
     slicedElements,
     page,
     typeString,
     term,
-    selectedItem,
+    selectedSong,
     submittedTerm,
     items,
+    artists,
+    tracks,
+    totalArtists,
+    totalTracks,
+    setArtists,
+    setTracks,
     setAnimateStateList,
     setAnimateStateSearch,
     setFilteredAlbum,
@@ -62,7 +83,7 @@ export const SearchState = () => {
     setItems,
     spotifyTokenAndSearch,
     spotifyArtistAndAlbum,
-    setSelectedItem,
+    setSelectedSong,
     navigate,
   };
 
@@ -77,15 +98,23 @@ const initSearchContextState: UseSearchStateContext = {
   filteredAlbum: 0,
   filteredTrack: 0,
   topTracks: [],
-  artist: artistInitState.artist,
+  totalTopTracks: 0,
+  artistDetail: artistInitState.artistDetail,
   albums: [],
+  totalAlbums: 0,
   slicedElements: [0, 10],
   page: 0,
   typeString: "",
   term: "",
-  selectedItem: null,
+  selectedSong: null,
   submittedTerm: "",
-  items: [],
+  items: null,
+  artists: null,
+  tracks: null,
+  totalArtists: 0,
+  totalTracks: 0,
+  setArtists: () => {},
+  setTracks: () => {},
   setAnimateStateList: () => {},
   setAnimateStateSearch: () => {},
   setFilteredAlbum: () => {},
@@ -99,7 +128,7 @@ const initSearchContextState: UseSearchStateContext = {
   setItems: () => {},
   spotifyTokenAndSearch: () => {},
   spotifyArtistAndAlbum: () => {},
-  setSelectedItem: () => {},
+  setSelectedSong: () => {},
   navigate: () => {},
 };
 

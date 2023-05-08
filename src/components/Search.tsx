@@ -1,8 +1,15 @@
-import React, { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, ReactElement } from "react";
 import SearchContext from "../contexts/SearchStore";
 import { motion } from "framer-motion";
+import { UseSearchStateContext } from "../contexts/SearchState";
+import { SearchAnimateState } from "../hooks/AnimateStateHooks";
 
-const Search = () => {
+type HandleButtonClickType = (
+  category: "artist" | "track",
+  term: string
+) => void;
+
+const Search = (): ReactElement => {
   const {
     animateStateSearch,
     typeString,
@@ -10,31 +17,45 @@ const Search = () => {
     term,
     setAnimateStateSearch,
     setTerm,
+    setArtists,
+    setTracks,
+    setSelectedSong,
+    artists,
+    tracks,
     setPage,
     setSubmittedTerm,
     submittedTerm,
     spotifyTokenAndSearch,
-    setItems,
-    items,
     navigate,
-  } = useContext(SearchContext);
+  } = useContext<UseSearchStateContext>(SearchContext);
 
-  const focused = useRef(false);
+  const focused = useRef<boolean>(false);
 
   const animations = {
-    initial: (animateStateSearch) => ({ ...animateStateSearch.initial }),
+    initial: (animateStateSearch: SearchAnimateState) => ({
+      ...animateStateSearch.initial,
+    }),
     animate: { opacity: 1, y: 0, x: 0 },
-    exit: (animateStateSearch) => ({ ...animateStateSearch.exit }),
+    exit: (animateStateSearch: SearchAnimateState) => ({
+      ...animateStateSearch.exit,
+    }),
   };
 
   useEffect(() => {
     focused.current = false;
+    setArtists(null);
+    setTracks(null);
+    setSelectedSong(null);
     setAnimateStateSearch({ opacity: 0.5, y: 300 }, { opacity: 0, y: 0 });
   }, []);
 
   useEffect(() => {
-    const div = document.getElementsByClassName("instructionsDiv")[0];
-    const form = document.getElementsByClassName("wholeForm")[0];
+    const div = document.getElementsByClassName(
+      "instructionsDiv"
+    )[0] as HTMLDivElement;
+    const form = document.getElementsByClassName(
+      "wholeForm"
+    )[0] as HTMLFormElement;
 
     if (term) {
       div.classList.add("instructionsFloat");
@@ -46,9 +67,9 @@ const Search = () => {
     setTerm("");
 
     if (typeString === "artist" && submittedTerm) {
-      spotifyTokenAndSearch(submittedTerm, typeString, setItems);
+      spotifyTokenAndSearch(submittedTerm, typeString, setArtists);
     } else if (typeString === "track" && submittedTerm) {
-      spotifyTokenAndSearch(submittedTerm, typeString, setItems);
+      spotifyTokenAndSearch(submittedTerm, typeString, setTracks);
     }
   }, [submittedTerm]);
 
@@ -56,17 +77,19 @@ const Search = () => {
     if (typeString === "artist" && submittedTerm) {
       setPage(1);
       setSubmittedTerm("");
-      sessionStorage.setItem("artists", JSON.stringify(items));
+      sessionStorage.setItem("artists", JSON.stringify(artists));
       navigate("/artists");
     } else if (typeString === "track" && submittedTerm) {
       setSubmittedTerm("");
-      sessionStorage.setItem("tracks", JSON.stringify(items));
+      sessionStorage.setItem("tracks", JSON.stringify(tracks));
       navigate("/songs");
     }
-  }, [items]);
+  }, [tracks, artists]);
 
-  const handleFocus = () => {
-    const div1 = document.getElementsByClassName("searchDiv")[0];
+  const handleFocus = (): void => {
+    const div1 = document.getElementsByClassName(
+      "searchDiv"
+    )[0] as HTMLDivElement;
 
     focused.current = !focused.current;
 
@@ -77,10 +100,35 @@ const Search = () => {
     }
   };
 
-  const handleButtonClick = (category, term, object) => {
+  const handleButtonClick: HandleButtonClickType = (category, term) => {
+    const x = category === "artist" ? 300 : -300;
+
     setTypeString(category);
     setSubmittedTerm(term);
-    setAnimateStateSearch(object.initial, object.exit);
+    setAnimateStateSearch({ opacity: 0.5, x }, { opacity: 0, x });
+    sessionStorage.clear();
+  };
+
+  const renderButton = (buttonType: "artists" | "songs"): ReactElement => {
+    const capitalized =
+      buttonType.charAt(0).toUpperCase() + buttonType.slice(1);
+
+    return (
+      <button
+        placeholder="button"
+        role={`search-button-${buttonType}`}
+        disabled={!term}
+        onClick={() =>
+          handleButtonClick(buttonType === "artists" ? "artist" : "track", term)
+        }
+        type="button"
+        className={`btn btn-outline-dark submitButtons fs-4 rounded-3 ${
+          buttonType === "artists" && "me-3"
+        } p-1 px-3`}
+      >
+        {capitalized}
+      </button>
+    );
   };
 
   return (
@@ -117,38 +165,8 @@ const Search = () => {
           </div>
         </div>
         <div>
-          <button
-            placeholder="button"
-            role="search-button-artists"
-            disabled={!term}
-            onClick={() => {
-              sessionStorage.removeItem("tracks");
-              handleButtonClick("artist", term, {
-                initial: { opacity: 0.5, x: 300 },
-                exit: { opacity: 0, x: 300 },
-              });
-            }}
-            type="button"
-            className="btn btn-outline-dark submitButtons fs-4 rounded-3 me-3 p-1 px-3 "
-          >
-            Artists
-          </button>
-          <button
-            placeholder="button"
-            role="search-button-songs"
-            disabled={!term}
-            onClick={() => {
-              sessionStorage.removeItem("artists");
-              handleButtonClick("track", term, {
-                initial: { opacity: 0, x: -300 },
-                exit: { opacity: 0, x: -300 },
-              });
-            }}
-            type="button"
-            className="btn btn-outline-dark submitButtons fs-4 rounded-3 p-1 px-3 "
-          >
-            Songs
-          </button>
+          {renderButton("artists")}
+          {renderButton("songs")}
         </div>
       </form>
     </motion.main>

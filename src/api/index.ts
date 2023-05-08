@@ -1,8 +1,12 @@
 import React from "react";
 import axios from "axios";
 import { Buffer } from "buffer";
-import { TrackAndArtistDetailsType } from "../types";
-import { ArtistAndAlbumStateSetter } from "../contexts/SearchResultHooks";
+import {
+  AlbumDetailsType,
+  ArtistDetailsType,
+  TopTracksDetailsType,
+} from "../types";
+import { ArtistAndAlbumStateSetter } from "../hooks/DetailedArtistResultHooks";
 
 const clientId = process.env.REACT_APP_ID;
 const clientSecret = process.env.REACT_APP_SECRET;
@@ -12,18 +16,19 @@ export const clientMix =
 
 const spotifyToken = axios.create({
   baseURL: "https://accounts.spotify.com/api/token",
+  headers: { Authorization: clientMix },
 });
 
 const spotifyQuery = axios.create({
   baseURL: "https://api.spotify.com/v1",
 });
 
+const data = new URLSearchParams({ grant_type: "client_credentials" });
+
 export const spotifyArtistAndAlbum = (
   id: string,
   state: ArtistAndAlbumStateSetter
 ): void => {
-  const data = new URLSearchParams({ grant_type: "client_credentials" });
-
   const artistAndAlbum = [
     `https://api.spotify.com/v1/artists/${id}`,
     `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album&limit=50`,
@@ -31,11 +36,7 @@ export const spotifyArtistAndAlbum = (
   ];
 
   spotifyToken
-    .post("", data, {
-      headers: {
-        Authorization: clientMix,
-      },
-    })
+    .post("", data, {})
     .then(({ data }) => {
       const accessToken = `Bearer ${data.access_token}`;
 
@@ -50,10 +51,31 @@ export const spotifyArtistAndAlbum = (
           )
         )
         .then((responses) => {
+          let albums = responses[1].data.items;
+
+          albums = albums
+            ? [
+                ...new Map(
+                  albums.map((item: AlbumDetailsType) => [item.name, item])
+                ).values(),
+              ]
+            : albums;
+
+          let albumsTotal = albums.length ? albums.length : 0;
+
+          let topTracks = responses[2].data.tracks;
+          let topTracksTotal = topTracks.length ? topTracks.length : 0;
+
           state(
             responses[0].data,
-            responses[1].data.items,
-            responses[2].data.tracks
+            {
+              albums: albums,
+              total: albumsTotal,
+            },
+            {
+              topTracks: topTracks,
+              total: topTracksTotal,
+            }
           );
         })
         .catch((err) => {
@@ -61,13 +83,22 @@ export const spotifyArtistAndAlbum = (
             throw new Error(err.message);
           }
         });
+    })
+    .catch((err) => {
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
     });
 };
 
 export type SpotifyTokenAndSearchType = (
   q: string,
-  type: "artist" | "tracks",
-  state: React.Dispatch<React.SetStateAction<TrackAndArtistDetailsType | null>>
+  type: "artist" | "track",
+  state:
+    | React.Dispatch<React.SetStateAction<ArtistDetailsType[] | null>>
+    | React.Dispatch<
+        React.SetStateAction<Required<TopTracksDetailsType>[] | null>
+      >
 ) => void;
 
 export const spotifyTokenAndSearch: SpotifyTokenAndSearchType = (
@@ -75,14 +106,8 @@ export const spotifyTokenAndSearch: SpotifyTokenAndSearchType = (
   type,
   state
 ) => {
-  const data = new URLSearchParams({ grant_type: "client_credentials" });
-
   spotifyToken
-    .post("", data, {
-      headers: {
-        Authorization: clientMix,
-      },
-    })
+    .post("", data, {})
     .then(({ data }) => {
       const accessToken = `Bearer ${data.access_token}`;
       const string = `${type}s`;
@@ -95,11 +120,18 @@ export const spotifyTokenAndSearch: SpotifyTokenAndSearchType = (
           params: { q, type, limit: 40 },
         })
         .then(({ data }) => {
-          state(
-            data[string].items.length === 0
-              ? { noItems: "noItems" }
-              : data[string].items
-          );
+          console.log(data);
+          state(data[string].items);
+        })
+        .catch((err) => {
+          if (err instanceof Error) {
+            throw new Error(err.message);
+          }
         });
+    })
+    .catch((err) => {
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
     });
 };
