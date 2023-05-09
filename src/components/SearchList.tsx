@@ -50,9 +50,6 @@ const SearchList = (): ReactElement => {
 
   const idRef = useRef<string | null>(null);
 
-  console.log(tracks);
-  console.log(artists);
-
   useEffect(() => {
     let artists = sessionStorage.getItem("artists");
     let tracks = sessionStorage.getItem("tracks");
@@ -139,12 +136,12 @@ const SearchList = (): ReactElement => {
     }
 
     return `songWholeListContainer ${
-      totalTracks === 0 ? "" : "d-grid"
+      !totalTracks ? "" : "d-grid"
     } container-fluid`;
   };
 
   const renderSongs = (): ReactElement => {
-    if (totalTracks === 0) {
+    if (!totalTracks) {
       return (
         <motion.section
           initial={{
@@ -163,7 +160,7 @@ const SearchList = (): ReactElement => {
           </div>
         </motion.section>
       );
-    } else if (totalTracks > 0 && tracks) {
+    } else if (totalTracks && tracks) {
       return (
         <section
           className={`${
@@ -179,7 +176,7 @@ const SearchList = (): ReactElement => {
   };
 
   const renderArtists = (): ReactElement => {
-    if (totalArtists === 0) {
+    if (!totalArtists) {
       return (
         <motion.section
           initial={{
@@ -198,7 +195,7 @@ const SearchList = (): ReactElement => {
           </div>
         </motion.section>
       );
-    } else if (totalArtists > 0) {
+    } else if (totalArtists) {
       return (
         <motion.section
           initial={{
@@ -234,7 +231,7 @@ const SearchList = (): ReactElement => {
       exit="exit"
       custom={animateStateList}
       transition={{ duration: 0.2 }}
-      style={(totalArtists | totalTracks) === 0 ? { height: "100vh" } : {}}
+      style={!totalArtists || !totalTracks ? { height: "100vh" } : {}}
       id="main"
       className={songOrArtistContainer()}
     >

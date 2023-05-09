@@ -120,7 +120,6 @@ export const spotifyTokenAndSearch: SpotifyTokenAndSearchType = (
           params: { q, type, limit: 40 },
         })
         .then(({ data }) => {
-          console.log(data);
           state(data[string].items);
         })
         .catch((err) => {

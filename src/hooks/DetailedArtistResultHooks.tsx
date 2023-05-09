@@ -15,8 +15,8 @@ type ActionReturnedTypes = (typeof artistArray)[number];
 
 type ReducerStateType = {
   artistDetail: ArtistDetailsType | null;
-  artistAlbums: { albums: AlbumDetailsType[] | null; total: number };
-  artistTopTracks: { topTracks: TopTracksDetailsType[] | null; total: number };
+  artistAlbums: { albums: AlbumDetailsType[] | []; total: number };
+  artistTopTracks: { topTracks: TopTracksDetailsType[] | []; total: number };
 };
 
 type ReducerAction = {
@@ -26,8 +26,8 @@ type ReducerAction = {
 
 export const artistInitState: ReducerStateType = {
   artistDetail: null,
-  artistAlbums: { albums: null, total: 0 },
-  artistTopTracks: { topTracks: null, total: 0 },
+  artistAlbums: { albums: [], total: 0 },
+  artistTopTracks: { topTracks: [], total: 0 },
 };
 
 export type ArtistAndAlbumStateSetter = (

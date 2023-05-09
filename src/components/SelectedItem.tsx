@@ -1,7 +1,7 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { ReactElement, useCallback, useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
-import ArtistAlbums from "./ArtistAlbums";
-import ArtistTopTracks from "./ArtistTopTracks";
+import ArtistAlbums from "./ArtistDetailsComponents/ArtistAlbums";
+import ArtistTopTracks from "./ArtistDetailsComponents/ArtistTopTracks";
 import Loader from "./Loader";
 import { motion } from "framer-motion";
 import { gradient1, gradient2, gradient3 } from "../styles/inline";
@@ -13,8 +13,10 @@ const SelectedItem = () => {
     setSelectedSong,
     artistDetail,
     albums,
+    totalAlbums,
     filteredTrack,
     topTracks,
+    totalTopTracks,
     filteredAlbum,
     setFilteredAlbum,
     setFilteredTrack,
@@ -25,10 +27,8 @@ const SelectedItem = () => {
     setAnimateStateList,
   } = useContext(SearchContext);
 
-  const is992 = useMediaQuery(992);
+  const isWidth992 = useMediaQuery(992);
   const isHeight1025 = useMediaQuery(1025, true);
-
-  console.log(is992);
 
   const animations = {
     initial: { opacity: 0, x: -300 },
@@ -61,16 +61,8 @@ const SelectedItem = () => {
     [selectedSong]
   );
 
-  const oneColumnWidth = (image) => {
-    if (!image && window.innerWidth > 576) {
-      return "w-75";
-    } else if (image && window.innerWidth > 1200) {
-      return "w-100";
-    }
-  };
-
-  const renderSong = () => {
-    const classFlex = selectedSong ? "flex-column" : "";
+  const renderSong = (): ReactElement => {
+    const classFlex: string = selectedSong ? "flex-column" : "";
 
     if (!selectedSong) {
       return (
@@ -126,7 +118,7 @@ const SelectedItem = () => {
     }
   };
 
-  const renderArtist = () => {
+  const renderArtist = (): ReactElement => {
     if (!artistDetail) {
       return (
         <main className="artistPage d-grid">
@@ -149,17 +141,17 @@ const SelectedItem = () => {
     } else {
       const { external_urls, name, followers, images } = artistDetail;
 
-      const imageExistsOrWidth: boolean = !images[0]?.url || is992;
+      const imageExistsOrWidth992: boolean = !images[0]?.url || isWidth992;
 
       const styles = {
         background: `${
-          !is992
+          !isWidth992
             ? `${gradient1} url(${images[0]?.url})`
             : `${isHeight1025 ? gradient2 : gradient3} url(${images[0]?.url})`
         }
          no-repeat ${
-           !is992 ? "50px" : `center ${!isHeight1025 ? "230px" : "130px"}`
-         }/ ${!is992 ? "640px" : "400px"}`,
+           !isWidth992 ? "50px" : `center ${!isHeight1025 ? "230px" : "130px"}`
+         }/ ${!isWidth992 ? "640px" : "400px"}`,
       };
 
       return (
@@ -170,15 +162,15 @@ const SelectedItem = () => {
           exit="exit"
           transition={{ duration: 0.2 }}
           className={`${
-            imageExistsOrWidth
+            imageExistsOrWidth992
               ? "artistPageOneColumn d-flex flex-column align-items-center"
               : "artistPage d-grid"
           } `}
-          style={is992 ? styles : {}}
+          style={isWidth992 ? styles : {}}
         >
           <section
             className={`w-100 artistLeft ${
-              imageExistsOrWidth ? "d-none" : ""
+              imageExistsOrWidth992 ? "d-none" : ""
             } d-flex
              justify-content-end`}
           >
@@ -209,11 +201,13 @@ const SelectedItem = () => {
             </div>
             <ArtistAlbums
               albums={albums}
+              totalAlbums={totalAlbums}
               filteredAlbum={filteredAlbum}
               setFilteredAlbum={setFilteredAlbum}
             />
             <ArtistTopTracks
               topTracks={topTracks}
+              totalTopTracks={totalTopTracks}
               filteredTrack={filteredTrack}
               setFilteredTrack={setFilteredTrack}
             />
