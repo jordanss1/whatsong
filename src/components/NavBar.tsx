@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useContext } from "react";
+import { ReactElement, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import SearchContext from "../contexts/SearchStore";
 import "../styles/all.css";
