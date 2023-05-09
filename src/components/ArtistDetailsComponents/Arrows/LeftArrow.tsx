@@ -1,4 +1,4 @@
-import { memo, ReactElement } from "react";
+import { memo, ReactElement, MouseEventHandler } from "react";
 import { HandleArrowClickType } from "../ArtistAlbums";
 
 interface Props {
@@ -13,7 +13,7 @@ const LeftArrow: LeftArrowType = ({ func, style, testId }) => {
   return (
     <div
       data-testid={testId}
-      onClick={func ? () => func : () => {}}
+      onClick={func ? (func as MouseEventHandler) : () => {}}
       className={style}
     >
       <i className="left chevron icon"></i>
