@@ -1,9 +1,13 @@
 import { MockedRequest, RestHandler, rest } from "msw";
-import { ArtistResultsType, SongResultsType, AlbumAndTracksType } from "./api";
+import {
+  ArtistResultsTestType,
+  SongResultsTestType,
+  AlbumAndTracksTestType,
+} from "./api";
 
 export type ArtistAndTrackHandlersType = (
-  data: ArtistResultsType | SongResultsType
-) => RestHandler<MockedRequest<ArtistResultsType | SongResultsType>>[];
+  data: ArtistResultsTestType | SongResultsTestType
+) => RestHandler<MockedRequest<ArtistResultsTestType | SongResultsTestType>>[];
 
 export const artistAndTrackHandlers: ArtistAndTrackHandlersType = (data) => {
   return [
@@ -18,8 +22,8 @@ export const artistAndTrackHandlers: ArtistAndTrackHandlersType = (data) => {
 };
 
 export type ArtistAndAlbumHandlerType = (
-  data: AlbumAndTracksType
-) => RestHandler<MockedRequest<AlbumAndTracksType>>[];
+  data: AlbumAndTracksTestType
+) => RestHandler<MockedRequest<AlbumAndTracksTestType>>[];
 
 export const artistAndAlbumHandler: ArtistAndAlbumHandlerType = (data) => {
   const artistAndAlbum: string[] = [
@@ -44,3 +48,5 @@ export const artistAndAlbumHandler: ArtistAndAlbumHandlerType = (data) => {
     }),
   ];
 };
+
+export type HandlerUnion = ArtistAndAlbumHandlerType | ArtistAndTrackHandlersType;
