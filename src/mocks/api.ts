@@ -1,4 +1,4 @@
-export type ArtistResultsType = {
+export type ArtistResultsTestType = {
   artists: {
     items:
       | {
@@ -11,7 +11,7 @@ export type ArtistResultsType = {
   };
 };
 
-export type SongResultsType = {
+export type SongResultsTestType = {
   tracks: {
     items:
       | {
@@ -31,7 +31,7 @@ export type SongResultsType = {
   };
 };
 
-export type AlbumAndTracksType = [
+export type AlbumAndTracksTestType = [
   {
     external_urls: { spotify: string };
     name: string;
@@ -52,7 +52,12 @@ export type AlbumAndTracksType = [
   }
 ];
 
-export const artistResults: ArtistResultsType = {
+export type AllTestResultsUnionType =
+  | AlbumAndTracksTestType
+  | SongResultsTestType
+  | ArtistResultsTestType;
+
+export const artistResults: ArtistResultsTestType = {
   artists: {
     items: [
       {
@@ -119,7 +124,7 @@ export const artistResults: ArtistResultsType = {
   },
 };
 
-export const artistResultsFull: ArtistResultsType = {
+export const artistResultsFull: ArtistResultsTestType = {
   artists: {
     items: [
       {
@@ -348,11 +353,11 @@ export const artistResultsFull: ArtistResultsType = {
   },
 };
 
-export const artistResultsNone: ArtistResultsType = {
+export const artistResultsNone: ArtistResultsTestType = {
   artists: { items: [] },
 };
 
-export const songResults: SongResultsType = {
+export const songResults: SongResultsTestType = {
   tracks: {
     items: [
       {
@@ -424,7 +429,7 @@ export const songResults: SongResultsType = {
   },
 };
 
-export const songResultsDouble: SongResultsType = {
+export const songResultsDouble: SongResultsTestType = {
   tracks: {
     items: [
       {
@@ -561,11 +566,11 @@ export const songResultsDouble: SongResultsType = {
   },
 };
 
-export const songResultsNone: SongResultsType = {
+export const songResultsNone: SongResultsTestType = {
   tracks: { items: [] },
 };
 
-export const albumAndTracks: AlbumAndTracksType = [
+export const albumAndTracks: AlbumAndTracksTestType = [
   {
     external_urls: { spotify: "www.spotify.com/1" },
     name: "Name",
@@ -589,7 +594,7 @@ export const albumAndTracks: AlbumAndTracksType = [
   },
 ];
 
-export const albumAndTracksNoResults: AlbumAndTracksType = [
+export const albumAndTracksNoResults: AlbumAndTracksTestType = [
   {
     external_urls: { spotify: "www.spotify.com/1" },
     name: "Name",
