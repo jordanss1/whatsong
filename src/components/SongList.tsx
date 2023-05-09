@@ -13,7 +13,7 @@ const SongList = ({
   const hidden = window.innerWidth < 992 ? true : false;
 
   return (
-    <div className="d-grid h-100 pt-1 mt-3 mt-xl-0 songListContainer">
+    <div className="d-grid pt-1 mt-3 mt-xl-0 songListContainer">
       <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row searchListDiv align-self-lg-end border rounded-3">
         <h2 className="ms-4 fs-3 pt-1 typeHeader">Songs</h2>
         <SearchBar />

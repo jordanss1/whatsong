@@ -141,6 +141,7 @@
   row-gap: 40px;
   width: 85%;
   overflow: hidden;
+  height: 100vh;
 }
 
 .artistPage {

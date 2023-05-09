@@ -17,6 +17,7 @@ import { motion } from "framer-motion";
 import { UseSearchStateContext } from "../contexts/SearchState";
 import { SearchListAnimateState } from "../hooks/AnimateStateHooks";
 import { TopTracksDetailsType } from "../types";
+import SearchBarContainer from "./SearchBarContainer";
 
 export type HandleProfileClickType = (id: string) => void;
 
@@ -143,14 +144,7 @@ const SearchList = (): ReactElement => {
   const renderSongs = (): ReactElement => {
     if (!totalTracks) {
       return (
-        <motion.section
-          initial={{
-            opacity: 0,
-          }}
-          animate={{ opacity: 1, transition: { duration: 2 } }}
-          exit={{ opacity: 0, transition: { duration: 0.5 } }}
-          className="w-100 d-flex flex-column align-items-center justify-content-between justify-content-center pt-4 noResultsSong"
-        >
+        <SearchBarContainer isArtists={false} searchResults={false}>
           <div className="d-flex align-items-center justify-content-center justify-content-between  flex-column flex-xl-row noResultsSearch border rounded-3">
             <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Songs</h2>
             <SearchBar />
@@ -158,18 +152,18 @@ const SearchList = (): ReactElement => {
           <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0">
             <h3>No results found</h3>
           </div>
-        </motion.section>
+        </SearchBarContainer>
       );
     } else if (totalTracks && tracks) {
       return (
-        <section
-          className={`${
-            selectedSong ? "containerAnimate" : ""
-          } w-100 d-grid selectedContainer`}
+        <SearchBarContainer
+          isArtists={false}
+          selectedSong={selectedSong}
+          searchResults
         >
           <SelectedItem />
           <SongList tracks={tracks} handleSelectedSong={handleSelectedSong} />
-        </section>
+        </SearchBarContainer>
       );
     }
     return <div></div>;
@@ -178,37 +172,15 @@ const SearchList = (): ReactElement => {
   const renderArtists = (): ReactElement => {
     if (!totalArtists) {
       return (
-        <motion.section
-          initial={{
-            opacity: 0,
-          }}
-          animate={{ opacity: 1, transition: { duration: 2 } }}
-          exit={{ opacity: 0, transition: { duration: 0.5 } }}
-          className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center pt-4"
-        >
-          <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row noResultsSearch border rounded-3">
-            <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Artists</h2>
-            <SearchBar />
-          </div>
+        <SearchBarContainer isArtists searchResults={false}>
           <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0 artistGrid">
             <h3>No results found</h3>
           </div>
-        </motion.section>
+        </SearchBarContainer>
       );
     } else if (totalArtists) {
       return (
-        <motion.section
-          initial={{
-            opacity: 0,
-          }}
-          animate={{ opacity: 1, transition: { duration: 2 } }}
-          exit={{ opacity: 0, transition: { duration: 0.5 } }}
-          className="w-100 h-100 d-grid artistListContainer align-items-center justify-content-center pt-4"
-        >
-          <div className="d-flex align-items-center justify-content-center justify-content-xl-between flex-column flex-xl-row searchListDiv align-self-lg-end border rounded-3">
-            <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Artists</h2>
-            <SearchBar />
-          </div>
+        <SearchBarContainer isArtists searchResults>
           {artists && (
             <ArtistList
               handleProfileClick={handleProfileClick}
@@ -217,7 +189,7 @@ const SearchList = (): ReactElement => {
             />
           )}
           <Pages />
-        </motion.section>
+        </SearchBarContainer>
       );
     }
     return <div></div>;

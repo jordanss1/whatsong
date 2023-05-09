@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback, useContext, useEffect } from "react";
 import SearchContext from "../contexts/SearchStore";
-import ArtistAlbums from "./ArtistDetailsComponents/ArtistAlbums";
-import ArtistTopTracks from "./ArtistDetailsComponents/ArtistTopTracks";
+import ArtistAlbums from "./artist-details/ArtistAlbums";
+import ArtistTopTracks from "./artist-details/ArtistTopTracks";
 import Loader from "./Loader";
 import { motion } from "framer-motion";
 import { gradient1, gradient2, gradient3 } from "../styles/inline";
