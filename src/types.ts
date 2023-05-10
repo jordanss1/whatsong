@@ -50,10 +50,3 @@ export type TopTracksDetailsType = {
   type: string;
   uri: string;
 };
-
-export interface TrackAndArtistDetailsType {
-  [index: string]:
-    | ArtistDetailsType[]
-    | Required<TopTracksDetailsType>[]
-    | number;
-}

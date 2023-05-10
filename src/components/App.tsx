@@ -4,7 +4,7 @@ import Landing from "./Landing";
 import Search from "./Search";
 import SearchList from "./SearchList";
 import { AnimatePresence } from "framer-motion";
-import SelectedItem from "./SelectedItem";
+import ArtistDetails from "./artist-details/ArtistDetails";
 
 const App = (): ReactElement => {
   const location = useLocation();
@@ -16,7 +16,7 @@ const App = (): ReactElement => {
         <Route path="/search" element={<Search />} />
         <Route path="/artists">
           <Route index element={<SearchList />} />
-          <Route path="/artists/:id" element={<SelectedItem />} />
+          <Route path="/artists/:id" element={<ArtistDetails />} />
         </Route>
         <Route path="/songs" element={<SearchList />} />
       </Routes>

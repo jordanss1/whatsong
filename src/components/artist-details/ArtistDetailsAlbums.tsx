@@ -21,7 +21,7 @@ export type HandleArrowClickType = (
   func: (prev: number) => number
 ) => void;
 
-const ArtistAlbums = ({
+const ArtistDetailsAlbums = ({
   albums,
   totalAlbums,
   setFilteredAlbum,
@@ -100,7 +100,7 @@ const ArtistAlbums = ({
       );
     } else if (!totalAlbums) {
       return <h3 className="align-self-center pb-5">No albums</h3>;
-    } else if (totalAlbums && albums && albums[filteredAlbum]) {
+    } else if (totalAlbums && albums) {
       const { name, images } = albums[filteredAlbum];
 
       return (
@@ -125,4 +125,4 @@ const ArtistAlbums = ({
   );
 };
 
-export default memo(ArtistAlbums);
+export default memo(ArtistDetailsAlbums);

@@ -8,13 +8,13 @@ import {
 } from "../../../test-utils/test-utils";
 import Search from "../Search";
 import SearchList from "../SearchList";
-import SelectedItem from "../SelectedItem";
 import { searchComponent } from "./SearchList.test";
 import { SearchStore } from "../../contexts/SearchStore";
 import { history } from "../../../test-utils";
 import { changeHandlers } from "./Search.test";
 import { artistAndAlbumHandler } from "../../mocks/handlers";
 import { albumAndTracks, albumAndTracksNoResults } from "../../mocks/api";
+import ArtistDetails from "../artist-details/ArtistDetails";
 
 const WrapperComponent = ({
   children,
@@ -37,7 +37,7 @@ describe("SelectedItem component when there are albums and songs", () => {
       <>
         <Search />
         <SearchList />
-        <SelectedItem />
+        <ArtistDetails />
       </>
     );
 
@@ -76,7 +76,7 @@ describe("SelectedItem component when there are albums and songs", () => {
       <>
         <Search />
         <SearchList />
-        <SelectedItem />
+        <ArtistDetails />
       </>
     );
 
@@ -126,7 +126,7 @@ describe("SelectedItem component when there are albums and songs", () => {
         <>
           <Search />
           <SearchList />
-          <SelectedItem />
+          <ArtistDetails />
         </>
       );
 
@@ -197,7 +197,7 @@ describe("SelectedItem component when there are no albums and songs", () => {
       <>
         <Search />
         <SearchList />
-        <SelectedItem />
+        <ArtistDetails />
       </>
     );
 
@@ -232,7 +232,7 @@ describe("SelectedItem component when there are no albums and songs", () => {
       <>
         <Search />
         <SearchList />
-        <SelectedItem />
+        <ArtistDetails />
       </>
     );
 
@@ -276,7 +276,7 @@ describe("Route, history and window testing in SelectedItem component", () => {
       <>
         <Search />
         <SearchList />
-        <SelectedItem />
+        <ArtistDetails />
       </>
     );
 
@@ -304,7 +304,7 @@ describe("Route, history and window testing in SelectedItem component", () => {
       <>
         <Search />
         <SearchList />
-        <SelectedItem />
+        <ArtistDetails />
       </>
     );
 

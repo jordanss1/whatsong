@@ -8,7 +8,7 @@ import {
 } from "../../../test-utils/test-utils";
 import Search from "../Search";
 import SearchList from "../SearchList";
-import SelectedItem from "../SelectedItem";
+import SelectedItem from "../song-list/SongListSelectedSong";
 import { SearchStore } from "../../contexts/SearchStore";
 import { history } from "../../../test-utils";
 import {

@@ -11,16 +11,14 @@ import {
   useArtistResults,
   artistInitState,
 } from "../hooks/DetailedArtistResultHooks";
-import { TopTracksDetailsType, TrackAndArtistDetailsType } from "../types";
+import { TopTracksDetailsType } from "../types";
 import { useArtistsOrTracks } from "../hooks/ArtistsAndTracksHook";
 
 export const SearchState = () => {
   const [term, setTerm] = useState<string>("");
   const [submittedTerm, setSubmittedTerm] = useState<string>("");
-  const [items, setItems] = useState<TrackAndArtistDetailsType | null>(null);
   const [selectedSong, setSelectedSong] =
     useState<Required<TopTracksDetailsType> | null>(null);
-  const [typeString, setTypeString] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [slicedElements, setSlicedElements] = useState<number[]>([0, 10]);
   const [filteredAlbum, setFilteredAlbum] = useState<number>(0);
@@ -59,11 +57,10 @@ export const SearchState = () => {
     totalAlbums,
     slicedElements,
     page,
-    typeString,
+
     term,
     selectedSong,
     submittedTerm,
-    items,
     artists,
     tracks,
     totalArtists,
@@ -77,10 +74,8 @@ export const SearchState = () => {
     setProfile,
     setSlicedElements,
     setPage,
-    setTypeString,
     setTerm,
     setSubmittedTerm,
-    setItems,
     spotifyTokenAndSearch,
     spotifyArtistAndAlbum,
     setSelectedSong,
@@ -104,11 +99,9 @@ const initSearchContextState: UseSearchStateContext = {
   totalAlbums: 0,
   slicedElements: [0, 10],
   page: 0,
-  typeString: "",
   term: "",
   selectedSong: null,
   submittedTerm: "",
-  items: null,
   artists: null,
   tracks: null,
   totalArtists: 0,
@@ -122,10 +115,8 @@ const initSearchContextState: UseSearchStateContext = {
   setProfile: () => {},
   setSlicedElements: () => {},
   setPage: () => {},
-  setTypeString: () => {},
   setTerm: () => {},
   setSubmittedTerm: () => {},
-  setItems: () => {},
   spotifyTokenAndSearch: () => {},
   spotifyArtistAndAlbum: () => {},
   setSelectedSong: () => {},

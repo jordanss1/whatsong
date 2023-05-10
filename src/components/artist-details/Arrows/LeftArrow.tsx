@@ -1,5 +1,5 @@
 import { memo, ReactElement, MouseEventHandler } from "react";
-import { HandleArrowClickType } from "../ArtistAlbums";
+import { HandleArrowClickType } from "../ArtistDetailsAlbums";
 
 interface Props {
   style: string;

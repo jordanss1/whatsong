@@ -1,29 +1,14 @@
-import {
-  useContext,
-  useEffect,
-  useMemo,
-  useCallback,
-  useRef,
-  ReactElement,
-} from "react";
+import { useContext, useEffect, useMemo, ReactElement } from "react";
 import NavBar from "./NavBar";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
-import SelectedItem from "./SelectedItem";
-import ArtistList from "./ArtistList";
-import SongList from "./SongList";
-import Pages from "./Pages";
+import SongListSelectedItem from "./song-list/SongListSelectedSong";
+import ArtistList from "./artist-list/ArtistList";
+import SongList from "./song-list/SongList";
+import Pages from "./artist-list/ArtistListPages";
 import { motion } from "framer-motion";
-import { UseSearchStateContext } from "../contexts/SearchState";
 import { SearchListAnimateState } from "../hooks/AnimateStateHooks";
-import { TopTracksDetailsType } from "../types";
 import SearchBarContainer from "./SearchBarContainer";
-
-export type HandleProfileClickType = (id: string) => void;
-
-export type HandleSelectedSongType = (
-  track: Required<TopTracksDetailsType>
-) => void;
 
 const SearchList = (): ReactElement => {
   const {
@@ -33,52 +18,31 @@ const SearchList = (): ReactElement => {
     totalTracks,
     setArtists,
     setTracks,
-    albums,
-    topTracks,
     animateStateList,
     selectedSong,
-    setTypeString,
     setAnimateStateList,
     setAnimateStateSearch,
-    setSelectedSong,
-    spotifyArtistAndAlbum,
-    setFilteredAlbum,
-    setFilteredTrack,
-    navigate,
-    setProfile,
     slicedElements,
   } = useContext(SearchContext);
-
-  const idRef = useRef<string | null>(null);
 
   useEffect(() => {
     let artists = sessionStorage.getItem("artists");
     let tracks = sessionStorage.getItem("tracks");
 
     const nav = document.getElementsByClassName("navClass")[0];
-    setFilteredTrack(0);
-    setFilteredAlbum(0);
-
     nav.classList.add("navClassList");
 
+    sessionStorage.removeItem("artist-details");
+
     if (artists && typeof artists === "string") {
-      setTypeString("artist");
       setArtists(JSON.parse(artists));
       setAnimateStateSearch({ opacity: 0.5, x: 300 }, { opacity: 0, x: 300 });
       setAnimateStateList({ x: -300, opacity: 0 }, { x: -300, opacity: 0 });
     } else if (tracks && typeof tracks === "string") {
-      setTypeString("track");
       setTracks(JSON.parse(tracks));
       setAnimateStateSearch({ opacity: 0, x: -300 }, { opacity: 0, x: -300 });
     }
   }, []);
-
-  useEffect(() => {
-    if (albums && topTracks && idRef.current) {
-      navigate(`/artists/${idRef.current}`);
-      idRef.current = null;
-    }
-  }, [albums, topTracks]);
 
   let animations = useMemo(() => {
     return [
@@ -115,22 +79,6 @@ const SearchList = (): ReactElement => {
     </div>
   );
 
-  const handleProfileClick = useCallback<HandleProfileClickType>(
-    (id) => {
-      idRef.current = id;
-      spotifyArtistAndAlbum(id, setProfile);
-      setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
-    },
-    [setAnimateStateList, setProfile, spotifyArtistAndAlbum]
-  );
-
-  const handleSelectedSong = useCallback<HandleSelectedSongType>(
-    (track) => {
-      setSelectedSong(track);
-    },
-    [setSelectedSong]
-  );
-
   const songOrArtistContainer = (): string => {
     if (artists) {
       return "artistWholeListContainer d-flex flex-column px-1";
@@ -154,19 +102,18 @@ const SearchList = (): ReactElement => {
           </div>
         </SearchBarContainer>
       );
-    } else if (totalTracks && tracks) {
+    } else {
       return (
         <SearchBarContainer
           isArtists={false}
           selectedSong={selectedSong}
           searchResults
         >
-          <SelectedItem />
-          <SongList tracks={tracks} handleSelectedSong={handleSelectedSong} />
+          <SongListSelectedItem />
+          {tracks && <SongList tracks={tracks} />}
         </SearchBarContainer>
       );
     }
-    return <div></div>;
   };
 
   const renderArtists = (): ReactElement => {
@@ -178,21 +125,16 @@ const SearchList = (): ReactElement => {
           </div>
         </SearchBarContainer>
       );
-    } else if (totalArtists) {
+    } else {
       return (
         <SearchBarContainer isArtists searchResults>
           {artists && (
-            <ArtistList
-              handleProfileClick={handleProfileClick}
-              slicedElements={slicedElements}
-              artists={artists}
-            />
+            <ArtistList slicedElements={slicedElements} artists={artists} />
           )}
           <Pages />
         </SearchBarContainer>
       );
     }
-    return <div></div>;
   };
 
   return (

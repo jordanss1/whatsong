@@ -12,8 +12,6 @@ type HandleButtonClickType = (
 const Search = (): ReactElement => {
   const {
     animateStateSearch,
-    typeString,
-    setTypeString,
     term,
     setAnimateStateSearch,
     setTerm,
@@ -30,6 +28,7 @@ const Search = (): ReactElement => {
   } = useContext<UseSearchStateContext>(SearchContext);
 
   const focused = useRef<boolean>(false);
+  const searchType = useRef<string>("");
 
   const animations = {
     initial: (animateStateSearch: SearchAnimateState) => ({
@@ -66,20 +65,20 @@ const Search = (): ReactElement => {
   useEffect(() => {
     setTerm("");
 
-    if (typeString === "artist" && submittedTerm) {
-      spotifyTokenAndSearch(submittedTerm, typeString, setArtists);
-    } else if (typeString === "track" && submittedTerm) {
-      spotifyTokenAndSearch(submittedTerm, typeString, setTracks);
+    if (searchType.current === "artist" && submittedTerm) {
+      spotifyTokenAndSearch(submittedTerm, searchType.current, setArtists);
+    } else if (searchType.current === "track" && submittedTerm) {
+      spotifyTokenAndSearch(submittedTerm, searchType.current, setTracks);
     }
   }, [submittedTerm]);
 
   useEffect(() => {
-    if (typeString === "artist" && submittedTerm) {
+    if (searchType.current === "artist" && submittedTerm) {
       setPage(1);
       setSubmittedTerm("");
       sessionStorage.setItem("artists", JSON.stringify(artists));
       navigate("/artists");
-    } else if (typeString === "track" && submittedTerm) {
+    } else if (searchType.current === "track" && submittedTerm) {
       setSubmittedTerm("");
       sessionStorage.setItem("tracks", JSON.stringify(tracks));
       navigate("/songs");
@@ -103,7 +102,7 @@ const Search = (): ReactElement => {
   const handleButtonClick: HandleButtonClickType = (category, term) => {
     const x = category === "artist" ? 300 : -300;
 
-    setTypeString(category);
+    searchType.current = category;
     setSubmittedTerm(term);
     setAnimateStateSearch({ opacity: 0.5, x }, { opacity: 0, x });
     sessionStorage.clear();

@@ -13,7 +13,7 @@ const artistArray = [...Object.values(ARTIST_REDUCER_TYPES)] as const;
 
 type ActionReturnedTypes = (typeof artistArray)[number];
 
-type ReducerStateType = {
+export type ReducerStateType = {
   artistDetail: ArtistDetailsType | null;
   artistAlbums: { albums: AlbumDetailsType[] | []; total: number };
   artistTopTracks: { topTracks: TopTracksDetailsType[] | []; total: number };

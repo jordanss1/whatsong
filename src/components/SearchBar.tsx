@@ -10,7 +10,6 @@ const SearchBar = (): ReactElement => {
     setTracks,
     setPage,
     setTerm,
-    typeString,
     spotifyTokenAndSearch,
     submittedTerm,
     setSubmittedTerm,
@@ -22,12 +21,12 @@ const SearchBar = (): ReactElement => {
   useEffect(() => {
     focused.current = false;
 
-    if (typeString === "artist" && submittedTerm) {
-      spotifyTokenAndSearch(submittedTerm, typeString, setArtists);
+    if (artists && submittedTerm) {
+      spotifyTokenAndSearch(submittedTerm, "artist", setArtists);
       setSubmittedTerm("");
       pageChange.current = true;
-    } else if (typeString === "track" && submittedTerm) {
-      spotifyTokenAndSearch(submittedTerm, typeString, setTracks);
+    } else if (tracks && submittedTerm) {
+      spotifyTokenAndSearch(submittedTerm, "track", setTracks);
       setSubmittedTerm("");
     }
   }, [submittedTerm]);

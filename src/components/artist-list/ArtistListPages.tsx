@@ -1,12 +1,12 @@
 import { useEffect, useContext } from "react";
-import SearchContext from "../contexts/SearchStore";
+import SearchContext from "../../contexts/SearchStore";
 
 interface PageStyle {
   cursor: string;
   color?: string;
 }
 
-const Pages = () => {
+const ArtistListPages = () => {
   const { setSlicedElements, page, setPage, totalArtists } =
     useContext(SearchContext);
 
@@ -41,8 +41,6 @@ const Pages = () => {
       return "w-75";
     }
   };
-
- 
 
   const pageStyle = (num: number): PageStyle => {
     if (page === num) {
@@ -105,4 +103,4 @@ const Pages = () => {
   );
 };
 
-export default Pages;
+export default ArtistListPages;

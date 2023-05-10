@@ -10,7 +10,7 @@ import {
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import { TopTracksDetailsType } from "../../types";
 
-const ArtistTopTracks = ({
+const ArtistDetailsTopTracks = ({
   topTracks,
   totalTopTracks,
   filteredTrack,
@@ -124,4 +124,4 @@ const ArtistTopTracks = ({
   );
 };
 
-export default memo(ArtistTopTracks);
+export default memo(ArtistDetailsTopTracks);
