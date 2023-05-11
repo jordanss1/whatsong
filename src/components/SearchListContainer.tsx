@@ -21,7 +21,7 @@ const SearchListContainer = ({
       return searchResults
         ? `${
             selectedSong ? "containerAnimate" : ""
-          } w-100 d-grid selectedContainer`
+          } w-100 whole-songs-container`
         : "w-100 d-flex flex-column align-items-center justify-content-between justify-content-center pt-4 noResultsSong";
     }
   };
@@ -37,9 +37,7 @@ const SearchListContainer = ({
         className="w-100 h-100 d-flex"
       >
         <div className="artist-list-results d-grid h-100 p-4">
-          <div
-            className={`d-flex align-items-center justify-content-center justify-content-between  search-list-div border rounded-3`}
-          >
+          <div className="d-flex align-items-center justify-content-center justify-content-between  search-list-div border rounded-3">
             <h2 className="ms-4 fs-3 pt-1 typeHeader">Artists</h2>
             <SearchBar />
           </div>

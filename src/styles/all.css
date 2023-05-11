@@ -37,7 +37,7 @@
 }
 
 .songWholeListContainer {
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(
     to right,
     black 0%,
@@ -143,12 +143,18 @@
   height: 150px;
 }
 
-.songListContainer {
-  grid-template-rows: 15% 77%;
-  row-gap: 40px;
-  width: 85%;
-  overflow: hidden;
-  height: 100vh;
+.song-list-container {
+  padding: 20px 20px;
+  row-gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  min-height: 100vh;
+  margin: 0 40px 0 auto;
+  transition: 0.5s;
+}
+
+.song-list-container-animate {
+  max-width: calc(900px - 10%);
 }
 
 .artistPage {
@@ -716,6 +722,28 @@ hr {
   }
 }
 
+.main-search-input {
+  background-color: black !important;
+  caret-color: white;
+  border-radius: 10px !important;
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  transition: 0.5s !important;
+}
+
+.main-search-div-outer {
+  padding-bottom: 80px;
+}
+
+.main-search-div {
+  height: 35px;
+  transition: 0.5s;
+}
+
+.main-search-div-focus {
+  height: 40px;
+}
+
 .search-input {
   background-color: black !important;
   caret-color: white;
@@ -730,21 +758,6 @@ hr {
 .search-input-focus {
   max-width: 220px !important;
   width: 220px !important;
-}
-
-.searchDiv {
-  height: 30px;
-  transition: 1s;
-}
-
-.searchDiv:hover {
-  height: 40px;
-  width: 52% !important;
-}
-
-.searchDivFocus {
-  height: 40px;
-  width: 52% !important;
 }
 
 .list-search-div {
@@ -836,7 +849,7 @@ hr {
 }
 
 .trackItemContainer {
-  width: 95%;
+  width: 100%;
 }
 
 .trackItem {
@@ -856,12 +869,7 @@ hr {
   font-family: "Barlow", sans-serif;
 }
 
-.songListGrid {
-  justify-items: center;
-  overflow: scroll;
-}
-
-.selectedContainer {
+.whole-songs-container {
   background: linear-gradient(
     to right,
     black 0%,
@@ -873,8 +881,7 @@ hr {
     black 100%
   );
   height: 100%;
-  grid-template-columns: 14vw 85vw;
-  overflow: hidden;
+  grid-template-columns: 15vw 85vw;
   column-gap: 35px;
   transition: 1s;
 }
@@ -889,9 +896,11 @@ hr {
 }
 
 .selectedDiv {
+  position: fixed;
   height: 100% !important;
   background-color: black;
   border-right: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 0 10px;
 }
 
 .selectedSongDiv {
@@ -901,6 +910,14 @@ hr {
 .noSongHeader,
 .noSongHeader div {
   color: white !important;
+}
+
+.noSongHeader {
+  margin-bottom: 200px !important;
+}
+
+.noSongHeader p {
+  max-width: 200px;
 }
 
 .songItem {
@@ -933,17 +950,10 @@ hr {
     border-radius: 15px;
   }
 
-  .songWholeListContainer {
-    padding: 0px;
-  }
   .listNavbar {
     width: 100%;
     margin-left: 10px;
   }
-}
-
-.songListContainer {
-  justify-items: center;
 }
 
 .songItem {
@@ -976,20 +986,6 @@ hr {
     border-radius: 15px;
   }
 
-  .searchDiv {
-    width: 70% !important;
-  }
-
-  .searchDiv:hover {
-    height: 40px;
-    width: 80% !important;
-  }
-
-  .searchDivFocus {
-    height: 40px;
-    width: 80% !important;
-  }
-
   .artistGrid {
     grid-template-columns: repeat(2, 150px);
     height: 100%;
@@ -1001,14 +997,8 @@ hr {
     width: 100%;
     margin-left: 0;
   }
-
-  .artistWholeListContainer {
-  }
 }
 
-.selectedDiv {
-  display: none !important;
-}
 .selectedContainer {
   grid-template-columns: 100%;
   justify-items: center;
@@ -1019,14 +1009,8 @@ hr {
 }
 
 .songListGrid {
-  grid-template-columns: 96%;
-  padding-left: 20px;
 }
 
-.songListContainer {
-  grid-template-rows: 10% 80%;
-  justify-items: center;
-}
 .noResultsSearch {
   background: linear-gradient(
     to right,
@@ -1053,12 +1037,6 @@ hr {
     transition: 0.5s;
   }
 
-  .songListContainer {
-    row-gap: 40px;
-    width: 95%;
-    overflow: hidden;
-  }
-
   .topTrackItem {
     width: 75%;
   }
@@ -1082,20 +1060,6 @@ hr {
     max-width: 55%;
   }
 
-  .searchDiv {
-    width: 70% !important;
-  }
-
-  .searchDiv:hover {
-    height: 40px;
-    width: 80% !important;
-  }
-
-  .searchDivFocus {
-    height: 40px;
-    width: 80% !important;
-  }
-
   .navClassList {
     position: sticky;
   }
@@ -1103,9 +1067,6 @@ hr {
   .listNavbar {
     width: 100%;
     margin-left: 0;
-  }
-
-  .artistWholeListContainer {
   }
 
   .artistGrid {

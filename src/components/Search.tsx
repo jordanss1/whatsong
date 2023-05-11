@@ -86,16 +86,16 @@ const Search = (): ReactElement => {
   }, [tracks, artists]);
 
   const handleFocus = (): void => {
-    const div1 = document.getElementsByClassName(
-      "searchDiv"
-    )[0] as HTMLDivElement;
+    const input = document.getElementsByClassName(
+      "main-search-div"
+    )[0] as HTMLInputElement;
 
     focused.current = !focused.current;
 
     if (focused.current === true) {
-      div1.classList.add("searchDivFocus");
+      input.classList.add("main-search-div-focus");
     } else {
-      div1.classList.remove("searchDivFocus");
+      input.classList.remove("main-search-div-focus");
     }
   };
 
@@ -147,8 +147,8 @@ const Search = (): ReactElement => {
         onSubmit={(e) => e.preventDefault()}
         className="d-flex flex-column justify-content-center align-items-center wholeForm w-100 h-50"
       >
-        <div className="w-100 d-flex justify-content-center pb-5">
-          <div className="ui input searchDiv w-50">
+        <div className="w-100 d-flex justify-content-center main-search-div-outer">
+          <div className="ui input main-search-div w-50">
             <input
               role="search-all-input"
               onFocus={() => handleFocus()}
@@ -159,7 +159,7 @@ const Search = (): ReactElement => {
               placeholder="Search..."
               data-dashlane-rid="3640789f2356683f"
               data-form-type=""
-              className="searchInput"
+              className="main-search-input"
             />
           </div>
         </div>

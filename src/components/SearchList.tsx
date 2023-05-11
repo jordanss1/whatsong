@@ -8,7 +8,7 @@ import SongList from "./song-list/SongList";
 import Pages from "./artist-list/ArtistListPages";
 import { motion } from "framer-motion";
 import { SearchListAnimateState } from "../hooks/AnimateStateHooks";
-import SearchBarContainer from "./SearchListContainer";
+import SearchListContainer from "./SearchListContainer";
 
 const SearchList = (): ReactElement => {
   const {
@@ -84,15 +84,14 @@ const SearchList = (): ReactElement => {
       return "artistWholeListContainer d-flex flex-column px-1";
     }
 
-    return `songWholeListContainer ${
-      !totalTracks ? "" : "d-grid"
-    } container-fluid`;
+    return `songWholeListContainer 
+     container-fluid`;
   };
 
   const renderSongs = (): ReactElement => {
     if (!totalTracks) {
       return (
-        <SearchBarContainer isArtists={false} searchResults={false}>
+        <SearchListContainer isArtists={false} searchResults={false}>
           <div className="d-flex align-items-center justify-content-center justify-content-between  flex-column flex-xl-row noResultsSearch border rounded-3">
             <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Songs</h2>
             <SearchBar />
@@ -100,18 +99,18 @@ const SearchList = (): ReactElement => {
           <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0">
             <h3>No results found</h3>
           </div>
-        </SearchBarContainer>
+        </SearchListContainer>
       );
     } else {
       return (
-        <SearchBarContainer
+        <SearchListContainer
           isArtists={false}
           selectedSong={selectedSong}
           searchResults
         >
           <SongListSelectedItem />
           {tracks && <SongList tracks={tracks} />}
-        </SearchBarContainer>
+        </SearchListContainer>
       );
     }
   };
@@ -119,20 +118,20 @@ const SearchList = (): ReactElement => {
   const renderArtists = (): ReactElement => {
     if (!totalArtists) {
       return (
-        <SearchBarContainer isArtists searchResults={false}>
+        <SearchListContainer isArtists searchResults={false}>
           <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0 artistGrid">
             <h3>No results found</h3>
           </div>
-        </SearchBarContainer>
+        </SearchListContainer>
       );
     } else {
       return (
-        <SearchBarContainer isArtists searchResults>
+        <SearchListContainer isArtists searchResults>
           {artists && (
             <ArtistList slicedElements={slicedElements} artists={artists} />
           )}
           <Pages />
-        </SearchBarContainer>
+        </SearchListContainer>
       );
     }
   };

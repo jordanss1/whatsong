@@ -9,6 +9,18 @@ const SongListSelectedItem = (): ReactElement => {
     setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
   }, []);
 
+  useEffect(() => {
+    const songList = document.getElementsByClassName(
+      "song-list-container"
+    )[0] as HTMLDivElement;
+
+    if (selectedSong) {
+      songList.classList.add("song-list-container-animate");
+    } else {
+      songList.classList.remove("song-list-container-animate");
+    }
+  }, [selectedSong]);
+
   const durationConvert = useCallback(
     (milliseconds: number): string => {
       const seconds = Math.floor((milliseconds / 1000) % 60);
@@ -24,13 +36,13 @@ const SongListSelectedItem = (): ReactElement => {
 
   if (!selectedSong) {
     return (
-      <div
-        className={`selectedDiv d-flex align-items-center justify-content-evenly`}
-      >
-        <h2 className="ui header noSongHeader ps-1 mb-5">
-          Search spotify songs
+      <div className="selectedDiv d-flex align-items-center justify-content-evenly">
+        <h2 className="ui header noSongHeader ">
+          <p className="mb-0">Search spotify songs</p>
           <div className="sub header">
-            Selected <b>details</b> will appear here
+            <p>
+              Selected <b>details</b> will appear here
+            </p>
           </div>
         </h2>
       </div>
@@ -38,9 +50,7 @@ const SongListSelectedItem = (): ReactElement => {
   } else {
     const { album, artists, duration_ms, name, track_number } = selectedSong;
     return (
-      <div
-        className={`selectedDiv d-flex align-items-center flex-column justify-content-evenly`}
-      >
+      <div className="selectedDiv d-flex align-items-center flex-column justify-content-evenly">
         <div className="w-100 d-flex justify-content-end align-items-center mt-2 pb-3">
           <i
             data-testid="x-icon"
