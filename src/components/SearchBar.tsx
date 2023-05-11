@@ -42,16 +42,16 @@ const SearchBar = (): ReactElement => {
   }, [tracks, artists]);
 
   const handleFocus = (): void => {
-    const div1 = document.getElementsByClassName(
-      "listSearchDiv"
-    )[0] as HTMLDivElement;
+    const input = document.getElementsByClassName(
+      "search-input"
+    )[0] as HTMLFormElement;
 
     focused.current = !focused.current;
 
     if (focused.current === true) {
-      div1.classList.add("listSearchDivFocus");
+      input.classList.add("search-input-focus");
     } else {
-      div1.classList.remove("listSearchDivFocus");
+      input.classList.remove("search-input-focus");
     }
   };
 
@@ -65,7 +65,10 @@ const SearchBar = (): ReactElement => {
   };
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className="ui input listSearchDiv">
+    <form
+      onSubmit={(e) => handleSubmit(e)}
+      className="ui input list-search-div pe-1 justify-content-end"
+    >
       <input
         onFocus={() => {
           handleFocus();
@@ -79,7 +82,7 @@ const SearchBar = (): ReactElement => {
         placeholder={`${artists ? "Search artists" : "Search songs"}`}
         data-dashlane-rid="3640789f2356683f"
         data-form-type=""
-        className="searchInput me-1"
+        className="search-input me-2"
       />
       <button
         role="searchList-button"

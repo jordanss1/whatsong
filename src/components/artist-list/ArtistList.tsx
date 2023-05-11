@@ -54,7 +54,7 @@ const ArtistList = ({
 
   return (
     <>
-      <div className="d-sm-grid d-flex flex-column ms-2 align-items-center justify-content-md-center p-5 p-xl-0 artistGrid">
+      <div className="artist-grid d-grid">
         {artists
           .slice(slicedElements[0], slicedElements[1])
           .map(({ external_urls, name, images, id }, i) => {

@@ -8,7 +8,7 @@ import SongList from "./song-list/SongList";
 import Pages from "./artist-list/ArtistListPages";
 import { motion } from "framer-motion";
 import { SearchListAnimateState } from "../hooks/AnimateStateHooks";
-import SearchBarContainer from "./SearchBarContainer";
+import SearchBarContainer from "./SearchListContainer";
 
 const SearchList = (): ReactElement => {
   const {
@@ -145,7 +145,6 @@ const SearchList = (): ReactElement => {
       exit="exit"
       custom={animateStateList}
       transition={{ duration: 0.2 }}
-      style={!totalArtists || !totalTracks ? { height: "100vh" } : {}}
       id="main"
       className={songOrArtistContainer()}
     >

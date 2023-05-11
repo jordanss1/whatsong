@@ -1,5 +1,6 @@
 #root {
   background-color: black;
+  min-height: 100vh;
 }
 
 .landingContainer {
@@ -28,7 +29,11 @@
     rgb(222, 90, 174, 0.3) 89%,
     black 100%
   );
-  height: 100vh;
+  min-height: 100vh;
+}
+
+.artistWholeListContainer section {
+  min-height: 100vh;
 }
 
 .songWholeListContainer {
@@ -45,9 +50,11 @@
   );
 }
 
-.artistListContainer {
-  grid-template-rows: 10% 70% 10%;
-  row-gap: 20px;
+.artist-list-results {
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  row-gap: 25px;
 }
 
 .instructionsDiv {
@@ -709,12 +716,20 @@ hr {
   }
 }
 
-.searchInput {
+.search-input {
   background-color: black !important;
   caret-color: white;
   border-radius: 10px !important;
   color: white !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
+  max-width: 180px !important;
+  width: 200px !important;
+  transition: 0.5s !important;
+}
+
+.search-input-focus {
+  max-width: 220px !important;
+  width: 220px !important;
 }
 
 .searchDiv {
@@ -732,20 +747,8 @@ hr {
   width: 52% !important;
 }
 
-.listSearchDiv {
-  height: 30px;
-  transition: 1s;
-  width: 30% !important;
-}
-
-.listSearchDiv:hover {
-  height: 32px;
-  width: 35% !important;
-}
-
-.listSearchDivFocus {
-  height: 32px;
-  width: 35% !important;
+.list-search-div {
+  width: 100%;
 }
 
 .loading {
@@ -770,11 +773,12 @@ hr {
   border: 1.5px solid rgb(0, 21, 160) !important;
 }
 
-.artistGrid {
-  grid-auto-flow: row;
-  grid-template-columns: repeat(5, 150px);
+.artist-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   row-gap: 10px;
-  column-gap: 23px;
+  max-width: 100%;
+  align-items: center;
+  justify-items: center;
 }
 
 .artistContent a {
@@ -801,14 +805,13 @@ hr {
   height: 163px !important;
 }
 
-.searchListDiv {
+.search-list-div {
   background: linear-gradient(
     to right,
     rgb(26, 26, 26) 0%,
     rgb(13, 13, 13) 100%
   ) !important;
   height: 50px;
-  margin-left: 20px;
 }
 
 .searchButton {
@@ -936,52 +939,30 @@ hr {
     width: 100%;
     margin-left: 10px;
   }
+}
 
-  .artistListContainer {
-    grid-template-rows: 10% 50% 10%;
-    justify-items: center;
-    height: 100%;
-    row-gap: 0px;
-  }
+.songListContainer {
+  justify-items: center;
+}
 
-  .listSearchDiv {
-    width: 60% !important;
-  }
+.songItem {
+  width: 100%;
+}
 
-  .listSearchDiv:hover {
-    width: 65% !important;
-  }
-
-  .searchListDiv {
-    width: 90% !important;
-    height: 90px;
-    justify-content: initial;
-    margin-left: 10px;
-  }
-
-  .songListContainer {
-    justify-items: center;
-  }
-
-  .songItem {
-    width: 100%;
-  }
-
-  .noResultsSearch {
-    background: linear-gradient(
-      to right,
-      rgb(26, 26, 26) 0%,
-      rgb(13, 13, 13) 100%
-    ) !important;
-    height: 160px;
-    margin-left: 20px;
-    width: 70%;
-    padding: 10px;
-    flex-direction: column;
-  }
-  .trackItem .content {
-    max-width: 315px;
-  }
+.noResultsSearch {
+  background: linear-gradient(
+    to right,
+    rgb(26, 26, 26) 0%,
+    rgb(13, 13, 13) 100%
+  ) !important;
+  height: 160px;
+  margin-left: 20px;
+  width: 70%;
+  padding: 10px;
+  flex-direction: column;
+}
+.trackItem .content {
+  max-width: 315px;
 }
 
 @media screen and (max-width: 992px) {
@@ -992,12 +973,6 @@ hr {
     width: 65%;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
     border-radius: 15px;
-  }
-  .searchListDiv {
-    margin-left: 10px;
-    width: 420px !important;
-    height: 90px;
-    justify-content: initial;
   }
 
   .searchDiv {
@@ -1014,14 +989,6 @@ hr {
     width: 80% !important;
   }
 
-  .listSearchDiv {
-    width: 80% !important;
-  }
-
-  .listSearchDiv:hover {
-    width: 85% !important;
-  }
-
   .artistGrid {
     grid-template-columns: repeat(2, 150px);
     height: 100%;
@@ -1035,50 +1002,43 @@ hr {
   }
 
   .artistWholeListContainer {
-    height: 100vh;
-  }
-
-  .artistListContainer {
-    row-gap: 10px;
-    grid-template-rows: 12% 85%;
-    justify-items: center;
-    overflow: scroll;
-  }
-
-  .selectedDiv {
-    display: none !important;
-  }
-  .selectedContainer {
-    grid-template-columns: 100%;
-    justify-items: center;
-  }
-
-  .trackItem .content {
-    max-width: 70%;
-  }
-
-  .songListGrid {
-    grid-template-columns: 96%;
-    padding-left: 20px;
-  }
-
-  .songListContainer {
-    grid-template-rows: 10% 80%;
-    justify-items: center;
-  }
-  .noResultsSearch {
-    background: linear-gradient(
-      to right,
-      rgb(26, 26, 26) 0%,
-      rgb(13, 13, 13) 100%
-    ) !important;
-    height: 160px;
-    margin-left: 20px;
-    width: 70%;
-    padding: 10px;
-    flex-direction: column;
   }
 }
+
+.selectedDiv {
+  display: none !important;
+}
+.selectedContainer {
+  grid-template-columns: 100%;
+  justify-items: center;
+}
+
+.trackItem .content {
+  max-width: 70%;
+}
+
+.songListGrid {
+  grid-template-columns: 96%;
+  padding-left: 20px;
+}
+
+.songListContainer {
+  grid-template-rows: 10% 80%;
+  justify-items: center;
+}
+.noResultsSearch {
+  background: linear-gradient(
+    to right,
+    rgb(26, 26, 26) 0%,
+    rgb(13, 13, 13) 100%
+  ) !important;
+  height: 160px;
+  margin-left: 20px;
+  width: 70%;
+  padding: 10px;
+  flex-direction: column;
+}
+
 @media screen and (max-width: 688px) {
   .trackContentContainer {
     min-width: 250px;
@@ -1135,12 +1095,6 @@ hr {
     width: 80% !important;
   }
 
-  .searchListDiv {
-    width: 300px !important;
-    height: 90px;
-    justify-content: initial;
-  }
-
   .navClassList {
     position: sticky;
   }
@@ -1150,28 +1104,13 @@ hr {
     margin-left: 0;
   }
 
-  .artistListContainer {
-    grid-template-rows: 15% 70% 15%;
-    row-gap: 0;
-    justify-items: center;
-  }
-
   .artistWholeListContainer {
-    height: 100vh;
   }
 
   .artistGrid {
     height: 100%;
     overflow: scroll;
     width: 100%;
-  }
-
-  .listSearchDiv {
-    width: 80% !important;
-  }
-
-  .listSearchDiv:hover {
-    width: 85% !important;
   }
 
   .noResultsSearch {

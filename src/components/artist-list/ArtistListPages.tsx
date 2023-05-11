@@ -51,7 +51,7 @@ const ArtistListPages = () => {
 
   return (
     <div
-      className={`w-100 pages justify-content-center  mb-lg-4 ${
+      className={`w-100 pages justify-content-center align-items-center ${
         totalArtists === 0 ? "d-none" : "d-flex"
       }`}
     >
