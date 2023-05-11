@@ -779,6 +779,7 @@ hr {
   max-width: 100%;
   align-items: center;
   justify-items: center;
+  min-height: 430px;
 }
 
 .artistContent a {
