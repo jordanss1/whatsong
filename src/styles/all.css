@@ -144,17 +144,36 @@
 }
 
 .song-list-container {
+  justify-self: center;
   padding: 20px 20px;
   row-gap: 20px;
   width: 100%;
-  max-width: 900px;
+  max-width: 850px;
   min-height: 100vh;
-  margin: 0 40px 0 auto;
   transition: 0.5s;
 }
 
-.song-list-container-animate {
-  max-width: calc(900px - 10%);
+.song-list-empty-div {
+  max-width: 320px;
+  width: 100%;
+}
+
+.contentDescription {
+  color: rgb(210, 210, 210);
+  font-weight: 400;
+  font-family: "Barlow", sans-serif;
+  line-height: 25px;
+}
+
+.contentDescription li {
+  max-width: 220px;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.songItem img {
+  margin-bottom: -40px;
 }
 
 .artistPage {
@@ -207,12 +226,13 @@ hr {
 
 .albumCard img {
   width: 170px !important;
-  border: 1px solid rgb(0, 0, 0, 0);
+  border: 0.5px solid rgb(0, 0, 0, 0);
   border-radius: 5px;
 }
 
 .albumCard .image {
-  box-shadow: 0px 0px 2px 2px rgb(21, 21, 21) !important;
+  box-shadow: 0px 0px 5px 2px rgba(255, 255, 255, 0.6) !important;
+  border-radius: 5px;
 }
 
 .albumCard .header {
@@ -866,11 +886,14 @@ hr {
 }
 
 .trackItem .content {
-  max-width: 650px;
   height: 100%;
   color: rgb(210, 210, 210);
   font-weight: 200;
   font-family: "Barlow", sans-serif;
+  max-width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .whole-songs-container {
@@ -885,8 +908,7 @@ hr {
     black 100%
   );
   height: 100%;
-  grid-template-columns: 15vw 85vw;
-  column-gap: 35px;
+  grid-template-columns: 250px auto;
   transition: 1s;
 }
 
@@ -905,6 +927,12 @@ hr {
   background-color: black;
   border-right: 1px solid rgba(255, 255, 255, 0.6);
   padding: 0 10px;
+  transition: 0.5s;
+  width: 220px;
+}
+
+.selectedDivAnimation {
+  width: 260px;
 }
 
 .selectedSongDiv {
@@ -926,6 +954,7 @@ hr {
 
 .songItem {
   height: 100%;
+  max-width: 250px;
 }
 
 .description {
@@ -976,9 +1005,6 @@ hr {
   padding: 10px;
   flex-direction: column;
 }
-.trackItem .content {
-  max-width: 315px;
-}
 
 @media screen and (max-width: 992px) {
   .topTrackItem {
@@ -1008,13 +1034,6 @@ hr {
   justify-items: center;
 }
 
-.trackItem .content {
-  max-width: 70%;
-}
-
-.songListGrid {
-}
-
 .noResultsSearch {
   background: linear-gradient(
     to right,
@@ -1028,13 +1047,45 @@ hr {
   flex-direction: column;
 }
 
+@media screen and (max-width: 958px) {
+  .trackItem .content {
+    max-width: 340px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .trackItem .content {
+    max-width: 450px;
+  }
+
+  .whole-songs-container {
+    display: block !important;
+    grid-template-columns: 250px auto;
+    transition: 1s;
+  }
+}
+
 @media screen and (max-width: 688px) {
   .trackContentContainer {
     min-width: 250px;
   }
+
+  .trackItem .content {
+    max-width: 300px;
+    font-size: 18px !important;
+  }
 }
 
 @media screen and (max-width: 576px) {
+  .listen-button {
+    padding: 7px !important;
+  }
+
+  .trackItem .content {
+    max-width: 250px;
+    font-size: 14px !important;
+  }
+
   .arrows {
     cursor: pointer;
     width: 90px;
@@ -1058,10 +1109,6 @@ hr {
 
   .trackContentContainer {
     min-width: 210px;
-  }
-
-  .trackItem .content {
-    max-width: 55%;
   }
 
   .navClassList {
@@ -1092,9 +1139,28 @@ hr {
     flex-direction: column;
   }
 }
-@media screen and (max-width: 410px) {
+@media screen and (max-width: 438px) {
   .trackContentContainer {
     min-width: 150px;
+  }
+  .trackItem .content {
+    max-width: 200px;
+    font-size: 14px !important;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .trackItem {
+    padding: 5px !important;
+  }
+
+  .listen-button {
+    font-size: 12px !important;
+  }
+
+  .trackItem .content {
+    max-width: 175px;
+    font-size: 13px !important;
   }
 }
 

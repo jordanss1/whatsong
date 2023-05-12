@@ -9,6 +9,7 @@ import Pages from "./artist-list/ArtistListPages";
 import { motion } from "framer-motion";
 import { SearchListAnimateState } from "../hooks/AnimateStateHooks";
 import SearchListContainer from "./SearchListContainer";
+import { useMediaQuery } from "../hooks/MediaQueryHook";
 
 const SearchList = (): ReactElement => {
   const {
@@ -19,11 +20,11 @@ const SearchList = (): ReactElement => {
     setArtists,
     setTracks,
     animateStateList,
-    selectedSong,
     setAnimateStateList,
     setAnimateStateSearch,
     slicedElements,
   } = useContext(SearchContext);
+  const is900 = useMediaQuery(900);
 
   useEffect(() => {
     let artists = sessionStorage.getItem("artists");
@@ -103,14 +104,13 @@ const SearchList = (): ReactElement => {
       );
     } else {
       return (
-        <SearchListContainer
-          isArtists={false}
-          selectedSong={selectedSong}
-          searchResults
-        >
-          <SongListSelectedItem />
-          {tracks && <SongList tracks={tracks} />}
-        </SearchListContainer>
+        <>
+          {!is900 && <SongListSelectedItem />}
+          <SearchListContainer isArtists={false} searchResults>
+            <div className="song-list-empty-div"></div>
+            {tracks && <SongList tracks={tracks} />}
+          </SearchListContainer>
+        </>
       );
     }
   };

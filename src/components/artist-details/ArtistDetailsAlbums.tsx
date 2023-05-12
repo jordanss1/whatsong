@@ -108,7 +108,7 @@ const ArtistDetailsAlbums = ({
           <div className="image d-flex justify-content-center">
             {images[1] ? <img src={`${images[1].url}`} /> : <h3>No image</h3>}
           </div>
-          <h3 className="header fs-5 text-center w-100 px-1">{name}</h3>
+          <h3 className="header fs-5 text-center w-100 pt-2">{name}</h3>
         </div>
       );
     }

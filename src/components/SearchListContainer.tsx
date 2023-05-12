@@ -7,21 +7,17 @@ const SearchListContainer = ({
   isArtists,
   searchResults,
   children,
-  selectedSong,
 }: {
   isArtists: boolean;
   searchResults: boolean;
   children?: ReactNode;
-  selectedSong?: Required<TopTracksDetailsType> | null;
 }): ReactElement => {
   const divClasses = (): string => {
     if (isArtists) {
       return searchResults ? "" : "noResultsSearch";
     } else {
       return searchResults
-        ? `${
-            selectedSong ? "containerAnimate" : ""
-          } w-100 whole-songs-container`
+        ? `w-100 whole-songs-container d-grid`
         : "w-100 d-flex flex-column align-items-center justify-content-between justify-content-center pt-4 noResultsSong";
     }
   };

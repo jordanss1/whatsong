@@ -10,14 +10,12 @@ const SongListSelectedItem = (): ReactElement => {
   }, []);
 
   useEffect(() => {
-    const songList = document.getElementsByClassName(
-      "song-list-container"
+    const selectedSongDiv = document.getElementsByClassName(
+      "selectedDiv"
     )[0] as HTMLDivElement;
 
     if (selectedSong) {
-      songList.classList.add("song-list-container-animate");
-    } else {
-      songList.classList.remove("song-list-container-animate");
+      selectedSongDiv.classList.add("selectedDivAnimation");
     }
   }, [selectedSong]);
 
@@ -66,7 +64,7 @@ const SongListSelectedItem = (): ReactElement => {
           )}
           <div className="ui items mt-0 description">
             <div className="item">
-              <ul className="content d-flex flex-column justify-content-start justify-content-evenly align-content-center contentDescription">
+              <ul className="content d-flex flex-column justify-content-start  align-content-center contentDescription">
                 <li className=" text-center">{`${name} by ${artists[0].name}`}</li>
                 <li className="text-center">{`${
                   album.album_type === "single" ? "Single:" : "Album:"

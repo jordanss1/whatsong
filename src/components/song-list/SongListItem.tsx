@@ -1,4 +1,4 @@
-import { memo, ReactElement } from "react";
+import { memo, ReactElement, useEffect } from "react";
 import { TopTracksDetailsType } from "../../types";
 import { HandleSelectedSongType } from "./SongList";
 
@@ -29,7 +29,7 @@ const SongListItem = ({
           </div>
           <div
             onClick={() => window.open(song.external_urls.spotify, "_blank")}
-            className="ui button"
+            className="ui button listen-button"
             title={song.external_urls.spotify}
           >
             Listen

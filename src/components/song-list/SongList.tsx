@@ -11,7 +11,7 @@ export type HandleSelectedSongType = (
 
 const SongList = ({ tracks }: { tracks: Required<TopTracksDetailsType>[] }) => {
   const { setSelectedSong } = useContext(SearchContext);
-  const is992 = useMediaQuery(992);
+  const is900 = useMediaQuery(900);
 
   const handleSelectedSong = useCallback<HandleSelectedSongType>(
     (track) => {
@@ -32,7 +32,7 @@ const SongList = ({ tracks }: { tracks: Required<TopTracksDetailsType>[] }) => {
             <SongListItem
               key={i}
               song={song}
-              hidden={is992}
+              hidden={is900}
               handleSelectedSong={handleSelectedSong}
             />
           );
