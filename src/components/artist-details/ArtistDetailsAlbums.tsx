@@ -104,13 +104,11 @@ const ArtistDetailsAlbums = ({
       const { name, images } = albums[filteredAlbum];
 
       return (
-        <div className="ui raised card albumCard">
-          <div className="image d-flex justify-content-center pt-1 ps-1">
+        <div className="albumCard">
+          <div className="image d-flex justify-content-center">
             {images[1] ? <img src={`${images[1].url}`} /> : <h3>No image</h3>}
           </div>
-          <div className="content d-flex align-items-center justify-content-center p-0">
-            <h3 className="header fs-5 text-center w-100 px-1">{name}</h3>
-          </div>
+          <h3 className="header fs-5 text-center w-100 px-1">{name}</h3>
         </div>
       );
     }

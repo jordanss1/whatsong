@@ -37,7 +37,7 @@ const SearchListContainer = ({
         className="w-100 h-100 d-flex"
       >
         <div className="artist-list-results d-grid h-100 p-4">
-          <div className="d-flex align-items-center justify-content-center justify-content-between  search-list-div border rounded-3">
+          <div className="align-items-center justify-content-center search-list-div border rounded-3">
             <h2 className="ms-4 fs-3 pt-1 typeHeader">Artists</h2>
             <SearchBar />
           </div>
