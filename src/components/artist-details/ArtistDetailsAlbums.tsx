@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useRef,
   ReactElement,
+  useContext,
 } from "react";
 import Loader from "../Loader";
 import LeftArrow from "./Arrows/LeftArrow";
@@ -15,100 +16,49 @@ import {
   rightDisabledStyle,
 } from "../../styles/inline";
 import { AlbumDetailsType } from "../../types";
+import SearchContext from "../../contexts/SearchState";
 
 export type HandleArrowClickType = (
   classString: "leftClick" | "rightClick",
-  func: (prev: number) => number
+  direction: "right" | "left"
 ) => void;
 
 const ArtistDetailsAlbums = ({
-  albums,
   totalAlbums,
-  setFilteredAlbum,
-  filteredAlbum,
+  setAlbum,
+  album,
 }: {
-  albums: AlbumDetailsType[] | [];
   totalAlbums: number;
-  setFilteredAlbum: React.Dispatch<React.SetStateAction<number>>;
-  filteredAlbum: number;
+  album: AlbumDetailsType | null;
+  setAlbum: (direction: "left" | "right") => void;
 }): ReactElement => {
   const timeoutId = useRef<NodeJS.Timeout | number>();
 
   useEffect(() => {
-    setFilteredAlbum(0);
-  }, []);
-
-  useEffect(() => {
     clearTimeout(timeoutId.current);
-  }, [filteredAlbum]);
+  }, [album]);
 
-  const handleClick: HandleArrowClickType = (classString, func) => {
+  const handleClick: HandleArrowClickType = (classString, direction) => {
     const album = document.getElementsByClassName("albumCard")[0];
     album.classList.add(`${classString}`);
-    timeoutId.current = setTimeout(() => setFilteredAlbum(func), 100);
+    timeoutId.current = setTimeout(() => setAlbum(direction), 100);
     setTimeout(() => album.classList.remove(`${classString}`), 400);
   };
 
-  const arrowProps = {
-    leftClick: useCallback(
-      () => handleClick("leftClick", (prev) => prev - 1),
-      []
-    ),
-    rightClick: useCallback(
-      () => handleClick("rightClick", (prev) => prev + 1),
-      []
-    ),
-  };
-
-  const renderLeftArrow = () => {
-    if (filteredAlbum === 0 || !totalAlbums) {
-      return <LeftArrow testId="bigLeft" style={leftDisabledStyle} />;
-    } else {
-      return (
-        <LeftArrow
-          testId="bigLeft"
-          func={arrowProps.leftClick}
-          style={leftStyle}
-        />
-      );
-    }
-  };
-
-  const renderRightArrow = () => {
-    if (filteredAlbum === totalAlbums - 1 || !totalAlbums) {
-      return <RightArrow testId="bigRight" style={rightDisabledStyle} />;
-    } else {
-      return (
-        <RightArrow
-          testId="bigRight"
-          func={arrowProps.rightClick}
-          style={rightStyle}
-        />
-      );
-    }
-  };
-
   const renderAlbums = () => {
-    if (!albums) {
-      return (
-        <div className="ui raised centered card albumCard">
-          <div className="image">
-            <Loader />
-          </div>
-          <div className="content"></div>
-        </div>
-      );
-    } else if (!totalAlbums) {
+    if (!totalAlbums || !album) {
       return <h3 className="align-self-center pb-5">No albums</h3>;
-    } else if (totalAlbums && albums) {
-      const { name, images } = albums[filteredAlbum];
-
+    } else {
       return (
         <div className="albumCard">
           <div className="image d-flex justify-content-center">
-            {images[1] ? <img src={`${images[1].url}`} /> : <h3 className="album-no-image">No image</h3>}
+            {album.images[1] ? (
+              <img src={`${album.images[1].url}`} />
+            ) : (
+              <h3 className="album-no-image">No image</h3>
+            )}
           </div>
-          <h3 className="header fs-5 text-center w-100 pt-2">{name}</h3>
+          <h3 className="header fs-5 text-center w-100 pt-2">{album.name}</h3>
         </div>
       );
     }
@@ -116,9 +66,17 @@ const ArtistDetailsAlbums = ({
 
   return (
     <section className="d-flex flex-row justify-content-center justify-content-evenly">
-      {renderLeftArrow()}
+      <LeftArrow
+        testId="bigLeft"
+        func={handleClick}
+        style={totalAlbums ? leftStyle : leftDisabledStyle}
+      />
       {renderAlbums()}
-      {renderRightArrow()}
+      <RightArrow
+        testId="bigRight"
+        func={handleClick}
+        style={totalAlbums ? rightStyle : rightDisabledStyle}
+      />
     </section>
   );
 };

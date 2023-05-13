@@ -12,13 +12,13 @@ const ArtistDetails = (): ReactElement => {
   const {
     navigate,
     artistDetail,
-    albums,
+    album,
+    setAlbum,
+    setAlbumIndex,
     totalAlbums,
     topTracks,
     totalTopTracks,
-    filteredAlbum,
     filteredTrack,
-    setFilteredAlbum,
     setFilteredTrack,
     setProfile,
     setAnimateStateList,
@@ -91,10 +91,10 @@ const ArtistDetails = (): ReactElement => {
           styles={styles}
         >
           <ArtistDetailsAlbums
-            albums={albums}
+            setAlbum={setAlbum}
+            setAlbumIndex={setAlbumIndex}
+            album={album}
             totalAlbums={totalAlbums}
-            filteredAlbum={filteredAlbum}
-            setFilteredAlbum={setFilteredAlbum}
           />
           <ArtistDetailsTopTracks
             topTracks={topTracks}

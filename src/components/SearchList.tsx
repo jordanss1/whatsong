@@ -24,6 +24,7 @@ const SearchList = (): ReactElement => {
     setAnimateStateList,
     setAnimateStateSearch,
   } = useContext(SearchContext);
+
   const is900 = useMediaQuery(900);
 
   useEffect(() => {
@@ -105,8 +106,8 @@ const SearchList = (): ReactElement => {
     } else {
       return (
         <>
-          {!is900 && <SongListSelectedItem />}
           <SearchListContainer isArtists={false} searchResults>
+            {!is900 && <SongListSelectedItem />}
             <div className="song-list-empty-div"></div>
             {tracks && <SongList tracks={tracks} />}
           </SearchListContainer>

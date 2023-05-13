@@ -1,4 +1,4 @@
-import { memo, ReactElement, useEffect } from "react";
+import { memo, ReactElement } from "react";
 import { TopTracksDetailsType } from "../../types";
 import { HandleSelectedSongType } from "./SongList";
 

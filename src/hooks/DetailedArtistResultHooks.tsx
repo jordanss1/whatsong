@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useReducer, useState, useEffect } from "react";
 import {
   AlbumDetailsType,
   ArtistDetailsType,
@@ -7,17 +7,18 @@ import {
 
 const ARTIST_REDUCER_TYPES = {
   ADD: "ADD",
+  CHANGE_ALBUM: "CHANGE_ALBUM",
 };
 
 const artistArray = [...Object.values(ARTIST_REDUCER_TYPES)] as const;
 
 type ActionReturnedTypes = (typeof artistArray)[number];
 
-export type ReducerStateType = {
+export interface ReducerStateType {
   artistDetail: ArtistDetailsType | null;
   artistAlbums: { albums: AlbumDetailsType[] | []; total: number };
   artistTopTracks: { topTracks: TopTracksDetailsType[] | []; total: number };
-};
+}
 
 type ReducerAction = {
   type: ActionReturnedTypes;
@@ -37,11 +38,17 @@ export type ArtistAndAlbumStateSetter = (
 ) => void;
 
 export const useArtistResults = (initialState: ReducerStateType) => {
+  const [albumIndex, setAlbumIndex] = useState<number>(0);
+
   const [artistDetails, dispatch] = useReducer(
     (state: ReducerStateType, action: ReducerAction): ReducerStateType => {
       switch (action.type) {
         case ARTIST_REDUCER_TYPES.ADD: {
-          if (!action.payload) {
+          if (
+            !action.payload.artistAlbums ||
+            !action.payload.artistDetail ||
+            !action.payload.artistTopTracks
+          ) {
             throw new Error("ADD action requires a payload");
           }
 
@@ -50,8 +57,8 @@ export const useArtistResults = (initialState: ReducerStateType) => {
           const albums = action.payload.artistAlbums.albums;
           const totalAlbums = action.payload.artistAlbums.total;
 
-          const topTracks = action.payload.artistTopTracks.topTracks;
-          const totalTopTracks = action.payload.artistTopTracks.total;
+          const topTracks = action.payload.artistTopTracks?.topTracks;
+          const totalTopTracks = action.payload.artistTopTracks?.total;
 
           sessionStorage.setItem(
             "artist-details",
@@ -75,6 +82,7 @@ export const useArtistResults = (initialState: ReducerStateType) => {
             },
           };
         }
+
         default:
           return { ...state };
       }
@@ -85,7 +93,7 @@ export const useArtistResults = (initialState: ReducerStateType) => {
   const setProfile = useCallback<ArtistAndAlbumStateSetter>(
     (artistDetail, artistAlbums, artistTopTracks) => {
       dispatch({
-        type: "ADD",
+        type: ARTIST_REDUCER_TYPES.ADD,
         payload: {
           artistDetail,
           artistAlbums,
@@ -95,6 +103,10 @@ export const useArtistResults = (initialState: ReducerStateType) => {
     },
     []
   );
+
+  useEffect(() => {
+    setAlbumIndex(0);
+  }, [artistDetails]);
 
   const { artistDetail, artistAlbums, artistTopTracks } = artistDetails;
 
@@ -106,6 +118,16 @@ export const useArtistResults = (initialState: ReducerStateType) => {
 
   let topTracks = artistTopTracks.topTracks;
 
+  const setAlbum = (arrowType: "right" | "left"): void => {
+    if (arrowType === "right") {
+      setAlbumIndex((prev) => (prev + 1 === albums.length ? 0 : prev + 1));
+    } else {
+      setAlbumIndex((prev) => (prev - 1 < 0 ? albums.length - 1 : prev - 1));
+    }
+  };
+
+  let album: AlbumDetailsType | null = albums ? albums[albumIndex] : null;
+
   return {
     artistDetail,
     albums,
@@ -113,5 +135,8 @@ export const useArtistResults = (initialState: ReducerStateType) => {
     topTracks,
     totalTopTracks,
     setProfile,
+    album,
+    setAlbum,
+    setAlbumIndex,
   };
 };

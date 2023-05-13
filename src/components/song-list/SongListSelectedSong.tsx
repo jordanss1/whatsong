@@ -2,12 +2,7 @@ import { ReactElement, useCallback, useContext, useEffect } from "react";
 import SearchContext from "../../contexts/SearchStore";
 
 const SongListSelectedItem = (): ReactElement => {
-  const { selectedSong, setSelectedSong, setAnimateStateList } =
-    useContext(SearchContext);
-
-  useEffect(() => {
-    setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
-  }, []);
+  const { selectedSong, setSelectedSong } = useContext(SearchContext);
 
   useEffect(() => {
     const selectedSongDiv = document.getElementsByClassName(

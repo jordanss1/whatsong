@@ -1,4 +1,4 @@
-import { memo, useContext, useCallback, useEffect } from "react";
+import { memo, useContext, useCallback } from "react";
 import SearchBar from "../SearchBar";
 import { TopTracksDetailsType } from "../../types";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";

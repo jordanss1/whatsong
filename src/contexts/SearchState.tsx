@@ -48,6 +48,9 @@ export const SearchState = () => {
     topTracks,
     totalTopTracks,
     setProfile,
+    album,
+    setAlbum,
+    setAlbumIndex,
   } = useArtistResults(artistInitState);
 
   const navigate = useNavigate();
@@ -61,6 +64,7 @@ export const SearchState = () => {
     totalTopTracks,
     artistDetail,
     albums,
+    album,
     totalAlbums,
     page,
     term,
@@ -73,6 +77,8 @@ export const SearchState = () => {
     totalTracks,
     setFullArtists,
     setTracks,
+    setAlbum,
+    setAlbumIndex,
     setAnimateStateList,
     setAnimateStateSearch,
     setFilteredAlbum,
@@ -101,6 +107,8 @@ const initSearchContextState: UseSearchStateContext = {
   totalTopTracks: 0,
   artistDetail: artistInitState.artistDetail,
   albums: [],
+  album: null,
+  setAlbum: () => {},
   totalAlbums: 0,
   page: 0,
   term: "",
@@ -115,6 +123,7 @@ const initSearchContextState: UseSearchStateContext = {
   setTracks: () => {},
   setAnimateStateList: () => {},
   setAnimateStateSearch: () => {},
+  setAlbumIndex: () => {},
   setFilteredAlbum: () => {},
   setFilteredTrack: () => {},
   setProfile: () => {},
