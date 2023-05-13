@@ -15,10 +15,10 @@ const Search = (): ReactElement => {
     term,
     setAnimateStateSearch,
     setTerm,
-    setArtists,
+    setFullArtists,
     setTracks,
     setSelectedSong,
-    artists,
+    fullArtists,
     tracks,
     setPage,
     setSubmittedTerm,
@@ -42,7 +42,7 @@ const Search = (): ReactElement => {
 
   useEffect(() => {
     focused.current = false;
-    setArtists(null);
+    setFullArtists(null);
     setTracks(null);
     setSelectedSong(null);
     setAnimateStateSearch({ opacity: 0.5, y: 300 }, { opacity: 0, y: 0 });
@@ -66,7 +66,7 @@ const Search = (): ReactElement => {
     setTerm("");
 
     if (searchType.current === "artist" && submittedTerm) {
-      spotifyTokenAndSearch(submittedTerm, searchType.current, setArtists);
+      spotifyTokenAndSearch(submittedTerm, searchType.current, setFullArtists);
     } else if (searchType.current === "track" && submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, searchType.current, setTracks);
     }
@@ -76,14 +76,14 @@ const Search = (): ReactElement => {
     if (searchType.current === "artist" && submittedTerm) {
       setPage(1);
       setSubmittedTerm("");
-      sessionStorage.setItem("artists", JSON.stringify(artists));
+      sessionStorage.setItem("artists", JSON.stringify(fullArtists));
       navigate("/artists");
     } else if (searchType.current === "track" && submittedTerm) {
       setSubmittedTerm("");
       sessionStorage.setItem("tracks", JSON.stringify(tracks));
       navigate("/songs");
     }
-  }, [tracks, artists]);
+  }, [tracks, fullArtists]);
 
   const handleFocus = (): void => {
     const input = document.getElementsByClassName(

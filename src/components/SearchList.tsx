@@ -14,15 +14,15 @@ import { useMediaQuery } from "../hooks/MediaQueryHook";
 const SearchList = (): ReactElement => {
   const {
     artists,
+    fullArtists,
     totalArtists,
     tracks,
     totalTracks,
-    setArtists,
+    setFullArtists,
     setTracks,
     animateStateList,
     setAnimateStateList,
     setAnimateStateSearch,
-    slicedElements,
   } = useContext(SearchContext);
   const is900 = useMediaQuery(900);
 
@@ -36,7 +36,7 @@ const SearchList = (): ReactElement => {
     sessionStorage.removeItem("artist-details");
 
     if (artists && typeof artists === "string") {
-      setArtists(JSON.parse(artists));
+      setFullArtists(JSON.parse(artists));
       setAnimateStateSearch({ opacity: 0.5, x: 300 }, { opacity: 0, x: 300 });
       setAnimateStateList({ x: -300, opacity: 0 }, { x: -300, opacity: 0 });
     } else if (tracks && typeof tracks === "string") {
@@ -127,9 +127,7 @@ const SearchList = (): ReactElement => {
     } else {
       return (
         <SearchListContainer isArtists searchResults>
-          {artists && (
-            <ArtistList slicedElements={slicedElements} artists={artists} />
-          )}
+          {artists && <ArtistList artists={artists} />}
           <Pages />
         </SearchListContainer>
       );
@@ -148,7 +146,7 @@ const SearchList = (): ReactElement => {
       className={songOrArtistContainer()}
     >
       <NavBar content={navContent} />
-      {artists && renderArtists()}
+      {fullArtists && renderArtists()}
       {tracks && renderSongs()}
     </motion.main>
   );

@@ -7,29 +7,13 @@ interface PageStyle {
 }
 
 const ArtistListPages = () => {
-  const { setSlicedElements, page, setPage, totalArtists } =
-    useContext(SearchContext);
+  const { page, setPage, totalArtists } = useContext(SearchContext);
 
   const handlePageClick = (): void => {
     if (window.innerWidth < 949) {
       window.scrollTo(0, 0);
     }
   };
-
-  useEffect(() => {
-    if (page === 1) {
-      setSlicedElements([0, 10]);
-    }
-    if (page === 2) {
-      setSlicedElements([11, 21]);
-    }
-    if (page === 3) {
-      setSlicedElements([22, 32]);
-    }
-    if (page === 4) {
-      setSlicedElements([33, 43]);
-    }
-  }, [page]);
 
   const pagesWidth = () => {
     if (totalArtists < 21) {

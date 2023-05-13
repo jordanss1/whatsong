@@ -19,13 +19,20 @@ export const SearchState = () => {
   const [submittedTerm, setSubmittedTerm] = useState<string>("");
   const [selectedSong, setSelectedSong] =
     useState<Required<TopTracksDetailsType> | null>(null);
-  const [page, setPage] = useState<number>(1);
-  const [slicedElements, setSlicedElements] = useState<number[]>([0, 10]);
   const [filteredAlbum, setFilteredAlbum] = useState<number>(0);
   const [filteredTrack, setFilteredTrack] = useState<number>(0);
 
-  const { artists, totalArtists, tracks, totalTracks, setArtists, setTracks } =
-    useArtistsOrTracks();
+  const {
+    artists,
+    totalArtists,
+    tracks,
+    totalTracks,
+    setFullArtists,
+    setTracks,
+    setPage,
+    page,
+    fullArtists,
+  } = useArtistsOrTracks();
 
   const { animateStateSearch, setAnimateStateSearch } =
     useAnimateSearchManager(searchAnimateInit);
@@ -55,24 +62,22 @@ export const SearchState = () => {
     artistDetail,
     albums,
     totalAlbums,
-    slicedElements,
     page,
-
     term,
     selectedSong,
     submittedTerm,
+    fullArtists,
     artists,
     tracks,
     totalArtists,
     totalTracks,
-    setArtists,
+    setFullArtists,
     setTracks,
     setAnimateStateList,
     setAnimateStateSearch,
     setFilteredAlbum,
     setFilteredTrack,
     setProfile,
-    setSlicedElements,
     setPage,
     setTerm,
     setSubmittedTerm,
@@ -97,23 +102,22 @@ const initSearchContextState: UseSearchStateContext = {
   artistDetail: artistInitState.artistDetail,
   albums: [],
   totalAlbums: 0,
-  slicedElements: [0, 10],
   page: 0,
   term: "",
   selectedSong: null,
   submittedTerm: "",
+  fullArtists: null,
   artists: null,
   tracks: null,
   totalArtists: 0,
   totalTracks: 0,
-  setArtists: () => {},
+  setFullArtists: () => {},
   setTracks: () => {},
   setAnimateStateList: () => {},
   setAnimateStateSearch: () => {},
   setFilteredAlbum: () => {},
   setFilteredTrack: () => {},
   setProfile: () => {},
-  setSlicedElements: () => {},
   setPage: () => {},
   setTerm: () => {},
   setSubmittedTerm: () => {},

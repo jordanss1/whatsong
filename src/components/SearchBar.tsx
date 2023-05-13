@@ -6,7 +6,7 @@ const SearchBar = (): ReactElement => {
     term,
     artists,
     tracks,
-    setArtists,
+    setFullArtists,
     setTracks,
     setPage,
     setTerm,
@@ -22,7 +22,7 @@ const SearchBar = (): ReactElement => {
     focused.current = false;
 
     if (artists && submittedTerm) {
-      spotifyTokenAndSearch(submittedTerm, "artist", setArtists);
+      spotifyTokenAndSearch(submittedTerm, "artist", setFullArtists);
       setSubmittedTerm("");
       pageChange.current = true;
     } else if (tracks && submittedTerm) {

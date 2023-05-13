@@ -12,10 +12,8 @@ import { ArtistDetailsType } from "../../types";
 export type HandleProfileClickType = (id: string) => void;
 
 const ArtistList = ({
-  slicedElements,
   artists,
 }: {
-  slicedElements: number[];
   artists: ArtistDetailsType[];
 }): ReactElement => {
   const {
@@ -55,20 +53,18 @@ const ArtistList = ({
   return (
     <>
       <div className="artist-grid d-grid">
-        {artists
-          .slice(slicedElements[0], slicedElements[1])
-          .map(({ external_urls, name, images, id }, i) => {
-            return (
-              <ArtistCard
-                key={i}
-                url={external_urls.spotify}
-                name={name}
-                image={images[0]}
-                id={id}
-                handleProfileClick={handleProfileClick}
-              />
-            );
-          })}
+        {artists.map(({ external_urls, name, images, id }, i) => {
+          return (
+            <ArtistCard
+              key={i}
+              url={external_urls.spotify}
+              name={name}
+              image={images[0]}
+              id={id}
+              handleProfileClick={handleProfileClick}
+            />
+          );
+        })}
       </div>
     </>
   );
