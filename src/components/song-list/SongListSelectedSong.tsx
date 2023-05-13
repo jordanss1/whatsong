@@ -13,9 +13,15 @@ const SongListSelectedItem = (): ReactElement => {
     const selectedSongDiv = document.getElementsByClassName(
       "selectedDiv"
     )[0] as HTMLDivElement;
+    const songContainer = document.getElementsByClassName(
+      "whole-songs-container"
+    )[0] as HTMLDivElement;
 
     if (selectedSong) {
       selectedSongDiv.classList.add("selectedDivAnimation");
+      songContainer.classList.add("containerAnimate");
+    } else {
+      songContainer.classList.remove("containerAnimate");
     }
   }, [selectedSong]);
 

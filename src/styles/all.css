@@ -148,7 +148,7 @@
   padding: 20px 20px;
   row-gap: 20px;
   width: 100%;
-  max-width: 850px;
+  max-width: 900px;
   min-height: 100vh;
   transition: 0.5s;
 }
@@ -294,6 +294,7 @@ hr {
   cursor: pointer;
   width: 90px;
   transition: 0.5s;
+  height: 80% !important;
 }
 
 .smallArrows {
@@ -512,19 +513,20 @@ hr {
   font-family: "Barlow", sans-serif !important;
 }
 
-.trackContentContainer {
-  min-width: 350px;
-}
-
 .topTrackContent {
   max-width: 350px;
-  min-width: 75px;
+  min-width: 50px;
   font-family: "Barlow", sans-serif !important;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.744);
   text-overflow: ellipsis !important;
   overflow: hidden !important;
   white-space: nowrap !important;
+}
+
+.trackContentContainer {
+  max-width: 350px;
+  min-width: 220px;
 }
 
 .mainDiv {
@@ -639,8 +641,7 @@ hr {
 }
 
 .listNavbar {
-  margin-left: 200px;
-  width: 400px;
+  max-width: 400px;
 }
 
 .poweredList {
@@ -908,12 +909,12 @@ hr {
     black 100%
   );
   height: 100%;
-  grid-template-columns: 250px auto;
+  grid-template-columns: 220px auto;
   transition: 1s;
 }
 
 .containerAnimate {
-  grid-template-columns: 25vw 75vw !important;
+  grid-template-columns: 250px auto !important;
 }
 
 .iconRed {
@@ -967,27 +968,6 @@ hr {
   color: rgb(210, 210, 210) !important;
   text-decoration: none !important;
 }
-@media screen and (max-width: 1280px) {
-  .arrows {
-    height: 70% !important;
-  }
-}
-
-@media screen and (max-width: 1200px) {
-  .topTrackItem {
-    background-color: rgb(26, 26, 26) !important;
-    box-shadow: 0px 1px rgb(30, 30, 30) !important;
-    color: white !important;
-    width: 90%;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    border-radius: 15px;
-  }
-
-  .listNavbar {
-    width: 100%;
-    margin-left: 10px;
-  }
-}
 
 .songItem {
   width: 100%;
@@ -1021,11 +1001,6 @@ hr {
     height: 100%;
     overflow: scroll;
     width: 100%;
-  }
-
-  .listNavbar {
-    width: 100%;
-    margin-left: 0;
   }
 }
 
@@ -1066,10 +1041,6 @@ hr {
 }
 
 @media screen and (max-width: 688px) {
-  .trackContentContainer {
-    min-width: 250px;
-  }
-
   .trackItem .content {
     max-width: 300px;
     font-size: 18px !important;
@@ -1084,12 +1055,6 @@ hr {
   .trackItem .content {
     max-width: 250px;
     font-size: 14px !important;
-  }
-
-  .arrows {
-    cursor: pointer;
-    width: 90px;
-    transition: 0.5s;
   }
 
   .topTrackItem {
@@ -1107,17 +1072,8 @@ hr {
     white-space: nowrap !important;
   }
 
-  .trackContentContainer {
-    min-width: 210px;
-  }
-
   .navClassList {
     position: sticky;
-  }
-
-  .listNavbar {
-    width: 100%;
-    margin-left: 0;
   }
 
   .artistGrid {
@@ -1140,12 +1096,13 @@ hr {
   }
 }
 @media screen and (max-width: 438px) {
-  .trackContentContainer {
-    min-width: 150px;
-  }
   .trackItem .content {
     max-width: 200px;
     font-size: 14px !important;
+  }
+
+  .trackContentContainer {
+    min-width: 150px;
   }
 }
 

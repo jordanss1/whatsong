@@ -11,10 +11,9 @@ const ArtistListPages = () => {
     useContext(SearchContext);
 
   const handlePageClick = (): void => {
-    if (window.innerWidth < 992)
-      document
-        .getElementsByClassName("artistGrid")[0]
-        .scrollTo({ top: 0, behavior: "smooth" });
+    if (window.innerWidth < 949) {
+      window.scrollTo(0, 0);
+    }
   };
 
   useEffect(() => {
