@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { ArtistDetailsType } from "../../types";
 import { NavigateFunction } from "react-router-dom";
 

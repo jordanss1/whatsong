@@ -1,19 +1,36 @@
-import { memo, ReactElement, MouseEventHandler } from "react";
-import { HandleArrowClickType } from "../ArtistDetailsAlbums";
+import { memo, ReactElement } from "react";
+import {
+  SetAlbumType,
+  TrackOrAlbumFuncType as SetTopTrackType,
+} from "../../../hooks/DetailedArtistResultHooks";
+
+export type SetterUnion = SetAlbumType | SetTopTrackType;
 
 interface Props {
   style: string;
   testId: "smallLeft" | "bigLeft";
-  func?: HandleArrowClickType;
+  func: SetterUnion;
 }
 
 type LeftArrowType = (props: Props) => ReactElement;
 
+export const funcIsSetAlbumType = (func: SetterUnion): func is SetAlbumType => {
+  return func.name === "setAlbum";
+};
+
 const LeftArrow: LeftArrowType = ({ func, style, testId }) => {
+  const returnTrueFunc = (): void => {
+    if (funcIsSetAlbumType(func)) {
+      return func("leftClick", "left");
+    }
+
+    return func("left", "track");
+  };
+
   return (
     <div
       data-testid={testId}
-      onClick={func ? () => func("leftClick", "left") : () => {}}
+      onClick={() => returnTrueFunc()}
       className={style}
     >
       <i className="left chevron icon"></i>

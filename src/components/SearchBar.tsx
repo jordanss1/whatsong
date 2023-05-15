@@ -4,7 +4,7 @@ import SearchContext from "../contexts/SearchStore";
 const SearchBar = (): ReactElement => {
   const {
     term,
-    artists,
+    fullArtists,
     tracks,
     setFullArtists,
     setTracks,
@@ -21,7 +21,7 @@ const SearchBar = (): ReactElement => {
   useEffect(() => {
     focused.current = false;
 
-    if (artists && submittedTerm) {
+    if (fullArtists && submittedTerm) {
       spotifyTokenAndSearch(submittedTerm, "artist", setFullArtists);
       setSubmittedTerm("");
       pageChange.current = true;
@@ -32,14 +32,14 @@ const SearchBar = (): ReactElement => {
   }, [submittedTerm]);
 
   useEffect(() => {
-    if (artists && pageChange.current) {
-      sessionStorage.setItem("artists", JSON.stringify(artists));
+    if (fullArtists && pageChange.current) {
+      sessionStorage.setItem("artists", JSON.stringify(fullArtists));
       setPage(1);
       pageChange.current = false;
     } else if (tracks) {
       sessionStorage.setItem("tracks", JSON.stringify(tracks));
     }
-  }, [tracks, artists]);
+  }, [tracks, fullArtists]);
 
   const handleFocus = (): void => {
     const input = document.getElementsByClassName(
@@ -79,7 +79,7 @@ const SearchBar = (): ReactElement => {
         value={term}
         onChange={({ target }) => setTerm(target.value)}
         type="text"
-        placeholder={`${artists ? "Search artists" : "Search songs"}`}
+        placeholder={`${fullArtists ? "Search artists" : "Search songs"}`}
         data-dashlane-rid="3640789f2356683f"
         data-form-type=""
         className="search-input me-2"

@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import SearchContext from "../../contexts/SearchStore";
 
 interface PageStyle {
@@ -6,14 +6,16 @@ interface PageStyle {
   color?: string;
 }
 
-const ArtistListPages = () => {
-  const { page, setPage, totalArtists } = useContext(SearchContext);
+const ArtistListPages = ({ totalArtists }: { totalArtists: number }) => {
+  const { page, setPage } = useContext(SearchContext);
 
   const handlePageClick = (): void => {
     if (window.innerWidth < 949) {
       window.scrollTo(0, 0);
     }
   };
+
+  console.log(totalArtists);
 
   const pagesWidth = () => {
     if (totalArtists < 21) {
@@ -33,11 +35,7 @@ const ArtistListPages = () => {
   };
 
   return (
-    <div
-      className={`w-100 pages justify-content-center align-items-center ${
-        totalArtists === 0 ? "d-none" : "d-flex"
-      }`}
-    >
+    <div className="w-100 pages justify-content-center align-items-center d-flex">
       <div
         className={`d-flex justify-content-center justify-content-between pages ${pagesWidth()} fs-1`}
       >

@@ -20,7 +20,6 @@ const ArtistList = ({
     spotifyArtistAndAlbum,
     setProfile,
     setAnimateStateList,
-    setFilteredAlbum,
     setFilteredTrack,
     albums,
     topTracks,
@@ -31,7 +30,6 @@ const ArtistList = ({
 
   useEffect(() => {
     setFilteredTrack(0);
-    setFilteredAlbum(0);
   }, []);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, memo, useCallback } from "react";
+import { memo } from "react";
 import RightArrow from "./Arrows/RightArrow";
 import LeftArrow from "./Arrows/LeftArrow";
 import {
@@ -9,101 +9,37 @@ import {
 } from "../../styles/inline";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import { TopTracksDetailsType } from "../../types";
+import { TrackOrAlbumFuncType as SetTopTrackType } from "../../hooks/DetailedArtistResultHooks";
 
 const ArtistDetailsTopTracks = ({
   topTracks,
-  totalTopTracks,
-  filteredTrack,
-  setFilteredTrack,
+  topTrack,
+  setTopTrack,
 }: {
   topTracks: TopTracksDetailsType[];
-  totalTopTracks: number;
-  filteredTrack: number;
-  setFilteredTrack: React.Dispatch<React.SetStateAction<number>>;
+  topTrack: TopTracksDetailsType | null;
+  setTopTrack: SetTopTrackType;
 }) => {
   const isWidth992 = useMediaQuery(992);
 
-  useEffect(() => {
-    setFilteredTrack(0);
-  }, []);
-
-  const arrowProps = {
-    leftClick: useCallback(() => setFilteredTrack((prev) => prev - 1), []),
-    rightClick: useCallback(() => setFilteredTrack((prev) => prev + 1), []),
-  };
-
   const containerWidth = () => {
-    if (!totalTopTracks && isWidth992) {
+    if (!topTracks && isWidth992) {
       return "w-50";
     }
     return "w-75";
   };
 
-  const renderLeftArrow = () => {
-    if (filteredTrack === 0 || !totalTopTracks) {
-      return (
-        <div className="d-flex justify-content-start smallArrowDiv">
-          <LeftArrow testId="smallLeft" style={leftSmallDisabled} />
-        </div>
-      );
-    } else {
-      return (
-        <div className="d-flex justify-content-start smallArrowDiv">
-          <LeftArrow
-            testId="smallLeft"
-            style={leftSmall}
-            func={arrowProps.leftClick}
-          />
-        </div>
-      );
-    }
-  };
-
-  const renderRightArrow = () => {
-    if (filteredTrack === totalTopTracks - 1 || !totalTopTracks) {
-      return (
-        <div className="d-flex justify-content-end smallArrowDiv">
-          <RightArrow testId="smallRight" style={rightSmallDisabled} />
-        </div>
-      );
-    } else {
-      return (
-        <div className="d-flex justify-content-end smallArrowDiv">
-          <RightArrow
-            testId="smallRight"
-            style={rightSmall}
-            func={arrowProps.rightClick}
-          />
-        </div>
-      );
-    }
-  };
-
-  const renderTopTracks = () => {
-    if (!topTracks) {
-      return (
-        <div className="ui placeholder">
-          <div className="header">
-            <div className="line"></div>
-            <div className="line"></div>
-          </div>
-        </div>
-      );
-    } else if (!totalTopTracks) {
+  const renderTopTrack = () => {
+    if (!topTrack) {
       return <h3 className="fs-4">No tracks</h3>;
-    } else if (totalTopTracks && topTracks) {
-      const { album, name } = topTracks[filteredTrack];
+    } else {
       return (
         <div className="d-flex align-items-center justify-content-center trackContentContainer">
-          {album.images && album.images[2] ? (
-            <img
-              className="ui avatar image me-2"
-              src={`${album.images[2].url}`}
-            />
-          ) : (
-            <img className="ui avatar image" src="" />
-          )}
-          <div className="content topTrackContent">{name}</div>
+          <img
+            className={`ui avatar image ${topTrack.album.images[2] && "me2"}`}
+            src={`${topTrack.album.images[2] && topTrack.album.images[2].url}`}
+          />
+          <div className="content topTrackContent">{topTrack.name}</div>
         </div>
       );
     }
@@ -116,9 +52,21 @@ const ArtistDetailsTopTracks = ({
       <div
         className={`item d-flex topTrackItem justify-content-center align-items-center ${containerWidth()}  p-1`}
       >
-        {renderLeftArrow()}
-        {renderTopTracks()}
-        {renderRightArrow()}
+        <div className="d-flex justify-content-start smallArrowDiv">
+          <LeftArrow
+            testId="smallLeft"
+            style={topTracks.length > 1 ? leftSmall : leftSmallDisabled}
+            func={setTopTrack}
+          />
+        </div>
+        {renderTopTrack()}
+        <div className="d-flex justify-content-end smallArrowDiv">
+          <RightArrow
+            testId="smallRight"
+            style={topTracks.length > 1 ? rightSmall : rightSmallDisabled}
+            func={setTopTrack}
+          />
+        </div>
       </div>
     </section>
   );

@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 import SongListSelectedItem from "./song-list/SongListSelectedSong";
 import ArtistList from "./artist-list/ArtistList";
 import SongList from "./song-list/SongList";
-import Pages from "./artist-list/ArtistListPages";
+import ArtistListPages from "./artist-list/ArtistListPages";
 import { motion } from "framer-motion";
 import { SearchListAnimateState } from "../hooks/AnimateStateHooks";
 import SearchListContainer from "./SearchListContainer";
@@ -129,7 +129,7 @@ const SearchList = (): ReactElement => {
       return (
         <SearchListContainer isArtists searchResults>
           {artists && <ArtistList artists={artists} />}
-          <Pages />
+          {totalArtists && <ArtistListPages totalArtists={totalArtists} />}
         </SearchListContainer>
       );
     }

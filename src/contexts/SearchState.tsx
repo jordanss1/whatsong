@@ -19,7 +19,6 @@ export const SearchState = () => {
   const [submittedTerm, setSubmittedTerm] = useState<string>("");
   const [selectedSong, setSelectedSong] =
     useState<Required<TopTracksDetailsType> | null>(null);
-  const [filteredAlbum, setFilteredAlbum] = useState<number>(0);
   const [filteredTrack, setFilteredTrack] = useState<number>(0);
 
   const {
@@ -44,13 +43,12 @@ export const SearchState = () => {
   const {
     artistDetail,
     albums,
-    totalAlbums,
-    topTracks,
-    totalTopTracks,
-    setProfile,
     album,
+    topTracks,
+    topTrack,
+    setProfile,
     setAlbum,
-    setAlbumIndex,
+    setTopTrack,
   } = useArtistResults(artistInitState);
 
   const navigate = useNavigate();
@@ -58,14 +56,12 @@ export const SearchState = () => {
   const providerValues = {
     animateStateSearch,
     animateStateList,
-    filteredAlbum,
     filteredTrack,
     topTracks,
-    totalTopTracks,
+    topTrack,
     artistDetail,
     albums,
     album,
-    totalAlbums,
     page,
     term,
     selectedSong,
@@ -77,11 +73,10 @@ export const SearchState = () => {
     totalTracks,
     setFullArtists,
     setTracks,
+    setTopTrack,
     setAlbum,
-    setAlbumIndex,
     setAnimateStateList,
     setAnimateStateSearch,
-    setFilteredAlbum,
     setFilteredTrack,
     setProfile,
     setPage,
@@ -101,15 +96,13 @@ export type UseSearchStateContext = ReturnType<typeof SearchState>;
 const initSearchContextState: UseSearchStateContext = {
   animateStateSearch: searchAnimateInit,
   animateStateList: searchListAnimateInit,
-  filteredAlbum: 0,
   filteredTrack: 0,
   topTracks: [],
-  totalTopTracks: 0,
+  topTrack: null,
   artistDetail: artistInitState.artistDetail,
   albums: [],
   album: null,
   setAlbum: () => {},
-  totalAlbums: 0,
   page: 0,
   term: "",
   selectedSong: null,
@@ -121,10 +114,9 @@ const initSearchContextState: UseSearchStateContext = {
   totalTracks: 0,
   setFullArtists: () => {},
   setTracks: () => {},
+  setTopTrack: () => {},
   setAnimateStateList: () => {},
   setAnimateStateSearch: () => {},
-  setAlbumIndex: () => {},
-  setFilteredAlbum: () => {},
   setFilteredTrack: () => {},
   setProfile: () => {},
   setPage: () => {},

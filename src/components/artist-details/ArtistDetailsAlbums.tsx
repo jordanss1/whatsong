@@ -1,12 +1,4 @@
-import React, {
-  useEffect,
-  memo,
-  useCallback,
-  useRef,
-  ReactElement,
-  useContext,
-} from "react";
-import Loader from "../Loader";
+import { useEffect, memo, useRef, ReactElement } from "react";
 import LeftArrow from "./Arrows/LeftArrow";
 import RightArrow from "./Arrows/RightArrow";
 import {
@@ -16,21 +8,16 @@ import {
   rightDisabledStyle,
 } from "../../styles/inline";
 import { AlbumDetailsType } from "../../types";
-import SearchContext from "../../contexts/SearchState";
-
-export type HandleArrowClickType = (
-  classString: "leftClick" | "rightClick",
-  direction: "right" | "left"
-) => void;
+import { SetAlbumType } from "../../hooks/DetailedArtistResultHooks";
 
 const ArtistDetailsAlbums = ({
-  totalAlbums,
   setAlbum,
   album,
+  albums,
 }: {
-  totalAlbums: number;
   album: AlbumDetailsType | null;
-  setAlbum: (direction: "left" | "right") => void;
+  setAlbum: SetAlbumType;
+  albums: AlbumDetailsType[] | [];
 }): ReactElement => {
   const timeoutId = useRef<NodeJS.Timeout | number>();
 
@@ -38,15 +25,8 @@ const ArtistDetailsAlbums = ({
     clearTimeout(timeoutId.current);
   }, [album]);
 
-  const handleClick: HandleArrowClickType = (classString, direction) => {
-    const album = document.getElementsByClassName("albumCard")[0];
-    album.classList.add(`${classString}`);
-    timeoutId.current = setTimeout(() => setAlbum(direction), 100);
-    setTimeout(() => album.classList.remove(`${classString}`), 400);
-  };
-
-  const renderAlbums = () => {
-    if (!totalAlbums || !album) {
+  const renderAlbum = () => {
+    if (!album) {
       return <h3 className="align-self-center pb-5">No albums</h3>;
     } else {
       return (
@@ -65,17 +45,17 @@ const ArtistDetailsAlbums = ({
   };
 
   return (
-    <section className="d-flex flex-row justify-content-center justify-content-evenly">
+    <section className="d-flex flex-row justify-content-center justify-content-evenly album-container">
       <LeftArrow
         testId="bigLeft"
-        func={handleClick}
-        style={totalAlbums ? leftStyle : leftDisabledStyle}
+        func={setAlbum}
+        style={album && albums.length > 1 ? leftStyle : leftDisabledStyle}
       />
-      {renderAlbums()}
+      {renderAlbum()}
       <RightArrow
         testId="bigRight"
-        func={handleClick}
-        style={totalAlbums ? rightStyle : rightDisabledStyle}
+        func={setAlbum}
+        style={album && albums.length > 1 ? rightStyle : rightDisabledStyle}
       />
     </section>
   );

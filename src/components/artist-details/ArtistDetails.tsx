@@ -13,15 +13,13 @@ const ArtistDetails = (): ReactElement => {
     navigate,
     artistDetail,
     album,
+    albums,
     setAlbum,
-    setAlbumIndex,
-    totalAlbums,
     topTracks,
-    totalTopTracks,
-    filteredTrack,
-    setFilteredTrack,
+    topTrack,
     setProfile,
     setAnimateStateList,
+    setTopTrack,
   } = useContext(SearchContext);
 
   const isWidth992 = useMediaQuery(992);
@@ -92,15 +90,13 @@ const ArtistDetails = (): ReactElement => {
         >
           <ArtistDetailsAlbums
             setAlbum={setAlbum}
-            setAlbumIndex={setAlbumIndex}
             album={album}
-            totalAlbums={totalAlbums}
+            albums={albums}
           />
           <ArtistDetailsTopTracks
+            setTopTrack={setTopTrack}
             topTracks={topTracks}
-            totalTopTracks={totalTopTracks}
-            filteredTrack={filteredTrack}
-            setFilteredTrack={setFilteredTrack}
+            topTrack={topTrack}
           />
         </ArtistDetailsArtist>
       );

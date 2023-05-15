@@ -61,22 +61,9 @@ export const spotifyArtistAndAlbum = (
               ]
             : albums;
 
-          let albumsTotal = albums.length ? albums.length : 0;
-
           let topTracks = responses[2].data.tracks;
-          let topTracksTotal = topTracks.length ? topTracks.length : 0;
 
-          state(
-            responses[0].data,
-            {
-              albums: albums,
-              total: albumsTotal,
-            },
-            {
-              topTracks: topTracks,
-              total: topTracksTotal,
-            }
-          );
+          state(responses[0].data, albums, topTracks);
         })
         .catch((err) => {
           if (err instanceof Error) {
