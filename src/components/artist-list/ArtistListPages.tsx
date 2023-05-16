@@ -15,18 +15,6 @@ const ArtistListPages = ({ totalArtists }: { totalArtists: number }) => {
     }
   };
 
-  console.log(totalArtists);
-
-  const pagesWidth = () => {
-    if (totalArtists < 21) {
-      return "w-25";
-    } else if (totalArtists < 31) {
-      return "w-50";
-    } else if (totalArtists > 31) {
-      return "w-75";
-    }
-  };
-
   const pageStyle = (num: number): PageStyle => {
     if (page === num) {
       return { cursor: "default", color: "white" };
@@ -34,52 +22,50 @@ const ArtistListPages = ({ totalArtists }: { totalArtists: number }) => {
     return { cursor: "pointer" };
   };
 
+  console.log(totalArtists);
+
   return (
-    <div className="w-100 pages justify-content-center align-items-center d-flex">
-      <div
-        className={`d-flex justify-content-center justify-content-between pages ${pagesWidth()} fs-1`}
+    <div className="w-100 pages justify-content-center  align-items-center d-flex fs-1">
+      <p
+        style={pageStyle(1)}
+        hidden={totalArtists < 11}
+        onClick={() => {
+          setPage(1);
+          handlePageClick();
+        }}
       >
-        <p
-          style={pageStyle(1)}
-          hidden={totalArtists < 11}
-          onClick={() => {
-            setPage(1);
-            handlePageClick();
-          }}
-        >
-          1
-        </p>
-        <p
-          style={pageStyle(2)}
-          hidden={totalArtists < 11}
-          onClick={() => {
-            setPage(2);
-            handlePageClick();
-          }}
-        >
-          2
-        </p>
-        <p
-          style={pageStyle(3)}
-          hidden={totalArtists < 21}
-          onClick={() => {
-            setPage(3);
-            handlePageClick();
-          }}
-        >
-          3
-        </p>
-        <p
-          style={pageStyle(4)}
-          hidden={totalArtists < 31}
-          onClick={() => {
-            setPage(4);
-            handlePageClick();
-          }}
-        >
-          4
-        </p>
-      </div>
+        1
+      </p>
+      <p
+        style={pageStyle(2)}
+        hidden={totalArtists < 11}
+        onClick={() => {
+          setPage(2);
+          handlePageClick();
+        }}
+      >
+        2
+      </p>
+      <p
+        style={pageStyle(3)}
+        hidden={totalArtists < 21}
+        onClick={() => {
+          setPage(3);
+          handlePageClick();
+        }}
+      >
+        3
+      </p>
+      <p
+        style={pageStyle(4)}
+        hidden={totalArtists < 31}
+        onClick={() => {
+          setPage(4);
+          handlePageClick();
+        }}
+      >
+        4
+      </p>
     </div>
   );
 };
