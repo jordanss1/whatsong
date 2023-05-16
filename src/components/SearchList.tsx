@@ -120,8 +120,8 @@ const SearchList = (): ReactElement => {
     if (!totalArtists) {
       return (
         <SearchListContainer isArtists searchResults={false}>
-          <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0 artistGrid">
-            <h3>No results found</h3>
+          <div className="no-results-artists d-flex align-items-center">
+            <h3 className="text-center w-100">No results found</h3>
           </div>
         </SearchListContainer>
       );

@@ -835,6 +835,12 @@ hr {
   min-height: 430px;
 }
 
+.artist-grid-less {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
+  min-height: 430px;
+  max-width: 100%;
+}
+
 .artistContent a {
   text-decoration: none;
   color: rgba(255, 255, 255, 0.7) !important;
@@ -868,7 +874,7 @@ hr {
   height: auto;
   padding: 5px 0;
   display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
 }
 
 .searchButton {
@@ -885,6 +891,10 @@ hr {
   max-width: 700px;
   justify-self: center;
   font-family: "Raleway", sans-serif;
+}
+
+.no-results-artists {
+  min-height: 400px;
 }
 
 .pages p {
@@ -1018,13 +1028,6 @@ hr {
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
     border-radius: 15px;
   }
-
-  .artistGrid {
-    grid-template-columns: repeat(2, 150px);
-    height: 100%;
-    overflow: scroll;
-    width: 100%;
-  }
 }
 
 .selectedContainer {
@@ -1099,12 +1102,6 @@ hr {
     position: sticky;
   }
 
-  .artistGrid {
-    height: 100%;
-    overflow: scroll;
-    width: 100%;
-  }
-
   .noResultsSearch {
     background: linear-gradient(
       to right,
@@ -1116,6 +1113,10 @@ hr {
     width: 70%;
     padding: 10px;
     flex-direction: column;
+  }
+
+  .artist-grid-less {
+    justify-content: center;
   }
 }
 @media screen and (max-width: 438px) {
@@ -1141,6 +1142,16 @@ hr {
   .trackItem .content {
     max-width: 175px;
     font-size: 13px !important;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .list-search-div {
+    justify-content: center !important;
+  }
+
+  .typeHeader {
+    text-align: center;
   }
 }
 

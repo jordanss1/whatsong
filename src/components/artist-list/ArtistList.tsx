@@ -48,9 +48,13 @@ const ArtistList = ({
     [setAnimateStateList, setProfile, spotifyArtistAndAlbum]
   );
 
+  console.log(artists);
+
+  const gridClass = artists.length < 6 ? "artist-grid-less" : "artist-grid";
+
   return (
     <>
-      <div className="artist-grid d-grid">
+      <div className={`d-grid ${gridClass}`}>
         {artists.map(({ external_urls, name, images, id }, i) => {
           return (
             <ArtistCard
