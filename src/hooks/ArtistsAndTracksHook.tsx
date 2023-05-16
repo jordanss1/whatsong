@@ -23,13 +23,13 @@ export const useArtistsOrTracks = () => {
     artists = fullArtists?.slice(0, 10);
   }
   if (page === 2) {
-    artists = fullArtists?.slice(11, 21);
+    artists = fullArtists?.slice(10, 20);
   }
   if (page === 3) {
-    artists = fullArtists?.slice(22, 32);
+    artists = fullArtists?.slice(20, 30);
   }
   if (page === 4) {
-    artists = fullArtists?.slice(33, 43);
+    artists = fullArtists?.slice(30, 40);
   }
 
   return {

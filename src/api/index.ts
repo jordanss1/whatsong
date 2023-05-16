@@ -107,7 +107,15 @@ export const spotifyTokenAndSearch: SpotifyTokenAndSearchType = (
           params: { q, type, limit: 40 },
         })
         .then(({ data }) => {
-          state(data[string].items);
+          if (string === "artists") {
+            const sortedArtists = data[string].items.sort(
+              (a: ArtistDetailsType, b: ArtistDetailsType) =>
+                b.followers.total - a.followers.total
+            );
+            state(sortedArtists);
+          } else {
+            state(data[string].items);
+          }
         })
         .catch((err) => {
           if (err instanceof Error) {
