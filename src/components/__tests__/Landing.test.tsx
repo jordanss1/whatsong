@@ -1,8 +1,8 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
-import SearchContext, { SearchStore } from "../../contexts/SearchStore";
+import { SearchStore } from "../../contexts/SearchStore";
 import { NavigationAndStore } from "../../../test-utils/test-utils";
 import { history } from "../../../test-utils";
 import Landing from "../Landing";

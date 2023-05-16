@@ -22,8 +22,6 @@ const ArtistListPages = ({ totalArtists }: { totalArtists: number }) => {
     return { cursor: "pointer" };
   };
 
-  console.log(totalArtists);
-
   return (
     <div className="w-100 pages justify-content-center  align-items-center d-flex fs-1">
       <p

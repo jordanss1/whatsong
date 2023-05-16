@@ -48,8 +48,6 @@ const ArtistList = ({
     [setAnimateStateList, setProfile, spotifyArtistAndAlbum]
   );
 
-  console.log(artists);
-
   const gridClass = artists.length < 6 ? "artist-grid-less" : "artist-grid";
 
   return (

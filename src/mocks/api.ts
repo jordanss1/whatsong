@@ -6,6 +6,7 @@ export type ArtistResultsTestType = {
           name: string;
           images: [];
           id: number;
+          followers: { total: number };
         }[]
       | [];
   };
@@ -65,60 +66,79 @@ export const artistResults: ArtistResultsTestType = {
         name: "Test 1",
         images: [],
         id: 1,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 2",
         images: [],
         id: 2,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 3",
         images: [],
         id: 3,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 4",
         images: [],
         id: 4,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 5",
         images: [],
         id: 5,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 6",
         images: [],
         id: 6,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 7",
         images: [],
         id: 7,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 8",
         images: [],
         id: 8,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 9",
         images: [],
         id: 9,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 10",
         images: [],
         id: 10,
+        followers: { total: 24 },
       },
     ],
   },
@@ -132,222 +152,268 @@ export const artistResultsFull: ArtistResultsTestType = {
         name: "Test 1",
         images: [],
         id: 1,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 2",
         images: [],
         id: 2,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 3",
         images: [],
         id: 3,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 4",
         images: [],
         id: 4,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 5",
         images: [],
         id: 5,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 6",
         images: [],
         id: 6,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 7",
         images: [],
         id: 7,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 8",
         images: [],
         id: 8,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 9",
         images: [],
         id: 9,
+
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 10",
         images: [],
         id: 10,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 11",
         images: [],
         id: 11,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 12",
         images: [],
         id: 12,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 13",
         images: [],
         id: 13,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 14",
         images: [],
         id: 14,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 15",
         images: [],
         id: 15,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 16",
         images: [],
         id: 16,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 17",
         images: [],
         id: 17,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 18",
         images: [],
         id: 18,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 19",
         images: [],
         id: 19,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 20",
         images: [],
         id: 20,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 21",
         images: [],
         id: 21,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 22",
         images: [],
         id: 22,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 23",
         images: [],
         id: 23,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 24",
         images: [],
         id: 24,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 25",
         images: [],
         id: 25,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 26",
         images: [],
         id: 26,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 27",
         images: [],
         id: 27,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 28",
         images: [],
         id: 28,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 29",
         images: [],
         id: 29,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 30",
         images: [],
         id: 30,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 31",
         images: [],
         id: 31,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 32",
         images: [],
         id: 32,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 33",
         images: [],
         id: 33,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 34",
         images: [],
         id: 34,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 35",
         images: [],
         id: 35,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 36",
         images: [],
         id: 36,
+        followers: { total: 24 },
       },
       {
         external_urls: { spotify: "www.spotify.com" },
         name: "Test 37",
         images: [],
         id: 37,
+        followers: { total: 24 },
       },
     ],
   },

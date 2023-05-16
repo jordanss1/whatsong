@@ -119,7 +119,7 @@ describe("SelectedItem component when there are albums and songs", () => {
     expect(queryByText("Track 2")).toBeNull();
   });
 
-  it("The arrows are disabled and don't function at the beginning and end of arrays", async () => {
+  it("The arrows change between first and last albums/tracks", async () => {
     const { getByRole, getByText, findByText, getAllByTitle, getByTestId } =
       customRender(
         WrapperComponent,
@@ -143,50 +143,31 @@ describe("SelectedItem component when there are albums and songs", () => {
 
     const track1 = getByText("Track 1");
 
-    expect(album1).toBeInTheDocument();
-
-    expect(track1).toBeInTheDocument();
-
-    //Clicking disabled left arrow does nothing
-
-    expect(getByTestId("bigLeft")).toHaveClass("leftArrowDisabled");
-    expect(getByTestId("smallLeft")).toHaveClass("leftSmallArrowDisabled");
-
-    await user.click(getByTestId("bigLeft"));
-    await user.click(getByTestId("smallLeft"));
+    const leftAlbumArrow = getByTestId("bigLeft");
+    const leftTrackArrow = getByTestId("smallLeft");
+    const rightAlbumArrow = getByTestId("bigRight");
+    const rightTrackArrow = getByTestId("smallRight");
 
     expect(album1).toBeInTheDocument();
 
     expect(track1).toBeInTheDocument();
 
-    // Going to end of arrays
+    //Clicking left arrow goes to last album
 
-    await user.click(getByTestId("bigRight"));
-
-    expect(await findByText("Album 2")).toBeInTheDocument();
-
-    await user.click(getByTestId("bigRight"));
-
-    await user.dblClick(getByTestId("smallRight"));
+    await user.click(leftAlbumArrow);
+    await user.click(leftTrackArrow);
 
     expect(await findByText("Album 3")).toBeInTheDocument();
+    expect(getByText("Track 3")).toBeInTheDocument();
 
-    expect(await findByText("Track 3")).toBeInTheDocument();
+    // Back to first album
 
-    //Right arrows are disabled
+    await user.click(rightAlbumArrow);
+    await user.click(rightTrackArrow);
 
-    expect(getByTestId("bigRight")).toHaveClass("rightArrowDisabled");
-    expect(getByTestId("smallRight")).toHaveClass("rightSmallArrowDisabled");
+    expect(album1).toBeInTheDocument();
 
-    //Clicking right arrow at end of array does nothing
-
-    await user.click(getByTestId("bigRight"));
-
-    await user.click(getByTestId("smallRight"));
-
-    expect(await findByText("Album 3")).toBeInTheDocument();
-
-    expect(await findByText("Track 3")).toBeInTheDocument();
+    expect(track1).toBeInTheDocument();
   });
 });
 
