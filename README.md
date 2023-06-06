@@ -71,12 +71,12 @@ Press the red "X" icon in the top right to remove the details from the sidebar. 
 <li>ReactJS</li>
 <li>JavaScript</li>
 <li>TypeScript</li>
+<li>React Testing Library</li>
+<li>Jest</li>
+<li>Mock Service Worker</li>
 <li>HTML</li>
 <li>CSS</li>
 <li>React Router</li>
-<li>React Testing Library</li>
-<li>Jest</li>
-<li>MSW</li>
 <li>BootStrap</li>
 <li>Semantic UI</li>
 <li>Axios</li>
