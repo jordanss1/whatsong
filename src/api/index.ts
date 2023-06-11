@@ -154,8 +154,6 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
       return;
     }
 
-    console.log(data);
-
     const accessToken = data;
 
     const searchType = `${typeOfSearch}s`;
