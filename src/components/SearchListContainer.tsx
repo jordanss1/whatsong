@@ -1,7 +1,6 @@
 import { ReactNode, ReactElement } from "react";
 import SearchBar from "./SearchBar";
 import { motion } from "framer-motion";
-import { TopTracksDetailsType } from "../types";
 
 const SearchListContainer = ({
   isArtists,

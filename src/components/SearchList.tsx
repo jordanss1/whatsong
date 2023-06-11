@@ -31,9 +31,6 @@ const SearchList = (): ReactElement => {
     let artists = sessionStorage.getItem("artists");
     let tracks = sessionStorage.getItem("tracks");
 
-    const nav = document.getElementsByClassName("navClass")[0];
-    nav.classList.add("navClassList");
-
     sessionStorage.removeItem("artist-details");
 
     if (artists && typeof artists === "string") {
@@ -81,7 +78,7 @@ const SearchList = (): ReactElement => {
     </div>
   );
 
-  const songOrArtistContainer = (): string => {
+  const songOrArtistContainerClasses = (): string => {
     if (artists) {
       return "artistWholeListContainer d-flex flex-column px-1";
     }
@@ -144,7 +141,7 @@ const SearchList = (): ReactElement => {
       custom={animateStateList}
       transition={{ duration: 0.2 }}
       id="main"
-      className={songOrArtistContainer()}
+      className={songOrArtistContainerClasses()}
     >
       <NavBar content={navContent} />
       {fullArtists && renderArtists()}

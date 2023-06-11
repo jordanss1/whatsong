@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Landing from "./Landing";
-import Search from "./Search";
+import Search from "./main-search/MainSearch";
 import SearchList from "./SearchList";
 import { AnimatePresence } from "framer-motion";
 import ArtistDetails from "./artist-details/ArtistDetails";

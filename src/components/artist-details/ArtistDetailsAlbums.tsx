@@ -1,4 +1,4 @@
-import { useEffect, memo, useRef, ReactElement } from "react";
+import { useEffect, memo, ReactElement, MutableRefObject } from "react";
 import LeftArrow from "./Arrows/LeftArrow";
 import RightArrow from "./Arrows/RightArrow";
 import {
@@ -19,12 +19,6 @@ const ArtistDetailsAlbums = ({
   setAlbum: SetAlbumType;
   albums: AlbumDetailsType[] | [];
 }): ReactElement => {
-  const timeoutId = useRef<NodeJS.Timeout | number>();
-
-  useEffect(() => {
-    clearTimeout(timeoutId.current);
-  }, [album]);
-
   const renderAlbum = () => {
     if (!album) {
       return <h3 className="align-self-center pb-5">No albums</h3>;

@@ -50,7 +50,7 @@ export type TrackOrAlbumFuncType = (
 export const useArtistResults = (initialState: ReducerStateType) => {
   const [albumIndex, setAlbumIndex] = useState<number>(0);
   const [trackIndex, setTrackIndex] = useState<number>(0);
-  const timeoutId = useRef<NodeJS.Timeout | number>();
+  const timeoutId = useRef<NodeJS.Timeout[] | number[]>([]);
 
   const [artistDetails, dispatch] = useReducer(
     (state: ReducerStateType, action: ReducerAction): ReducerStateType => {
@@ -103,7 +103,7 @@ export const useArtistResults = (initialState: ReducerStateType) => {
   useEffect(() => {
     setAlbumIndex(0);
     setTrackIndex(0);
-  }, [artistDetails]);
+  }, [artistDetails.albums]);
 
   const { artistDetail, albums, topTracks } = artistDetails;
 
@@ -119,14 +119,23 @@ export const useArtistResults = (initialState: ReducerStateType) => {
   };
 
   const setAlbum: SetAlbumType = (classString, direction) => {
+    if (timeoutId.current[0] || timeoutId.current[1]) {
+      clearTimeout(timeoutId.current[0]);
+      clearTimeout(timeoutId.current[1]);
+    }
+
     if (albums.length > 1) {
       const album = document.getElementsByClassName("albumCard")[0];
       album.classList.add(`${classString}`);
-      timeoutId.current = setTimeout(
+      timeoutId.current[0] = setTimeout(
         () => setAlbumOrTrack(direction, "album"),
         100
       );
-      setTimeout(() => album.classList.remove(`${classString}`), 400);
+
+      timeoutId.current[1] = setTimeout(
+        () => album.classList.remove(`${classString}`),
+        400
+      );
     }
   };
 
@@ -139,6 +148,7 @@ export const useArtistResults = (initialState: ReducerStateType) => {
     : null;
 
   return {
+    timeoutId,
     artistDetail,
     albums,
     topTracks,

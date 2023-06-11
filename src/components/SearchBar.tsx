@@ -1,4 +1,11 @@
-import { FormEvent, ReactElement, useContext, useEffect, useRef } from "react";
+import {
+  FormEvent,
+  ReactElement,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import SearchContext from "../contexts/SearchStore";
 
 const SearchBar = (): ReactElement => {
@@ -6,27 +13,23 @@ const SearchBar = (): ReactElement => {
     term,
     fullArtists,
     tracks,
-    setFullArtists,
-    setTracks,
     setPage,
     setTerm,
-    spotifyTokenAndSearch,
+    handleArtistsOrSongsSearch,
     submittedTerm,
     setSubmittedTerm,
   } = useContext(SearchContext);
+  const [searchInputClass, setSearchInputClass] = useState("");
 
-  const focused = useRef<boolean>(false);
   const pageChange = useRef<boolean>(false);
 
   useEffect(() => {
-    focused.current = false;
-
     if (fullArtists && submittedTerm) {
-      spotifyTokenAndSearch(submittedTerm, "artist", setFullArtists);
+      handleArtistsOrSongsSearch(submittedTerm, "artist");
       setSubmittedTerm("");
       pageChange.current = true;
     } else if (tracks && submittedTerm) {
-      spotifyTokenAndSearch(submittedTerm, "track", setTracks);
+      handleArtistsOrSongsSearch(submittedTerm, "track");
       setSubmittedTerm("");
     }
   }, [submittedTerm]);
@@ -40,20 +43,6 @@ const SearchBar = (): ReactElement => {
       sessionStorage.setItem("tracks", JSON.stringify(tracks));
     }
   }, [tracks, fullArtists]);
-
-  const handleFocus = (): void => {
-    const input = document.getElementsByClassName(
-      "search-input"
-    )[0] as HTMLFormElement;
-
-    focused.current = !focused.current;
-
-    if (focused.current === true) {
-      input.classList.add("search-input-focus");
-    } else {
-      input.classList.remove("search-input-focus");
-    }
-  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -71,10 +60,10 @@ const SearchBar = (): ReactElement => {
     >
       <input
         onFocus={() => {
-          handleFocus();
+          setSearchInputClass("search-input-focus");
         }}
         onBlur={() => {
-          handleFocus();
+          setSearchInputClass("");
         }}
         value={term}
         onChange={({ target }) => setTerm(target.value)}
@@ -82,7 +71,7 @@ const SearchBar = (): ReactElement => {
         placeholder={`${fullArtists ? "Search artists" : "Search songs"}`}
         data-dashlane-rid="3640789f2356683f"
         data-form-type=""
-        className="search-input me-2"
+        className={`search-input ${searchInputClass} me-2`}
       />
       <button
         role="searchList-button"

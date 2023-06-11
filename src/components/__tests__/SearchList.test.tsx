@@ -6,7 +6,7 @@ import {
   NavigationAndStore,
   customRender,
 } from "../../../test-utils/test-utils";
-import Search from "../Search";
+import Search from "../main-search/MainSearch";
 import SearchList from "../SearchList";
 import SelectedItem from "../song-list/SongListSelectedSong";
 import { SearchStore } from "../../contexts/SearchStore";

@@ -17,7 +17,7 @@ const ArtistList = ({
   artists: ArtistDetailsType[];
 }): ReactElement => {
   const {
-    spotifyArtistAndAlbum,
+    handleArtistDetailSearch,
     setProfile,
     setAnimateStateList,
     setFilteredTrack,
@@ -42,10 +42,10 @@ const ArtistList = ({
   const handleProfileClick = useCallback<HandleProfileClickType>(
     (id) => {
       idRef.current = id;
-      spotifyArtistAndAlbum(id, setProfile);
+      handleArtistDetailSearch(id);
       setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
     },
-    [setAnimateStateList, setProfile, spotifyArtistAndAlbum]
+    [setAnimateStateList, setProfile, handleArtistDetailSearch]
   );
 
   const gridClass = artists.length < 6 ? "artist-grid-less" : "artist-grid";

@@ -1,22 +1,29 @@
-import { ReactElement, useCallback, useContext, useEffect } from "react";
+import {
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import SearchContext from "../../contexts/SearchStore";
 
 const SongListSelectedItem = (): ReactElement => {
   const { selectedSong, setSelectedSong } = useContext(SearchContext);
+  const [selectedDivClass, setSelectedDivClass] = useState<string>("");
 
   useEffect(() => {
-    const selectedSongDiv = document.getElementsByClassName(
-      "selectedDiv"
-    )[0] as HTMLDivElement;
     const songContainer = document.getElementsByClassName(
       "whole-songs-container"
     )[0] as HTMLDivElement;
 
     if (selectedSong) {
-      selectedSongDiv.classList.add("selectedDivAnimation");
+      setSelectedDivClass("selectedDivAnimation");
       songContainer.classList.add("containerAnimate");
+    } else {
+      setSelectedDivClass("");
+      songContainer?.classList?.remove("containerAnimate");
     }
-  }, [selectedSong]);
+  }, [selectedSong?.id]);
 
   const durationConvert = useCallback(
     (milliseconds: number): string => {
@@ -28,12 +35,14 @@ const SongListSelectedItem = (): ReactElement => {
         seconds.toString().padStart(2, "0"),
       ].join(":");
     },
-    [selectedSong]
+    [selectedSong?.id]
   );
 
   if (!selectedSong) {
     return (
-      <div className="selectedDiv d-flex align-items-center justify-content-evenly">
+      <div
+        className={`selectedDiv ${selectedDivClass} d-flex align-items-center justify-content-evenly`}
+      >
         <h2 className="ui header noSongHeader ">
           <p className="mb-0">Search spotify songs</p>
           <div className="sub header">
@@ -47,7 +56,9 @@ const SongListSelectedItem = (): ReactElement => {
   } else {
     const { album, artists, duration_ms, name, track_number } = selectedSong;
     return (
-      <div className="selectedDiv d-flex align-items-center flex-column justify-content-evenly">
+      <div
+        className={`selectedDiv ${selectedDivClass} d-flex align-items-center flex-column justify-content-evenly`}
+      >
         <div className="w-100 d-flex justify-content-end align-items-center mt-2 pb-3">
           <i
             data-testid="x-icon"

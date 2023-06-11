@@ -1,6 +1,6 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { spotifyTokenAndSearch, spotifyArtistAndAlbum } from "../api";
+import { spotifyArtistsOrSongsSearch, spotifyArtistAndAlbum } from "../api";
 import {
   useAnimateSearchManager,
   useAnimateListManager,
@@ -13,6 +13,7 @@ import {
 } from "../hooks/DetailedArtistResultHooks";
 import { TopTracksDetailsType } from "../types";
 import { useArtistsOrTracks } from "../hooks/ArtistsAndTracksHook";
+import { CancelTokenSource } from "axios";
 
 export const SearchState = () => {
   const [term, setTerm] = useState<string>("");
@@ -20,6 +21,7 @@ export const SearchState = () => {
   const [selectedSong, setSelectedSong] =
     useState<Required<TopTracksDetailsType> | null>(null);
   const [filteredTrack, setFilteredTrack] = useState<number>(0);
+  const cancelToken = useRef<CancelTokenSource | null>(null);
 
   const {
     artists,
@@ -53,6 +55,23 @@ export const SearchState = () => {
 
   const navigate = useNavigate();
 
+  const handleArtistsOrSongsSearch = (
+    query: string,
+    typeOfSearch: "artist" | "track"
+  ) => {
+    if (cancelToken.current) cancelToken.current.cancel();
+
+    const stateSetter = typeOfSearch === "artist" ? setFullArtists : setTracks;
+
+    spotifyArtistsOrSongsSearch(query, cancelToken, typeOfSearch, stateSetter);
+  };
+
+  const handleArtistDetailSearch = (id: string) => {
+    if (cancelToken.current) cancelToken.current.cancel();
+
+    spotifyArtistAndAlbum(id, cancelToken, setProfile);
+  };
+
   const providerValues = {
     animateStateSearch,
     animateStateList,
@@ -82,8 +101,8 @@ export const SearchState = () => {
     setPage,
     setTerm,
     setSubmittedTerm,
-    spotifyTokenAndSearch,
-    spotifyArtistAndAlbum,
+    handleArtistsOrSongsSearch,
+    handleArtistDetailSearch,
     setSelectedSong,
     navigate,
   };
@@ -122,8 +141,8 @@ const initSearchContextState: UseSearchStateContext = {
   setPage: () => {},
   setTerm: () => {},
   setSubmittedTerm: () => {},
-  spotifyTokenAndSearch: () => {},
-  spotifyArtistAndAlbum: () => {},
+  handleArtistsOrSongsSearch: () => {},
+  handleArtistDetailSearch: () => {},
   setSelectedSong: () => {},
   navigate: () => {},
 };

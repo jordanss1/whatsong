@@ -1,4 +1,4 @@
-import { useEffect, useRef, useContext, ReactElement } from "react";
+import { useEffect, useRef, useState, useContext, ReactElement } from "react";
 import SearchContext from "../contexts/SearchStore";
 import NavBar from "./NavBar";
 import "../styles/all.css";
@@ -7,6 +7,13 @@ import { UseSearchStateContext } from "../contexts/SearchState";
 
 const Landing = (): ReactElement => {
   const { navigate } = useContext<UseSearchStateContext>(SearchContext);
+
+  const [wrapperClass, setWrapperClass] = useState<string>("");
+  const [navClass, setNavClass] = useState<string>("");
+  const [iconClass, setIconClass] = useState<string>("");
+  const [iconDivClass, setIconDivClass] = useState<string>("");
+  const [poweredClass, setPoweredClass] = useState<string>("");
+
   const hover = useRef<boolean>(false);
   const timeoutId = useRef<NodeJS.Timeout | number | null>(null);
 
@@ -17,8 +24,7 @@ const Landing = (): ReactElement => {
   };
 
   useEffect(() => {
-    const nav = document.getElementsByClassName("navClass")[0] as HTMLElement;
-    nav.classList.add("navClassAnimate");
+    setNavClass("navClassAnimate");
 
     return () => {
       clearTimeout(timeoutId.current as number);
@@ -26,13 +32,8 @@ const Landing = (): ReactElement => {
   }, []);
 
   const handleClick = (): void => {
-    const navBg = document.getElementsByClassName("navClass")[0] as HTMLElement;
-    const wrapper = document.getElementsByClassName(
-      "wrapper"
-    )[0] as HTMLDivElement;
-
-    navBg.classList.remove("navClassAnimate");
-    wrapper.classList.add("wrapperLoad");
+    setNavClass("");
+    setWrapperClass("wrapperLoad");
 
     timeoutId.current = setTimeout(() => {
       navigate("/search");
@@ -40,26 +41,15 @@ const Landing = (): ReactElement => {
   };
 
   const handleHover = (): void => {
-    const spotifyDiv = document.getElementsByClassName(
-      "spotifyDiv"
-    )[0] as HTMLDivElement;
-    const icon = document.getElementsByClassName(
-      "spotifyNav"
-    )[0] as HTMLElement;
-    const text = document.getElementsByClassName(
-      "powered"
-    )[0] as HTMLHeadingElement;
-    const navBg = document.getElementsByClassName("navClass")[0] as HTMLElement;
-
     hover.current = !hover.current;
 
     if (hover.current) {
-      spotifyDiv.classList.add("spotifyLoad");
-      icon.classList.add("spotifyHover");
-      text.classList.add("poweredHover");
-      navBg.classList.remove("navClassAnimate");
+      setIconDivClass("spotifyLoad");
+      setIconClass("spotifyHover");
+      setPoweredClass("poweredHover");
+      setNavClass("");
     } else if (!hover.current) {
-      navBg.classList.add("navClassAnimate");
+      setNavClass("navClassAnimate");
     }
   };
 
@@ -78,8 +68,8 @@ const Landing = (): ReactElement => {
       exit="exit"
       className="landingContainer d-flex flex-column"
     >
-      <NavBar content={content} />
-      <div className="wrapper h-100">
+      <NavBar navClass={navClass} content={content} />
+      <div className={`wrapper ${wrapperClass} h-100`}>
         <div className="d-flex h-100 justify-content-center align-items-center flex-column-reverse mainDiv">
           <button
             onMouseEnter={() => handleHover()}
@@ -90,9 +80,13 @@ const Landing = (): ReactElement => {
           >
             Get started!
           </button>
-          <div className="d-flex border rounded-3 p-5 pt-3 pb-3 spotifyDiv">
-            <h2 className="fs-5 me-2 mt-2 powered">Powered by</h2>
-            <i className="spotify icon fs-1 spotifyNav"></i>
+          <div
+            className={`d-flex border rounded-3 p-5 pt-3 pb-3 ${iconDivClass} spotifyDiv`}
+          >
+            <h2 className={`fs-5 me-2 mt-2 powered ${poweredClass}`}>
+              Powered by
+            </h2>
+            <i className={`spotify icon fs-1 ${iconClass} spotifyNav`}></i>
           </div>
         </div>
       </div>

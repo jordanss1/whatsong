@@ -3,7 +3,7 @@ import { fireEvent, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { SearchStore } from "../../contexts/SearchStore";
-import Search from "../Search";
+import Search from "../main-search/MainSearch";
 import SearchList from "../SearchList";
 import { server } from "../../mocks/server";
 import {
