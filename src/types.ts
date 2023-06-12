@@ -1,3 +1,10 @@
+import {
+  ArtistResultsTestType,
+  SongResultsTestType,
+  AlbumAndTracksTestType,
+} from "./mocks/api";
+import { RestHandler, MockedRequest } from "msw";
+
 export type ArtistDetailsType = {
   external_urls: { spotify: string };
   followers: { href: null; total: number };
@@ -50,3 +57,18 @@ export type TopTracksDetailsType = {
   type: string;
   uri: string;
 };
+
+export type ArtistAndTrackHandlerDataType =
+  | ArtistResultsTestType
+  | SongResultsTestType
+  | Error;
+
+export type ArtistDetailsHandlerDataType = AlbumAndTracksTestType | Error;
+
+export type ArtistAndTrackHandlersType = (
+  data: ArtistAndTrackHandlerDataType
+) => RestHandler<MockedRequest<ArtistDetailsHandlerDataType>>[];
+
+export type ArtistDetailsHandlerType = (
+  data: ArtistDetailsHandlerDataType
+) => RestHandler<MockedRequest<AlbumAndTracksTestType>>[];

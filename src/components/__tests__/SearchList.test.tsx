@@ -6,14 +6,14 @@ import {
   NavigationAndStore,
   customRender,
 } from "../../../test-utils/test-utils";
-import Search from "../main-search/MainSearch";
+import MainSearch from "../main-search/MainSearch";
 import SearchList from "../SearchList";
 import SelectedItem from "../song-list/SongListSelectedSong";
 import { SearchStore } from "../../contexts/SearchStore";
 import { history } from "../../../test-utils";
 import {
   artistAndTrackHandlers,
-  artistAndAlbumHandler,
+  artistDetailsHandler,
 } from "../../mocks/handlers";
 import {
   artistResultsFull,
@@ -24,7 +24,7 @@ import {
   artistResultsNone,
   albumAndTracks,
 } from "../../mocks/api";
-import { changeHandlers } from "./Search.test";
+import { changeHandlers } from "./MainSearch.test";
 
 type SearchComponentFuncType = (
   queries: (HTMLInputElement | HTMLButtonElement)[]
@@ -54,11 +54,11 @@ export const searchComponent: SearchComponentFuncType = async (queries) => {
 
 describe("The SearchList component on the /artists path", () => {
   it("The input in SearchList makes a search and returns artists when there's existing artists on page", async () => {
-    const { getByRole, getByText, getByPlaceholderText, getAllByRole } =
+    const { getByRole, getByText, getByPlaceholderText, getAllByTitle } =
       customRender(
         WrapperComponent,
         <>
-          <Search />
+          <MainSearch />
           <SearchList />
         </>
       );
@@ -70,7 +70,7 @@ describe("The SearchList component on the /artists path", () => {
       ) as HTMLButtonElement as HTMLButtonElement,
     ]);
 
-    expect(getAllByRole("artist-card")).toHaveLength(10);
+    expect(getAllByTitle("View artist profile")).toHaveLength(10);
 
     //Page number 4 should be hidden because the array is only 10
 
@@ -89,10 +89,10 @@ describe("The SearchList component on the /artists path", () => {
   });
 
   it("The input in SearchList makes a search and can return no results when there's existing artists on page", async () => {
-    const { getByRole, getAllByRole, getByPlaceholderText } = customRender(
+    const { getByRole, getAllByTitle, getByPlaceholderText } = customRender(
       WrapperComponent,
       <>
-        <Search />
+        <MainSearch />
         <SearchList />
       </>
     );
@@ -102,7 +102,7 @@ describe("The SearchList component on the /artists path", () => {
       getByRole("search-button-artists") as HTMLButtonElement,
     ]);
 
-    expect(getAllByRole("artist-card")).toHaveLength(10);
+    expect(getAllByTitle("View artist profile")).toHaveLength(10);
 
     changeHandlers(artistResultsNone, artistAndTrackHandlers);
 
@@ -122,7 +122,7 @@ describe("The SearchList component on the /artists path", () => {
     const { getByRole, getByText } = customRender(
       WrapperComponent,
       <>
-        <Search />
+        <MainSearch />
         <SearchList />
       </>
     );
@@ -149,7 +149,7 @@ describe("The SearchList component on the /artists path", () => {
     const { getByRole, getByText, getByPlaceholderText } = customRender(
       WrapperComponent,
       <>
-        <Search />
+        <MainSearch />
         <SearchList />
       </>
     );
@@ -176,10 +176,10 @@ describe("The SearchList component on the /artists path", () => {
   it("The input in SearchList makes a search and returns artists when there's no existing artists on page", async () => {
     changeHandlers(artistResultsNone, artistAndTrackHandlers);
 
-    const { getByRole, getAllByRole, getByPlaceholderText } = customRender(
+    const { getByRole, getAllByTitle, getByPlaceholderText } = customRender(
       WrapperComponent,
       <>
-        <Search />
+        <MainSearch />
         <SearchList />
       </>
     );
@@ -200,7 +200,7 @@ describe("The SearchList component on the /artists path", () => {
       getByRole("searchList-button") as HTMLButtonElement,
     ]);
 
-    expect(getAllByRole("artist-card")).toHaveLength(10);
+    expect(getAllByTitle("View artist profile")).toHaveLength(10);
   });
 
   describe("Route and history testing on /artist path", () => {
@@ -210,7 +210,7 @@ describe("The SearchList component on the /artists path", () => {
       const { getByRole } = customRender(
         WrapperComponent,
         <>
-          <Search />
+          <MainSearch />
           <SearchList />
         </>
       );
@@ -222,13 +222,13 @@ describe("The SearchList component on the /artists path", () => {
       expect(history.location.pathname).toBe("/search");
     });
 
-    it("Clicking on the artist image or profile icon opens the /artist/:id path", async () => {
+    it("Clicking on the artist card opens the /artist/:id path", async () => {
       history.push("/search");
 
-      const { getByRole, getAllByTitle, getAllByRole } = customRender(
+      const { getByRole, getByText } = customRender(
         WrapperComponent,
         <>
-          <Search />
+          <MainSearch />
           <SearchList />
           <SelectedItem />
         </>
@@ -243,44 +243,11 @@ describe("The SearchList component on the /artists path", () => {
 
       expect(history.location.pathname).toBe("/artists");
 
-      changeHandlers(albumAndTracks, artistAndAlbumHandler);
+      changeHandlers(albumAndTracks, artistDetailsHandler);
 
-      await user.click(getAllByTitle("View artist profile")[0]);
-
-      //The profile button works
+      await user.click(getByText("Test 1"));
 
       await waitFor(() => expect(history.location.pathname).toBe("/artists/1"));
-
-      history.push("/artists");
-
-      expect(history.location.pathname).toBe("/artists");
-
-      await user.click(getAllByRole("heading", { name: "No image" })[0]);
-
-      //Clicking on the image works
-
-      await waitFor(() => expect(history.location.pathname).toBe("/artists/1"));
-    });
-
-    it("Clicking on the spotify icon opens a tab to spotify", async () => {
-      const windowSpy = jest.spyOn(window, "open").mockImplementation();
-
-      const { getByRole, getAllByTitle } = customRender(
-        WrapperComponent,
-        <>
-          <Search />
-          <SearchList />
-        </>
-      );
-
-      await searchComponent([
-        getByRole("search-all-input") as HTMLInputElement,
-        getByRole("search-button-artists") as HTMLButtonElement,
-      ]);
-
-      await user.click(getAllByTitle("www.spotify.com")[0]);
-
-      expect(windowSpy).toHaveBeenCalled();
     });
   });
 });
@@ -292,7 +259,7 @@ describe("The SearchList component on the /songs path", () => {
     const { getByPlaceholderText, getAllByRole, getByRole } = customRender(
       WrapperComponent,
       <>
-        <Search />
+        <MainSearch />
         <SearchList />
       </>
     );
@@ -320,7 +287,7 @@ describe("The SearchList component on the /songs path", () => {
     const { getByPlaceholderText, getAllByRole, getByRole } = customRender(
       WrapperComponent,
       <>
-        <Search />
+        <MainSearch />
         <SearchList />
       </>
     );
@@ -351,7 +318,7 @@ describe("The SearchList component on the /songs path", () => {
       customRender(
         WrapperComponent,
         <>
-          <Search />
+          <MainSearch />
           <SearchList />
         </>
       );
@@ -397,7 +364,7 @@ describe("The SearchList component on the /songs path", () => {
       const { getByRole } = customRender(
         WrapperComponent,
         <>
-          <Search />
+          <MainSearch />
           <SearchList />
         </>
       );
@@ -417,7 +384,7 @@ describe("The SearchList component on the /songs path", () => {
       const { getByRole, getAllByTitle } = customRender(
         WrapperComponent,
         <>
-          <Search />
+          <MainSearch />
           <SearchList />
         </>
       );

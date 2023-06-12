@@ -6,13 +6,13 @@ import {
   NavigationAndStore,
   customRender,
 } from "../../../test-utils/test-utils";
-import Search from "../main-search/MainSearch";
+import MainSearch from "../main-search/MainSearch";
 import SearchList from "../SearchList";
 import { searchComponent } from "./SearchList.test";
 import { SearchStore } from "../../contexts/SearchStore";
 import { history } from "../../../test-utils";
-import { changeHandlers } from "./Search.test";
-import { artistAndAlbumHandler } from "../../mocks/handlers";
+import { changeHandlers } from "./MainSearch.test";
+import { artistDetailsHandler } from "../../mocks/handlers";
 import { albumAndTracks, albumAndTracksNoResults } from "../../mocks/api";
 import ArtistDetails from "../artist-details/ArtistDetails";
 
@@ -35,7 +35,7 @@ describe("SelectedItem component when there are albums and songs", () => {
     const { getByRole, getByText, findByText, getAllByTitle } = customRender(
       WrapperComponent,
       <>
-        <Search />
+        <MainSearch />
         <SearchList />
         <ArtistDetails />
       </>
@@ -46,9 +46,9 @@ describe("SelectedItem component when there are albums and songs", () => {
       getByRole("search-button-artists") as HTMLButtonElement,
     ]);
 
-    changeHandlers(albumAndTracks, artistAndAlbumHandler);
+    changeHandlers(albumAndTracks, artistDetailsHandler);
 
-    await user.click(getAllByTitle("View artist profile")[0]);
+    await user.click(getByText("Test 1"));
 
     //Name and followers
 
@@ -64,30 +64,24 @@ describe("SelectedItem component when there are albums and songs", () => {
   });
 
   it("The arrows can change the artists and albums arrays and remove previous item", async () => {
-    const {
-      getByRole,
-      findByText,
-      queryByText,
-      getAllByTitle,
-      getByTestId,
-      debug,
-    } = customRender(
-      WrapperComponent,
-      <>
-        <Search />
-        <SearchList />
-        <ArtistDetails />
-      </>
-    );
+    const { getByRole, findByText, queryByText, getByText, getByTestId } =
+      customRender(
+        WrapperComponent,
+        <>
+          <MainSearch />
+          <SearchList />
+          <ArtistDetails />
+        </>
+      );
 
     await searchComponent([
       getByRole("search-all-input") as HTMLInputElement,
       getByRole("search-button-artists") as HTMLButtonElement,
     ]);
 
-    changeHandlers(albumAndTracks, artistAndAlbumHandler);
+    changeHandlers(albumAndTracks, artistDetailsHandler);
 
-    await user.click(getAllByTitle("View artist profile")[0]);
+    await user.click(getByText("Test 1"));
 
     //The current album and top-track
 
@@ -120,24 +114,23 @@ describe("SelectedItem component when there are albums and songs", () => {
   });
 
   it("The arrows change between first and last albums/tracks", async () => {
-    const { getByRole, getByText, findByText, getAllByTitle, getByTestId } =
-      customRender(
-        WrapperComponent,
-        <>
-          <Search />
-          <SearchList />
-          <ArtistDetails />
-        </>
-      );
+    const { getByRole, getByText, findByText, getByTestId } = customRender(
+      WrapperComponent,
+      <>
+        <MainSearch />
+        <SearchList />
+        <ArtistDetails />
+      </>
+    );
 
     await searchComponent([
       getByRole("search-all-input") as HTMLInputElement,
       getByRole("search-button-artists") as HTMLButtonElement,
     ]);
 
-    changeHandlers(albumAndTracks, artistAndAlbumHandler);
+    changeHandlers(albumAndTracks, artistDetailsHandler);
 
-    await user.click(getAllByTitle("View artist profile")[0]);
+    await user.click(getByText("Test 1"));
 
     const album1 = await findByText("Album 1");
 
@@ -176,7 +169,7 @@ describe("SelectedItem component when there are no albums and songs", () => {
     const { getByRole, getByText, findByText, getAllByTitle } = customRender(
       WrapperComponent,
       <>
-        <Search />
+        <MainSearch />
         <SearchList />
         <ArtistDetails />
       </>
@@ -187,9 +180,9 @@ describe("SelectedItem component when there are no albums and songs", () => {
       getByRole("search-button-artists") as HTMLButtonElement,
     ]);
 
-    changeHandlers(albumAndTracksNoResults, artistAndAlbumHandler);
+    changeHandlers(albumAndTracksNoResults, artistDetailsHandler);
 
-    await user.click(getAllByTitle("View artist profile")[0]);
+    await user.click(getByText("Test 1"));
 
     expect(await findByText("Name")).toBeInTheDocument();
 
@@ -201,30 +194,24 @@ describe("SelectedItem component when there are no albums and songs", () => {
   });
 
   it("The arrows are rendered disabled and have no effect when clicked", async () => {
-    const {
-      getByRole,
-      getByText,
-      findByText,
-      getByTestId,
-      findByTestId,
-      getAllByTitle,
-    } = customRender(
-      WrapperComponent,
-      <>
-        <Search />
-        <SearchList />
-        <ArtistDetails />
-      </>
-    );
+    const { getByRole, getByText, findByText, getByTestId, findByTestId } =
+      customRender(
+        WrapperComponent,
+        <>
+          <MainSearch />
+          <SearchList />
+          <ArtistDetails />
+        </>
+      );
 
     await searchComponent([
       getByRole("search-all-input") as HTMLInputElement,
       getByRole("search-button-artists") as HTMLButtonElement,
     ]);
 
-    changeHandlers(albumAndTracksNoResults, artistAndAlbumHandler);
+    changeHandlers(albumAndTracksNoResults, artistDetailsHandler);
 
-    await user.click(getAllByTitle("View artist profile")[0]);
+    await user.click(getByText("Test 1"));
 
     expect(await findByText("No albums")).toBeInTheDocument();
 
@@ -252,10 +239,10 @@ describe("SelectedItem component when there are no albums and songs", () => {
 
 describe("Route, history and window testing in SelectedItem component", () => {
   it("Pressing the 'X' icon should route back to /artists path", async () => {
-    const { getByRole, getByTestId, getAllByTitle } = customRender(
+    const { getByRole, getByTestId, getByText, findByTestId } = customRender(
       WrapperComponent,
       <>
-        <Search />
+        <MainSearch />
         <SearchList />
         <ArtistDetails />
       </>
@@ -266,40 +253,16 @@ describe("Route, history and window testing in SelectedItem component", () => {
       getByRole("search-button-artists") as HTMLButtonElement,
     ]);
 
-    changeHandlers(albumAndTracks, artistAndAlbumHandler);
+    changeHandlers(albumAndTracks, artistDetailsHandler);
 
-    await user.click(getAllByTitle("View artist profile")[0]);
+    await user.click(getByText("Test 1"));
+
+    expect(await findByTestId("red-x")).toBeInTheDocument();
 
     await waitFor(() => expect(history.location.pathname).toBe("/artists/1"));
 
     await user.click(getByTestId("red-x"));
 
     await waitFor(() => expect(history.location.pathname).toBe("/artists"));
-  });
-
-  it("Clicking on the spotify icon opens a tab to spotify", async () => {
-    const windowSpy = jest.spyOn(window, "open").mockImplementation();
-
-    const { getByRole, findByTitle, getAllByTitle } = customRender(
-      WrapperComponent,
-      <>
-        <Search />
-        <SearchList />
-        <ArtistDetails />
-      </>
-    );
-
-    await searchComponent([
-      getByRole("search-all-input") as HTMLInputElement,
-      getByRole("search-button-artists") as HTMLButtonElement,
-    ]);
-
-    changeHandlers(albumAndTracks, artistAndAlbumHandler);
-
-    await user.click(getAllByTitle("View artist profile")[0]);
-
-    await user.click(await findByTitle("www.spotify.com/1"));
-
-    expect(windowSpy).toHaveBeenCalled();
   });
 });

@@ -1,9 +1,9 @@
 import { setupServer } from "msw/node";
-import { ArtistResultsTestType, artistResults } from "./api";
+import { artistResults } from "./api";
 import { artistAndTrackHandlers } from "./handlers";
-import { RestHandler, MockedRequest } from "msw";
 
-const data: RestHandler<MockedRequest<ArtistResultsTestType>>[] =
-  artistAndTrackHandlers(artistResults);
+const data = artistAndTrackHandlers(artistResults);
 
-export const server = setupServer(...data);
+const server = setupServer(...data);
+
+export default server;

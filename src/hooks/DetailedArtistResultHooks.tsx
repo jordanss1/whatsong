@@ -119,7 +119,6 @@ export const useArtistResults = (initialState: ReducerStateType) => {
     let setter = itemType === "album" ? setAlbumIndex : setTrackIndex;
 
     if (arrowType === "right" && array.length > 1) {
-      console.log("first");
       setter((prev) => (prev + 1 === array.length ? 0 : prev + 1));
     } else if (arrowType === "left" && array.length > 1) {
       setter((prev) => (prev - 1 < 0 ? array.length - 1 : prev - 1));
@@ -149,15 +148,15 @@ export const useArtistResults = (initialState: ReducerStateType) => {
 
   const setTopTrack = setAlbumOrTrack;
 
-  let albumReturn: AlbumDetailsType | null = albums ? albums[albumIndex] : null;
+  let album: AlbumDetailsType | null = albums ? albums[albumIndex] : null;
 
-  let album = useMemo(() => albumReturn, [albumIndex, albums]);
+  album = useMemo(() => album, [albumIndex, albums]);
 
-  let topTrackReturn: TopTracksDetailsType | null = topTracks
+  let topTrack: TopTracksDetailsType | null = topTracks
     ? topTracks[trackIndex]
     : null;
 
-  let topTrack = useMemo(() => topTrackReturn, [trackIndex, topTracks]);
+  topTrack = useMemo(() => topTrack, [trackIndex, topTracks]);
 
   return {
     timeoutId,

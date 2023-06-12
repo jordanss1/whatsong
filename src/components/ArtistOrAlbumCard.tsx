@@ -64,6 +64,7 @@ const ArtistOrAlbumCard = ({
   return (
     <div
       className={`artist-album-card ${cardType === "artist" && "artist-card"}`}
+      title={cardType === "artist" ? "View artist profile" : ""}
     >
       {cardType === "album" && renderAlbumCard}
       {cardType === "artist" && artist && renderArtistCard}

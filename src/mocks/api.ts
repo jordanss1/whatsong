@@ -56,7 +56,8 @@ export type AlbumAndTracksTestType = [
 export type AllTestResultsUnionType =
   | AlbumAndTracksTestType
   | SongResultsTestType
-  | ArtistResultsTestType;
+  | ArtistResultsTestType
+  | Error;
 
 export const artistResults: ArtistResultsTestType = {
   artists: {

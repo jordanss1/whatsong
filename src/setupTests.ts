@@ -1,4 +1,4 @@
-import { server } from "./mocks/server";
+import server from "./mocks/server";
 import { cleanup } from "@testing-library/react";
 
 // Establish API mocking before all tests.
