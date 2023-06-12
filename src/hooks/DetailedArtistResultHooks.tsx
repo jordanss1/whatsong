@@ -1,4 +1,11 @@
-import { useCallback, useReducer, useState, useEffect, useRef } from "react";
+import {
+  useCallback,
+  useReducer,
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+} from "react";
 import {
   AlbumDetailsType,
   ArtistDetailsType,
@@ -112,6 +119,7 @@ export const useArtistResults = (initialState: ReducerStateType) => {
     let setter = itemType === "album" ? setAlbumIndex : setTrackIndex;
 
     if (arrowType === "right" && array.length > 1) {
+      console.log("first");
       setter((prev) => (prev + 1 === array.length ? 0 : prev + 1));
     } else if (arrowType === "left" && array.length > 1) {
       setter((prev) => (prev - 1 < 0 ? array.length - 1 : prev - 1));
@@ -125,7 +133,7 @@ export const useArtistResults = (initialState: ReducerStateType) => {
     }
 
     if (albums.length > 1) {
-      const album = document.getElementsByClassName("albumCard")[0];
+      const album = document.getElementsByClassName("artist-album-card")[0];
       album.classList.add(`${classString}`);
       timeoutId.current[0] = setTimeout(
         () => setAlbumOrTrack(direction, "album"),
@@ -141,11 +149,15 @@ export const useArtistResults = (initialState: ReducerStateType) => {
 
   const setTopTrack = setAlbumOrTrack;
 
-  let album: AlbumDetailsType | null = albums ? albums[albumIndex] : null;
+  let albumReturn: AlbumDetailsType | null = albums ? albums[albumIndex] : null;
 
-  let topTrack: TopTracksDetailsType | null = topTracks
+  let album = useMemo(() => albumReturn, [albumIndex, albums]);
+
+  let topTrackReturn: TopTracksDetailsType | null = topTracks
     ? topTracks[trackIndex]
     : null;
+
+  let topTrack = useMemo(() => topTrackReturn, [trackIndex, topTracks]);
 
   return {
     timeoutId,
