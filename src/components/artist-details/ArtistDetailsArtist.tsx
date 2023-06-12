@@ -48,10 +48,12 @@ const ArtistDetailsArtist = ({
               onClick={() => window.open(external_urls.spotify, "_blank")}
               className="spotify icon fs-1 pe-5 me-3"
             ></i>
-            <div className="vl"></div>
-            <h2 className="fs-5 pt-1 ps-4">{`${followers.total.toLocaleString(
-              "US"
-            )} followers`}</h2>
+            {followers.total && <div className="vl" />}
+            <h2 className="fs-5 pt-1 ps-4">
+              {followers.total
+                ? `${followers.total?.toLocaleString("US")} followers`
+                : ""}
+            </h2>
           </div>
         </div>
         {children}

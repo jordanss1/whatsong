@@ -5,9 +5,9 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import ArtistCard from "./ArtistListArtistCard";
 import SearchContext from "../../contexts/SearchState";
 import { ArtistDetailsType } from "../../types";
+import ArtistOrAlbumCard from "../ArtistOrAlbumCard";
 
 export type HandleProfileClickType = (id: string) => void;
 
@@ -53,14 +53,12 @@ const ArtistList = ({
   return (
     <>
       <div className={`d-grid ${gridClass}`}>
-        {artists.map(({ external_urls, name, images, id }, i) => {
+        {artists.map((artist, i) => {
           return (
-            <ArtistCard
+            <ArtistOrAlbumCard
               key={i}
-              url={external_urls.spotify}
-              name={name}
-              image={images[0]}
-              id={id}
+              cardType="artist"
+              artist={artist}
               handleProfileClick={handleProfileClick}
             />
           );

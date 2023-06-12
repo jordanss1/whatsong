@@ -1,4 +1,4 @@
-import { useEffect, memo, ReactElement, MutableRefObject } from "react";
+import { memo, ReactElement } from "react";
 import LeftArrow from "./Arrows/LeftArrow";
 import RightArrow from "./Arrows/RightArrow";
 import {
@@ -9,6 +9,7 @@ import {
 } from "../../styles/inline";
 import { AlbumDetailsType } from "../../types";
 import { SetAlbumType } from "../../hooks/DetailedArtistResultHooks";
+import ArtistOrAlbumCard from "../ArtistOrAlbumCard";
 
 const ArtistDetailsAlbums = ({
   setAlbum,
@@ -19,25 +20,6 @@ const ArtistDetailsAlbums = ({
   setAlbum: SetAlbumType;
   albums: AlbumDetailsType[] | [];
 }): ReactElement => {
-  const renderAlbum = () => {
-    if (!album) {
-      return <h3 className="align-self-center pb-5">No albums</h3>;
-    } else {
-      return (
-        <div className="albumCard">
-          <div className="image d-flex justify-content-center">
-            {album.images[1] ? (
-              <img src={`${album.images[1].url}`} />
-            ) : (
-              <h3 className="album-no-image">No image</h3>
-            )}
-          </div>
-          <h3 className="header fs-5 text-center w-100 pt-2">{album.name}</h3>
-        </div>
-      );
-    }
-  };
-
   return (
     <section className="d-flex flex-row justify-content-center justify-content-evenly album-container">
       <LeftArrow
@@ -45,7 +27,7 @@ const ArtistDetailsAlbums = ({
         func={setAlbum}
         style={album && albums.length > 1 ? leftStyle : leftDisabledStyle}
       />
-      {renderAlbum()}
+      <ArtistOrAlbumCard cardType="album" album={album} />
       <RightArrow
         testId="bigRight"
         func={setAlbum}

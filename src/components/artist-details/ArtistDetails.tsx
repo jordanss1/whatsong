@@ -2,7 +2,7 @@ import { useContext, ReactElement, useEffect } from "react";
 import Loader from "../Loader";
 import SearchContext from "../../contexts/SearchState";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
-import { gradient1, gradient2, gradient3 } from "../../styles/inline";
+import { gradient1, gradient2 } from "../../styles/inline";
 import ArtistDetailsAlbums from "./ArtistDetailsAlbums";
 import ArtistDetailsTopTracks from "./ArtistDetailsTopTracks";
 import { motion } from "framer-motion";
@@ -23,7 +23,6 @@ const ArtistDetails = (): ReactElement => {
   } = useContext(SearchContext);
 
   const isWidth992 = useMediaQuery(992);
-  const isHeight1025 = useMediaQuery(1025, true);
 
   useEffect(() => {
     let artistDetails = sessionStorage.getItem("artist-details");
@@ -42,22 +41,13 @@ const ArtistDetails = (): ReactElement => {
     exit: { opacity: 0, x: -300 },
   };
 
-  const imageExistsOrWidth992: boolean =
+  const noArtistImageOrWidth992: boolean =
     !artistDetail?.images[0]?.url || isWidth992;
 
   const styles = {
-    background: `${
-      !isWidth992
-        ? `${gradient1} url(${artistDetail?.images[0]?.url})`
-        : `${isHeight1025 ? gradient2 : gradient3} url(${
-            artistDetail?.images[0]?.url
-          })`
-    }
-             no-repeat ${
-               !isWidth992
-                 ? "50px"
-                 : `center ${!isHeight1025 ? "230px" : "130px"}`
-             }/ ${!isWidth992 ? "640px" : "400px"}`,
+    background: `${!isWidth992 ? gradient1 : gradient2} url(${
+      artistDetail?.images[0]?.url
+    }) no-repeat  center 0px/ 0px`,
   };
 
   const renderArtist = () => {
@@ -111,12 +101,12 @@ const ArtistDetails = (): ReactElement => {
       exit="exit"
       transition={{ duration: 0.2 }}
       className={`${
-        imageExistsOrWidth992
+        noArtistImageOrWidth992
           ? "artistPageOneColumn d-flex flex-column align-items-center"
           : "artistPage d-grid"
       } `}
-      style={isWidth992 ? styles : {}}
     >
+      {isWidth992 && <div className="centered-artist" style={styles} />}
       {renderArtist()}
     </motion.main>
   );
