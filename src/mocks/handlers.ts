@@ -19,7 +19,7 @@ export const artistAndTrackHandlers: ArtistAndTrackHandlersType = (data) => {
   };
 
   if (data instanceof Error) {
-    data.message === "post"
+    data.message.includes("post")
       ? (postResponse = { code: 500, body: data })
       : (getResponse = { code: 401, body: data });
   }

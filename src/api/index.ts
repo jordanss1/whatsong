@@ -63,8 +63,8 @@ const spotifyTokenFunction: SpotifyTokenFunctionType = async (cancelToken) => {
     }
 
     if (!axios.isCancel(err) && err instanceof Error) {
-      alert(`Server error: ${err.message} please search again`);
       promiseReturn = err;
+      throw new Error("Issue retrieving token", err);
     }
   } finally {
     cancelToken.current = null;

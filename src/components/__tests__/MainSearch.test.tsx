@@ -201,12 +201,30 @@ describe("All possibilities when no song results are returned from Search compon
 });
 
 describe("All failed network requests with prompts for the artists or songs search", () => {
+  beforeEach(() => {
+    const alert = jest.spyOn(window, "alert").mockImplementation(() => {});
+  });
   it("Failed network request for post request for token", async () => {
-    const { getByRole, findByRole } = customRender(
-      WrapperComponent,
-      <MainSearch />
-    );
+    const { getByRole } = customRender(WrapperComponent, <MainSearch />);
 
-    await changeHandlers(new Error("post"), artistAndTrackHandlers);
+    changeHandlers(new Error("post error"), artistAndTrackHandlers);
+
+    await renderComponentSearched(getByRole, "search-button-songs");
+
+    expect(alert).toHaveBeenCalledWith(
+      "Server error: Request failed with status code 500, please search again"
+    );
+  });
+
+  it("Successful post request but unsuccessful get request for artists/songs", async () => {
+    const { getByRole } = customRender(WrapperComponent, <MainSearch />);
+
+    changeHandlers(new Error("get error"), artistAndTrackHandlers);
+
+    await renderComponentSearched(getByRole, "search-button-songs");
+
+    expect(alert).toHaveBeenCalledWith(
+      `Issue during search: Request failed with status code 401 please search again`
+    );
   });
 });
