@@ -252,6 +252,35 @@ describe("The SearchList component on the /artists path", () => {
   });
 });
 
+describe("Failed network request on SearchList component on /artists path", () => {
+  it("Failed request after clicking artist card to retrieve artist details", async () => {
+    const { getByRole, getByText } = customRender(
+      WrapperComponent,
+      <>
+        <MainSearch />
+        <SearchList />
+      </>
+    );
+
+    const alert = jest.spyOn(window, "alert").mockImplementation(() => {});
+
+    await searchComponent([
+      getByRole("search-all-input") as HTMLInputElement,
+      getByRole("search-button-artists") as HTMLButtonElement,
+    ]);
+
+    changeHandlers(new Error("get"), artistDetailsHandler);
+
+    expect(history.location.pathname).toBe("/artists");
+
+    await user.click(getByText("Test 1"));
+
+    expect(alert).toHaveBeenCalledWith(
+      `Issue retrieving artist detail: Request failed with status code 401 please search again`
+    );
+  });
+});
+
 describe("The SearchList component on the /songs path", () => {
   it("The input in SearchList makes a search and returns songs when there's existing songs", async () => {
     changeHandlers(songResults, artistAndTrackHandlers);

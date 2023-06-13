@@ -59,7 +59,7 @@ const spotifyTokenFunction: SpotifyTokenFunctionType = async (cancelToken) => {
     promiseReturn = `Bearer ${data.access_token}`;
   } catch (err) {
     if (axios.isCancel(err)) {
-      console.error("cancelled", err);
+      console.error("cancelled due to duplicate request", err);
     }
 
     if (!axios.isCancel(err) && err instanceof Error) {
@@ -126,7 +126,7 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
     stateSetter(responses[0].data, albums, topTracks);
   } catch (err) {
     if (axios.isCancel(err)) {
-      console.log("cancelled", err);
+      console.log("cancelled due to duplicate request", err);
     }
 
     if (!axios.isCancel(err) && err instanceof Error) {
@@ -181,7 +181,7 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
       }
     } catch (err) {
       if (axios.isCancel(err)) {
-        console.log("cancelled", err);
+        console.log("cancelled due to duplicate request", err);
       }
 
       if (!axios.isCancel(err) && err instanceof Error) {
