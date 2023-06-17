@@ -1,3 +1,7 @@
+import React, { MutableRefObject } from "react";
+import { CancelTokenSource } from "axios";
+import { ArtistAndAlbumStateSetter } from "./hooks/DetailedArtistResultHooks";
+
 import {
   ArtistResultsTestType,
   SongResultsTestType,
@@ -72,3 +76,27 @@ export type ArtistAndTrackHandlersType = (
 export type ArtistDetailsHandlerType = (
   data: ArtistDetailsHandlerDataType
 ) => RestHandler<MockedRequest<AlbumAndTracksTestType>>[];
+
+export type SpotifyArtistAndAlbumSearchType = (
+  id: string,
+  cancelToken: MutableRefObject<CancelTokenSource | null>,
+  stateSetter: ArtistAndAlbumStateSetter,
+  setError: React.Dispatch<React.SetStateAction<Error | null>>
+) => Promise<void>;
+
+export type SpotifyArtistsOrSongsSearchType = (
+  query: string,
+  cancelToken: MutableRefObject<CancelTokenSource | null>,
+  typeOfSearch: "artist" | "track",
+  state:
+    | React.Dispatch<React.SetStateAction<ArtistDetailsType[] | null>>
+    | React.Dispatch<
+        React.SetStateAction<Required<TopTracksDetailsType>[] | null>
+      >,
+  setError: React.Dispatch<React.SetStateAction<Error | null>>
+) => void;
+
+export type SpotifyTokenFunctionType = (
+  CancelToken: MutableRefObject<CancelTokenSource | null>,
+  setError: React.Dispatch<React.SetStateAction<Error | null>>
+) => Promise<string | null>;

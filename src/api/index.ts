@@ -1,33 +1,11 @@
-import React, { MutableRefObject } from "react";
-import axios, { CancelToken, CancelTokenSource } from "axios";
+import axios from "axios";
 import { Buffer } from "buffer";
+import { AlbumDetailsType, ArtistDetailsType } from "../types";
 import {
-  AlbumDetailsType,
-  ArtistDetailsType,
-  TopTracksDetailsType,
+  SpotifyArtistAndAlbumSearchType,
+  SpotifyArtistsOrSongsSearchType,
+  SpotifyTokenFunctionType,
 } from "../types";
-import { ArtistAndAlbumStateSetter } from "../hooks/DetailedArtistResultHooks";
-
-type SpotifyArtistAndAlbumSearchType = (
-  id: string,
-  cancelToken: MutableRefObject<CancelTokenSource | null>,
-  stateSetter: ArtistAndAlbumStateSetter
-) => Promise<void>;
-
-export type SpotifyArtistsOrSongsSearchType = (
-  query: string,
-  cancelToken: MutableRefObject<CancelTokenSource | null>,
-  typeOfSearch: "artist" | "track",
-  state:
-    | React.Dispatch<React.SetStateAction<ArtistDetailsType[] | null>>
-    | React.Dispatch<
-        React.SetStateAction<Required<TopTracksDetailsType>[] | null>
-      >
-) => void;
-
-type SpotifyTokenFunctionType = (
-  CancelToken: MutableRefObject<CancelTokenSource | null>
-) => Promise<string | Error | null>;
 
 const clientId = process.env.REACT_APP_ID;
 const clientSecret = process.env.REACT_APP_SECRET;
@@ -46,10 +24,13 @@ const spotifyQuery = axios.create({
 
 const paramData = new URLSearchParams({ grant_type: "client_credentials" });
 
-const spotifyTokenFunction: SpotifyTokenFunctionType = async (cancelToken) => {
+const spotifyTokenFunction: SpotifyTokenFunctionType = async (
+  cancelToken,
+  setError
+) => {
   cancelToken.current = axios.CancelToken.source();
 
-  let promiseReturn: string | Error | null = null;
+  let promiseReturn: string | null = null;
 
   try {
     const { data } = await spotifyToken.post("", paramData, {
@@ -63,7 +44,7 @@ const spotifyTokenFunction: SpotifyTokenFunctionType = async (cancelToken) => {
     }
 
     if (!axios.isCancel(err) && err instanceof Error) {
-      promiseReturn = err;
+      setError(new Error(`Server error: ${err.message}, please search again`));
       throw new Error("Issue retrieving token", err);
     }
   } finally {
@@ -75,7 +56,8 @@ const spotifyTokenFunction: SpotifyTokenFunctionType = async (cancelToken) => {
 export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
   id,
   cancelToken,
-  stateSetter
+  stateSetter,
+  setError
 ) => {
   const artistAndAlbum = [
     `${id}`,
@@ -83,15 +65,9 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
     `${id}/top-tracks?market=US`,
   ];
 
-  let data = await spotifyTokenFunction(cancelToken);
+  let data = await spotifyTokenFunction(cancelToken, setError);
 
   if (!data) {
-    return;
-  }
-
-  if (data instanceof Error) {
-    alert(`Server error: ${data.message}, please search again`);
-    console.error(data);
     return;
   }
 
@@ -131,8 +107,10 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
 
     if (!axios.isCancel(err) && err instanceof Error) {
       console.error("error", err);
-      alert(
-        `Issue retrieving artist detail: ${err.message} please search again`
+      setError(
+        new Error(
+          `Issue retrieving artist detail: ${err.message} please search again`
+        )
       );
     }
   } finally {
@@ -141,16 +119,10 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
 };
 
 export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
-  async (query, cancelToken, typeOfSearch, stateSetter) => {
-    let data = await spotifyTokenFunction(cancelToken);
+  async (query, cancelToken, typeOfSearch, stateSetter, setError) => {
+    let data = await spotifyTokenFunction(cancelToken, setError);
 
     if (!data) {
-      return;
-    }
-
-    if (data instanceof Error) {
-      alert(`Server error: ${data.message}, please search again`);
-      console.error(data);
       return;
     }
 
@@ -186,7 +158,9 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
 
       if (!axios.isCancel(err) && err instanceof Error) {
         console.error("error", err);
-        alert(`Issue during search: ${err.message} please search again`);
+        setError(
+          new Error(`Issue during search: ${err.message} please search again`)
+        );
       }
     } finally {
       cancelToken.current = null;

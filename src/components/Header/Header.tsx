@@ -8,7 +8,7 @@ import HeaderContent from "./HeaderContent";
 const Header = ({ path }: { path: string }): ReactElement => {
   const { setTerm } = useContext<UseSearchStateContext>(SearchContext);
 
-  console.log(path);
+  const linkPath = path === "/" ? "" : "/search";
 
   return (
     <>
@@ -18,7 +18,7 @@ const Header = ({ path }: { path: string }): ReactElement => {
             setTerm("");
           }}
           className="text-uppercase"
-          to="/search"
+          to={linkPath}
         >
           <HeaderContent path={path} />
         </NavLink>

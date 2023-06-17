@@ -21,6 +21,7 @@ export const SearchState = () => {
   const [selectedSong, setSelectedSong] =
     useState<Required<TopTracksDetailsType> | null>(null);
   const [filteredTrack, setFilteredTrack] = useState<number>(0);
+  const [networkError, setNetworkError] = useState<Error | null>(null);
   const cancelToken = useRef<CancelTokenSource | null>(null);
 
   const {
@@ -61,16 +62,23 @@ export const SearchState = () => {
 
     const stateSetter = typeOfSearch === "artist" ? setFullArtists : setTracks;
 
-    spotifyArtistsOrSongsSearch(query, cancelToken, typeOfSearch, stateSetter);
+    spotifyArtistsOrSongsSearch(
+      query,
+      cancelToken,
+      typeOfSearch,
+      stateSetter,
+      setNetworkError
+    );
   };
 
   const handleArtistDetailSearch = (id: string) => {
     if (cancelToken.current) cancelToken.current.cancel();
 
-    spotifyArtistAndAlbum(id, cancelToken, setProfile);
+    spotifyArtistAndAlbum(id, cancelToken, setProfile, setNetworkError);
   };
 
   const providerValues = {
+    networkError,
     animateStateSearch,
     animateStateList,
     filteredTrack,
@@ -111,6 +119,7 @@ export const SearchState = () => {
 export type UseSearchStateContext = ReturnType<typeof SearchState>;
 
 const initSearchContextState: UseSearchStateContext = {
+  networkError: null,
   animateStateSearch: searchAnimateInit,
   animateStateList: searchListAnimateInit,
   filteredTrack: 0,
