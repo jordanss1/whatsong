@@ -12,9 +12,7 @@ export type HandleButtonClickType = (
 
 const MainSearch = (): ReactElement => {
   const {
-    animateStateSearch,
     term,
-    setAnimateStateSearch,
     setTerm,
     setFullArtists,
     setTracks,
@@ -26,6 +24,8 @@ const MainSearch = (): ReactElement => {
     submittedTerm,
     handleArtistsOrSongsSearch,
     navigate,
+    animateStateSearch,
+    setAnimateStateSearch,
   } = useContext<UseSearchStateContext>(SearchContext);
 
   const searchType = useRef<string>("");

@@ -1,5 +1,4 @@
 import { useContext, useEffect, useMemo, ReactElement } from "react";
-import NavBar from "./NavBar";
 import SearchContext from "../contexts/SearchStore";
 import SearchBar from "./SearchBar";
 import SongListSelectedItem from "./song-list/SongListSelectedSong";
@@ -62,21 +61,7 @@ const SearchList = (): ReactElement => {
     ];
   }, []);
 
-  const navContent: ReactElement = (
-    <div className="d-flex listNavbar">
-      <div className="text-lowercase">
-        <span className="w">w.</span>
-        <span className="pink me-2">s</span>
-      </div>
-      <span className="underScore ms-1">_</span>
-      <div className="d-flex align-items-end ps-2 pe-2 pb-3 listSpotify">
-        <h2 className="fs-6 me-2 mt-3 poweredList text-lowercase">
-          powered by
-        </h2>
-        <i className="spotify icon mb-1 fs-1 pe-1 spotifyIconList"></i>
-      </div>
-    </div>
-  );
+
 
   const songOrArtistContainerClasses = (): string => {
     if (artists) {
@@ -143,7 +128,6 @@ const SearchList = (): ReactElement => {
       id="main"
       className={songOrArtistContainerClasses()}
     >
-      <NavBar content={navContent} />
       {fullArtists && renderArtists()}
       {tracks && renderSongs()}
     </motion.main>

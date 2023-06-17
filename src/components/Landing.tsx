@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, useContext, ReactElement } from "react";
 import SearchContext from "../contexts/SearchStore";
-import NavBar from "./NavBar";
 import "../styles/all.css";
 import { motion } from "framer-motion";
 import { UseSearchStateContext } from "../contexts/SearchState";
@@ -9,7 +8,6 @@ const Landing = (): ReactElement => {
   const { navigate } = useContext<UseSearchStateContext>(SearchContext);
 
   const [wrapperClass, setWrapperClass] = useState<string>("");
-  const [navClass, setNavClass] = useState<string>("");
   const [iconClass, setIconClass] = useState<string>("");
   const [iconDivClass, setIconDivClass] = useState<string>("");
   const [poweredClass, setPoweredClass] = useState<string>("");
@@ -24,15 +22,12 @@ const Landing = (): ReactElement => {
   };
 
   useEffect(() => {
-    setNavClass("navClassAnimate");
-
     return () => {
       clearTimeout(timeoutId.current as number);
     };
   }, []);
 
   const handleClick = (): void => {
-    setNavClass("");
     setWrapperClass("wrapperLoad");
 
     timeoutId.current = setTimeout(() => {
@@ -47,18 +42,8 @@ const Landing = (): ReactElement => {
       setIconDivClass("spotifyLoad");
       setIconClass("spotifyHover");
       setPoweredClass("poweredHover");
-      setNavClass("");
-    } else if (!hover.current) {
-      setNavClass("navClassAnimate");
     }
   };
-
-  const content: ReactElement = (
-    <>
-      w<span className="me-1 pt-2 extraText fs-5">.hat</span>s
-      <span className="ms-2 extraText fs-5">.ong</span>
-    </>
-  );
 
   return (
     <motion.main
@@ -68,7 +53,6 @@ const Landing = (): ReactElement => {
       exit="exit"
       className="landingContainer d-flex flex-column"
     >
-      <NavBar navClass={navClass} content={content} />
       <div className={`wrapper ${wrapperClass} h-100`}>
         <div className="d-flex h-100 justify-content-center align-items-center flex-column-reverse mainDiv">
           <button

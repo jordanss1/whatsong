@@ -54,7 +54,7 @@ export type TrackOrAlbumFuncType = (
   itemType: "album" | "track"
 ) => void;
 
-export const useArtistResults = (initialState: ReducerStateType) => {
+export const useArtistResults = () => {
   const [albumIndex, setAlbumIndex] = useState<number>(0);
   const [trackIndex, setTrackIndex] = useState<number>(0);
   const timeoutId = useRef<NodeJS.Timeout[] | number[]>([]);
@@ -90,7 +90,7 @@ export const useArtistResults = (initialState: ReducerStateType) => {
           return { ...state };
       }
     },
-    initialState
+    artistInitState
   );
 
   const setProfile = useCallback<ArtistAndAlbumStateSetter>(

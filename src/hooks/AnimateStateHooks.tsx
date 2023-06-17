@@ -36,7 +36,7 @@ export const searchAnimateInit = {
   exit: { opacity: 0, y: 0 },
 };
 
-export const useAnimateSearchManager = (initialState: SearchAnimateState) => {
+export const useAnimateSearchManager = () => {
   const [animateStateSearch, dispatch] = useReducer(
     (
       state: SearchAnimateState,
@@ -57,7 +57,7 @@ export const useAnimateSearchManager = (initialState: SearchAnimateState) => {
           return { ...state };
       }
     },
-    initialState
+    searchAnimateInit
   );
 
   const setAnimateStateSearch = useCallback<SetAnimateStateSearchType>(
@@ -100,7 +100,7 @@ export const searchListAnimateInit = {
   exit: { x: -300, opacity: 0 },
 };
 
-export const useAnimateListManager = (initialState: SearchListAnimateState) => {
+export const useAnimateListManager = () => {
   const [animateStateList, dispatch] = useReducer(
     (
       state: SearchListAnimateState,
@@ -122,7 +122,7 @@ export const useAnimateListManager = (initialState: SearchListAnimateState) => {
         }
       }
     },
-    initialState
+    searchListAnimateInit
   );
 
   const setAnimateStateList = useCallback<SetAnimateStateSearchListType>(

@@ -36,11 +36,9 @@ export const SearchState = () => {
   } = useArtistsOrTracks();
 
   const { animateStateSearch, setAnimateStateSearch } =
-    useAnimateSearchManager(searchAnimateInit);
+    useAnimateSearchManager();
 
-  const { animateStateList, setAnimateStateList } = useAnimateListManager(
-    searchListAnimateInit
-  );
+  const { animateStateList, setAnimateStateList } = useAnimateListManager();
 
   const {
     artistDetail,
@@ -51,7 +49,7 @@ export const SearchState = () => {
     setProfile,
     setAlbum,
     setTopTrack,
-  } = useArtistResults(artistInitState);
+  } = useArtistResults();
 
   const navigate = useNavigate();
 

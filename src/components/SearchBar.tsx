@@ -11,14 +11,15 @@ import SearchContext from "../contexts/SearchStore";
 const SearchBar = (): ReactElement => {
   const {
     term,
-    fullArtists,
-    tracks,
-    setPage,
     setTerm,
     handleArtistsOrSongsSearch,
     submittedTerm,
     setSubmittedTerm,
+    setPage,
+    fullArtists,
+    tracks,
   } = useContext(SearchContext);
+
   const [searchInputClass, setSearchInputClass] = useState("");
 
   const pageChange = useRef<boolean>(false);
