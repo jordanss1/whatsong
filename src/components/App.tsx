@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useContext } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Landing from "./Landing";
 import MainSearch from "./main-search/MainSearch";
@@ -6,15 +6,18 @@ import SearchList from "./search-list/SearchList";
 import { AnimatePresence } from "framer-motion";
 import ArtistDetails from "./artist-details/ArtistDetails";
 import Header from "./header/Header";
+import SearchContext from "../contexts/SearchState";
+import Modal from "./modal/Modal";
 
 const App = (): ReactElement => {
   const location = useLocation();
 
+  const { networkError, loading } = useContext(SearchContext);
+
   return (
     <>
-      {location.pathname !== "/artists/:id" && (
-        <Header path={location.pathname} />
-      )}
+      <Header path={location.pathname} />
+      {(loading || networkError) && <Modal />}
       <AnimatePresence initial={false} mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Landing />} />

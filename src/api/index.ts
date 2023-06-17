@@ -30,7 +30,7 @@ const spotifyTokenFunction: SpotifyTokenFunctionType = async (
 ) => {
   cancelToken.current = axios.CancelToken.source();
 
-  let promiseReturn: string | null = null;
+  let promiseReturn: string | Error | null = null;
 
   try {
     const { data } = await spotifyToken.post("", paramData, {
@@ -45,6 +45,7 @@ const spotifyTokenFunction: SpotifyTokenFunctionType = async (
 
     if (!axios.isCancel(err) && err instanceof Error) {
       setError(new Error(`Server error: ${err.message}, please search again`));
+      promiseReturn = new Error();
       throw new Error("Issue retrieving token", err);
     }
   } finally {
@@ -57,7 +58,8 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
   id,
   cancelToken,
   stateSetter,
-  setError
+  setError,
+  setLoading
 ) => {
   const artistAndAlbum = [
     `${id}`,
@@ -68,6 +70,11 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
   let data = await spotifyTokenFunction(cancelToken, setError);
 
   if (!data) {
+    return;
+  }
+
+  if (data instanceof Error) {
+    setLoading(false);
     return;
   }
 
@@ -114,15 +121,28 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
       );
     }
   } finally {
+    setLoading(false);
     cancelToken.current = null;
   }
 };
 
 export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
-  async (query, cancelToken, typeOfSearch, stateSetter, setError) => {
+  async (
+    query,
+    cancelToken,
+    typeOfSearch,
+    stateSetter,
+    setError,
+    setLoading
+  ) => {
     let data = await spotifyTokenFunction(cancelToken, setError);
 
     if (!data) {
+      return;
+    }
+
+    if (data instanceof Error) {
+      setLoading(false);
       return;
     }
 
@@ -163,6 +183,7 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
         );
       }
     } finally {
+      setLoading(false);
       cancelToken.current = null;
     }
   };

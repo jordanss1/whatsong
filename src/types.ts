@@ -81,22 +81,24 @@ export type SpotifyArtistAndAlbumSearchType = (
   id: string,
   cancelToken: MutableRefObject<CancelTokenSource | null>,
   stateSetter: ArtistAndAlbumStateSetter,
-  setError: React.Dispatch<React.SetStateAction<Error | null>>
+  setError: React.Dispatch<React.SetStateAction<Error | null>>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => Promise<void>;
 
 export type SpotifyArtistsOrSongsSearchType = (
   query: string,
   cancelToken: MutableRefObject<CancelTokenSource | null>,
   typeOfSearch: "artist" | "track",
-  state:
+  stateSetter:
     | React.Dispatch<React.SetStateAction<ArtistDetailsType[] | null>>
     | React.Dispatch<
         React.SetStateAction<Required<TopTracksDetailsType>[] | null>
       >,
-  setError: React.Dispatch<React.SetStateAction<Error | null>>
+  setError: React.Dispatch<React.SetStateAction<Error | null>>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => void;
 
 export type SpotifyTokenFunctionType = (
   CancelToken: MutableRefObject<CancelTokenSource | null>,
   setError: React.Dispatch<React.SetStateAction<Error | null>>
-) => Promise<string | null>;
+) => Promise<string | Error | null>;
