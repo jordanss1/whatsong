@@ -1,14 +1,15 @@
 import { useContext, useEffect, useMemo, ReactElement } from "react";
-import SearchContext from "../contexts/SearchStore";
-import SearchBar from "./SearchBar";
-import SongListSelectedItem from "./song-list/SongListSelectedSong";
-import ArtistList from "./artist-list/ArtistList";
-import SongList from "./song-list/SongList";
-import ArtistListPages from "./artist-list/ArtistListPages";
+import SearchContext from "../../contexts/SearchStore";
+import SearchBar from "../SearchBar";
+import SongListSelectedItem from "../song-list/SongListSelectedSong";
+import ArtistList from "../artist-list/ArtistList";
+import SongList from "../song-list/SongList";
+import ArtistListPages from "../artist-list/ArtistListPages";
 import { motion } from "framer-motion";
-import { SearchListAnimateState } from "../hooks/AnimateStateHooks";
+import { SearchListAnimateState } from "../../hooks/AnimateStateHooks";
 import SearchListContainer from "./SearchListContainer";
-import { useMediaQuery } from "../hooks/MediaQueryHook";
+import { useMediaQuery } from "../../hooks/MediaQueryHook";
+import "./styles/search-list.css";
 
 const SearchList = (): ReactElement => {
   const {
@@ -60,8 +61,6 @@ const SearchList = (): ReactElement => {
       },
     ];
   }, []);
-
-
 
   const songOrArtistContainerClasses = (): string => {
     if (artists) {

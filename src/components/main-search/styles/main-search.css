@@ -1,0 +1,118 @@
+.searchContainer {
+  height: 100vh;
+  background: linear-gradient(
+    to right,
+    black 10%,
+    rgb(0, 3, 90) 50%,
+    black 90%
+  );
+}
+
+.instructionsDiv {
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.1)
+  );
+  color: rgb(219, 219, 219);
+  height: 90px;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 100;
+  letter-spacing: 1.5px;
+  opacity: 1;
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+.instructionsFloat {
+  animation: float 1s forwards;
+}
+
+@keyframes float {
+  0% {
+    left: 0;
+    opacity: 1;
+    height: 90px;
+  }
+  20% {
+    top: 0;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+    width: 262px;
+    height: 30px;
+  }
+  70% {
+    width: 200px;
+    height: 0;
+  }
+  100% {
+    width: 0;
+    height: 0;
+    top: 0px;
+    opacity: 0;
+    left: 70px;
+  }
+}
+
+.wholeForm {
+  position: relative;
+  bottom: 0;
+}
+
+.wholeFormMoved {
+  animation: bottom 1s forwards;
+}
+
+@keyframes bottom {
+  0% {
+    bottom: 0;
+  }
+  20% {
+    bottom: 10px;
+  }
+  100% {
+    bottom: 40px;
+  }
+}
+
+.main-search-input {
+  background-color: black !important;
+  caret-color: white;
+  border-radius: 10px !important;
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  transition: 0.5s !important;
+}
+
+.main-search-div-outer {
+  padding-bottom: 80px;
+}
+
+.main-search-div {
+  height: 35px;
+  transition: 0.5s;
+}
+
+.main-search-div-focus {
+  height: 40px;
+}
+
+.submitButtons {
+  color: white;
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  transition: 1s;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.submitButtons:disabled {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.submitButtons:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255);
+}

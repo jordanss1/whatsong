@@ -7,7 +7,8 @@ import {
 } from "react";
 import SearchContext from "../../contexts/SearchState";
 import { ArtistDetailsType } from "../../types";
-import ArtistOrAlbumCard from "../ArtistOrAlbumCard";
+import ArtistOrAlbumCard from "../artist-details/ArtistOrAlbumCard";
+import "./styles/artist-list.css";
 
 export type HandleProfileClickType = (id: string) => void;
 

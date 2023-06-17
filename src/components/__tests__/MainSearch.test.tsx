@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { SearchStore } from "../../contexts/SearchStore";
 import MainSearch from "../main-search/MainSearch";
-import SearchList from "../SearchList";
+import SearchList from "../search-list/SearchList";
 import server from "../../mocks/server";
 import { HandlerUnion, artistAndTrackHandlers } from "../../mocks/handlers";
 import {

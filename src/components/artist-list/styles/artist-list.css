@@ -1,0 +1,48 @@
+.artist-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  row-gap: 10px;
+  max-width: 100%;
+  align-items: center;
+  justify-items: center;
+  min-height: 430px;
+}
+
+.artist-grid-less {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
+  min-height: 430px;
+  max-width: 100%;
+}
+
+.pages {
+  max-width: 700px;
+  justify-self: center;
+  font-family: "Raleway", sans-serif;
+}
+
+.pages p {
+  color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  margin-bottom: 0;
+  max-width: 170px;
+  width: 100%;
+  text-align: center;
+}
+
+@media screen and (max-width: 576px) {
+  .noResultsSearch {
+    background: linear-gradient(
+      to right,
+      rgb(26, 26, 26) 0%,
+      rgb(13, 13, 13) 100%
+    ) !important;
+    height: 160px;
+    margin-left: 20px;
+    width: 70%;
+    padding: 10px;
+    flex-direction: column;
+  }
+
+  .artist-grid-less {
+    justify-content: center;
+  }
+}

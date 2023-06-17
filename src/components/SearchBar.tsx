@@ -57,7 +57,7 @@ const SearchBar = (): ReactElement => {
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
-      className="ui input list-search-div pe-1 justify-content-end"
+      className="ui input pe-1 justify-content-end"
     >
       <input
         onFocus={() => {

@@ -1,0 +1,441 @@
+.artistPage {
+  grid-template-columns: 50% 50%;
+  height: 100vh;
+}
+
+.artistPageOneColumn {
+  height: 100vh;
+  background-size: cover !important;
+}
+
+.centered-artist {
+  position: absolute !important;
+  width: 80%;
+  height: 80%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 75px;
+  margin: auto;
+  z-index: 0;
+  background-size: cover !important;
+}
+
+.artistRight {
+  grid-template-rows: repeat(3, 1fr);
+  z-index: 1;
+}
+
+hr {
+  color: white;
+}
+
+.artistHeading h1 {
+  font-family: "Barlow", sans-serif !important;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.632);
+}
+
+.artistHeading h2 {
+  font-family: "Barlow", sans-serif !important;
+  font-weight: 200;
+  color: white;
+}
+
+.artistHeading i {
+  position: relative;
+  bottom: 10px;
+  color: green;
+  cursor: pointer;
+}
+
+.vl {
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.artistBg {
+  background-size: cover !important;
+}
+
+.album-container {
+  max-width: 700px;
+  justify-self: center;
+  width: 100%;
+}
+
+.artist-card {
+  transition: 0.5s;
+}
+
+.artist-card .header {
+  cursor: pointer;
+}
+
+.artist-card:hover {
+  transform: translateY(-5px);
+}
+
+.artist-album-card {
+  width: 170px !important;
+  position: relative;
+  left: 0;
+  right: 0;
+  transition: 0.5s;
+}
+
+.artist-album-card img {
+  width: 170px !important;
+  height: 170px;
+  object-fit: cover;
+  border: 0.5px solid rgb(0, 0, 0, 0);
+  border-radius: 5px;
+}
+
+.artist-album-card .image {
+  height: 170px;
+  box-shadow: 0px 0px 5px 2px rgba(255, 255, 255, 0.6) !important;
+  border-radius: 5px;
+}
+
+.card-no-image-album {
+  height: 170px;
+  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Barlow", sans-serif;
+  font-weight: 400;
+  color: white;
+}
+
+.card-no-image-artist {
+  font-family: "Raleway", sans-serif;
+  color: rgba(255, 255, 255, 0.3) !important;
+  letter-spacing: 1px;
+}
+
+.artist-album-card .header {
+  font-family: "Barlow", sans-serif !important;
+  font-weight: 400 !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  color: white !important;
+}
+
+.iconRed {
+  color: red !important;
+  cursor: pointer;
+}
+
+.rightClick {
+  animation: right-click 400ms;
+}
+
+@keyframes right-click {
+  0% {
+    left: 0;
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+    left: 50px;
+  }
+  75% {
+    opacity: 0;
+    left: 30px;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
+  }
+}
+
+.leftClick {
+  animation: left-click 400ms;
+}
+
+@keyframes left-click {
+  0% {
+    left: 0;
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+    left: -50px;
+  }
+  50% {
+    opacity: 0;
+    left: -30px;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
+  }
+}
+
+.arrows {
+  cursor: pointer;
+  width: 90px;
+  transition: 0.5s;
+  height: 80% !important;
+}
+
+.smallArrows {
+  cursor: pointer;
+  width: 37px !important;
+  transition: 0.5s;
+}
+
+.smallArrowDiv {
+  width: 25%;
+}
+
+.leftArrow {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 10%,
+    rgba(255, 255, 255, 0.315) 100%
+  );
+  width: 30px !important;
+  height: 150px !important;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.leftSmallArrow {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.115) 20%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  width: 30px !important;
+  border-radius: 10px;
+  height: 45px;
+  transition: 0.5s;
+}
+
+.rightArrow {
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0) 10%,
+    rgba(255, 255, 255, 0.315) 100%
+  );
+  border-radius: 10px;
+  width: 30px !important;
+  height: 150px !important;
+  transition: 0.5s;
+}
+
+.rightSmallArrow {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.18) 100%
+  );
+  width: 30px !important;
+  border-radius: 10px;
+  height: 45px;
+  transition: 0.5s;
+}
+
+.leftArrow i {
+  position: relative;
+  bottom: 10px;
+  right: 0;
+  transition: 0.5s;
+}
+
+.leftSmallArrow i {
+  position: relative;
+  left: 0;
+  transition: 0.5s;
+}
+
+.rightArrow i {
+  position: relative;
+  bottom: 10px;
+  left: 0;
+  transition: 0.5s;
+}
+
+.rightSmallArrow i {
+  position: relative;
+  left: 3px;
+  transition: 0.5s;
+}
+
+.leftArrow:hover {
+  width: 40px !important;
+}
+
+.leftSmallArrow:hover {
+  width: 55px !important;
+}
+
+.rightArrow:hover {
+  width: 40px !important;
+}
+
+.rightSmallArrow:hover {
+  width: 55px !important;
+}
+
+.leftArrow:hover i {
+  right: 6px;
+  bottom: 12px;
+  font-size: 21px;
+}
+
+.rightArrow:hover i {
+  left: 6px;
+  bottom: 12px;
+  font-size: 21px;
+}
+
+.arrows i {
+  color: rgba(255, 255, 255, 0.605);
+  font-size: 20px;
+}
+
+.smallArrows i {
+  color: rgba(255, 255, 255, 0.605);
+  font-size: 13px;
+}
+
+.leftArrowDisabled {
+  background: rgba(255, 255, 255, 0);
+  width: 35px;
+  border-radius: 40px;
+  cursor: default !important;
+}
+
+.leftSmallArrowDisabled {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 10%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  border: 7px solid rgb(26, 26, 26) !important;
+  border-radius: 13px;
+  width: 45px;
+  transition: 0.5s;
+  cursor: default !important;
+}
+
+.leftArrowDisabled i {
+  color: rgba(255, 255, 255, 0.1) !important;
+  position: relative;
+  bottom: 6px;
+}
+
+.leftSmallArrowDisabled i {
+  color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.rightArrowDisabled {
+  background: rgba(255, 255, 255, 0);
+  width: 35px;
+  border-radius: 40px;
+  cursor: default !important;
+}
+
+.rightSmallArrowDisabled {
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  border: 7px solid rgb(26, 26, 26) !important;
+  border-radius: 10px;
+  width: 45px;
+  transition: 0.5s;
+  cursor: default !important;
+  justify-content: end;
+}
+
+.rightArrowDisabled i {
+  color: rgba(255, 255, 255, 0.1) !important;
+  position: relative;
+  bottom: 6px;
+}
+
+.rightSmallArrowDisabled i {
+  color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.topTrackContainer h2 {
+  font-family: "Barlow", sans-serif !important;
+  font-weight: 200;
+  color: white;
+}
+
+.topTrackItem {
+  background-color: rgb(26, 26, 26) !important;
+  box-shadow: 0px 1px rgb(30, 30, 30) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 15px;
+  max-width: 445px;
+}
+
+.topTrackItem img {
+  width: 50px !important;
+  height: 50px !important;
+  border: 2px solid white !important;
+}
+
+.topTrackItem h3 {
+  font-family: "Barlow", sans-serif !important;
+}
+
+.topTrackContent {
+  max-width: 350px;
+  min-width: 50px;
+  font-family: "Barlow", sans-serif !important;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.744);
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+.trackContentContainer {
+  max-width: 350px;
+  min-width: 220px;
+}
+
+@media screen and (max-width: 992px) {
+  .topTrackItem {
+    background-color: rgb(26, 26, 26) !important;
+    box-shadow: 0px 1px rgb(30, 30, 30) !important;
+    color: white !important;
+    width: 65%;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 15px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .topTrackItem {
+    width: 75%;
+  }
+
+  .topTrackContent {
+    max-width: 250px;
+    min-width: 75px;
+    font-family: "Barlow", sans-serif !important;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.744);
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media screen and (max-width: 438px) {
+  .trackContentContainer {
+    min-width: 150px;
+  }
+}

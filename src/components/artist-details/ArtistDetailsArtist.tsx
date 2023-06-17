@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { ArtistDetailsType } from "../../types";
 import { NavigateFunction } from "react-router-dom";
+import "./styles/artist-details.css";
 
 type PropTypes = {
   artistDetail: ArtistDetailsType;
@@ -24,9 +25,7 @@ const ArtistDetailsArtist = ({
   return (
     <>
       <section
-        className={`w-100 artistLeft ${
-          imageExistsOrWidth992 ? "d-none" : ""
-        } d-flex
+        className={`w-100  ${imageExistsOrWidth992 ? "d-none" : ""} d-flex
                  justify-content-end`}
       >
         <div className="artistBg w-100 h-100" style={styles}></div>

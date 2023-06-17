@@ -2,15 +2,13 @@ import { ReactElement } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Landing from "./Landing";
 import MainSearch from "./main-search/MainSearch";
-import SearchList from "./SearchList";
+import SearchList from "./search-list/SearchList";
 import { AnimatePresence } from "framer-motion";
 import ArtistDetails from "./artist-details/ArtistDetails";
-import Header from "./Header/Header";
+import Header from "./header/Header";
 
 const App = (): ReactElement => {
   const location = useLocation();
-
-  console.log(location.pathname);
 
   return (
     <>

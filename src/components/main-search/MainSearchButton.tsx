@@ -1,4 +1,5 @@
 import { HandleButtonClickType } from "./MainSearch";
+import "./styles/main-search.css";
 
 type MainSearchButtonPropsType = {
   buttonType: "artists" | "songs";

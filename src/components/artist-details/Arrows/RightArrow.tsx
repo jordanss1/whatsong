@@ -1,5 +1,6 @@
 import { memo, ReactElement } from "react";
 import { funcIsSetAlbumType, SetterUnion } from "./LeftArrow";
+import "../styles/artist-details.css";
 
 interface Props {
   style: string;

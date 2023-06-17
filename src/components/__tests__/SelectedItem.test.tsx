@@ -7,7 +7,7 @@ import {
   customRender,
 } from "../../../test-utils/test-utils";
 import MainSearch from "../main-search/MainSearch";
-import SearchList from "../SearchList";
+import SearchList from "../search-list/SearchList";
 import { searchComponent } from "./SearchList.test";
 import { SearchStore } from "../../contexts/SearchStore";
 import { history } from "../../../test-utils";

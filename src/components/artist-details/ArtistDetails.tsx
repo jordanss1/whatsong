@@ -1,5 +1,5 @@
 import { useContext, ReactElement, useEffect } from "react";
-import Loader from "../Loader";
+import Loader from "../modal/ModalLoader";
 import SearchContext from "../../contexts/SearchState";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import { gradient1, gradient2 } from "../../styles/inline";
@@ -7,6 +7,7 @@ import ArtistDetailsAlbums from "./ArtistDetailsAlbums";
 import ArtistDetailsTopTracks from "./ArtistDetailsTopTracks";
 import { motion } from "framer-motion";
 import ArtistDetailsArtist from "./ArtistDetailsArtist";
+import "./styles/artist-details.css";
 
 const ArtistDetails = (): ReactElement => {
   const {
@@ -54,7 +55,7 @@ const ArtistDetails = (): ReactElement => {
     if (!artistDetail) {
       return (
         <div className="artistPage d-grid w-100">
-          <section className="w-100 artistLeft d-flex justify-content-end align-items-center">
+          <section className="w-100 d-flex justify-content-end align-items-center">
             <Loader />
           </section>
           <section className="w-100 h-100 d-grid artistRight">

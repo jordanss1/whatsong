@@ -1,6 +1,7 @@
 import { memo, ReactElement } from "react";
 import { TopTracksDetailsType } from "../../types";
 import { HandleSelectedSongType } from "./SongList";
+import "./styles/song-list.css";
 
 type PropTypes = {
   song: Required<TopTracksDetailsType>;
@@ -16,7 +17,7 @@ const SongListItem = ({
   return (
     <div
       role="song-item"
-      className="ui middle aligned selection divided list d-flex justify-content-center trackItemContainer"
+      className="ui middle aligned selection divided list d-flex justify-content-center w-100"
     >
       <div className="item trackItem border rounded-3 p-3">
         <div className="right floated content d-flex align-items-center">

@@ -1,6 +1,7 @@
 import { ReactNode, ReactElement } from "react";
-import SearchBar from "./SearchBar";
+import SearchBar from "../SearchBar";
 import { motion } from "framer-motion";
+import "./styles/search-list.css";
 
 const SearchListContainer = ({
   isArtists,
@@ -29,7 +30,7 @@ const SearchListContainer = ({
         }}
         animate={{ opacity: 1, transition: { duration: 1 } }}
         exit={{ opacity: 0, transition: { duration: 0.5 } }}
-        className="w-100 h-100 d-flex artist-list-results-container"
+        className="w-100 h-100 d-flex"
       >
         <div className="artist-list-results d-grid h-100 p-4">
           <div

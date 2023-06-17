@@ -4,6 +4,7 @@ import { TopTracksDetailsType } from "../../types";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import SearchContext from "../../contexts/SearchState";
 import SongListItem from "./SongListItem";
+import "./styles/song-list.css";
 
 export type HandleSelectedSongType = (
   track: Required<TopTracksDetailsType>
@@ -26,7 +27,7 @@ const SongList = ({ tracks }: { tracks: Required<TopTracksDetailsType>[] }) => {
         <h2 className="ms-4 fs-3 pt-1 typeHeader">Songs</h2>
         <SearchBar />
       </div>
-      <div className="d-grid songListGrid">
+      <div className="d-grid">
         {tracks.map((song, i) => {
           return (
             <SongListItem

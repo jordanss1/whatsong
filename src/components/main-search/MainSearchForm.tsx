@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { HandleButtonClickType } from "./MainSearch";
 import MainSearchButton from "./MainSearchButton";
+import "./styles/main-search.css";
 
 type MainSearchFormPropTypes = {
   term: string;

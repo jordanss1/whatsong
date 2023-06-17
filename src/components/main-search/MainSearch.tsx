@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { UseSearchStateContext } from "../../contexts/SearchState";
 import { SearchAnimateState } from "../../hooks/AnimateStateHooks";
 import MainSearchForm from "./MainSearchForm";
+import "./styles/main-search.css";
 
 export type HandleButtonClickType = (
   category: "artist" | "track",

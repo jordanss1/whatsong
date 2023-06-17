@@ -1,5 +1,6 @@
 import { ReactElement, memo } from "react";
-import { AlbumDetailsType, ArtistDetailsType } from "../types";
+import { AlbumDetailsType, ArtistDetailsType } from "../../types";
+import "./styles/artist-details.css";
 
 type ArtistOrAlbumCardType = {
   cardType: "artist" | "album";

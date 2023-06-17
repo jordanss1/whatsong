@@ -4,6 +4,7 @@ import SearchContext from "../../contexts/SearchStore";
 import "../../styles/all.css";
 import { UseSearchStateContext } from "../../contexts/SearchState";
 import HeaderContent from "./HeaderContent";
+import "./styles/header.css";
 
 const Header = ({ path }: { path: string }): ReactElement => {
   const { setTerm } = useContext<UseSearchStateContext>(SearchContext);

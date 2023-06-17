@@ -9,7 +9,8 @@ import {
 } from "../../styles/inline";
 import { AlbumDetailsType } from "../../types";
 import { SetAlbumType } from "../../hooks/DetailedArtistResultHooks";
-import ArtistOrAlbumCard from "../ArtistOrAlbumCard";
+import ArtistOrAlbumCard from "./ArtistOrAlbumCard";
+import "./styles/artist-details.css";
 
 const ArtistDetailsAlbums = ({
   setAlbum,

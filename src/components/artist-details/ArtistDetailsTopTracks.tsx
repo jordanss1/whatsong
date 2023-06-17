@@ -10,6 +10,7 @@ import {
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import { TopTracksDetailsType } from "../../types";
 import { TrackOrAlbumFuncType as SetTopTrackType } from "../../hooks/DetailedArtistResultHooks";
+import "./styles/artist-details.css";
 
 const ArtistDetailsTopTracks = ({
   topTracks,

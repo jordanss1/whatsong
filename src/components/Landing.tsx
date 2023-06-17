@@ -7,7 +7,6 @@ import { UseSearchStateContext } from "../contexts/SearchState";
 const Landing = (): ReactElement => {
   const { navigate } = useContext<UseSearchStateContext>(SearchContext);
 
-  const [wrapperClass, setWrapperClass] = useState<string>("");
   const [iconClass, setIconClass] = useState<string>("");
   const [iconDivClass, setIconDivClass] = useState<string>("");
   const [poweredClass, setPoweredClass] = useState<string>("");
@@ -28,8 +27,6 @@ const Landing = (): ReactElement => {
   }, []);
 
   const handleClick = (): void => {
-    setWrapperClass("wrapperLoad");
-
     timeoutId.current = setTimeout(() => {
       navigate("/search");
     }, 1000);
@@ -53,7 +50,7 @@ const Landing = (): ReactElement => {
       exit="exit"
       className="landingContainer d-flex flex-column"
     >
-      <div className={`wrapper ${wrapperClass} h-100`}>
+      <div className="h-100">
         <div className="d-flex h-100 justify-content-center align-items-center flex-column-reverse mainDiv">
           <button
             onMouseEnter={() => handleHover()}

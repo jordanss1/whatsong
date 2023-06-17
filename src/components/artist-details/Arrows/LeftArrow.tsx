@@ -3,6 +3,7 @@ import {
   SetAlbumType,
   TrackOrAlbumFuncType as SetTopTrackType,
 } from "../../../hooks/DetailedArtistResultHooks";
+import "../styles/artist-details.css";
 
 export type SetterUnion = SetAlbumType | SetTopTrackType;
 

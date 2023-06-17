@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import SearchContext from "../../contexts/SearchStore";
+import "./styles/song-list.css";
 
 const SongListSelectedItem = (): ReactElement => {
   const { selectedSong, setSelectedSong } = useContext(SearchContext);
@@ -43,7 +44,7 @@ const SongListSelectedItem = (): ReactElement => {
       <div
         className={`selectedDiv ${selectedDivClass} d-flex align-items-center justify-content-evenly`}
       >
-        <h2 className="ui header noSongHeader ">
+        <h2 className="ui header noSongHeader">
           <p className="mb-0">Search spotify songs</p>
           <div className="sub header">
             <p>
@@ -66,7 +67,7 @@ const SongListSelectedItem = (): ReactElement => {
             className="window close outline icon iconRed fs-4"
           ></i>
         </div>
-        <div className="d-flex flex-column ms-0 mb-5 songItem justify-content-evenly">
+        <div className="d-flex flex-column ms-0 mb-5 songItem w-100 justify-content-evenly">
           {album.images[1].url ? (
             <img className="rounded" src={album.images[1].url} />
           ) : (

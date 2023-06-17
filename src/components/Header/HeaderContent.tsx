@@ -1,3 +1,5 @@
+import "./styles/header.css";
+
 type HeaderContentProps = { path: string };
 
 const HeaderContent = ({ path }: HeaderContentProps) => {

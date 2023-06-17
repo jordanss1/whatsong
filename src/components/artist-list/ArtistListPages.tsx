@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import SearchContext from "../../contexts/SearchStore";
+import "./styles/artist-list.css";
 
 interface PageStyle {
   cursor: string;
