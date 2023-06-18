@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, ReactElement } from "react";
+import { useContext, useEffect, ReactElement } from "react";
 import SearchContext from "../../contexts/SearchStore";
 import SearchBar from "../SearchBar";
 import SongListSelectedItem from "../song-list/SongListSelectedSong";
@@ -6,7 +6,6 @@ import ArtistList from "../artist-list/ArtistList";
 import SongList from "../song-list/SongList";
 import ArtistListPages from "../artist-list/ArtistListPages";
 import { motion } from "framer-motion";
-import { SearchListAnimateState } from "../../hooks/AnimateStateHooks";
 import SearchListContainer from "./SearchListContainer";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import "./styles/search-list.css";
@@ -20,9 +19,6 @@ const SearchList = (): ReactElement => {
     totalTracks,
     setFullArtists,
     setTracks,
-    animateStateList,
-    setAnimateStateList,
-    setAnimateStateSearch,
   } = useContext(SearchContext);
 
   const is900 = useMediaQuery(900);
@@ -35,31 +31,9 @@ const SearchList = (): ReactElement => {
 
     if (artists && typeof artists === "string") {
       setFullArtists(JSON.parse(artists));
-      setAnimateStateSearch({ opacity: 0.5, x: 300 }, { opacity: 0, x: 300 });
-      setAnimateStateList({ x: -300, opacity: 0 }, { x: -300, opacity: 0 });
     } else if (tracks && typeof tracks === "string") {
       setTracks(JSON.parse(tracks));
-      setAnimateStateSearch({ opacity: 0, x: -300 }, { opacity: 0, x: -300 });
     }
-  }, []);
-
-  let animations = useMemo(() => {
-    return [
-      {
-        initial: (animateStateList: SearchListAnimateState) => ({
-          ...animateStateList.initial,
-        }),
-        animate: { x: 0, opacity: 1 },
-        exit: (animateStateList: SearchListAnimateState) => ({
-          ...animateStateList.exit,
-        }),
-      },
-      {
-        initial: { x: 300, opacity: 0 },
-        animate: { x: 0, opacity: 1 },
-        exit: { x: 300, opacity: 0 },
-      },
-    ];
   }, []);
 
   const songOrArtistContainerClasses = (): string => {
@@ -117,16 +91,7 @@ const SearchList = (): ReactElement => {
   };
 
   return (
-    <motion.main
-      variants={artists ? animations[0] : animations[1]}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      custom={animateStateList}
-      transition={{ duration: 0.2 }}
-      id="main"
-      className={songOrArtistContainerClasses()}
-    >
+    <motion.main id="main" className={songOrArtistContainerClasses()}>
       {fullArtists && renderArtists()}
       {tracks && renderSongs()}
     </motion.main>

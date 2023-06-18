@@ -20,7 +20,6 @@ const ArtistList = ({
   const {
     handleArtistDetailSearch,
     setProfile,
-    setAnimateStateList,
     setFilteredTrack,
     albums,
     topTracks,
@@ -44,9 +43,8 @@ const ArtistList = ({
     (id) => {
       idRef.current = id;
       handleArtistDetailSearch(id);
-      setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
     },
-    [setAnimateStateList, setProfile, handleArtistDetailSearch]
+    [setProfile, handleArtistDetailSearch]
   );
 
   const gridClass = artists.length < 6 ? "artist-grid-less" : "artist-grid";

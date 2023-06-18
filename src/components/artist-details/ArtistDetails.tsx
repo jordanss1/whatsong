@@ -19,7 +19,6 @@ const ArtistDetails = (): ReactElement => {
     topTracks,
     topTrack,
     setProfile,
-    setAnimateStateList,
     setTopTrack,
   } = useContext(SearchContext);
 
@@ -32,8 +31,6 @@ const ArtistDetails = (): ReactElement => {
       const [artistDetail, albums, topTracks] = JSON.parse(artistDetails);
       setProfile(artistDetail, albums, topTracks);
     }
-
-    setAnimateStateList({ x: 300, opacity: 0 }, { x: 300, opacity: 0 });
   }, []);
 
   const animations = {

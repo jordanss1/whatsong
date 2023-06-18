@@ -1,0 +1,52 @@
+.start-button {
+  margin: 0 auto;
+  max-width: 250px;
+  color: white;
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+.landing-main {
+  min-height: 100vh;
+  background-color: black;
+}
+
+.landing-content {
+  min-height: 100vh;
+}
+
+.spotify-nav {
+  color: rgba(169, 169, 169, 0.178);
+}
+
+.pink {
+  color: #de5aae;
+  font-weight: 200;
+  letter-spacing: 3px;
+}
+
+.w {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.spotify-div {
+  margin: 0 auto;
+  max-width: 500px;
+  letter-spacing: 1px;
+  border-color: rgb(255, 255, 255, 0.3) !important;
+}
+
+.scolling-container {
+  position: relative;
+  left: 40px;
+  top: 20px;
+  z-index: 2;
+  overflow: hidden;
+  width: 210px;
+}
+
+.ribbon-div {
+  background-repeat: no-repeat;
+  background-image: url("../../../assets/ribbon.svg");
+  height: 100px;
+  width: 280px;
+}

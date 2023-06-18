@@ -3,76 +3,6 @@
   min-height: 100vh;
 }
 
-.landingContainer {
-  height: 100vh;
-  background-color: black;
-}
-
-.spotifyNav {
-  position: relative;
-  bottom: 12px;
-  color: rgba(169, 169, 169, 0.178);
-}
-
-.spotifyHover {
-  animation: spotifyHover 1s forwards;
-}
-
-@keyframes spotifyHover {
-  60% {
-    color: rgba(169, 169, 169, 0.178);
-  }
-  100% {
-    color: green;
-  }
-}
-
-.poweredHover {
-  color: white !important;
-}
-
-.pink {
-  color: #de5aae;
-  font-weight: 200;
-  letter-spacing: 3px;
-}
-
-.w {
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-
-.spotifyDiv {
-  position: relative;
-  opacity: 0;
-  bottom: 70px;
-  letter-spacing: 1px;
-  margin-bottom: 75px;
-  border-color: rgb(255, 255, 255, 0.3) !important;
-}
-
-.spotifyLoad {
-  animation: spotifyMove forwards 1s;
-}
-
-@keyframes spotifyMove {
-  0% {
-    opacity: 0;
-    bottom: 70px;
-    letter-spacing: 1px;
-    margin-bottom: 75px;
-  }
-  100% {
-    opacity: 1;
-    bottom: 0px;
-    letter-spacing: 3px;
-    padding: 15px 50px !important;
-  }
-}
-
-.mainDiv {
-  background-color: black;
-}
-
 .search-input {
   background-color: black !important;
   caret-color: white;
@@ -100,6 +30,8 @@
 .searchButton {
   width: 30px !important;
 }
+
+
 
 @media screen and (max-width: 380px) {
   .list-search-div {

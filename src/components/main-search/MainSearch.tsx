@@ -2,7 +2,6 @@ import { useContext, useEffect, useRef, ReactElement } from "react";
 import SearchContext from "../../contexts/SearchStore";
 import { motion } from "framer-motion";
 import { UseSearchStateContext } from "../../contexts/SearchState";
-import { SearchAnimateState } from "../../hooks/AnimateStateHooks";
 import MainSearchForm from "./MainSearchForm";
 import "./styles/main-search.css";
 
@@ -25,27 +24,14 @@ const MainSearch = (): ReactElement => {
     submittedTerm,
     handleArtistsOrSongsSearch,
     navigate,
-    animateStateSearch,
-    setAnimateStateSearch,
   } = useContext<UseSearchStateContext>(SearchContext);
 
   const searchType = useRef<string>("");
-
-  const animations = {
-    initial: (animateStateSearch: SearchAnimateState) => ({
-      ...animateStateSearch.initial,
-    }),
-    animate: { opacity: 1, y: 0, x: 0 },
-    exit: (animateStateSearch: SearchAnimateState) => ({
-      ...animateStateSearch.exit,
-    }),
-  };
 
   useEffect(() => {
     setFullArtists(null);
     setTracks(null);
     setSelectedSong(null);
-    setAnimateStateSearch({ opacity: 0.5, y: 300 }, { opacity: 0, y: 0 });
   }, []);
 
   useEffect(() => {
@@ -76,20 +62,11 @@ const MainSearch = (): ReactElement => {
 
     searchType.current = category;
     setSubmittedTerm(term);
-    setAnimateStateSearch({ opacity: 0.5, x }, { opacity: 0, x });
     sessionStorage.clear();
   };
 
   return (
-    <motion.main
-      variants={animations}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      transition={{ duration: 0.2 }}
-      custom={animateStateSearch}
-      className="searchContainer container-fluid d-flex flex-column justify-content-center align-items-center"
-    >
+    <motion.main className="searchContainer container-fluid d-flex flex-column justify-content-center align-items-center">
       <MainSearchForm
         term={term}
         setTerm={setTerm}

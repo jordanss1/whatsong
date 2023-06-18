@@ -5,7 +5,7 @@ import "@testing-library/jest-dom";
 import { SearchStore } from "../../contexts/SearchStore";
 import { NavigationAndStore } from "../../../test-utils/test-utils";
 import { history } from "../../../test-utils";
-import Landing from "../Landing";
+import Landing from "../landing/Landing";
 
 const WrapperComponent = ({ children }: { children: ReactNode }) => {
   return (

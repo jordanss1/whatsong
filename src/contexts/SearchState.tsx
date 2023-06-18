@@ -2,12 +2,6 @@ import { useState, createContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { spotifyArtistsOrSongsSearch, spotifyArtistAndAlbum } from "../api";
 import {
-  useAnimateSearchManager,
-  useAnimateListManager,
-  searchAnimateInit,
-  searchListAnimateInit,
-} from "../hooks/AnimateStateHooks";
-import {
   useArtistResults,
   artistInitState,
 } from "../hooks/DetailedArtistResultHooks";
@@ -37,11 +31,6 @@ export const SearchState = () => {
     page,
     fullArtists,
   } = useArtistsOrTracks();
-
-  const { animateStateSearch, setAnimateStateSearch } =
-    useAnimateSearchManager();
-
-  const { animateStateList, setAnimateStateList } = useAnimateListManager();
 
   const {
     artistDetail,
@@ -89,8 +78,6 @@ export const SearchState = () => {
   const providerValues = {
     loading,
     networkError,
-    animateStateSearch,
-    animateStateList,
     filteredTrack,
     topTracks,
     topTrack,
@@ -110,8 +97,6 @@ export const SearchState = () => {
     setTracks,
     setTopTrack,
     setAlbum,
-    setAnimateStateList,
-    setAnimateStateSearch,
     setFilteredTrack,
     setProfile,
     setPage,
@@ -131,8 +116,6 @@ export type UseSearchStateContext = ReturnType<typeof SearchState>;
 const initSearchContextState: UseSearchStateContext = {
   loading: false,
   networkError: null,
-  animateStateSearch: searchAnimateInit,
-  animateStateList: searchListAnimateInit,
   filteredTrack: 0,
   topTracks: [],
   topTrack: null,
@@ -152,8 +135,6 @@ const initSearchContextState: UseSearchStateContext = {
   setFullArtists: () => {},
   setTracks: () => {},
   setTopTrack: () => {},
-  setAnimateStateList: () => {},
-  setAnimateStateSearch: () => {},
   setFilteredTrack: () => {},
   setProfile: () => {},
   setPage: () => {},

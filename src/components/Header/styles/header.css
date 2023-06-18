@@ -8,7 +8,8 @@
 }
 
 .navClass {
-  position: sticky;
+  position: fixed;
+  width: 100%;
   height: 70px;
   top: 0;
   z-index: 2;
@@ -22,7 +23,7 @@
 }
 
 .navClassList {
-  position: sticky;
+  position: fixed;
   height: 70px;
   top: 0;
   z-index: 2;
@@ -36,51 +37,9 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.navClassAnimate {
-  animation: move-bg 6s ease-in-out infinite;
-}
-
-@keyframes move-bg {
-  25% {
-    background-position: 400px;
-  }
-  50% {
-    background-position: -400px;
-  }
-  75% {
-    background-position: 400px;
-  }
-  100% {
-    background-position: 0px;
-  }
-}
-
 .extraText {
   color: rgba(255, 255, 255, 0.25);
   font-weight: 200;
-}
-
-.spotifyNav {
-  position: relative;
-  bottom: 12px;
-  color: rgba(169, 169, 169, 0.178);
-}
-
-.spotifyHover {
-  animation: spotifyHover 1s forwards;
-}
-
-@keyframes spotifyHover {
-  60% {
-    color: rgba(169, 169, 169, 0.178);
-  }
-  100% {
-    color: green;
-  }
-}
-
-.poweredHover {
-  color: white !important;
 }
 
 .pink {
@@ -91,34 +50,6 @@
 
 .w {
   color: rgba(255, 255, 255, 0.7) !important;
-}
-
-.spotifyDiv {
-  position: relative;
-  opacity: 0;
-  bottom: 70px;
-  letter-spacing: 1px;
-  margin-bottom: 75px;
-  border-color: rgb(255, 255, 255, 0.3) !important;
-}
-
-.spotifyLoad {
-  animation: spotifyMove forwards 1s;
-}
-
-@keyframes spotifyMove {
-  0% {
-    opacity: 0;
-    bottom: 70px;
-    letter-spacing: 1px;
-    margin-bottom: 75px;
-  }
-  100% {
-    opacity: 1;
-    bottom: 0px;
-    letter-spacing: 3px;
-    padding: 15px 50px !important;
-  }
 }
 
 .listNavbar {
@@ -139,17 +70,6 @@
 .underScore {
   color: rgb(255, 255, 255, 0.4);
   font-weight: 900;
-}
-
-.startButton {
-  color: white;
-  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
-  transition: 500ms;
-}
-
-.startButton:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.3);
 }
 
 @media screen and (max-width: 576px) {
