@@ -2,7 +2,7 @@ import { memo, useContext, useCallback } from "react";
 import SearchBar from "../SearchBar";
 import { TopTracksDetailsType } from "../../types";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
-import SearchContext from "../../contexts/SearchState";
+import SearchContext from "../../contexts/searchContext/SearchState";
 import SongListItem from "./SongListItem";
 import "./styles/song-list.css";
 

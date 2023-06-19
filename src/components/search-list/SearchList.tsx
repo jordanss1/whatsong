@@ -1,5 +1,5 @@
 import { useContext, useEffect, ReactElement } from "react";
-import SearchContext from "../../contexts/SearchStore";
+import SearchContext from "../../contexts/searchContext/SearchStore";
 import SearchBar from "../SearchBar";
 import SongListSelectedItem from "../song-list/SongListSelectedSong";
 import ArtistList from "../artist-list/ArtistList";

@@ -1,30 +1,42 @@
-import React from "react";
-import { motion } from "framer-motion";
+import { ReactElement } from "react";
+import { Cycle, motion } from "framer-motion";
 import SVGFramer from "../../svgs/SVGFramer";
 import SVGReact from "../../svgs/SVGReact";
 import SVGReactRouter from "../../svgs/SVGReactRouter";
 import SVGTypeScript from "../../svgs/SVGTypeScript";
 import "./styles/landing.css";
 
-const LandingScroll = () => {
+type LandingScrollPropsType = {
+  xAnimation: string;
+  cycleAnimation: Cycle;
+};
+
+const LandingScroll = ({
+  xAnimation,
+  cycleAnimation,
+}: LandingScrollPropsType): ReactElement => {
   return (
-    <div className="w-100 d-flex flex-column justify-content-center align-items-center flex-grow-1">
-      <div className="ribbon-div">
-        <div className="scolling-container d-flex gap-3">
-          <div>
-            <SVGFramer />
+    <div className="w-100 d-flex flex-column justify-content-center align-items-center">
+      <motion.div
+        onMouseLeave={() => cycleAnimation(0)}
+        onMouseEnter={() => cycleAnimation(1)}
+        className="ribbon-div"
+      >
+        <div className="scolling-container d-flex">
+          <div className="framer-icon">
+            <SVGFramer xAnimation={xAnimation} />
           </div>
-          <div>
-            <SVGReact />
+          <div className="react-icon">
+            <SVGReact xAnimation={xAnimation} />
           </div>
-          <div>
-            <SVGReactRouter />
+          <div className="router-icon">
+            <SVGReactRouter xAnimation={xAnimation} />
           </div>
-          <div>
-            <SVGTypeScript />
+          <div className="typescript-icon">
+            <SVGTypeScript xAnimation={xAnimation} />
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

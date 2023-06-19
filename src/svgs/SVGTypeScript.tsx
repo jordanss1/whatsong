@@ -1,11 +1,59 @@
-import React from "react";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  Variants,
+  useTransform,
+  useMotionValue,
+  useMotionTemplate,
+} from "framer-motion";
 
-const SVGTypeScript = () => {
+export type SVGPropsType = {
+  xAnimation: string;
+};
+
+const SVGTypeScript = ({ xAnimation }: SVGPropsType) => {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+
+  const opacity = useTransform(x, [0, 62, 135, 187, 250], [0, 0, 1, 1, 0]);
+  const scale = useTransform(x, [0, 135, 250], [0.8, 1, 0.8]);
+  const shadowSize = useTransform(x, [0, 135, 250], [3, 5, 3]);
+
+  const svgVariant: Variants = {
+    cycleX: {
+      x: [0, 340],
+      transition: {
+        duration: 5,
+        repeat: Infinity,
+        delay: 4.5,
+        repeatDelay: 1.1,
+      },
+    },
+    cycleXFast: {
+      x: [0, 320],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        delay: 2.25,
+        repeatDelay: .5,
+      },
+    },
+  };
+
   return (
     <motion.svg
-      width="60px"
-      height="60px"
+      onTapStart={(e) => console.log(e.target)}
+      ref={ref}
+      variants={svgVariant}
+      animate={xAnimation}
+      style={{
+        x,
+        opacity,
+        scale,
+        filter: useMotionTemplate`drop-shadow(${shadowSize}px ${shadowSize}px 2px rgb(0 0 0 / 0.7))`,
+      }}
+      width="70px"
+      height="70px"
       viewBox="0 0 73 73"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"

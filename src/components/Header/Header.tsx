@@ -1,8 +1,8 @@
 import { ReactElement, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import SearchContext from "../../contexts/SearchStore";
+import SearchContext from "../../contexts/searchContext/SearchStore";
 import "../../styles/all.css";
-import { UseSearchStateContext } from "../../contexts/SearchState";
+import { UseSearchStateContext } from "../../contexts/searchContext/SearchState";
 import HeaderContent from "./HeaderContent";
 import "./styles/header.css";
 

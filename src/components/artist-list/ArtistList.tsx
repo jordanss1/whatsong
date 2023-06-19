@@ -5,7 +5,7 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import SearchContext from "../../contexts/SearchState";
+import SearchContext from "../../contexts/searchContext/SearchState";
 import { ArtistDetailsType } from "../../types";
 import ArtistOrAlbumCard from "../artist-details/ArtistOrAlbumCard";
 import "./styles/artist-list.css";

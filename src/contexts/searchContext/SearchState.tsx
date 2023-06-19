@@ -1,12 +1,12 @@
 import { useState, createContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { spotifyArtistsOrSongsSearch, spotifyArtistAndAlbum } from "../api";
+import { spotifyArtistsOrSongsSearch, spotifyArtistAndAlbum } from "../../api";
 import {
   useArtistResults,
   artistInitState,
-} from "../hooks/DetailedArtistResultHooks";
-import { TopTracksDetailsType } from "../types";
-import { useArtistsOrTracks } from "../hooks/ArtistsAndTracksHook";
+} from "../../hooks/DetailedArtistResultHooks";
+import { TopTracksDetailsType } from "../../types";
+import { useArtistsOrTracks } from "../../hooks/ArtistsAndTracksHook";
 import { CancelTokenSource } from "axios";
 
 export const SearchState = () => {

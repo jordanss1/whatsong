@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, ReactElement } from "react";
-import SearchContext from "../../contexts/SearchStore";
+import SearchContext from "../../contexts/searchContext/SearchStore";
 import { motion } from "framer-motion";
-import { UseSearchStateContext } from "../../contexts/SearchState";
+import { UseSearchStateContext } from "../../contexts/searchContext/SearchState";
 import MainSearchForm from "./MainSearchForm";
 import "./styles/main-search.css";
 

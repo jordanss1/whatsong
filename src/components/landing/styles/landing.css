@@ -11,7 +11,7 @@
 }
 
 .landing-content {
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .spotify-nav {
@@ -40,7 +40,8 @@
   left: 40px;
   top: 20px;
   z-index: 2;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
   width: 210px;
 }
 
@@ -49,4 +50,30 @@
   background-image: url("../../../assets/ribbon.svg");
   height: 100px;
   width: 280px;
+  overflow-y: visible;
+}
+
+.framer-icon,
+.react-icon,
+.router-icon,
+.typescript-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.framer-icon {
+  right: 80px;
+  bottom: 15px;
+}
+.react-icon {
+  right: 175px;
+  bottom: 10px;
+}
+.router-icon {
+  right: 280px;
+  bottom: 15px;
+}
+.typescript-icon {
+  right: 340px;
+  /* bottom: 5px; */
 }

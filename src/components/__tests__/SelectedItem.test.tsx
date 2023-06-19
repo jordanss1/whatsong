@@ -9,7 +9,7 @@ import {
 import MainSearch from "../main-search/MainSearch";
 import SearchList from "../search-list/SearchList";
 import { searchComponent } from "./SearchList.test";
-import { SearchStore } from "../../contexts/SearchStore";
+import { SearchStore } from "../../contexts/searchContext/SearchStore";
 import { history } from "../../../test-utils";
 import { changeHandlers } from "./MainSearch.test";
 import { artistDetailsHandler } from "../../mocks/handlers";

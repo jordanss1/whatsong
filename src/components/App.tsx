@@ -4,7 +4,7 @@ import SearchList from "./search-list/SearchList";
 import { AnimatePresence } from "framer-motion";
 import ArtistDetails from "./artist-details/ArtistDetails";
 import Header from "./header/Header";
-import SearchContext from "../contexts/SearchState";
+import SearchContext from "../contexts/searchContext/SearchState";
 import Modal from "./modal/Modal";
 import Landing from "./landing/Landing";
 import MainSearch from "./main-search/MainSearch";

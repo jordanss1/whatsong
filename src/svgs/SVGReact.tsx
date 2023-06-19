@@ -1,40 +1,37 @@
-import { useRef, useEffect } from "react";
 import {
   motion,
-  useInView,
-  useMotionTemplate,
-  useMotionValue,
+  Variants,
   useTransform,
+  useMotionValue,
+  useMotionTemplate,
 } from "framer-motion";
+import { ReactElement, useContext } from "react";
+import { SVGPropsType } from "./SVGTypeScript";
 
-const SVGReact = () => {
+const SVGReact = ({ xAnimation }: SVGPropsType): ReactElement => {
   const x = useMotionValue(0);
-  const ref = useRef<SVGSVGElement | null>(null);
-  const isInView = useInView(ref);
 
-  const opacity = useTransform(x, [0, 70, 175], [0.5, 1, 0.5]);
-  const scale = useTransform(x, [0, 70, 175], [0.9, 1.3, 0.9]);
-  const shadowSize = useTransform(x, [0, 70, 175], [4, 6, 4]);
-
-  let startingPosition;
-
-  const keyframes = [];
-
-  useEffect(() => {
-    if (ref.current) {
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isInView) {
-    } else {
-      x.set(0);
-    }
-  }, [isInView]);
+  const opacity = useTransform(x, [0, 62, 135, 187, 250], [0, 0, 1, 1, 0]);
+  const scale = useTransform(x, [0, 135, 250], [0.8, 1, 0.8]);
+  const shadowSize = useTransform(x, [0, 135, 250], [3, 5, 3]);
+  const svgVariant: Variants = {
+    cycleX: {
+      x: [0, 320],
+      transition: {
+        duration: 5,
+        repeat: Infinity,
+        delay: 1.5,
+        repeatDelay: 1.1,
+      },
+    },
+    cycleXFast: {
+      x: [0, 320],
+      transition: { duration: 3, repeat: Infinity, delay: .75, repeatDelay: 0.5 },
+    },
+  };
 
   return (
     <motion.svg
-      ref={ref}
       layout
       style={{
         x,
@@ -42,9 +39,10 @@ const SVGReact = () => {
         scale,
         filter: useMotionTemplate`drop-shadow(${shadowSize}px ${shadowSize}px 2px rgb(0 0 0 / 0.7))`,
       }}
-      animate={{ transition: { duration: 20 } }}
-      width="60px"
-      height="60px"
+      variants={svgVariant}
+      animate={xAnimation}
+      width="90px"
+      height="90px"
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

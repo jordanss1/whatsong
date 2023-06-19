@@ -1,11 +1,62 @@
-import React from "react";
-import { motion } from "framer-motion";
+import { ReactElement, useContext, useRef, useEffect, useState } from "react";
+import {
+  motion,
+  Variants,
+  useTransform,
+  useMotionValue,
+  useMotionTemplate,
+  useInView,
+  useMotionValueEvent,
+} from "framer-motion";
+import { SVGPropsType } from "./SVGTypeScript";
 
-const SVGReactRouter = () => {
+const SVGReactRouter = ({ xAnimation }: SVGPropsType): ReactElement => {
+  const [keyframes, setKeyframes] = useState([0, 320]);
+  const x = useMotionValue(0);
+  const ref = useRef<SVGSVGElement>(null);
+  const isInView = useInView(ref);
+
+  const opacity = useTransform(x, [0, 62, 150, 187, 250], [0, 0, 1, 1, 0]);
+  const scale = useTransform(x, [0, 150, 250], [0.8, 1, 0.8]);
+  const shadowSize = useTransform(x, [0, 135, 250], [3, 5, 3]);
+
+  useMotionValueEvent(x, "animationCancel", () => {
+    if (isInView) {
+      setKeyframes([x.get(), 320 - x.get()]);
+    } else {
+      setKeyframes([0, 320]);
+    }
+  });
+
+  const svgVariant: Variants = {
+    cycleX: {
+      x: keyframes,
+      transition: { duration: 5, repeat: Infinity, delay: 3, repeatDelay: 1.1 },
+    },
+    cycleXFast: {
+      x: keyframes,
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        delay: 1.5,
+        repeatDelay: 0.5,
+      },
+    },
+  };
+
   return (
     <motion.svg
-      width="60px"
-      height="60px"
+      ref={ref}
+      style={{
+        x,
+        opacity,
+        scale,
+        filter: useMotionTemplate`drop-shadow(${shadowSize}px ${shadowSize}px 2px rgb(0 0 0 / 0.7))`,
+      }}
+      variants={svgVariant}
+      animate={xAnimation}
+      width="80px"
+      height="90px"
       viewBox="0 -58 256 256"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"

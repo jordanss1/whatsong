@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import SearchContext from "../../contexts/SearchStore";
+import SearchContext from "../../contexts/searchContext/SearchStore";
 import "./styles/song-list.css";
 
 const SongListSelectedItem = (): ReactElement => {

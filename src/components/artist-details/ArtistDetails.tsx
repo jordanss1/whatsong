@@ -1,6 +1,6 @@
 import { useContext, ReactElement, useEffect } from "react";
 import Loader from "../modal/ModalLoader";
-import SearchContext from "../../contexts/SearchState";
+import SearchContext from "../../contexts/searchContext/SearchState";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import { gradient1, gradient2 } from "../../styles/inline";
 import ArtistDetailsAlbums from "./ArtistDetailsAlbums";

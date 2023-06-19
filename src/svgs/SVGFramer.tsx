@@ -1,47 +1,53 @@
-import { useRef, useEffect } from "react";
+import { ReactElement, useContext, useRef } from "react";
 import {
   motion,
+  Variants,
   useMotionTemplate,
-  useMotionValue,
   useTransform,
+  useMotionValue,
   useInView,
 } from "framer-motion";
+import { SVGPropsType } from "./SVGTypeScript";
 
-//591.25 from the right is the end of animation
-//347.23 from the left is the start of animation
-
-const SVGFramer = () => {
+const SVGFramer = ({ xAnimation }: SVGPropsType): ReactElement => {
   const x = useMotionValue(0);
+  const ref = useRef<SVGSVGElement>(null);
 
-  const opacity = useTransform(x, [0, 70, 130, 145, 175], [0.5, 1, 1, 0.7, 0]);
-  const scale = useTransform(x, [0, 70, 175], [0.9, 1.3, 0.9]);
-  const shadowSize = useTransform(x, [0, 70, 175], [4, 6, 4]);
-
-  const ref = useRef(null);
   const isInView = useInView(ref);
+
+  const opacity = useTransform(x, [0, 62, 135, 187, 250], [0, 0, 1, 1, 0]);
+  const scale = useTransform(x, [0, 135, 250], [0.8, 1, 0.8]);
+  const shadowSize = useTransform(x, [0, 135, 250], [3, 5, 3]);
+
+  const svgVariant: Variants = {
+    cycleX: {
+      x: [0, 320],
+      transition: { duration: 5, repeat: Infinity, repeatDelay: 1.1 },
+    },
+    cycleXFast: {
+      x: [0, 320],
+      transition: { duration: 3, repeat: Infinity, repeatDelay: 0.5 },
+    },
+  };
 
   return (
     <motion.svg
       layout
-      ref={ref}
       style={{
         x,
         opacity,
         scale,
         filter: useMotionTemplate`drop-shadow(${shadowSize}px ${shadowSize}px 2px rgb(0 0 0 / 0.7))`,
       }}
-      onAnimationComplete={(e) => {
-        console.log(e);
-      }}
-      animate={{ x: [0, 180], transition: { duration: 5 } }}
+      variants={svgVariant}
+      animate={xAnimation}
       fill="#000000"
-      width="60px"
-      height="60px"
+      width="90px"
+      height="90px"
       viewBox="0 0 24 24"
       id="framer"
       data-name="Flat Line"
       xmlns="http://www.w3.org/2000/svg"
-      className="icon flat-line"
     >
       <path
         id="secondary"

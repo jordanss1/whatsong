@@ -6,7 +6,7 @@ import {
   useEffect,
   useRef,
 } from "react";
-import SearchContext from "../contexts/SearchStore";
+import SearchContext from "../contexts/searchContext/SearchStore";
 
 const SearchBar = (): ReactElement => {
   const {
