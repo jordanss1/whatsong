@@ -6,27 +6,21 @@ import {
   useMotionTemplate,
 } from "framer-motion";
 import { ReactElement, useContext } from "react";
-import { SVGPropsType } from "./SVGTypeScript";
 
-const SVGReact = ({ xAnimation }: SVGPropsType): ReactElement => {
+const SVGReact = (): ReactElement => {
   const x = useMotionValue(0);
 
   const opacity = useTransform(x, [0, 62, 135, 187, 250], [0, 0, 1, 1, 0]);
   const scale = useTransform(x, [0, 135, 250], [0.8, 1, 0.8]);
   const shadowSize = useTransform(x, [0, 135, 250], [3, 5, 3]);
-  const svgVariant: Variants = {
-    cycleX: {
-      x: [0, 320],
-      transition: {
-        duration: 5,
-        repeat: Infinity,
-        delay: 1.5,
-        repeatDelay: 1.1,
-      },
-    },
-    cycleXFast: {
-      x: [0, 320],
-      transition: { duration: 3, repeat: Infinity, delay: .75, repeatDelay: 0.5 },
+
+  const cycleX = {
+    x: [0, 320],
+    transition: {
+      duration: 4,
+      repeat: Infinity,
+      delay: 1.5,
+      repeatDelay: 2,
     },
   };
 
@@ -39,8 +33,7 @@ const SVGReact = ({ xAnimation }: SVGPropsType): ReactElement => {
         scale,
         filter: useMotionTemplate`drop-shadow(${shadowSize}px ${shadowSize}px 2px rgb(0 0 0 / 0.7))`,
       }}
-      variants={svgVariant}
-      animate={xAnimation}
+      animate={cycleX}
       width="90px"
       height="90px"
       viewBox="0 0 32 32"

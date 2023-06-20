@@ -13,11 +13,16 @@ const Header = ({ path }: { path: string }): ReactElement => {
 
   return (
     <>
-      <header className={`navClass d-flex justify-content-center`}>
+      <header className="navClass d-flex justify-content-center">
         <NavLink
-          onClick={() => {
-            setTerm("");
-          }}
+          style={{ cursor: linkPath === "" ? "default" : "pointer" }}
+          onClick={
+            linkPath === ""
+              ? () => {}
+              : () => {
+                  setTerm("");
+                }
+          }
           className="text-uppercase"
           to={linkPath}
         >

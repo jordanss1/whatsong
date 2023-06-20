@@ -2,7 +2,9 @@
   margin: 0 auto;
   max-width: 250px;
   color: white;
+  background-color: transparent;
   font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  border: 1px solid white
 }
 
 .landing-main {
@@ -28,11 +30,31 @@
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
+.circle-1 {
+  position: relative;
+  right: 100px;
+  top: 30px;
+}
+.circle-2 {
+  position: relative;
+  left: 100px;
+  top: 30px;
+}
+
 .spotify-div {
   margin: 0 auto;
   max-width: 500px;
   letter-spacing: 1px;
-  border-color: rgb(255, 255, 255, 0.3) !important;
+  border-color: rgb(255, 255, 255, 1) !important;
+  position: relative;
+}
+
+.powered {
+  opacity: 0;
+}
+
+.spotify-nav {
+  opacity: 0 !important;
 }
 
 .scolling-container {
@@ -40,7 +62,6 @@
   left: 40px;
   top: 20px;
   z-index: 2;
-  overflow-x: hidden;
   overflow-y: visible;
   width: 210px;
 }
