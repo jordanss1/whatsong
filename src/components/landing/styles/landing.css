@@ -4,12 +4,12 @@
   color: white;
   background-color: transparent;
   font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
-  border: 1px solid white
+  border: 1px solid white;
 }
 
 .landing-main {
   min-height: 100vh;
-  background-color: black;
+  background: radial-gradient(circle at 0 0, rgb(0, 5, 133), transparent 50%);
 }
 
 .landing-content {
@@ -30,14 +30,20 @@
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
+.circle-div {
+  position: relative;
+  right: 40px;
+  bottom: 20px;
+}
+
 .circle-1 {
   position: relative;
-  right: 100px;
+  right: 40px;
   top: 30px;
 }
 .circle-2 {
   position: relative;
-  left: 100px;
+  left: 45px;
   top: 30px;
 }
 
@@ -45,16 +51,19 @@
   margin: 0 auto;
   max-width: 500px;
   letter-spacing: 1px;
-  border-color: rgb(255, 255, 255, 1) !important;
   position: relative;
-}
-
-.powered {
   opacity: 0;
 }
 
+.powered {
+  color: #fff !important;
+}
+
 .spotify-nav {
-  opacity: 0 !important;
+  position: relative;
+  bottom: 10px;
+  left: 5px;
+  /* color: rgba(30, 215, 96); */
 }
 
 .scolling-container {
@@ -72,6 +81,8 @@
   height: 100px;
   width: 280px;
   overflow-y: visible;
+  position: relative;
+  top: 40px;
 }
 
 .framer-icon,

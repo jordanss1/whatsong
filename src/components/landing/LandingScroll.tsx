@@ -8,7 +8,6 @@ import "./styles/landing.css";
 
 const LandingScroll = (): ReactElement => {
   return (
-    <div className="w-100 d-flex flex-column justify-content-center align-items-center">
       <motion.div whileHover={{ scale: [null, 1.1] }} className="ribbon-div">
         <div className="scolling-container d-flex">
           <div className="framer-icon">
@@ -25,7 +24,6 @@ const LandingScroll = (): ReactElement => {
           </div>
         </div>
       </motion.div>
-    </div>
   );
 };
 
