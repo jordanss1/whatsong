@@ -4,6 +4,7 @@ import {
   useRef,
   useCallback,
   useEffect,
+  useState,
 } from "react";
 import SearchContext from "../../contexts/searchContext/SearchState";
 import { ArtistDetailsType } from "../../types";
@@ -17,20 +18,10 @@ const ArtistList = ({
 }: {
   artists: ArtistDetailsType[];
 }): ReactElement => {
-  const {
-    handleArtistDetailSearch,
-    setProfile,
-    setFilteredTrack,
-    albums,
-    topTracks,
-    navigate,
-  } = useContext(SearchContext);
+  const { handleArtistDetailSearch, setProfile, albums, topTracks, navigate } =
+    useContext(SearchContext);
 
   const idRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    setFilteredTrack(0);
-  }, []);
 
   useEffect(() => {
     if (albums && topTracks && idRef.current) {

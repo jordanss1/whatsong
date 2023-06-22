@@ -59,8 +59,8 @@ const LandingCircles = ({ x }: { x: MotionValue<number> }) => {
           cy="10"
           r="3"
           stroke="white"
-          stroke-width="."
-          fill="#de5aae"
+          stroke-width=""
+          fill="white"
         />
       </motion.svg>
     </div>

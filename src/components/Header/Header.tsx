@@ -1,13 +1,17 @@
 import { ReactElement, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import SearchContext from "../../contexts/searchContext/SearchStore";
-import "../../styles/all.css";
 import { UseSearchStateContext } from "../../contexts/searchContext/SearchState";
-import HeaderContent from "./HeaderContent";
+import { FramerContext } from "../../contexts/framerContext/FramerState";
+import HeaderLanding from "./HeaderLanding";
+import HeaderSearch from "./HeaderSearch";
 import "./styles/header.css";
+import "../../styles/all.css";
+import { AnimatePresence } from "framer-motion";
 
 const Header = ({ path }: { path: string }): ReactElement => {
   const { setTerm } = useContext<UseSearchStateContext>(SearchContext);
+  const { headerCycle } = useContext(FramerContext);
 
   const linkPath = path === "/" ? "" : "/search";
 
@@ -26,7 +30,13 @@ const Header = ({ path }: { path: string }): ReactElement => {
           className="text-uppercase"
           to={linkPath}
         >
-          <HeaderContent path={path} />
+          <AnimatePresence>
+            {path === "/" ? (
+              <HeaderLanding headerCycle={headerCycle} />
+            ) : (
+              <HeaderSearch />
+            )}
+          </AnimatePresence>
         </NavLink>
       </header>
     </>

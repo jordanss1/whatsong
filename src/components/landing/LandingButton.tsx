@@ -1,4 +1,3 @@
-import React from "react";
 import { Cycle, Variants, motion } from "framer-motion";
 
 const buttonVariants: Variants = {
@@ -20,19 +19,32 @@ const buttonVariants: Variants = {
       type: "spring",
     },
   },
+  exit: {
+    opacity: 0,
+    x: 300,
+    transition: { duration: 5 },
+  },
 };
 
-const LandingButton = ({ cycleMain }: { cycleMain: Cycle }) => {
+const LandingButton = ({
+  setFinalAnimation,
+  handleHover,
+}: {
+  handleHover: (hovered: boolean) => void;
+  setFinalAnimation: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   return (
     <div className="d-flex justify-content-center align-items-end">
       <motion.button
         layout
         initial="hidden"
         animate="visible"
+        exit="exit"
         variants={buttonVariants}
         whileHover="hover"
-        onMouseEnter={() => cycleMain(1)}
-        onMouseLeave={() => cycleMain(0)}
+        onMouseEnter={() => handleHover(true)}
+        onMouseLeave={() => handleHover(false)}
+        onClick={() => setFinalAnimation(true)}
         type="button"
         className="fs-4 rounded-pill p-3 px-4 start-button"
       >

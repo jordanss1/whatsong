@@ -19,6 +19,7 @@ const SVGFramer = (): ReactElement => {
     transition: { duration: 4, repeat: Infinity, repeatDelay: 2 },
   };
 
+
   return (
     <motion.svg
       layout

@@ -1,4 +1,5 @@
 import {
+  AnimatePresence,
   Cycle,
   Variants,
   motion,
@@ -24,9 +25,16 @@ const boxVariants: Variants = {
       staggerChildren: 0.1,
     },
   },
+  exit: {
+    x: 300,
+    opacity: 0,
+    transition: {
+      duration: 5,
+    },
+  },
 };
 
-const poweredVariants = {
+const poweredVariants: Variants = {
   hidden: {
     opacity: 0,
   },
@@ -58,7 +66,8 @@ const LandingPowered = ({
         initial="hidden"
         variants={boxVariants}
         animate={poweredCycle}
-        className="d-flex border rounded-3 p-5 pt-3 pb-3 spotify-div"
+        exit="exit"
+        className="d-flex p-5 pt-3 pb-3 spotify-div"
       >
         <motion.h2
           variants={poweredVariants}
@@ -70,7 +79,7 @@ const LandingPowered = ({
           layout
           style={{ color }}
           variants={poweredVariants}
-          className="spotify icon fs-1 spotify-nav"
+          className="spotify icon spotify-nav"
         ></motion.i>
         <LandingCircles x={x} />
       </motion.div>

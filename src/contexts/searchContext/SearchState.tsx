@@ -14,7 +14,6 @@ export const SearchState = () => {
   const [submittedTerm, setSubmittedTerm] = useState<string>("");
   const [selectedSong, setSelectedSong] =
     useState<Required<TopTracksDetailsType> | null>(null);
-  const [filteredTrack, setFilteredTrack] = useState<number>(0);
   const [networkError, setNetworkError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -78,7 +77,6 @@ export const SearchState = () => {
   const providerValues = {
     loading,
     networkError,
-    filteredTrack,
     topTracks,
     topTrack,
     artistDetail,
@@ -97,7 +95,6 @@ export const SearchState = () => {
     setTracks,
     setTopTrack,
     setAlbum,
-    setFilteredTrack,
     setProfile,
     setPage,
     setTerm,
@@ -116,7 +113,6 @@ export type UseSearchStateContext = ReturnType<typeof SearchState>;
 const initSearchContextState: UseSearchStateContext = {
   loading: false,
   networkError: null,
-  filteredTrack: 0,
   topTracks: [],
   topTrack: null,
   artistDetail: artistInitState.artistDetail,
@@ -135,7 +131,6 @@ const initSearchContextState: UseSearchStateContext = {
   setFullArtists: () => {},
   setTracks: () => {},
   setTopTrack: () => {},
-  setFilteredTrack: () => {},
   setProfile: () => {},
   setPage: () => {},
   setTerm: () => {},

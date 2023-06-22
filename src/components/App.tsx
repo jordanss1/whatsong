@@ -17,16 +17,18 @@ const App = (): ReactElement => {
   return (
     <>
       <Header path={location.pathname} />
-      {(loading || networkError) && <Modal />}
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Landing />} />
-        <Route path="/search" element={<MainSearch />} />
-        <Route path="/artists">
-          <Route index element={<SearchList />} />
-          <Route path="/artists/:id" element={<ArtistDetails />} />
-        </Route>
-        <Route path="/songs" element={<SearchList />} />
-      </Routes>
+      <AnimatePresence mode="wait">
+        {(loading || networkError) && <Modal />}
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Landing />} />
+          <Route path="/search" element={<MainSearch />} />
+          <Route path="/artists">
+            <Route index element={<SearchList />} />
+            <Route path="/artists/:id" element={<ArtistDetails />} />
+          </Route>
+          <Route path="/songs" element={<SearchList />} />
+        </Routes>
+      </AnimatePresence>
     </>
   );
 };
