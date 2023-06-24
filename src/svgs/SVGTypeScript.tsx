@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { ReactElement } from "react";
 import {
   motion,
   useTransform,
@@ -6,9 +6,7 @@ import {
   useMotionTemplate,
 } from "framer-motion";
 
-const SVGTypeScript = () => {
-  const ref = useRef(null);
-
+const SVGTypeScript = (): ReactElement => {
   const x = useMotionValue(0);
 
   const opacity = useTransform(x, [0, 62, 135, 187, 250], [0, 0, 1, 1, 0]);
@@ -27,7 +25,6 @@ const SVGTypeScript = () => {
 
   return (
     <motion.svg
-      ref={ref}
       animate={cycleX}
       style={{
         x,

@@ -17,9 +17,9 @@ const App = (): ReactElement => {
   return (
     <>
       <Header path={location.pathname} />
+      {(loading || networkError) && <Modal />}
       <AnimatePresence mode="wait">
-        {(loading || networkError) && <Modal />}
-        <Routes location={location} key={location.pathname}>
+        <Routes location={location} key={location.key}>
           <Route path="/" element={<Landing />} />
           <Route path="/search" element={<MainSearch />} />
           <Route path="/artists">

@@ -1,18 +1,15 @@
-import { ReactElement, useRef } from "react";
+import { ReactElement } from "react";
 import {
   motion,
-  Variants,
   useTransform,
   useMotionValue,
   useMotionTemplate,
-  useInView,
   AnimationDefinition,
 } from "framer-motion";
 
 const SVGReactRouter = (): ReactElement => {
   const x = useMotionValue(0);
 
-  const ref = useRef<SVGSVGElement>(null);
 
   const opacity = useTransform(x, [0, 62, 150, 187, 250], [0, 0, 1, 1, 0]);
   const scale = useTransform(x, [0, 150, 250], [0.8, 1, 0.8]);
@@ -30,7 +27,6 @@ const SVGReactRouter = (): ReactElement => {
 
   return (
     <motion.svg
-      ref={ref}
       style={{
         x,
         opacity,

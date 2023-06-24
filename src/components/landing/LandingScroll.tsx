@@ -9,13 +9,8 @@ import "./styles/landing.css";
 const LandingScroll = (): ReactElement => {
   return (
     <motion.div
-      exit={{
-        opacity: [1, 0, 0],
-        x: 300,
-        transition: { duration: 5 },
-      }}
       whileHover={{ scale: [null, 1.1] }}
-      className="ribbon-div"
+      className="ribbon-div w-100 d-flex justify-content-center"
     >
       <div className="scolling-container d-flex">
         <div className="framer-icon">

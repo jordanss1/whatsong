@@ -37,6 +37,10 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.header-container * {
+  display: inline-block;
+}
+
 .extraText {
   color: rgba(255, 255, 255, 0.25);
   font-weight: 200;
@@ -62,9 +66,9 @@
 }
 
 .spotifyIconList {
-  color: green;
   position: relative;
   bottom: 12px;
+  font-size: 32px !important;
 }
 
 .underScore {

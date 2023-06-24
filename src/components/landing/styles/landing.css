@@ -49,7 +49,6 @@
 }
 
 .spotify-div {
-  margin: 0 auto;
   max-width: 500px;
   letter-spacing: 1px;
   position: relative;
@@ -58,6 +57,7 @@
 
 .powered {
   color: #fff !important;
+  white-space: nowrap;
 }
 
 .spotify-nav {
@@ -68,19 +68,14 @@
 
 .scolling-container {
   position: relative;
-  left: 40px;
   top: 20px;
-  z-index: 2;
   overflow-y: visible;
-  width: 210px;
+  max-width: 210px;
 }
 
 .ribbon-div {
-  background-repeat: no-repeat;
-  /* background-image: url("../../../assets/ribbon.svg"); */
   height: 100px;
-  width: 280px;
-  overflow-y: visible;
+  width: 100%;
   position: relative;
   top: 40px;
 }

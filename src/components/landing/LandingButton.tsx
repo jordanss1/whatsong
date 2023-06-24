@@ -19,11 +19,6 @@ const buttonVariants: Variants = {
       type: "spring",
     },
   },
-  exit: {
-    opacity: 0,
-    x: 300,
-    transition: { duration: 5 },
-  },
 };
 
 const LandingButton = ({
@@ -39,7 +34,6 @@ const LandingButton = ({
         layout
         initial="hidden"
         animate="visible"
-        exit="exit"
         variants={buttonVariants}
         whileHover="hover"
         onMouseEnter={() => handleHover(true)}

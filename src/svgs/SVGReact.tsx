@@ -1,11 +1,10 @@
+import { ReactElement } from "react";
 import {
   motion,
-  Variants,
   useTransform,
   useMotionValue,
   useMotionTemplate,
 } from "framer-motion";
-import { ReactElement, useContext } from "react";
 
 const SVGReact = (): ReactElement => {
   const x = useMotionValue(0);

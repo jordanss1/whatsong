@@ -58,15 +58,17 @@ const MainSearch = (): ReactElement => {
   }, [tracks, fullArtists]);
 
   const handleButtonClick: HandleButtonClickType = (category, term) => {
-    const x = category === "artist" ? 300 : -300;
-
     searchType.current = category;
     setSubmittedTerm(term);
     sessionStorage.clear();
   };
 
   return (
-    <motion.main className="searchContainer container-fluid d-flex flex-column justify-content-center align-items-center">
+    <motion.main
+      initial={{ x: -200 }}
+      animate={{ x: 0 }}
+      className="searchContainer container-fluid d-flex flex-column justify-content-center align-items-center"
+    >
       <MainSearchForm
         term={term}
         setTerm={setTerm}

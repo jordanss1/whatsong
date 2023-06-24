@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState, useContext, ReactElement } from "react";
+import { useEffect, useState, useContext, ReactElement } from "react";
 import SearchContext from "../../contexts/searchContext/SearchStore";
 import {
   AnimatePresence,
   Variants,
-  delay,
   motion,
   useAnimate,
   useCycle,
@@ -14,7 +13,7 @@ import "./styles/landing.css";
 import LandingScroll from "./LandingScroll";
 import LandingButton from "./LandingButton";
 import LandingPowered from "./LandingPowered";
-import { exit } from "process";
+import { useMediaQuery } from "../../hooks/MediaQueryHook";
 
 const mainVariants: Variants = {
   initial: {
@@ -57,6 +56,8 @@ const Landing = (): ReactElement => {
   const [intro, setIntro] = useState(true);
   const [finalAnimation, setFinalAnimation] = useState(false);
 
+  const is600 = useMediaQuery(600);
+
   const [mainCycle, cycleMain] = useCycle("intro", "prepare", "blastOff");
   const [poweredCycle, cyclePowered] = useCycle("hidden", "visible");
   const [isPresent, safeToRemove] = usePresence();
@@ -70,14 +71,49 @@ const Landing = (): ReactElement => {
   }, [mainCycle]);
 
   useEffect(() => {
-    const exitAnimation = async () => {
-      cycleMain(2);
-    };
     if (finalAnimation) {
-      exitAnimation();
       navigate("/search");
     }
   }, [finalAnimation]);
+
+  useEffect(() => {
+    if (isPresent) {
+      return;
+    }
+
+    if (!isPresent) {
+      const exitAnimation = async () => {
+        cycleMain(2);
+
+        await animate(
+          ".landing-content",
+          {
+            x: is600
+              ? [
+                  "calc(100vw - 100%)",
+                  "calc(100vw - 65%)",
+                  "calc(100vw - 65%)",
+                  "calc(100vw - 0%)",
+                ]
+              : [
+                  "calc(100vw - 100%)",
+                  "calc(100vw - 90%)",
+                  "calc(100vw - 90%)",
+                  "calc(100vw - 0%)",
+                ],
+            opacity: [1, 1, 0.3, 0],
+          },
+          {
+            times: [0, 0.5, 0.65, 1],
+            duration: 2,
+          }
+        );
+        safeToRemove();
+      };
+
+      exitAnimation();
+    }
+  }, [isPresent]);
 
   const handleHover = (hovered: boolean) => {
     if (hovered && !finalAnimation) {
@@ -93,25 +129,18 @@ const Landing = (): ReactElement => {
       custom={intro}
       initial="initial"
       animate={mainCycle}
-      exit={{ x: 500, transition: { duration: 3000 } }}
+      exit={{ x: 0, transition: { duration: 2 } }}
       className="landing-main"
+      ref={scope}
     >
       <div className="landing-content d-flex flex-column justify-content-center align-items-center">
-        <AnimatePresence>
-          {!finalAnimation && <LandingPowered poweredCycle={poweredCycle} />}
-        </AnimatePresence>
-        <div className="flex-grow-1 d-flex flex-column justify-content-center gap-5">
-          <AnimatePresence>
-            {!finalAnimation && (
-              <>
-                <LandingButton
-                  handleHover={handleHover}
-                  setFinalAnimation={setFinalAnimation}
-                />
-                <LandingScroll />
-              </>
-            )}
-          </AnimatePresence>
+        <LandingPowered poweredCycle={poweredCycle} />
+        <div className="flex-grow-1 d-flex flex-column w-100 justify-content-center gap-5">
+          <LandingButton
+            handleHover={handleHover}
+            setFinalAnimation={setFinalAnimation}
+          />
+          <LandingScroll />
         </div>
       </div>
     </motion.main>

@@ -30,11 +30,11 @@ const Header = ({ path }: { path: string }): ReactElement => {
           className="text-uppercase"
           to={linkPath}
         >
-          <AnimatePresence>
+          <AnimatePresence mode="sync">
             {path === "/" ? (
-              <HeaderLanding headerCycle={headerCycle} />
+              <HeaderLanding key="landing1" />
             ) : (
-              <HeaderSearch />
+              <HeaderSearch key="search1" />
             )}
           </AnimatePresence>
         </NavLink>

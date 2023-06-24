@@ -25,13 +25,6 @@ const boxVariants: Variants = {
       staggerChildren: 0.1,
     },
   },
-  exit: {
-    x: 300,
-    opacity: 0,
-    transition: {
-      duration: 5,
-    },
-  },
 };
 
 const poweredVariants: Variants = {
@@ -60,14 +53,13 @@ const LandingPowered = ({
   });
 
   return (
-    <div className="d-flex align-items-end flex-grow-1">
+    <div className="d-flex w-100 justify-content-center align-items-end flex-grow-1">
       <motion.div
         layout
         initial="hidden"
         variants={boxVariants}
         animate={poweredCycle}
-        exit="exit"
-        className="d-flex p-5 pt-3 pb-3 spotify-div"
+        className="d-flex p-5 pt-3 pb-3 rounded spotify-div"
       >
         <motion.h2
           variants={poweredVariants}

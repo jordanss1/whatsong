@@ -1,5 +1,6 @@
-import React from "react";
-import { MotionValue, Variants, motion } from "framer-motion";
+import React, { CSSProperties } from "react";
+import { MotionStyle, MotionValue, Variants, motion } from "framer-motion";
+import { Style } from "util";
 
 const circle1Variants: Variants = {
   spinning: {
@@ -27,9 +28,19 @@ const circle2Variants: Variants = {
   },
 };
 
-const LandingCircles = ({ x }: { x: MotionValue<number> }) => {
+const LandingCircles = ({
+  x,
+  containerStyle,
+}: {
+  x: MotionValue<number>;
+  containerStyle?: CSSProperties;
+}) => {
+  const radius = containerStyle ? 2 : 3;
   return (
-    <div className="circle-div d-flex justify-content-center">
+    <div
+      style={containerStyle}
+      className="circle-div d-flex justify-content-center"
+    >
       <motion.svg
         style={{ x }}
         variants={circle1Variants}
@@ -41,10 +52,10 @@ const LandingCircles = ({ x }: { x: MotionValue<number> }) => {
         <motion.circle
           cx="10"
           cy="10"
-          r="3"
+          r={radius}
           stroke="white"
           fill="white"
-          stroke-width=""
+          strokeWidth=""
         />
       </motion.svg>
       <motion.svg
@@ -57,9 +68,9 @@ const LandingCircles = ({ x }: { x: MotionValue<number> }) => {
         <motion.circle
           cx="10"
           cy="10"
-          r="3"
+          r={radius}
           stroke="white"
-          stroke-width=""
+          strokeWidth=""
           fill="white"
         />
       </motion.svg>

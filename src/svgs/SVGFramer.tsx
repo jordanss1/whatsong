@@ -1,7 +1,6 @@
-import { ReactElement, useContext, useRef } from "react";
+import { ReactElement } from "react";
 import {
   motion,
-  Variants,
   useMotionTemplate,
   useTransform,
   useMotionValue,

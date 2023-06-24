@@ -16,61 +16,90 @@ const boxVariants: Variants = {
   },
 };
 
-const letterVariants: Variants = {
+const wordVariants: Variants = {
   hidden: {
     opacity: 0,
+    x: 20,
   },
   visible: {
     opacity: 1,
+    x: 0,
     transition: {
-      duration: 1,
+      duration: 0.5,
+    },
+  },
+  exit: {
+    scale: 0.7,
+    x: 0,
+    opacity: 0,
+    transition: {
+      duration: 1.5,
     },
   },
 };
 
-const HeaderLanding = ({ headerCycle }: { headerCycle: string }) => {
+const letterVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    x: 20,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: (isW) => ({
+    scale: 0.7,
+    x: isW ? -7 : -57,
+    y: 5,
+    color: isW ? "white" : "#de5aae",
+    transition: {
+      duration: 1,
+      delay: 0.5,
+    },
+  }),
+};
+
+const HeaderLanding = () => {
   return (
-    <motion.div variants={boxVariants} initial="hidden" animate="visible">
-      <motion.span
-        custom={false}
-        animate={headerCycle}
+    <motion.div
+      className="header-container"
+      variants={boxVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div
+        custom={true}
+        exit="exit"
+        animate="visible"
         variants={letterVariants}
       >
         w
-      </motion.span>
-      <motion.span
-        custom={true}
-        variants={letterVariants}
-        exit={{
-          opacity: 0,
-          transition: {
-            duration: 1,
-          },
-        }}
+      </motion.div>
+      <motion.div
+        exit="exit"
+        variants={wordVariants}
         className="me-1 pt-2 extraText fs-5"
       >
         .hat
-      </motion.span>
-      <motion.span
-        animate={headerCycle}
+      </motion.div>
+      <motion.div
         custom={false}
+        exit="exit"
+        animate="visible"
         variants={letterVariants}
       >
         s
-      </motion.span>
-      <motion.span
-        custom={true}
-        variants={letterVariants}
-        exit={{
-          opacity: 0,
-          transition: {
-            duration: 1,
-          },
-        }}
+      </motion.div>
+      <motion.div
+        exit="exit"
+        variants={wordVariants}
         className="ms-2 extraText fs-5"
       >
         .ong
-      </motion.span>
+      </motion.div>
     </motion.div>
   );
 };
