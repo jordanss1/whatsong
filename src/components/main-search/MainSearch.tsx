@@ -2,8 +2,8 @@ import { useContext, useEffect, useRef, ReactElement } from "react";
 import SearchContext from "../../contexts/searchContext/SearchStore";
 import { motion } from "framer-motion";
 import { UseSearchStateContext } from "../../contexts/searchContext/SearchState";
-import MainSearchForm from "./MainSearchForm";
 import "./styles/main-search.css";
+import MainSearchType from "./MainSearchType";
 
 export type HandleButtonClickType = (
   category: "artist" | "track",
@@ -57,23 +57,9 @@ const MainSearch = (): ReactElement => {
     }
   }, [tracks, fullArtists]);
 
-  const handleButtonClick: HandleButtonClickType = (category, term) => {
-    searchType.current = category;
-    setSubmittedTerm(term);
-    sessionStorage.clear();
-  };
-
   return (
-    <motion.main
-      initial={{ x: -200 }}
-      animate={{ x: 0 }}
-      className="searchContainer container-fluid d-flex flex-column justify-content-center align-items-center"
-    >
-      <MainSearchForm
-        term={term}
-        setTerm={setTerm}
-        handleButtonClick={handleButtonClick}
-      />
+    <motion.main>
+      <MainSearchType />
     </motion.main>
   );
 };
