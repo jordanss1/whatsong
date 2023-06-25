@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, ReactElement, useState } from "react";
 import SearchContext from "../../contexts/searchContext/SearchStore";
-import { Variants, motion, useCycle } from "framer-motion";
+import { AnimatePresence, Variants, motion, useCycle } from "framer-motion";
 import { UseSearchStateContext } from "../../contexts/searchContext/SearchState";
 import MainSearchCategory from "./MainSearchCategory";
 import MainSearchInput from "./MainSearchInput";
@@ -20,16 +20,27 @@ const categoryVarients: Variants = {
   },
   artists: {
     background:
-      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 90%)",
+      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 110%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 90%)",
     transition: {
       duration: 0.5,
     },
   },
   songs: {
     background:
-      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, .3) 10%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, .2) 20%,transparent 90%)",
+      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .3) 15%,transparent 70%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, .2) 20%,transparent 90%)",
     transition: {
       duration: 0.5,
+    },
+  },
+};
+
+const searchVarients: Variants = {
+  awaitingInput: {
+    background:
+      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at 0% 110%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
+    transition: {
+      duration: 1,
+      delay: .5,
     },
   },
 };
@@ -58,7 +69,12 @@ const MainSearch = (): ReactElement => {
   } = useContext<UseSearchStateContext>(SearchContext);
 
   const [category, setCategory] = useState<string>("");
-  const [mainCycle, cycleMain] = useCycle("intro", "artists", "songs");
+  const [mainCycle, cycleMain] = useCycle(
+    "intro",
+    "artists",
+    "songs",
+    "awaitingInput"
+  );
 
   const searchType = useRef<string>("");
 
@@ -101,22 +117,31 @@ const MainSearch = (): ReactElement => {
     }
   };
 
+  const handleCategoryClick = (category: string) => {
+    cycleMain(3);
+    setCategory(category);
+  };
+
   return (
     <motion.main
       className="search-main d-flex flex-column"
-      variants={categoryVarients}
+      variants={category ? searchVarients : categoryVarients}
       initial="initial"
       animate={mainCycle}
       key="search"
-      layout
     >
       <div className="fixed" />
-      <MainSearchCategory
-        handleHover={handleCategoryHover}
-        category={category}
-        setCategory={setCategory}
-      />
-      <MainSearchInput />
+      <AnimatePresence mode="wait">
+        {category ? (
+          <MainSearchInput key="input" />
+        ) : (
+          <MainSearchCategory
+            key="category"
+            handleHover={handleCategoryHover}
+            handleClick={handleCategoryClick}
+          />
+        )}
+      </AnimatePresence>
     </motion.main>
   );
 };

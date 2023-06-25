@@ -59,7 +59,7 @@ const LandingPowered = ({
         initial="hidden"
         variants={boxVariants}
         animate={poweredCycle}
-        className="d-flex p-5 pt-3 pb-3 rounded spotify-div"
+        className="d-flex p-5 pt-3 pb-3 rounded w-100 spotify-div"
       >
         <motion.h2
           variants={poweredVariants}

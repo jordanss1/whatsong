@@ -24,10 +24,10 @@ const HeaderSearch = (): ReactElement => {
     <NavLink
       style={{ gridArea: 1 / 1 }}
       onClick={() => setTerm("")}
-      className="text-uppercase"
+      className="text-uppercase text-decoration-none"
       to={"/search"}
     >
-      <motion.div className="d-flex listNavbar">
+      <motion.div className="d-flex listNavbar px-5">
         <motion.div
           style={{ opacity }}
           initial={{ opacity: 0 }}
@@ -69,7 +69,7 @@ const HeaderSearch = (): ReactElement => {
               duration: 0.5,
             },
           }}
-          className="d-flex align-items-end ps-2 pe-2 pb-3 listSpotify"
+          className="d-flex align-items-end ps-2 pb-3 listSpotify"
         >
           <h2 className="fs-6 me-2 mt-3 poweredList text-lowercase">
             powered by
@@ -79,7 +79,7 @@ const HeaderSearch = (): ReactElement => {
             className="spotify icon mb-1 pe-1 spotifyIconList"
           ></motion.i>
         </motion.div>
-        <LandingCircles x={x} containerStyle={{ bottom: 0, right: "50px" }} />
+        <LandingCircles x={x} containerStyle={{ bottom: 0, right: "45px" }} />
       </motion.div>
     </NavLink>
   );

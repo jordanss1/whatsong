@@ -8,18 +8,19 @@
   font-size: 50px;
 }
 
-.header-search a {
+.nav-link {
   text-decoration: none !important;
 }
+
 .header-landing {
   position: fixed;
   width: 100%;
   z-index: 2;
   background: linear-gradient(
     to right,
-    black 20%,
+    rgb(0, 0, 0, 0.6) 20%,
     rgb(0, 3, 79) 50%,
-    black 80%
+    rgb(0, 0, 0, 0.6) 80%
   );
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 
@@ -32,9 +33,10 @@
   z-index: 2;
   background: linear-gradient(
     to right,
-    black 20%,
+    rgb(0, 0, 0, 0.6) 20%,
+
     rgb(0, 3, 79) 50%,
-    black 80%
+    rgb(0, 0, 0, 0.6) 80%
   );
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 
@@ -77,11 +79,14 @@
 
 .listNavbar {
   max-width: 400px;
+  position: relative;
+  left: 25px;
 }
 
 .poweredList {
   letter-spacing: 4px;
   color: rgb(255, 255, 255, 0.4);
+  white-space: nowrap;
 }
 
 .spotifyIconList {

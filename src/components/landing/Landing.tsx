@@ -85,22 +85,13 @@ const Landing = (): ReactElement => {
       const exitAnimation = async () => {
         cycleMain(2);
 
+        const calcX = is600 ? "calc(100vw - 65%)" : "calc(100vw - 90%)";
+
         await animate(
           ".landing-content",
           {
-            x: is600
-              ? [
-                  "calc(100vw - 100%)",
-                  "calc(100vw - 65%)",
-                  "calc(100vw - 65%)",
-                  "calc(100vw - 0%)",
-                ]
-              : [
-                  "calc(100vw - 100%)",
-                  "calc(100vw - 90%)",
-                  "calc(100vw - 90%)",
-                  "calc(100vw - 0%)",
-                ],
+            x: ["calc(100vw - 100%)", calcX, calcX, "calc(100vw - 0%)"],
+
             opacity: [1, 1, 0.3, 0],
           },
           {

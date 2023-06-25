@@ -49,7 +49,7 @@
 }
 
 .spotify-div {
-  max-width: 500px;
+  max-width: 255px;
   letter-spacing: 1px;
   position: relative;
   opacity: 0;
