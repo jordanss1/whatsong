@@ -1,5 +1,5 @@
-import { ReactElement, useContext } from "react";
-import { motion, useMotionValue } from "framer-motion";
+import { ReactElement, useContext, useEffect } from "react";
+import { MotionValue, motion, useMotionValue } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import LandingCircles from "../landing/LandingCircles";
 import "./styles/header.css";
@@ -8,6 +8,7 @@ import SearchContext from "../../contexts/searchContext/SearchState";
 const HeaderSearch = (): ReactElement => {
   const { setTerm } = useContext(SearchContext);
   const x = useMotionValue(0);
+  const opacity = useMotionValue(0);
 
   const color = useMotionValue("rgba(30, 215, 96)");
 
@@ -26,15 +27,9 @@ const HeaderSearch = (): ReactElement => {
       className="text-uppercase"
       to={"/search"}
     >
-      <motion.div
-        initial={{ y: -75, x: 0 }}
-        animate={{
-          transition: { delay: 1, duration: 1 },
-          transitionEnd: { y: 0, x: 0 },
-        }}
-        className="d-flex listNavbar"
-      >
+      <motion.div className="d-flex listNavbar">
         <motion.div
+          style={{ opacity }}
           initial={{ opacity: 0 }}
           animate={{
             opacity: 1,
@@ -42,7 +37,6 @@ const HeaderSearch = (): ReactElement => {
               delay: 1.2,
               duration: 1,
             },
-            transitionEnd: { opacity: 1 },
           }}
           className="text-lowercase"
         >

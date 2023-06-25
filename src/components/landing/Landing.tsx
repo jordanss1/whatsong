@@ -129,7 +129,12 @@ const Landing = (): ReactElement => {
       custom={intro}
       initial="initial"
       animate={mainCycle}
-      exit={{ x: 0, transition: { duration: 2 } }}
+      exit={{
+        x: 0,
+        transition: {
+          duration: 2,
+        },
+      }}
       className="landing-main"
       ref={scope}
     >

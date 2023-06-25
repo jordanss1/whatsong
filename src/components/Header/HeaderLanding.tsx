@@ -1,5 +1,11 @@
-import React from "react";
-import { AnimatePresence, Variants, motion } from "framer-motion";
+import React, { useEffect } from "react";
+import {
+  AnimatePresence,
+  MotionValue,
+  Variants,
+  motion,
+  useMotionValue,
+} from "framer-motion";
 
 const boxVariants: Variants = {
   hidden: {
@@ -45,10 +51,12 @@ const letterVariants: Variants = {
   hidden: {
     opacity: 0,
     x: 20,
+    y: 0,
   },
   visible: {
     opacity: 1,
     x: 0,
+    y: 0,
     transition: {
       duration: 0.5,
     },
@@ -65,7 +73,7 @@ const letterVariants: Variants = {
   }),
 };
 
-const HeaderLanding = () => {
+const HeaderLanding = ({ y }: { y: MotionValue }) => {
   return (
     <motion.div
       style={{ gridRow: 1, gridColumn: 1 }}
@@ -81,6 +89,7 @@ const HeaderLanding = () => {
         exit="exit"
         animate="visible"
         variants={letterVariants}
+        style={{ y }}
       >
         w
       </motion.div>
