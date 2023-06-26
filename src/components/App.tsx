@@ -16,9 +16,12 @@ const App = (): ReactElement => {
 
   return (
     <>
-      {location.pathname !== "/artists/:id" && (
-        <Header path={location.pathname} />
-      )}
+      <AnimatePresence>
+        {location.pathname !== "/search" &&
+          location.pathname !== "artists/:id" && (
+            <Header path={location.pathname} />
+          )}
+      </AnimatePresence>
       {(loading || networkError) && <Modal />}
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.key}>

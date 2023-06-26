@@ -22,7 +22,6 @@ const HeaderSearch = (): ReactElement => {
 
   return (
     <NavLink
-      style={{ gridArea: 1 / 1 }}
       onClick={() => setTerm("")}
       className="text-uppercase text-decoration-none"
       to={"/search"}
@@ -34,8 +33,8 @@ const HeaderSearch = (): ReactElement => {
           animate={{
             opacity: 1,
             transition: {
-              delay: 1.2,
-              duration: 1,
+              delay: 1.5,
+              duration: 0.5,
             },
           }}
           className="text-lowercase"
@@ -50,7 +49,7 @@ const HeaderSearch = (): ReactElement => {
           animate={{
             opacity: 1,
             transition: {
-              delay: 0.5,
+              delay: 1.5,
               duration: 0.5,
             },
           }}
@@ -61,11 +60,13 @@ const HeaderSearch = (): ReactElement => {
         <motion.div
           initial={{
             opacity: 0,
+            x: 300,
           }}
           animate={{
             opacity: 1,
+            x: 0,
             transition: {
-              delay: 0.5,
+              delay: 1,
               duration: 0.5,
             },
           }}

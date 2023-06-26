@@ -1,6 +1,9 @@
 .search-main {
   min-height: 100vh;
-  padding-bottom: 100px;
+}
+
+.actual-search-box {
+  height: 100vh;
 }
 
 .fixed {
@@ -13,27 +16,82 @@
 
 .main-input {
   height: 40px;
-  background-color: black;
   max-width: 600px;
-  width: 80%;
-  border-radius: 15px;
+  width: 100%;
+  border-radius: 25px;
+  border: 1px solid rgb(60, 60, 60);
+  background: linear-gradient(
+    45deg,
+    rgb(21, 21, 21),
+    rgba(0, 0, 0),
+    rgb(21, 21, 21)
+  );
   overflow: hidden;
 }
 
 .main-input input {
+  background: linear-gradient(
+    45deg,
+    rgb(21, 21, 21),
+    rgba(0, 0, 0),
+    rgb(21, 21, 21)
+  );
   height: 100%;
-  border: 0.5px solid rgb(255, 255, 255, 0.7);
   width: 100%;
   caret-color: white;
   padding: 0px 20px;
-  font-size: 36px;
+  font-size: 20px;
+  font-family: "Varela Round", sans-serif !important;
   color: rgb(255, 255, 255, 0.7);
   overflow: hidden;
+  border: none;
 }
 
 .main-input input:focus {
-  border: 1px solid white;
   outline: none;
+}
+
+.main-input input::placeholder {
+  font-size: 16px;
+}
+
+.search-button {
+  background-color: transparent;
+  border: none;
+  width: 60px;
+  color: rgb(255, 255, 255, 0.5);
+}
+
+.search-header {
+  max-width: 600px;
+  width: 100%;
+  font-family: "Varela Round", sans-serif !important;
+  font-size: 24px;
+}
+
+.redo {
+  cursor: pointer;
+}
+
+.redo-button {
+  background: linear-gradient(
+    45deg,
+    rgb(21, 21, 21),
+    rgba(0, 0, 0),
+    rgb(21, 21, 21)
+  );
+  border: 1px solid rgb(60, 60, 60);
+  color: rgb(255, 255, 255, 0.7);
+  border-radius: 10px;
+}
+
+.redo-category {
+  color: rgb(255, 255, 255, 0.7);
+}
+
+.redo-button i {
+  position: relative;
+  left: 2px;
 }
 
 .category-container {

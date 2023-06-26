@@ -1,12 +1,16 @@
-import React from "react";
+import { ReactElement } from "react";
 import { HandleCategoryHoverType } from "./MainSearch";
 import { motion, Variants } from "framer-motion";
 
 const buttonVariants: Variants = {
-  initial: (isArtist) => ({
+  initialArtist: {
     opacity: 0,
-    x: isArtist ? 100 : -100,
-  }),
+    x: 100,
+  },
+  initialSongs: {
+    opacity: 0,
+    x: -100,
+  },
   animate: {
     opacity: 1,
     x: 0,
@@ -17,28 +21,38 @@ const buttonVariants: Variants = {
       stiffness: 120,
     },
   },
-  hover: {
-    scale: 1.2,
-    color: "rgba(255, 255, 255, 0.9)",
-    transition: { duration: 0.2 },
-  },
-  exit: (isArtist) => ({
+  exitArtist: {
     opacity: [1, 0, 0],
-    x: isArtist ? 100 : -100,
+    x: 100,
     transition: {
       duration: 0.5,
       opacity: {
         times: [0, 1, 1],
       },
     },
-  }),
+  },
+  exitSongs: {
+    opacity: [1, 0, 0],
+    x: -100,
+    transition: {
+      duration: 0.5,
+      opacity: {
+        times: [0, 1, 1],
+      },
+    },
+  },
+  hover: {
+    scale: 1.2,
+    color: "rgba(255, 255, 255, 0.9)",
+    transition: { duration: 0.2 },
+  },
 };
 
 const separatorVariants: Variants = {
-  initial: {
-    y: -200,
+  initial: (redo) => ({
+    y: redo ? 200 : -200,
     opacity: 0,
-  },
+  }),
   animate: {
     y: 0,
     opacity: 1,
@@ -49,7 +63,7 @@ const separatorVariants: Variants = {
     },
   },
   exit: {
-    y: 100,
+    y: 200,
     opacity: 0,
     transition: {
       delay: 0.5,
@@ -61,20 +75,21 @@ const separatorVariants: Variants = {
 type MainSearchCategoryProps = {
   handleHover: HandleCategoryHoverType;
   handleClick: (category: string) => void;
+  redo: boolean;
 };
 
 const MainSearchCategory = ({
   handleClick,
   handleHover,
-}: MainSearchCategoryProps) => {
+  redo,
+}: MainSearchCategoryProps): ReactElement => {
   return (
     <div className="category-container d-flex flex-grow-1 flex-column gap-5 justify-content-center align-items-center w-100">
       <div className="category-choices d-grid justify-content-center w-100 px-5">
         <motion.button
-          custom={true}
-          initial="initial"
+          initial="initialArtist"
           animate="animate"
-          exit="exit"
+          exit="exitArtist"
           variants={buttonVariants}
           whileHover="hover"
           onMouseEnter={() => handleHover("artists")}
@@ -85,6 +100,7 @@ const MainSearchCategory = ({
         </motion.button>
         <motion.div
           variants={separatorVariants}
+          custom={redo}
           whileHover="hover"
           animate="animate"
           initial="initial"
@@ -92,10 +108,9 @@ const MainSearchCategory = ({
           className="category-separator"
         />
         <motion.button
-          custom={false}
-          initial="initial"
+          initial="initialSongs"
           animate="animate"
-          exit="exit"
+          exit="exitSongs"
           variants={buttonVariants}
           whileHover="hover"
           onMouseEnter={() => handleHover("songs")}

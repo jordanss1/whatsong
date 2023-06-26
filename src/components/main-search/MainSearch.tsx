@@ -1,10 +1,17 @@
-import { useContext, useEffect, useRef, ReactElement, useState } from "react";
+import {
+  useContext,
+  useEffect,
+  ReactElement,
+  useState,
+  FormEvent,
+} from "react";
 import SearchContext from "../../contexts/searchContext/SearchStore";
 import { AnimatePresence, Variants, motion, useCycle } from "framer-motion";
 import { UseSearchStateContext } from "../../contexts/searchContext/SearchState";
 import MainSearchCategory from "./MainSearchCategory";
 import MainSearchInput from "./MainSearchInput";
 import "./styles/main-search.css";
+import MainSearchHeader from "./MainSearchHeader";
 
 const categoryVarients: Variants = {
   initial: {
@@ -40,7 +47,7 @@ const searchVarients: Variants = {
       "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at 0% 110%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
     transition: {
       duration: 1,
-      delay: .5,
+      delay: 0.5,
     },
   },
 };
@@ -54,21 +61,20 @@ export type HandleCategoryHoverType = (hovered?: "artists" | "songs") => void;
 
 const MainSearch = (): ReactElement => {
   const {
-    term,
-    setTerm,
     setFullArtists,
     setTracks,
     setSelectedSong,
     fullArtists,
     tracks,
     setPage,
-    setSubmittedTerm,
-    submittedTerm,
     handleArtistsOrSongsSearch,
     navigate,
   } = useContext<UseSearchStateContext>(SearchContext);
 
   const [category, setCategory] = useState<string>("");
+  const [term, setTerm] = useState("");
+  const [submittedTerm, setSubmittedTerm] = useState("");
+
   const [mainCycle, cycleMain] = useCycle(
     "intro",
     "artists",
@@ -76,7 +82,7 @@ const MainSearch = (): ReactElement => {
     "awaitingInput"
   );
 
-  const searchType = useRef<string>("");
+  const [redo, cycleRedo] = useCycle(false, true);
 
   useEffect(() => {
     setFullArtists(null);
@@ -87,20 +93,20 @@ const MainSearch = (): ReactElement => {
   useEffect(() => {
     setTerm("");
 
-    if (searchType.current === "artist" && submittedTerm) {
-      handleArtistsOrSongsSearch(submittedTerm, searchType.current);
-    } else if (searchType.current === "track" && submittedTerm) {
-      handleArtistsOrSongsSearch(submittedTerm, searchType.current);
+    if (category === "artist" && submittedTerm) {
+      handleArtistsOrSongsSearch(submittedTerm, category);
+    } else if (category === "track" && submittedTerm) {
+      handleArtistsOrSongsSearch(submittedTerm, category);
     }
   }, [submittedTerm]);
 
   useEffect(() => {
-    if (searchType.current === "artist" && submittedTerm) {
+    if (category === "artist" && submittedTerm) {
       setPage(1);
       setSubmittedTerm("");
       sessionStorage.setItem("artists", JSON.stringify(fullArtists));
       navigate("/artists");
-    } else if (searchType.current === "track" && submittedTerm) {
+    } else if (category === "track" && submittedTerm) {
       setSubmittedTerm("");
       sessionStorage.setItem("tracks", JSON.stringify(tracks));
       navigate("/songs");
@@ -118,25 +124,49 @@ const MainSearch = (): ReactElement => {
   };
 
   const handleCategoryClick = (category: string) => {
-    cycleMain(3);
     setCategory(category);
+    cycleMain(3);
+    cycleRedo(0);
+  };
+
+  const handleResetCategoryClick = () => {
+    setCategory("");
+    cycleMain(0);
+    cycleRedo(1);
+  };
+
+  const handleFormSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setSubmittedTerm(term);
   };
 
   return (
     <motion.main
-      className="search-main d-flex flex-column"
+      className="search-main d-flex"
       variants={category ? searchVarients : categoryVarients}
       initial="initial"
       animate={mainCycle}
       key="search"
     >
-      <div className="fixed" />
       <AnimatePresence mode="wait">
         {category ? (
-          <MainSearchInput key="input" />
+          <div className="actual-search-box d-flex flex-column gap-4 w-100">
+            <MainSearchHeader
+              key="header"
+              handleClick={handleResetCategoryClick}
+              category={category}
+            />
+            <MainSearchInput
+              key="input"
+              handleSubmit={handleFormSubmit}
+              setTerm={setTerm}
+              term={term}
+            />
+          </div>
         ) : (
           <MainSearchCategory
             key="category"
+            redo={redo}
             handleHover={handleCategoryHover}
             handleClick={handleCategoryClick}
           />

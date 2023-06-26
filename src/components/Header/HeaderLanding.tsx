@@ -1,11 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  AnimatePresence,
-  MotionValue,
-  Variants,
-  motion,
-  useMotionValue,
-} from "framer-motion";
+import { MotionValue, Variants, motion } from "framer-motion";
 
 const boxVariants: Variants = {
   hidden: {
@@ -19,9 +13,6 @@ const boxVariants: Variants = {
       duration: 1,
       when: "beforeChildren",
     },
-  },
-  exit: {
-    position: "absolute",
   },
 };
 
@@ -63,7 +54,7 @@ const letterVariants: Variants = {
   },
   exit: (isW) => ({
     scale: 0.7,
-    x: isW ? -7 : -57,
+    x: isW ? -37 : -87,
     y: 5,
     color: isW ? "white" : "#de5aae",
     transition: {
@@ -73,7 +64,7 @@ const letterVariants: Variants = {
   }),
 };
 
-const HeaderLanding = ({ y }: { y: MotionValue }) => {
+const HeaderLanding = () => {
   return (
     <motion.div
       style={{ gridRow: 1, gridColumn: 1 }}
@@ -81,7 +72,6 @@ const HeaderLanding = ({ y }: { y: MotionValue }) => {
       variants={boxVariants}
       initial="hidden"
       animate="visible"
-      exit="exit"
       layout
     >
       <motion.div
@@ -89,7 +79,6 @@ const HeaderLanding = ({ y }: { y: MotionValue }) => {
         exit="exit"
         animate="visible"
         variants={letterVariants}
-        style={{ y }}
       >
         w
       </motion.div>
