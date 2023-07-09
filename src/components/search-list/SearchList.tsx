@@ -30,9 +30,9 @@ const SearchList = (): ReactElement => {
     sessionStorage.removeItem("artist-details");
 
     if (artists && typeof artists === "string") {
-      setFullArtists(JSON.parse(artists));
+      setFullArtists({ artists: JSON.parse(artists), error: null });
     } else if (tracks && typeof tracks === "string") {
-      setTracks(JSON.parse(tracks));
+      setTracks({ tracks: JSON.parse(tracks), error: null });
     }
   }, []);
 
@@ -64,7 +64,7 @@ const SearchList = (): ReactElement => {
           <SearchListContainer isArtists={false} searchResults>
             {!is900 && <SongListSelectedItem />}
             <div className="song-list-empty-div"></div>
-            {tracks && <SongList tracks={tracks} />}
+            {tracks?.tracks && <SongList tracks={tracks.tracks} />}
           </SearchListContainer>
         </>
       );
@@ -92,8 +92,8 @@ const SearchList = (): ReactElement => {
 
   return (
     <motion.main id="main" className={songOrArtistContainerClasses()}>
-      {fullArtists && renderArtists()}
-      {tracks && renderSongs()}
+      {fullArtists?.artists && renderArtists()}
+      {tracks?.tracks && renderSongs()}
     </motion.main>
   );
 };

@@ -7,17 +7,13 @@ import {
   useState,
 } from "react";
 import SearchContext from "../../contexts/searchContext/SearchState";
-import { ArtistDetailsType } from "../../types";
+import { ArtistsType } from "../../types";
 import ArtistOrAlbumCard from "../artist-details/ArtistOrAlbumCard";
 import "./styles/artist-list.css";
 
 export type HandleProfileClickType = (id: string) => void;
 
-const ArtistList = ({
-  artists,
-}: {
-  artists: ArtistDetailsType[];
-}): ReactElement => {
+const ArtistList = ({ artists }: { artists: ArtistsType[] }): ReactElement => {
   const { handleArtistDetailSearch, setProfile, albums, topTracks, navigate } =
     useContext(SearchContext);
 

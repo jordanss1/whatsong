@@ -1,11 +1,6 @@
 import axios from "axios";
 import { Buffer } from "buffer";
-import {
-  AlbumDetailsType,
-  ArtistsStateType,
-  ArtistsType,
-  TracksStateType,
-} from "../types";
+import { AlbumDetailsType, ArtistsStateType, ArtistsType } from "../types";
 import {
   SpotifyArtistAndAlbumSearchType,
   SpotifyArtistsOrSongsSearchType,
@@ -39,7 +34,7 @@ const spotifyTokenFunction: SpotifyTokenFunctionType = async (cancelToken) => {
       cancelToken: cancelToken.current.token,
     });
 
-    promiseReturn = `Bearer ${data.access_token}`;
+    promiseReturn = `Bear ${data.access_token}`;
   } catch (err) {
     if (axios.isCancel(err)) {
       console.error("cancelled due to duplicate request", err);
@@ -133,18 +128,19 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
   async (query, cancelToken, typeOfSearch, stateSetter, setLoading) => {
     let data = await spotifyTokenFunction(cancelToken);
 
+    const searchType = `${typeOfSearch}s`;
+
     if (!data) {
       return;
     }
 
     if (data instanceof Error) {
       setLoading(false);
+      stateSetter({ [searchType]: null, error: data } as any);
       return;
     }
 
     const accessToken = data;
-
-    const searchType = `${typeOfSearch}s`;
 
     cancelToken.current = axios.CancelToken.source();
 
@@ -163,9 +159,9 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
             b.followers.total - a.followers.total
         );
 
-        stateSetter(sortedArtists);
+        stateSetter({ artists: sortedArtists, error: null } as any);
       } else {
-        stateSetter(data[searchType].items);
+        stateSetter({ tracks: data[searchType].items, error: null } as any);
       }
     } catch (err) {
       if (axios.isCancel(err)) {

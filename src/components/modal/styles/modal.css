@@ -1,0 +1,6 @@
+.modal-background {
+  background-color: black;
+  opacity: 0.5;
+  height: 100vh;
+  position: absolute;
+}

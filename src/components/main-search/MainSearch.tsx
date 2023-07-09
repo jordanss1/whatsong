@@ -85,8 +85,8 @@ const MainSearch = (): ReactElement => {
   const [redo, cycleRedo] = useCycle(false, true);
 
   useEffect(() => {
-    setFullArtists(null);
-    setTracks(null);
+    setFullArtists({ artists: null, error: null });
+    setTracks({ tracks: null, error: null });
     setSelectedSong(null);
   }, []);
 
@@ -101,14 +101,14 @@ const MainSearch = (): ReactElement => {
   }, [submittedTerm]);
 
   useEffect(() => {
-    if (category === "artist" && submittedTerm) {
+    if (category === "artist" && !fullArtists?.error) {
       setPage(1);
       setSubmittedTerm("");
-      sessionStorage.setItem("artists", JSON.stringify(fullArtists));
+      sessionStorage.setItem("artists", JSON.stringify(fullArtists?.artists));
       navigate("/artists");
-    } else if (category === "track" && submittedTerm) {
+    } else if (category === "track" && !tracks?.error) {
       setSubmittedTerm("");
-      sessionStorage.setItem("tracks", JSON.stringify(tracks));
+      sessionStorage.setItem("tracks", JSON.stringify(tracks?.tracks));
       navigate("/songs");
     }
   }, [tracks, fullArtists]);

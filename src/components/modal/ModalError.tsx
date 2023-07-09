@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const ModalError = () => {
-  return (
-    <div>ModalError</div>
-  )
-}
+const ModalError = ({ error }: { error: Error }) => {
+  return <div>{error.message}</div>;
+};
 
-export default ModalError
+export default ModalError;
