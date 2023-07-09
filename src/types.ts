@@ -1,7 +1,6 @@
 import React, { MutableRefObject } from "react";
 import { CancelTokenSource } from "axios";
 import { ArtistAndAlbumStateSetter } from "./hooks/DetailedArtistResultHooks";
-
 import {
   ArtistResultsTestType,
   SongResultsTestType,
@@ -9,7 +8,7 @@ import {
 } from "./mocks/api";
 import { RestHandler, MockedRequest } from "msw";
 
-export type ArtistDetailsType = {
+export type ArtistsType = {
   external_urls: { spotify: string };
   followers: { href: null; total: number };
   genres: string[];
@@ -22,10 +21,15 @@ export type ArtistDetailsType = {
   uri: string;
 };
 
+export type ArtistsStateType = {
+  artists: ArtistsType[] | null;
+  error: Error | null;
+};
+
 export type AlbumDetailsType = {
   album_group: string;
   album_type: string;
-  artists: Partial<ArtistDetailsType>[];
+  artists: Partial<ArtistsType>[];
   available_markets: string[];
   external_urls: { spotify: string };
   href: string;
@@ -41,7 +45,7 @@ export type AlbumDetailsType = {
 
 export type TopTracksDetailsType = {
   album: AlbumDetailsType;
-  artists: Partial<ArtistDetailsType>[];
+  artists: Partial<ArtistsType>[];
   available_markets?: string[];
   disc_number: number;
   duration_ms: number;
@@ -60,6 +64,11 @@ export type TopTracksDetailsType = {
   track_number: number;
   type: string;
   uri: string;
+};
+
+export type TracksStateType = {
+  tracks: Required<TopTracksDetailsType>[] | null;
+  error: Error | null;
 };
 
 export type ArtistAndTrackHandlerDataType =
@@ -81,7 +90,6 @@ export type SpotifyArtistAndAlbumSearchType = (
   id: string,
   cancelToken: MutableRefObject<CancelTokenSource | null>,
   stateSetter: ArtistAndAlbumStateSetter,
-  setError: React.Dispatch<React.SetStateAction<Error | null>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => Promise<void>;
 
@@ -90,15 +98,11 @@ export type SpotifyArtistsOrSongsSearchType = (
   cancelToken: MutableRefObject<CancelTokenSource | null>,
   typeOfSearch: "artist" | "track",
   stateSetter:
-    | React.Dispatch<React.SetStateAction<ArtistDetailsType[] | null>>
-    | React.Dispatch<
-        React.SetStateAction<Required<TopTracksDetailsType>[] | null>
-      >,
-  setError: React.Dispatch<React.SetStateAction<Error | null>>,
+    | React.Dispatch<React.SetStateAction<ArtistsStateType | null>>
+    | React.Dispatch<React.SetStateAction<TracksStateType | null>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => void;
 
 export type SpotifyTokenFunctionType = (
-  CancelToken: MutableRefObject<CancelTokenSource | null>,
-  setError: React.Dispatch<React.SetStateAction<Error | null>>
+  CancelToken: MutableRefObject<CancelTokenSource | null>
 ) => Promise<string | Error | null>;

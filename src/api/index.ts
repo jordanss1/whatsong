@@ -1,6 +1,11 @@
 import axios from "axios";
 import { Buffer } from "buffer";
-import { AlbumDetailsType, ArtistDetailsType } from "../types";
+import {
+  AlbumDetailsType,
+  ArtistsStateType,
+  ArtistsType,
+  TracksStateType,
+} from "../types";
 import {
   SpotifyArtistAndAlbumSearchType,
   SpotifyArtistsOrSongsSearchType,
@@ -24,10 +29,7 @@ const spotifyQuery = axios.create({
 
 const paramData = new URLSearchParams({ grant_type: "client_credentials" });
 
-const spotifyTokenFunction: SpotifyTokenFunctionType = async (
-  cancelToken,
-  setError
-) => {
+const spotifyTokenFunction: SpotifyTokenFunctionType = async (cancelToken) => {
   cancelToken.current = axios.CancelToken.source();
 
   let promiseReturn: string | Error | null = null;
@@ -44,8 +46,9 @@ const spotifyTokenFunction: SpotifyTokenFunctionType = async (
     }
 
     if (!axios.isCancel(err) && err instanceof Error) {
-      setError(new Error(`Server error: ${err.message}, please search again`));
-      promiseReturn = new Error();
+      promiseReturn = new Error(
+        `Server error: ${err.message}, please search again`
+      );
       throw new Error("Issue retrieving token", err);
     }
   } finally {
@@ -58,7 +61,6 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
   id,
   cancelToken,
   stateSetter,
-  setError,
   setLoading
 ) => {
   const artistAndAlbum = [
@@ -67,7 +69,7 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
     `${id}/top-tracks?market=US`,
   ];
 
-  let data = await spotifyTokenFunction(cancelToken, setError);
+  let data = await spotifyTokenFunction(cancelToken);
 
   if (!data) {
     return;
@@ -75,6 +77,7 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
 
   if (data instanceof Error) {
     setLoading(false);
+    stateSetter(null, [], [], data);
     return;
   }
 
@@ -114,11 +117,11 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
 
     if (!axios.isCancel(err) && err instanceof Error) {
       console.error("error", err);
-      setError(
-        new Error(
-          `Issue retrieving artist detail: ${err.message} please search again`
-        )
+      const error = new Error(
+        `Issue retrieving artist detail: ${err.message} please search again`
       );
+
+      stateSetter(null, [], [], error);
     }
   } finally {
     setLoading(false);
@@ -127,15 +130,8 @@ export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
 };
 
 export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
-  async (
-    query,
-    cancelToken,
-    typeOfSearch,
-    stateSetter,
-    setError,
-    setLoading
-  ) => {
-    let data = await spotifyTokenFunction(cancelToken, setError);
+  async (query, cancelToken, typeOfSearch, stateSetter, setLoading) => {
+    let data = await spotifyTokenFunction(cancelToken);
 
     if (!data) {
       return;
@@ -163,7 +159,7 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
 
       if (searchType === "artists") {
         const sortedArtists = data[searchType].items.sort(
-          (a: ArtistDetailsType, b: ArtistDetailsType) =>
+          (a: ArtistsType, b: ArtistsType) =>
             b.followers.total - a.followers.total
         );
 
@@ -178,9 +174,15 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
 
       if (!axios.isCancel(err) && err instanceof Error) {
         console.error("error", err);
-        setError(
-          new Error(`Issue during search: ${err.message} please search again`)
-        );
+
+        let state = {
+          [searchType]: null,
+          error: new Error(
+            `Issue during search: ${err.message} please search again`
+          ),
+        };
+
+        stateSetter(state as any);
       }
     } finally {
       setLoading(false);
