@@ -6,15 +6,11 @@ import {
   useRef,
   useMemo,
 } from "react";
-import {
-  AlbumDetailsType,
-  ArtistDetailsType,
-  TopTracksDetailsType,
-} from "../types";
+import { AlbumDetailsType, ArtistsType, TopTracksDetailsType } from "../types";
 
 const ARTIST_REDUCER_TYPES = {
   ADD: "ADD",
-  CHANGE_ALBUM: "CHANGE_ALBUM",
+  ERROR: "ERROR",
 };
 
 const artistArray = [...Object.values(ARTIST_REDUCER_TYPES)] as const;
@@ -22,9 +18,10 @@ const artistArray = [...Object.values(ARTIST_REDUCER_TYPES)] as const;
 type ActionReturnedTypes = (typeof artistArray)[number];
 
 export interface ReducerStateType {
-  artistDetail: ArtistDetailsType | null;
+  artistDetail: ArtistsType | null;
   albums: AlbumDetailsType[] | [];
   topTracks: TopTracksDetailsType[] | [];
+  artistDetailError?: Error | null;
 }
 
 type ReducerAction = {
@@ -36,12 +33,14 @@ export const artistInitState: ReducerStateType = {
   artistDetail: null,
   albums: [],
   topTracks: [],
+  artistDetailError: null,
 };
 
 export type ArtistAndAlbumStateSetter = (
-  artistDetail: ArtistDetailsType,
+  artistDetail: ArtistsType | null,
   artistAlbums: AlbumDetailsType[] | [],
-  artistTopTracks: TopTracksDetailsType[] | []
+  artistTopTracks: TopTracksDetailsType[] | [],
+  error?: Error | null
 ) => void;
 
 export type SetAlbumType = (
@@ -67,6 +66,13 @@ export const useArtistResults = () => {
             throw new Error("ADD action requires a payload");
           }
 
+          if (action.payload.artistDetailError) {
+            return {
+              ...state,
+              artistDetailError: action.payload.artistDetailError,
+            };
+          }
+
           const artistDetail = action.payload.artistDetail;
 
           const albums = action.payload.albums;
@@ -80,9 +86,10 @@ export const useArtistResults = () => {
 
           return {
             ...state,
-            artistDetail: artistDetail,
+            artistDetail,
             albums,
             topTracks,
+            artistDetailError: null,
           };
         }
 
@@ -94,13 +101,14 @@ export const useArtistResults = () => {
   );
 
   const setProfile = useCallback<ArtistAndAlbumStateSetter>(
-    (artistDetail, albums, topTracks) => {
+    (artistDetail, albums, topTracks, artistDetailError) => {
       dispatch({
         type: ARTIST_REDUCER_TYPES.ADD,
         payload: {
           artistDetail,
           albums,
           topTracks,
+          artistDetailError,
         },
       });
     },
@@ -112,7 +120,7 @@ export const useArtistResults = () => {
     setTrackIndex(0);
   }, [artistDetails.albums]);
 
-  const { artistDetail, albums, topTracks } = artistDetails;
+  const { artistDetail, albums, topTracks, artistDetailError } = artistDetails;
 
   const setAlbumOrTrack: TrackOrAlbumFuncType = (arrowType, itemType) => {
     let array = itemType === "album" ? albums : topTracks;
@@ -168,5 +176,6 @@ export const useArtistResults = () => {
     setAlbum,
     topTrack,
     setTopTrack,
+    artistDetailError,
   };
 };
