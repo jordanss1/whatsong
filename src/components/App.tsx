@@ -12,7 +12,7 @@ import MainSearch from "./main-search/MainSearch";
 const App = (): ReactElement => {
   const location = useLocation();
 
-  const { networkError, loading } = useContext(SearchContext);
+  const { error, loading } = useContext(SearchContext);
 
   return (
     <>
@@ -22,7 +22,7 @@ const App = (): ReactElement => {
             <Header path={location.pathname} />
           )}
       </AnimatePresence>
-      {(loading || networkError) && <Modal />}
+      {(loading || error) && <Modal error={error} loading={loading} />}
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.key}>
           <Route path="/" element={<Landing />} />

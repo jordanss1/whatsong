@@ -14,7 +14,6 @@ export const SearchState = () => {
   const [submittedTerm, setSubmittedTerm] = useState<string>("");
   const [selectedSong, setSelectedSong] =
     useState<Required<TopTracksDetailsType> | null>(null);
-  const [networkError, setNetworkError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const cancelToken = useRef<CancelTokenSource | null>(null);
@@ -40,6 +39,7 @@ export const SearchState = () => {
     setProfile,
     setAlbum,
     setTopTrack,
+    artistDetailError,
   } = useArtistResults();
 
   const navigate = useNavigate();
@@ -57,7 +57,6 @@ export const SearchState = () => {
       cancelToken,
       typeOfSearch,
       stateSetter,
-      setNetworkError,
       setLoading
     );
   };
@@ -65,21 +64,23 @@ export const SearchState = () => {
   const handleArtistDetailSearch = (id: string) => {
     if (cancelToken.current) cancelToken.current.cancel();
 
-    spotifyArtistAndAlbum(
-      id,
-      cancelToken,
-      setProfile,
-      setNetworkError,
-      setLoading
-    );
+    spotifyArtistAndAlbum(id, cancelToken, setProfile, setLoading);
   };
+
+  let error: Error | null = null;
+
+  if (fullArtists?.error) error = fullArtists.error;
+
+  if (tracks?.error) error = tracks.error;
+
+  if (artistDetailError) error = artistDetailError;
 
   const providerValues = {
     loading,
-    networkError,
     topTracks,
     topTrack,
     artistDetail,
+    error,
     albums,
     album,
     page,
@@ -112,10 +113,10 @@ export type UseSearchStateContext = ReturnType<typeof SearchState>;
 
 const initSearchContextState: UseSearchStateContext = {
   loading: false,
-  networkError: null,
   topTracks: [],
   topTrack: null,
   artistDetail: artistInitState.artistDetail,
+  error: null,
   albums: [],
   album: null,
   setAlbum: () => {},

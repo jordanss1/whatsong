@@ -1,6 +1,11 @@
 import React from "react";
 
-const Modal = () => {
+type ModalPropsType = {
+  error: Error | null;
+  loading: boolean;
+};
+
+const Modal = ({ error, loading }: ModalPropsType) => {
   return <div>Modal</div>;
 };
 
