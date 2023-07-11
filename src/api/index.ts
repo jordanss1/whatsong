@@ -2,7 +2,7 @@ import axios from "axios";
 import { Buffer } from "buffer";
 import { AlbumDetailsType, ArtistsType } from "../types";
 import {
-  SpotifyArtistAndAlbumSearchType,
+  SpotifyArtistDetailsSearchType,
   SpotifyArtistsOrSongsSearchType,
   SpotifyTokenFunctionType,
 } from "../types";
@@ -52,81 +52,75 @@ const spotifyTokenFunction: SpotifyTokenFunctionType = async (cancelToken) => {
   }
 };
 
-export const spotifyArtistAndAlbum: SpotifyArtistAndAlbumSearchType = async (
-  id,
-  cancelToken,
-  stateSetter,
-  setLoading
-) => {
-  const artistAndAlbum = [
-    `${id}`,
-    `${id}/albums?include_groups=album&limit=50`,
-    `${id}/top-tracks?market=US`,
-  ];
+export const spotifyArtistDetailsSearch: SpotifyArtistDetailsSearchType =
+  async (id, cancelToken, setArtistDetails) => {
+    const artistAndAlbum = [
+      `${id}`,
+      `${id}/albums?include_groups=album&limit=50`,
+      `${id}/top-tracks?market=US`,
+    ];
 
-  let data = await spotifyTokenFunction(cancelToken);
+    let data = await spotifyTokenFunction(cancelToken);
 
-  if (!data) {
-    return;
-  }
-
-  if (data instanceof Error) {
-    setLoading(false);
-    stateSetter(null, [], [], data);
-    return;
-  }
-
-  let accessToken = data;
-
-  cancelToken.current = axios.CancelToken.source();
-
-  try {
-    const responses = await axios.all(
-      artistAndAlbum.map((endpoint) =>
-        spotifyQuery.get(`/artists/${endpoint}`, {
-          cancelToken: cancelToken.current?.token,
-          headers: {
-            Authorization: accessToken,
-          },
-        })
-      )
-    );
-
-    let albums = responses[1].data.items;
-
-    albums = albums
-      ? [
-          ...new Map(
-            albums.map((item: AlbumDetailsType) => [item.name, item])
-          ).values(),
-        ]
-      : albums;
-
-    let topTracks = responses[2].data.tracks;
-
-    stateSetter(responses[0].data, albums, topTracks);
-  } catch (err) {
-    if (axios.isCancel(err)) {
-      console.log("cancelled due to duplicate request", err);
+    if (!data) {
+      return;
     }
 
-    if (!axios.isCancel(err) && err instanceof Error) {
-      console.error("error", err);
+    if (data instanceof Error) {
+      setArtistDetails(null, [], [], data);
+      return;
+    }
 
-      const error = new Error(
-        `Issue retrieving artist detail: ${err.message} please search again`
+    let accessToken = data;
+
+    cancelToken.current = axios.CancelToken.source();
+
+    try {
+      const responses = await axios.all(
+        artistAndAlbum.map((endpoint) =>
+          spotifyQuery.get(`/artists/${endpoint}`, {
+            cancelToken: cancelToken.current?.token,
+            headers: {
+              Authorization: accessToken,
+            },
+          })
+        )
       );
 
-      stateSetter(null, [], [], error);
+      let albums = responses[1].data.items;
+
+      albums = albums
+        ? [
+            ...new Map(
+              albums.map((item: AlbumDetailsType) => [item.name, item])
+            ).values(),
+          ]
+        : albums;
+
+      let topTracks = responses[2].data.tracks;
+
+      setArtistDetails(responses[0].data, albums, topTracks);
+    } catch (err) {
+      if (axios.isCancel(err)) {
+        console.log("cancelled due to duplicate request", err);
+      }
+
+      if (!axios.isCancel(err) && err instanceof Error) {
+        console.error("error", err);
+
+        const error = new Error(
+          `Issue retrieving artist detail: ${err.message} please search again`
+        );
+
+        setArtistDetails(null, [], [], error);
+      }
+    } finally {
+      cancelToken.current = null;
     }
-  } finally {
-    setLoading(false);
-    cancelToken.current = null;
-  }
-};
+  };
 
 export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
-  async (query, cancelToken, typeOfSearch, setArtistOrTracks, setLoading) => {
+  async (query, cancelToken, typeOfSearch, setArtistOrTracks) => {
     let data = await spotifyTokenFunction(cancelToken);
 
     const searchType = `${typeOfSearch}s`;
@@ -136,7 +130,6 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
     }
 
     if (data instanceof Error) {
-      setLoading(false);
       setArtistOrTracks(undefined, undefined, data);
       return;
     }
@@ -179,7 +172,6 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
         setArtistOrTracks(undefined, undefined, error);
       }
     } finally {
-      setLoading(false);
       cancelToken.current = null;
     }
   };
