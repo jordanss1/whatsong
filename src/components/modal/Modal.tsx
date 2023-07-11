@@ -1,19 +1,47 @@
-import { ReactElement } from "react";
+import { ReactElement, useContext } from "react";
 import ModalLoader from "./ModalLoader";
 import ModalError from "./ModalError";
 import "./styles/modal.css";
+import { AnimatePresence, Variants, motion } from "framer-motion";
 
 type ModalPropsType = {
   error: Error | null;
   loading: boolean;
 };
 
+const backgroundVariants: Variants = {
+  hidden: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+  },
+  visible: (error) => ({
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    transition: {
+      delay: error ? 0.2 : 0,
+      duration: 0.5,
+    },
+  }),
+  exit: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    transition: {
+      when: "afterChildren",
+      duration: 0.5,
+    },
+  },
+};
+
 const Modal = ({ error, loading }: ModalPropsType): ReactElement => {
   return (
-    <div className="modal-background w-100">
-      {loading && <ModalLoader />}
-      {error && <ModalError error={error} />}
-    </div>
+    <motion.div
+      custom={error}
+      variants={backgroundVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="modal-background w-100"
+    >
+      <AnimatePresence>{loading && <ModalLoader />}</AnimatePresence>
+      <AnimatePresence>{error && <ModalError error={error} />}</AnimatePresence>
+    </motion.div>
   );
 };
 
