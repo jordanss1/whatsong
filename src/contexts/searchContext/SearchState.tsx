@@ -1,6 +1,9 @@
 import { useState, createContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { spotifyArtistsOrSongsSearch, spotifyArtistAndAlbum } from "../../api";
+import {
+  spotifyArtistsOrSongsSearch,
+  spotifyArtistDetailsSearch,
+} from "../../api";
 import {
   useArtistResults,
   artistInitState,
@@ -42,25 +45,21 @@ export const SearchState = () => {
 
   const navigate = useNavigate();
 
-  const handleArtistsOrSongsSearch = (
-    query: string,
-    typeOfSearch: "artist" | "track"
-  ) => {
+  const handleArtistsOrSongsSearch = (query: string, typeOfSearch: string) => {
     if (cancelToken.current) cancelToken.current.cancel();
 
     spotifyArtistsOrSongsSearch(
       query,
       cancelToken,
       typeOfSearch,
-      setArtistsOrTracks,
-      setLoading
+      setArtistsOrTracks
     );
   };
 
   const handleArtistDetailSearch = (id: string) => {
     if (cancelToken.current) cancelToken.current.cancel();
 
-    spotifyArtistAndAlbum(id, cancelToken, setProfile, setLoading);
+    spotifyArtistDetailsSearch(id, cancelToken, setProfile);
   };
 
   let error: Error | null = null;
@@ -71,6 +70,7 @@ export const SearchState = () => {
 
   const providerValues = {
     error,
+    setLoading,
     loading,
     topTracks,
     topTrack,
@@ -104,6 +104,7 @@ export type UseSearchStateContext = ReturnType<typeof SearchState>;
 
 const initSearchContextState: UseSearchStateContext = {
   error: null,
+  setLoading: () => {},
   loading: false,
   topTracks: [],
   topTrack: null,

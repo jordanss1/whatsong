@@ -22,7 +22,9 @@ const App = (): ReactElement => {
             <Header path={location.pathname} />
           )}
       </AnimatePresence>
-      {(loading || error) && <Modal error={error} loading={loading} />}
+      <AnimatePresence mode="wait">
+        {(loading || error) && <Modal error={error} loading={loading} />}
+      </AnimatePresence>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.key}>
           <Route path="/" element={<Landing />} />

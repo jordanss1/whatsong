@@ -77,19 +77,17 @@ export type ArtistDetailsHandlerType = (
   data: ArtistDetailsHandlerDataType
 ) => RestHandler<MockedRequest<AlbumAndTracksTestType>>[];
 
-export type SpotifyArtistAndAlbumSearchType = (
+export type SpotifyArtistDetailsSearchType = (
   id: string,
   cancelToken: MutableRefObject<CancelTokenSource | null>,
-  stateSetter: ArtistAndAlbumStateSetter,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  stateSetter: ArtistAndAlbumStateSetter
 ) => Promise<void>;
 
 export type SpotifyArtistsOrSongsSearchType = (
   query: string,
   cancelToken: MutableRefObject<CancelTokenSource | null>,
-  typeOfSearch: "artist" | "track",
-  setArtistOrTracks: ArtistsAndTracksSetterType,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  typeOfSearch: string,
+  setArtistOrTracks: ArtistsAndTracksSetterType
 ) => void;
 
 export type SpotifyTokenFunctionType = (
