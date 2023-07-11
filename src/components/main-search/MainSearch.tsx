@@ -6,7 +6,14 @@ import {
   FormEvent,
 } from "react";
 import SearchContext from "../../contexts/searchContext/SearchStore";
-import { AnimatePresence, Variants, motion, useCycle } from "framer-motion";
+import {
+  AnimatePresence,
+  Variants,
+  motion,
+  useCycle,
+  usePresence,
+  useAnimate,
+} from "framer-motion";
 import { UseSearchStateContext } from "../../contexts/searchContext/SearchState";
 import MainSearchCategory from "./MainSearchCategory";
 import MainSearchInput from "./MainSearchInput";
@@ -70,9 +77,11 @@ const MainSearch = (): ReactElement => {
     navigate,
   } = useContext<UseSearchStateContext>(SearchContext);
 
-  const [category, setCategory] = useState<string>("");
-  const [term, setTerm] = useState("");
-  const [submittedTerm, setSubmittedTerm] = useState("");
+  const [category, setCategory] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [isPresent, safeToRemove] = usePresence();
+  const [scope, animate] = useAnimate();
 
   const [mainCycle, cycleMain] = useCycle(
     "intro",
@@ -83,32 +92,31 @@ const MainSearch = (): ReactElement => {
 
   const [redo, cycleRedo] = useCycle(false, true);
 
+  const exitAnimation = () => {};
+
   useEffect(() => {
     setArtistsOrTracks(null, null);
     setSelectedSong(null);
   }, []);
 
   useEffect(() => {
-    setTerm("");
-
-    if (category === "artist" && submittedTerm) {
-      handleArtistsOrSongsSearch(submittedTerm, category);
-    } else if (category === "track" && submittedTerm) {
-      handleArtistsOrSongsSearch(submittedTerm, category);
-    }
-  }, [submittedTerm]);
-
-  useEffect(() => {
     if (category === "artist" && !error) {
-      setSubmittedTerm("");
+      setSearchTerm("");
       sessionStorage.setItem("artists", JSON.stringify(artists));
       navigate("/artists");
-    } else if (category === "track" && error) {
-      setSubmittedTerm("");
+    } else if (category === "track" && !error) {
+      setSearchTerm("");
       sessionStorage.setItem("tracks", JSON.stringify(tracks));
       navigate("/songs");
     }
   }, [tracks, artists]);
+
+  useEffect(() => {
+    if (isPresent) {
+      return;
+    } else {
+    }
+  }, [isPresent]);
 
   const handleCategoryHover: HandleCategoryHoverType = (hovered) => {
     if (hovered === "artists") {
@@ -132,9 +140,10 @@ const MainSearch = (): ReactElement => {
     cycleRedo(1);
   };
 
-  const handleFormSubmit = (e: FormEvent) => {
+  const handleFormSubmit = (e: FormEvent, searchTerm: string) => {
     e.preventDefault();
-    setSubmittedTerm(term);
+    sessionStorage.clear();
+    handleArtistsOrSongsSearch(searchTerm, category);
   };
 
   return (
@@ -156,8 +165,8 @@ const MainSearch = (): ReactElement => {
             <MainSearchInput
               key="input"
               handleSubmit={handleFormSubmit}
-              setTerm={setTerm}
-              term={term}
+              setSearchTerm={setSearchTerm}
+              searchTerm={searchTerm}
             />
           </div>
         ) : (
