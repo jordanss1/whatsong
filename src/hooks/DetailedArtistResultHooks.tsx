@@ -8,12 +8,12 @@ import {
 } from "react";
 import { AlbumDetailsType, ArtistsType, TopTracksDetailsType } from "../types";
 
-const ARTIST_REDUCER_TYPES = {
+const REDUCER_ACTION_TYPES = {
   ADD: "ADD",
   ERROR: "ERROR",
 };
 
-const artistArray = [...Object.values(ARTIST_REDUCER_TYPES)] as const;
+const artistArray = [...Object.values(REDUCER_ACTION_TYPES)] as const;
 
 type ActionReturnedTypes = (typeof artistArray)[number];
 
@@ -61,7 +61,7 @@ export const useArtistResults = () => {
   const [artistDetails, dispatch] = useReducer(
     (state: ReducerStateType, action: ReducerAction): ReducerStateType => {
       switch (action.type) {
-        case ARTIST_REDUCER_TYPES.ADD: {
+        case REDUCER_ACTION_TYPES.ADD: {
           if (!action.payload) {
             throw new Error("ADD action requires a payload");
           }
@@ -103,7 +103,7 @@ export const useArtistResults = () => {
   const setProfile = useCallback<ArtistAndAlbumStateSetter>(
     (artistDetail, albums, topTracks, artistDetailError) => {
       dispatch({
-        type: ARTIST_REDUCER_TYPES.ADD,
+        type: REDUCER_ACTION_TYPES.ADD,
         payload: {
           artistDetail,
           albums,

@@ -4,7 +4,6 @@ import {
   useRef,
   useCallback,
   useEffect,
-  useState,
 } from "react";
 import SearchContext from "../../contexts/searchContext/SearchState";
 import { ArtistsType } from "../../types";

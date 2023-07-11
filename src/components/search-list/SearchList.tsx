@@ -4,22 +4,14 @@ import SearchBar from "../SearchBar";
 import SongListSelectedItem from "../song-list/SongListSelectedSong";
 import ArtistList from "../artist-list/ArtistList";
 import SongList from "../song-list/SongList";
-import ArtistListPages from "../artist-list/ArtistListPages";
 import { motion } from "framer-motion";
 import SearchListContainer from "./SearchListContainer";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import "./styles/search-list.css";
 
 const SearchList = (): ReactElement => {
-  const {
-    artists,
-    fullArtists,
-    totalArtists,
-    tracks,
-    totalTracks,
-    setFullArtists,
-    setTracks,
-  } = useContext(SearchContext);
+  const { artists, totalArtists, tracks, totalTracks, setArtistsOrTracks } =
+    useContext(SearchContext);
 
   const is900 = useMediaQuery(900);
 
@@ -30,9 +22,9 @@ const SearchList = (): ReactElement => {
     sessionStorage.removeItem("artist-details");
 
     if (artists && typeof artists === "string") {
-      setFullArtists({ artists: JSON.parse(artists), error: null });
+      setArtistsOrTracks(JSON.parse(artists));
     } else if (tracks && typeof tracks === "string") {
-      setTracks({ tracks: JSON.parse(tracks), error: null });
+      setArtistsOrTracks(undefined, JSON.parse(tracks));
     }
   }, []);
 
@@ -64,7 +56,7 @@ const SearchList = (): ReactElement => {
           <SearchListContainer isArtists={false} searchResults>
             {!is900 && <SongListSelectedItem />}
             <div className="song-list-empty-div"></div>
-            {tracks?.tracks && <SongList tracks={tracks.tracks} />}
+            {tracks && <SongList tracks={tracks} />}
           </SearchListContainer>
         </>
       );
@@ -84,7 +76,6 @@ const SearchList = (): ReactElement => {
       return (
         <SearchListContainer isArtists searchResults>
           {artists && <ArtistList artists={artists} />}
-          {totalArtists && <ArtistListPages totalArtists={totalArtists} />}
         </SearchListContainer>
       );
     }
@@ -92,8 +83,8 @@ const SearchList = (): ReactElement => {
 
   return (
     <motion.main id="main" className={songOrArtistContainerClasses()}>
-      {fullArtists?.artists && renderArtists()}
-      {tracks?.tracks && renderSongs()}
+      {artists && renderArtists()}
+      {tracks && renderSongs()}
     </motion.main>
   );
 };

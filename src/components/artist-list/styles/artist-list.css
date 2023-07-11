@@ -4,12 +4,10 @@
   max-width: 100%;
   align-items: center;
   justify-items: center;
-  min-height: 430px;
 }
 
 .artist-grid-less {
   grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
-  min-height: 430px;
   max-width: 100%;
 }
 

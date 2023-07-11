@@ -7,6 +7,7 @@ import {
   AlbumAndTracksTestType,
 } from "./mocks/api";
 import { RestHandler, MockedRequest } from "msw";
+import { ArtistsAndTracksSetterType } from "./hooks/ArtistsAndTracksHook";
 
 export type ArtistsType = {
   external_urls: { spotify: string };
@@ -19,11 +20,6 @@ export type ArtistsType = {
   popularity: number;
   type: string;
   uri: string;
-};
-
-export type ArtistsStateType = {
-  artists: ArtistsType[] | null;
-  error: Error | null;
 };
 
 export type AlbumDetailsType = {
@@ -66,11 +62,6 @@ export type TopTracksDetailsType = {
   uri: string;
 };
 
-export type TracksStateType = {
-  tracks: Required<TopTracksDetailsType>[] | null;
-  error: Error | null;
-};
-
 export type ArtistAndTrackHandlerDataType =
   | ArtistResultsTestType
   | SongResultsTestType
@@ -97,9 +88,7 @@ export type SpotifyArtistsOrSongsSearchType = (
   query: string,
   cancelToken: MutableRefObject<CancelTokenSource | null>,
   typeOfSearch: "artist" | "track",
-  stateSetter:
-    | React.Dispatch<React.SetStateAction<ArtistsStateType | null>>
-    | React.Dispatch<React.SetStateAction<TracksStateType | null>>,
+  setArtistOrTracks: ArtistsAndTracksSetterType,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => void;
 

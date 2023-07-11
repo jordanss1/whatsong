@@ -61,12 +61,11 @@ export type HandleCategoryHoverType = (hovered?: "artists" | "songs") => void;
 
 const MainSearch = (): ReactElement => {
   const {
-    setFullArtists,
-    setTracks,
+    setArtistsOrTracks,
     setSelectedSong,
-    fullArtists,
+    artists,
     tracks,
-    setPage,
+    error,
     handleArtistsOrSongsSearch,
     navigate,
   } = useContext<UseSearchStateContext>(SearchContext);
@@ -85,8 +84,7 @@ const MainSearch = (): ReactElement => {
   const [redo, cycleRedo] = useCycle(false, true);
 
   useEffect(() => {
-    setFullArtists({ artists: null, error: null });
-    setTracks({ tracks: null, error: null });
+    setArtistsOrTracks(null, null);
     setSelectedSong(null);
   }, []);
 
@@ -101,17 +99,16 @@ const MainSearch = (): ReactElement => {
   }, [submittedTerm]);
 
   useEffect(() => {
-    if (category === "artist" && !fullArtists?.error) {
-      setPage(1);
+    if (category === "artist" && !error) {
       setSubmittedTerm("");
-      sessionStorage.setItem("artists", JSON.stringify(fullArtists?.artists));
+      sessionStorage.setItem("artists", JSON.stringify(artists));
       navigate("/artists");
-    } else if (category === "track" && !tracks?.error) {
+    } else if (category === "track" && error) {
       setSubmittedTerm("");
-      sessionStorage.setItem("tracks", JSON.stringify(tracks?.tracks));
+      sessionStorage.setItem("tracks", JSON.stringify(tracks));
       navigate("/songs");
     }
-  }, [tracks, fullArtists]);
+  }, [tracks, artists]);
 
   const handleCategoryHover: HandleCategoryHoverType = (hovered) => {
     if (hovered === "artists") {

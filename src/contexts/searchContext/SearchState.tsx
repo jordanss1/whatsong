@@ -22,12 +22,10 @@ export const SearchState = () => {
     artists,
     totalArtists,
     tracks,
+    artistOrTrackError,
     totalTracks,
-    setFullArtists,
-    setTracks,
-    setPage,
-    page,
-    fullArtists,
+    setArtistsOrTracks,
+    emptyArtistsAndTracks,
   } = useArtistsOrTracks();
 
   const {
@@ -50,13 +48,11 @@ export const SearchState = () => {
   ) => {
     if (cancelToken.current) cancelToken.current.cancel();
 
-    const stateSetter = typeOfSearch === "artist" ? setFullArtists : setTracks;
-
     spotifyArtistsOrSongsSearch(
       query,
       cancelToken,
       typeOfSearch,
-      stateSetter,
+      setArtistsOrTracks,
       setLoading
     );
   };
@@ -69,35 +65,30 @@ export const SearchState = () => {
 
   let error: Error | null = null;
 
-  if (fullArtists?.error) error = fullArtists.error;
-
-  if (tracks?.error) error = tracks.error;
-
   if (artistDetailError) error = artistDetailError;
 
+  if (artistOrTrackError) error = artistOrTrackError;
+
   const providerValues = {
+    error,
     loading,
     topTracks,
     topTrack,
     artistDetail,
-    error,
     albums,
     album,
-    page,
     term,
     selectedSong,
     submittedTerm,
-    fullArtists,
     artists,
     tracks,
     totalArtists,
     totalTracks,
-    setFullArtists,
-    setTracks,
+    setArtistsOrTracks,
+    emptyArtistsAndTracks,
     setTopTrack,
     setAlbum,
     setProfile,
-    setPage,
     setTerm,
     setSubmittedTerm,
     handleArtistsOrSongsSearch,
@@ -112,28 +103,25 @@ export const SearchState = () => {
 export type UseSearchStateContext = ReturnType<typeof SearchState>;
 
 const initSearchContextState: UseSearchStateContext = {
+  error: null,
   loading: false,
   topTracks: [],
   topTrack: null,
   artistDetail: artistInitState.artistDetail,
-  error: null,
   albums: [],
   album: null,
   setAlbum: () => {},
-  page: 0,
+  setArtistsOrTracks: () => {},
+  emptyArtistsAndTracks: () => {},
   term: "",
   selectedSong: null,
   submittedTerm: "",
-  fullArtists: null,
   artists: null,
   tracks: null,
   totalArtists: 0,
   totalTracks: 0,
-  setFullArtists: () => {},
-  setTracks: () => {},
   setTopTrack: () => {},
   setProfile: () => {},
-  setPage: () => {},
   setTerm: () => {},
   setSubmittedTerm: () => {},
   handleArtistsOrSongsSearch: () => {},
