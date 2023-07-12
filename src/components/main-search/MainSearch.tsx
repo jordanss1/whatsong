@@ -57,6 +57,16 @@ const searchVarients: Variants = {
       delay: 0.5,
     },
   },
+  searchComplete: (category) => ({
+    background:
+      category === "artist"
+        ? "radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)"
+        : "radial-gradient(circle at 100% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at 0% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%)",
+    transition: {
+      duration: 1,
+      ease: "easeInOut",
+    },
+  }),
 };
 
 export type HandleButtonClickType = (
@@ -80,6 +90,8 @@ const MainSearch = (): ReactElement => {
   const [category, setCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
+  console.log(category);
+
   const [isPresent, safeToRemove] = usePresence();
   const [scope, animate] = useAnimate();
 
@@ -87,12 +99,11 @@ const MainSearch = (): ReactElement => {
     "intro",
     "artists",
     "songs",
-    "awaitingInput"
+    "awaitingInput",
+    "searchComplete"
   );
 
   const [redo, cycleRedo] = useCycle(false, true);
-
-  const exitAnimation = () => {};
 
   useEffect(() => {
     setArtistsOrTracks(null, null);
@@ -100,14 +111,13 @@ const MainSearch = (): ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (category === "artist" && !error) {
+    const storage = artists ? artists : tracks;
+    const storageName = artists ? "artists" : "tracks";
+
+    if ((artists || tracks) && !error && category) {
       setSearchTerm("");
-      sessionStorage.setItem("artists", JSON.stringify(artists));
-      navigate("/artists");
-    } else if (category === "track" && !error) {
-      setSearchTerm("");
-      sessionStorage.setItem("tracks", JSON.stringify(tracks));
-      navigate("/songs");
+      sessionStorage.setItem(storageName, JSON.stringify(storage));
+      navigate(artists ? "/artists" : "/songs");
     }
   }, [tracks, artists]);
 
@@ -115,6 +125,33 @@ const MainSearch = (): ReactElement => {
     if (isPresent) {
       return;
     } else {
+      const exitAnimation = async () => {
+        cycleMain(4);
+        animate(
+          ".main-input",
+          {
+            x: -200,
+            opacity: 0,
+          },
+          {
+            duration: 1.5,
+          }
+        );
+        await animate(
+          ".redo",
+          {
+            x: 200,
+            opacity: 0,
+          },
+          {
+            duration: 1.5,
+          }
+        );
+
+        safeToRemove();
+      };
+
+      exitAnimation();
     }
   }, [isPresent]);
 
@@ -149,6 +186,8 @@ const MainSearch = (): ReactElement => {
   return (
     <motion.main
       className="search-main d-flex"
+      ref={scope}
+      custom={category}
       variants={category ? searchVarients : categoryVarients}
       initial="initial"
       animate={mainCycle}
@@ -164,6 +203,7 @@ const MainSearch = (): ReactElement => {
             />
             <MainSearchInput
               key="input"
+              redo={redo}
               handleSubmit={handleFormSubmit}
               setSearchTerm={setSearchTerm}
               searchTerm={searchTerm}

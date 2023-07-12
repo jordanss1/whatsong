@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext, ReactElement } from "react";
 import SearchContext from "../../contexts/searchContext/SearchStore";
 import {
-  AnimatePresence,
   Variants,
   motion,
   useAnimate,
@@ -13,6 +12,7 @@ import "./styles/landing.css";
 import LandingScroll from "./LandingScroll";
 import LandingButton from "./LandingButton";
 import LandingPowered from "./LandingPowered";
+import Header from "../header/Header";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 
 const mainVariants: Variants = {
@@ -99,6 +99,7 @@ const Landing = (): ReactElement => {
             duration: 2,
           }
         );
+        setFinalAnimation(false);
         safeToRemove();
       };
 
@@ -115,31 +116,34 @@ const Landing = (): ReactElement => {
   };
 
   return (
-    <motion.main
-      variants={finalAnimation ? mainLeaveVariants : mainVariants}
-      custom={intro}
-      initial="initial"
-      animate={mainCycle}
-      exit={{
-        x: 0,
-        transition: {
-          duration: 2,
-        },
-      }}
-      className="landing-main"
-      ref={scope}
-    >
-      <div className="landing-content d-flex flex-column justify-content-center align-items-center">
-        <LandingPowered poweredCycle={poweredCycle} />
-        <div className="flex-grow-1 d-flex flex-column w-100 justify-content-center gap-5">
-          <LandingButton
-            handleHover={handleHover}
-            setFinalAnimation={setFinalAnimation}
-          />
-          <LandingScroll />
+    <>
+      <Header path={"/"} />
+      <motion.main
+        variants={finalAnimation ? mainLeaveVariants : mainVariants}
+        custom={intro}
+        initial="initial"
+        animate={mainCycle}
+        exit={{
+          x: 0,
+          transition: {
+            duration: 2,
+          },
+        }}
+        className="landing-main"
+        ref={scope}
+      >
+        <div className="landing-content d-flex flex-column justify-content-center align-items-center">
+          <LandingPowered poweredCycle={poweredCycle} />
+          <div className="flex-grow-1 d-flex flex-column w-100 justify-content-center gap-5">
+            <LandingButton
+              handleHover={handleHover}
+              setFinalAnimation={setFinalAnimation}
+            />
+            <LandingScroll />
+          </div>
         </div>
-      </div>
-    </motion.main>
+      </motion.main>
+    </>
   );
 };
 

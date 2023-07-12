@@ -1,5 +1,5 @@
 import { FormEvent, ReactElement } from "react";
-import { motion, useCycle, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const wrapperVariants: Variants = {
   initial: {
@@ -16,28 +16,28 @@ const wrapperVariants: Variants = {
       delay: 0.2,
     },
   },
-  exit: {
+  exit: (redo) => ({
     x: -200,
     opacity: 0,
     transition: {
-      duration: 0.5,
+      duration: redo ? 0.5 : 1,
     },
-  },
+  }),
 };
 
 type MainSearchInputProps = {
+  redo: boolean;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   searchTerm: string;
   handleSubmit: (e: FormEvent, term: string) => void;
 };
 
 const MainSearchInput = ({
+  redo,
   setSearchTerm,
   searchTerm,
   handleSubmit,
 }: MainSearchInputProps): ReactElement => {
-  const [wrapperCycle, cycleWrapper] = useCycle();
-
   return (
     <form
       onSubmit={(e) => {
@@ -50,6 +50,7 @@ const MainSearchInput = ({
       <div className="input-container w-100 d-flex align-items-center justify-content-center">
         <motion.div
           variants={wrapperVariants}
+          custom={redo}
           initial="initial"
           animate="animate"
           exit="exit"

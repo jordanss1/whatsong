@@ -15,15 +15,18 @@ const containerVariants: Variants = {
       duration: 0.5,
     },
   },
-  exit: (redo) => ({
-    y: redo ? -100 : 100,
-    opacity: 0,
-    transition: {
-      delay: redo ? 0.2 : 0,
-      duration: 0.5,
-      ease: "easeInOut",
-    },
-  }),
+  exit: (redo) =>
+    redo
+      ? {
+          y: -100,
+          opacity: 0,
+          transition: {
+            delay: 0.2,
+            duration: 0.5,
+            ease: "easeInOut",
+          },
+        }
+      : {},
   hover: {
     scale: 1,
   },

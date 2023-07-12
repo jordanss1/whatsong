@@ -1,4 +1,6 @@
 import { useContext, useEffect, ReactElement } from "react";
+import { useLocation } from "react-router-dom";
+import Header from "../header/Header";
 import SearchContext from "../../contexts/searchContext/SearchStore";
 import SearchBar from "../SearchBar";
 import SongListSelectedItem from "../song-list/SongListSelectedSong";
@@ -12,6 +14,8 @@ import "./styles/search-list.css";
 const SearchList = (): ReactElement => {
   const { artists, totalArtists, tracks, totalTracks, setArtistsOrTracks } =
     useContext(SearchContext);
+
+  const location = useLocation();
 
   const is900 = useMediaQuery(900);
 
@@ -82,10 +86,13 @@ const SearchList = (): ReactElement => {
   };
 
   return (
-    <motion.main id="main" className={songOrArtistContainerClasses()}>
-      {artists && renderArtists()}
-      {tracks && renderSongs()}
-    </motion.main>
+    <>
+      <Header path={location.pathname} />
+      <motion.main id="main" className={songOrArtistContainerClasses()}>
+        {artists && renderArtists()}
+        {tracks && renderSongs()}
+      </motion.main>
+    </>
   );
 };
 

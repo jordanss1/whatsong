@@ -1,9 +1,9 @@
 import { ReactElement, useContext } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+
 import SearchList from "./search-list/SearchList";
 import { AnimatePresence } from "framer-motion";
 import ArtistDetails from "./artist-details/ArtistDetails";
-import Header from "./header/Header";
 import SearchContext from "../contexts/searchContext/SearchState";
 import Modal from "./modal/Modal";
 import Landing from "./landing/Landing";
@@ -16,24 +16,30 @@ const App = (): ReactElement => {
 
   return (
     <>
-      <AnimatePresence>
-        {location.pathname !== "/search" &&
-          location.pathname !== "artists/:id" && (
-            <Header path={location.pathname} />
-          )}
-      </AnimatePresence>
       <AnimatePresence mode="wait">
         {(loading || error) && <Modal error={error} loading={loading} />}
       </AnimatePresence>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.key}>
-          <Route path="/" element={<Landing />} />
-          <Route path="/search" element={<MainSearch />} />
+          <Route path="/" key={location.pathname} element={<Landing />} />
+          <Route
+            path="/search"
+            key={location.pathname}
+            element={<MainSearch />}
+          />
           <Route path="/artists">
-            <Route index element={<SearchList />} />
-            <Route path="/artists/:id" element={<ArtistDetails />} />
+            <Route index key={location.pathname} element={<SearchList />} />
+            <Route
+              path="/artists/:id"
+              key={location.pathname}
+              element={<ArtistDetails />}
+            />
           </Route>
-          <Route path="/songs" element={<SearchList />} />
+          <Route
+            path="/songs"
+            key={location.pathname}
+            element={<SearchList />}
+          />
         </Routes>
       </AnimatePresence>
     </>
