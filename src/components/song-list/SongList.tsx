@@ -1,5 +1,5 @@
 import { memo, useContext, useCallback } from "react";
-import SearchBar from "../SearchBar";
+import SearchBar from "../search-list/SearchListSearchBar";
 import { TopTracksDetailsType } from "../../types";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import SearchContext from "../../contexts/searchContext/SearchState";
@@ -23,8 +23,7 @@ const SongList = ({ tracks }: { tracks: Required<TopTracksDetailsType>[] }) => {
 
   return (
     <div className="d-grid  song-list-container">
-      <div className="d-flex align-items-center justify-content-center justify-content-between  search-list-div border rounded-3">
-        <h2 className="ms-4 fs-3 pt-1 typeHeader">Songs</h2>
+      <div className="d-flex align-items-center justify-content-end search-list-div">
         <SearchBar />
       </div>
       <div className="d-grid">

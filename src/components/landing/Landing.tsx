@@ -64,6 +64,10 @@ const Landing = (): ReactElement => {
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
+    sessionStorage.clear();
+  }, []);
+
+  useEffect(() => {
     if (mainCycle === "prepare") {
       setIntro(false);
       cyclePowered(1);
@@ -77,10 +81,6 @@ const Landing = (): ReactElement => {
   }, [finalAnimation]);
 
   useEffect(() => {
-    if (isPresent) {
-      return;
-    }
-
     if (!isPresent) {
       const exitAnimation = async () => {
         cycleMain(2);

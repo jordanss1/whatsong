@@ -8,18 +8,6 @@
   transition: 0.5s;
 }
 
-.search-list-div {
-  background: linear-gradient(
-    to right,
-    rgb(26, 26, 26) 0%,
-    rgb(13, 13, 13) 100%
-  ) !important;
-  height: auto;
-  padding: 5px 0;
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
-}
-
 .typeHeader {
   font-family: "Raleway", sans-serif;
   color: rgba(255, 255, 255, 0.3) !important;

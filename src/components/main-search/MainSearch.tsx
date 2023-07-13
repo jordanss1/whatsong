@@ -87,10 +87,8 @@ const MainSearch = (): ReactElement => {
     navigate,
   } = useContext<UseSearchStateContext>(SearchContext);
 
-  const [category, setCategory] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-
-  console.log(category);
+  const [category, setCategory] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const [isPresent, safeToRemove] = usePresence();
   const [scope, animate] = useAnimate();
@@ -108,25 +106,33 @@ const MainSearch = (): ReactElement => {
   useEffect(() => {
     setArtistsOrTracks(null, null);
     setSelectedSong(null);
+    const category = sessionStorage.getItem("category");
+
+    if (category) {
+      setCategory(category);
+      cycleMain(3);
+    }
   }, []);
 
   useEffect(() => {
-    const storage = artists ? artists : tracks;
-    const storageName = artists ? "artists" : "tracks";
+    const item = artists ? artists : tracks;
+    const key = artists ? "artists" : "tracks";
 
     if ((artists || tracks) && !error && category) {
       setSearchTerm("");
-      sessionStorage.setItem(storageName, JSON.stringify(storage));
+      sessionStorage.setItem(key, JSON.stringify(item));
       navigate(artists ? "/artists" : "/songs");
     }
   }, [tracks, artists]);
 
   useEffect(() => {
-    if (isPresent) {
-      return;
-    } else {
+    console.log("first");
+
+    if (!isPresent) {
+      const mainCycle = tracks || artists ? 4 : 0;
+
       const exitAnimation = async () => {
-        cycleMain(4);
+        cycleMain(mainCycle);
         animate(
           ".main-input",
           {
@@ -134,18 +140,25 @@ const MainSearch = (): ReactElement => {
             opacity: 0,
           },
           {
-            duration: 1.5,
+            duration: tracks || artists ? 1.5 : 0.5,
           }
         );
         await animate(
           ".redo",
-          {
-            x: 200,
-            opacity: 0,
-          },
-          {
-            duration: 1.5,
-          }
+          tracks || artists
+            ? {
+                x: 200,
+                opacity: 0,
+              }
+            : { y: -100, opacity: 0 },
+          tracks || artists
+            ? {
+                duration: 1.5,
+              }
+            : {
+                delay: 0.5,
+                duration: 0.5,
+              }
         );
 
         safeToRemove();
@@ -166,12 +179,14 @@ const MainSearch = (): ReactElement => {
   };
 
   const handleCategoryClick = (category: string) => {
+    sessionStorage.setItem("category", category);
     setCategory(category);
     cycleMain(3);
     cycleRedo(0);
   };
 
   const handleResetCategoryClick = () => {
+    sessionStorage.removeItem("category");
     setCategory("");
     cycleMain(0);
     cycleRedo(1);
@@ -194,7 +209,7 @@ const MainSearch = (): ReactElement => {
       key="search"
     >
       <AnimatePresence mode="wait">
-        {category ? (
+        {category || sessionStorage.getItem("category") ? (
           <div className="actual-search-box d-flex flex-column gap-4 w-100">
             <MainSearchHeader
               key="header"
@@ -203,7 +218,6 @@ const MainSearch = (): ReactElement => {
             />
             <MainSearchInput
               key="input"
-              redo={redo}
               handleSubmit={handleFormSubmit}
               setSearchTerm={setSearchTerm}
               searchTerm={searchTerm}

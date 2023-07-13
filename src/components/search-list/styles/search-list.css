@@ -1,14 +1,4 @@
 .artistWholeListContainer {
-  background: linear-gradient(
-    to right,
-    black 0%,
-    rgb(222, 90, 174, 0.3) 12%,
-    black 24%,
-    black 65%,
-    black 78%,
-    rgb(222, 90, 174, 0.3) 89%,
-    black 100%
-  );
   min-height: 100vh;
 }
 
@@ -25,44 +15,68 @@
 
 .songWholeListContainer {
   min-height: 100vh;
-  background: linear-gradient(
-    to right,
-    black 0%,
-    rgb(222, 90, 174, 0.3) 12%,
-    black 24%,
-    black 65%,
-    black 78%,
-    rgb(222, 90, 174, 0.3) 89%,
-    black 100%
-  );
 }
 
 .whole-songs-container {
-  background: linear-gradient(
-    to right,
-    black 0%,
-    rgb(222, 90, 174, 0.3) 12%,
-    black 24%,
-    black 65%,
-    black 78%,
-    rgb(222, 90, 174, 0.3) 89%,
-    black 100%
-  );
   height: 100%;
   grid-template-columns: 220px auto;
   transition: 1s;
 }
 
-.search-list-div {
-  background: linear-gradient(
-    to right,
-    rgb(26, 26, 26) 0%,
-    rgb(13, 13, 13) 100%
-  ) !important;
-  height: auto;
+.filler-div {
+  height: 90px;
+}
+
+.search-input-container {
   padding: 5px 0;
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+}
+
+.search-input {
+  height: 40px;
+  max-width: 600px;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgb(60, 60, 60);
+  background: linear-gradient(
+    45deg,
+    rgb(21, 21, 21),
+    rgba(0, 0, 0),
+    rgb(21, 21, 21)
+  );
+  overflow: hidden;
+}
+
+.search-input input {
+  background: linear-gradient(
+    45deg,
+    rgb(21, 21, 21),
+    rgba(0, 0, 0),
+    rgb(21, 21, 21)
+  );
+  height: 100%;
+  width: 100%;
+  caret-color: white;
+  padding: 0px 20px;
+  font-size: 20px;
+  font-family: "Varela Round", sans-serif !important;
+  color: rgb(255, 255, 255, 0.7);
+  overflow: hidden;
+  border: none;
+}
+
+.search-input input:focus {
+  outline: none;
+}
+
+.search-input input::placeholder {
+  font-size: 16px;
+}
+
+.search-button {
+  background-color: transparent;
+  border: none;
+  width: 60px;
+  color: rgb(255, 255, 255, 0.5);
 }
 
 .noResultsSearch {

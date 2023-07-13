@@ -16,24 +16,22 @@ const wrapperVariants: Variants = {
       delay: 0.2,
     },
   },
-  exit: (redo) => ({
+  exit: {
     x: -200,
     opacity: 0,
     transition: {
-      duration: redo ? 0.5 : 1,
+      duration: 0.5,
     },
-  }),
+  },
 };
 
 type MainSearchInputProps = {
-  redo: boolean;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   searchTerm: string;
   handleSubmit: (e: FormEvent, term: string) => void;
 };
 
 const MainSearchInput = ({
-  redo,
   setSearchTerm,
   searchTerm,
   handleSubmit,
@@ -50,13 +48,13 @@ const MainSearchInput = ({
       <div className="input-container w-100 d-flex align-items-center justify-content-center">
         <motion.div
           variants={wrapperVariants}
-          custom={redo}
           initial="initial"
           animate="animate"
           exit="exit"
           className="main-input d-flex"
         >
           <input
+            value={searchTerm}
             onChange={({ target }) => setSearchTerm(target.value)}
             className="flex-grow-1"
             placeholder="Search"

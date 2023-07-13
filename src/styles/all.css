@@ -3,7 +3,7 @@
   min-height: 100vh;
 }
 
-.search-input {
+/* .search-input {
   background-color: black !important;
   caret-color: white;
   border-radius: 10px !important;
@@ -17,7 +17,7 @@
 .search-input-focus {
   max-width: 220px !important;
   width: 220px !important;
-}
+} */
 
 .list-search-div {
   width: 100%;

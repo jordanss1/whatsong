@@ -2,7 +2,7 @@ import { useContext, useEffect, ReactElement } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../header/Header";
 import SearchContext from "../../contexts/searchContext/SearchStore";
-import SearchBar from "../SearchBar";
+import SearchBar from "./SearchListSearchBar";
 import SongListSelectedItem from "../song-list/SongListSelectedSong";
 import ArtistList from "../artist-list/ArtistList";
 import SongList from "../song-list/SongList";
@@ -88,6 +88,7 @@ const SearchList = (): ReactElement => {
   return (
     <>
       <Header path={location.pathname} />
+      <div className="filler-div" />
       <motion.main id="main" className={songOrArtistContainerClasses()}>
         {artists && renderArtists()}
         {tracks && renderSongs()}

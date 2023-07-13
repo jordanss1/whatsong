@@ -6,7 +6,6 @@ import "./styles/header.css";
 import SearchContext from "../../contexts/searchContext/SearchState";
 
 const HeaderSearch = (): ReactElement => {
-  const { setTerm } = useContext(SearchContext);
   const x = useMotionValue(0);
   const opacity = useMotionValue(0);
 
@@ -21,11 +20,7 @@ const HeaderSearch = (): ReactElement => {
   });
 
   return (
-    <NavLink
-      onClick={() => setTerm("")}
-      className="text-uppercase text-decoration-none"
-      to={"/search"}
-    >
+    <NavLink className="text-uppercase text-decoration-none" to={"/search"}>
       <motion.div className="d-flex listNavbar px-5">
         <motion.div
           style={{ opacity }}
