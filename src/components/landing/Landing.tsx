@@ -64,7 +64,7 @@ const Landing = (): ReactElement => {
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
-    sessionStorage.clear();
+    sessionStorage.removeItem("category");
     cycleMain(0);
   }, []);
 
