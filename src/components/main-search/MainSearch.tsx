@@ -82,9 +82,11 @@ const MainSearch = (): ReactElement => {
     setSelectedSong,
     artists,
     tracks,
-    error,
     handleArtistsOrSongsSearch,
     navigate,
+    resetModalOrSpotify,
+    error,
+    noResults,
   } = useContext<UseSearchStateContext>(SearchContext);
 
   const [category, setCategory] = useState<string>("");
@@ -104,7 +106,7 @@ const MainSearch = (): ReactElement => {
   const [redo, cycleRedo] = useCycle(false, true);
 
   useEffect(() => {
-    setArtistsOrTracks(null, null);
+    resetModalOrSpotify("spotify");
     setSelectedSong(null);
     const category = sessionStorage.getItem("category");
 
@@ -113,6 +115,11 @@ const MainSearch = (): ReactElement => {
       cycleMain(3);
     }
   }, []);
+
+  useEffect(() => {
+    if (error || noResults) return;
+    setSearchTerm("");
+  }, [error, noResults]);
 
   useEffect(() => {
     const item = artists ? artists : tracks;
@@ -126,8 +133,6 @@ const MainSearch = (): ReactElement => {
   }, [tracks, artists]);
 
   useEffect(() => {
-    console.log("first");
-
     if (!isPresent) {
       const mainCycle = tracks || artists ? 4 : 0;
 
