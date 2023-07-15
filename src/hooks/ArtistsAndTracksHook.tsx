@@ -3,7 +3,7 @@ import { ArtistsType, TopTracksDetailsType } from "../types";
 
 const REDUCER_ACTION_TYPES = {
   ADD_ARTISTS_TRACKS: "ADD_ARTISTS_TRACKS",
-  EMPTY_ALL: "EMPTY_ALL",
+  RESET_MODAL_OR_SPOTIFY: "RESET_MODAL_OR_SPOTIFY",
 };
 
 const actionTypeArray = [...Object.values(REDUCER_ACTION_TYPES)] as const;
@@ -14,23 +14,35 @@ type ReducerStateType = {
   artists: ArtistsType[] | null;
   tracks: Required<TopTracksDetailsType>[] | null;
   artistOrTrackError?: Error | null;
+  noResults: boolean | null;
+};
+
+type PayloadType = {
+  artists?: ArtistsType[] | null;
+  tracks?: Required<TopTracksDetailsType>[] | null;
+  artistOrTrackError?: Error | null;
+  noResults?: boolean | null;
+  reset?: "spotify" | "modal";
 };
 
 type ReducerActionType = {
   type: ActionTypes;
-  payload?: ReducerStateType;
+  payload?: PayloadType;
 };
 
 export type ArtistsAndTracksSetterType = (
-  artists?: ArtistsType[] | null | undefined,
-  tracks?: Required<TopTracksDetailsType>[] | null | undefined,
+  artists?: ArtistsType[] | undefined,
+  tracks?: Required<TopTracksDetailsType>[] | undefined,
   error?: Error | undefined
 ) => void;
+
+export type ResetModelOrSpotifyType = (state: "modal" | "spotify") => void;
 
 const initialState: ReducerStateType = {
   artists: null,
   tracks: null,
   artistOrTrackError: null,
+  noResults: null,
 };
 
 export const useArtistsOrTracks = () => {
@@ -42,20 +54,41 @@ export const useArtistsOrTracks = () => {
             throw new Error("ADD_ARTISTS_TRACKS action must have a payload");
           }
 
-          const payload = action.payload;
+          let artists = action.payload.artists;
+          let tracks = action.payload.tracks;
+          let noResults = artists?.length || tracks?.length ? false : true;
+          let artistOrTrackError = action.payload.artistOrTrackError;
+
+          if (!artists?.length) {
+            artists = state.artists;
+          }
+
+          if (!tracks?.length) {
+            tracks = state.tracks;
+          }
 
           return {
             ...state,
-            ...payload,
+            tracks,
+            artists,
+            noResults,
+            artistOrTrackError,
           };
         }
 
-        case REDUCER_ACTION_TYPES.EMPTY_ALL: {
+        case REDUCER_ACTION_TYPES.RESET_MODAL_OR_SPOTIFY: {
+          if (!action.payload) {
+            throw new Error("ADD_ARTISTS_TRACKS action must have a payload");
+          }
+
+          const reset = action.payload?.reset;
+
           return {
             ...state,
-            artists: null,
-            tracks: null,
+            artists: reset === "spotify" ? null : state.artists,
+            tracks: reset === "spotify" ? null : state.tracks,
             artistOrTrackError: null,
+            noResults: null,
           };
         }
 
@@ -76,8 +109,8 @@ export const useArtistsOrTracks = () => {
         newArtists = null;
         newTracks = null;
       } else {
-        newArtists = artists ? artists : null;
-        newTracks = tracks ? tracks : null;
+        newArtists = artists ? artists : [];
+        newTracks = tracks ? tracks : [];
       }
 
       dispatch({
@@ -92,28 +125,23 @@ export const useArtistsOrTracks = () => {
     []
   );
 
-  const emptyArtistsAndTracks = useCallback(() => {
+  const resetModalOrSpotify: ResetModelOrSpotifyType = useCallback((state) => {
     dispatch({
-      type: REDUCER_ACTION_TYPES.EMPTY_ALL,
+      type: REDUCER_ACTION_TYPES.RESET_MODAL_OR_SPOTIFY,
+      payload: {
+        reset: state,
+      },
     });
   }, []);
 
-  const { artists, tracks, artistOrTrackError } = artistsAndTracks;
-
-  let totalArtists: number = 0;
-  let totalTracks: number = 0;
-
-  if (artists) totalArtists = !artists.length ? 0 : artists.length;
-
-  if (tracks) totalTracks = !tracks.length ? 0 : tracks.length;
+  const { artists, tracks, artistOrTrackError, noResults } = artistsAndTracks;
 
   return {
     artists,
     tracks,
     artistOrTrackError,
     setArtistsOrTracks,
-    totalArtists,
-    emptyArtistsAndTracks,
-    totalTracks,
+    resetModalOrSpotify,
+    noResults,
   };
 };

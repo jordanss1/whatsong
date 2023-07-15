@@ -21,12 +21,11 @@ export const SearchState = () => {
 
   const {
     artists,
-    totalArtists,
     tracks,
     artistOrTrackError,
-    totalTracks,
     setArtistsOrTracks,
-    emptyArtistsAndTracks,
+    resetModalOrSpotify,
+    noResults,
   } = useArtistsOrTracks();
 
   const {
@@ -68,6 +67,7 @@ export const SearchState = () => {
 
   const providerValues = {
     error,
+    noResults,
     setLoading,
     loading,
     topTracks,
@@ -78,10 +78,8 @@ export const SearchState = () => {
     selectedSong,
     artists,
     tracks,
-    totalArtists,
-    totalTracks,
     setArtistsOrTracks,
-    emptyArtistsAndTracks,
+    resetModalOrSpotify,
     setTopTrack,
     setAlbum,
     setProfile,
@@ -98,6 +96,7 @@ export type UseSearchStateContext = ReturnType<typeof SearchState>;
 
 const initSearchContextState: UseSearchStateContext = {
   error: null,
+  noResults: null,
   setLoading: () => {},
   loading: false,
   topTracks: [],
@@ -107,12 +106,10 @@ const initSearchContextState: UseSearchStateContext = {
   album: null,
   setAlbum: () => {},
   setArtistsOrTracks: () => {},
-  emptyArtistsAndTracks: () => {},
+  resetModalOrSpotify: () => {},
   selectedSong: null,
   artists: null,
   tracks: null,
-  totalArtists: 0,
-  totalTracks: 0,
   setTopTrack: () => {},
   setProfile: () => {},
   handleArtistsOrSongsSearch: () => {},
