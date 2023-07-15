@@ -1,9 +1,9 @@
-import { ReactElement, useContext } from "react";
+import { ReactElement } from "react";
 import { motion } from "framer-motion";
 import "./styles/modal.css";
-import SearchContext from "../../contexts/searchContext/SearchState";
+import { ResetModelOrSpotifyType } from "../../hooks/ArtistsAndTracksHook";
 
-const errorVariants = {
+export const errorVariants = {
   hidden: {
     opacity: 0,
     scale: 0.5,
@@ -12,36 +12,47 @@ const errorVariants = {
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 0.5,
+      duration: 0.2,
     },
   },
   exit: {
     opacity: 0,
     scale: 0.8,
     transition: {
-      duration: 0.5,
+      duration: 0.2,
     },
   },
 };
 
-const ModalError = ({ error }: { error: Error }): ReactElement => {
-  const { setArtistsOrTracks } = useContext(SearchContext);
+type ModalErrorPropTypes = {
+  error: Error | null;
+  noResults: boolean | null;
+  emptyState: ResetModelOrSpotifyType;
+};
+
+const ModalError = ({
+  error,
+  emptyState,
+}: ModalErrorPropTypes): ReactElement => {
+  const heading = error ? error.name : "No results found";
+  const message = error ? error.message : "Please try to search again";
+  const button = error ? "Retry" : "Search again";
 
   return (
     <div className="error-container d-flex align-items-center justify-content-center px-5">
       <motion.div
         variants={errorVariants}
-        className="error-message d-flex flex-column"
+        className="error-message w-100 d-flex flex-column"
       >
-        <h3 className="fw-bold pb-2">{error.name}</h3>
-        <span className="pb-3">{error.message}</span>
+        <h3 className="fw-bold pb-2">{heading}</h3>
+        <span className="pb-3">{message}</span>
         <motion.button
-          onClick={() => setArtistsOrTracks(undefined, undefined, undefined)}
+          onClick={() => emptyState("modal")}
           whileHover={{ scale: 1.1, backgroundColor: "rgba(0, 0, 0, 0.5)" }}
           whileTap={{ scale: 1 }}
           className="error-button"
         >
-          Retry
+          {button}
         </motion.button>
       </motion.div>
     </div>

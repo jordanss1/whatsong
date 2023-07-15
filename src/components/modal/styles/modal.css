@@ -2,6 +2,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   height: 100vh;
   position: absolute;
+  z-index: 2;
   font-family: "Varela Round", sans-serif !important;
 }
 
@@ -36,8 +37,6 @@
   border: none;
   border-radius: 10px;
 }
-
-
 
 .loader-padding div:nth-child(2) {
   position: relative;

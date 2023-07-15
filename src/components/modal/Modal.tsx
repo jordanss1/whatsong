@@ -1,12 +1,14 @@
 import { ReactElement, useContext } from "react";
 import ModalLoader from "./ModalLoader";
 import ModalError from "./ModalError";
+import SearchContext from "../../contexts/searchContext/SearchState";
 import "./styles/modal.css";
 import { AnimatePresence, Variants, motion } from "framer-motion";
 
 type ModalPropsType = {
   error: Error | null;
   loading: boolean;
+  noResults: boolean | null;
 };
 
 const backgroundVariants: Variants = {
@@ -17,19 +19,21 @@ const backgroundVariants: Variants = {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     transition: {
       delay: error ? 0.2 : 0,
-      duration: 0.5,
+      duration: 0.3,
     },
   }),
   exit: {
     backgroundColor: "rgba(0, 0, 0, 0)",
     transition: {
       when: "afterChildren",
-      duration: 0.5,
+      duration: 0.2,
     },
   },
 };
 
-const Modal = ({ error, loading }: ModalPropsType): ReactElement => {
+const Modal = ({ error, loading, noResults }: ModalPropsType): ReactElement => {
+  const { resetModalOrSpotify } = useContext(SearchContext);
+
   return (
     <motion.div
       custom={error}
@@ -40,7 +44,15 @@ const Modal = ({ error, loading }: ModalPropsType): ReactElement => {
       className="modal-background w-100"
     >
       <AnimatePresence>{loading && <ModalLoader />}</AnimatePresence>
-      <AnimatePresence>{error && <ModalError error={error} />}</AnimatePresence>
+      <AnimatePresence>
+        {(error || noResults) && (
+          <ModalError
+            noResults={noResults}
+            error={error}
+            emptyState={resetModalOrSpotify}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
