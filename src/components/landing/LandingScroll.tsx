@@ -1,5 +1,5 @@
-import { ReactElement, useState } from "react";
-import { AnimatePresence, Cycle, motion } from "framer-motion";
+import { ReactElement } from "react";
+import { motion } from "framer-motion";
 import SVGFramer from "../../svgs/SVGFramer";
 import SVGReact from "../../svgs/SVGReact";
 import SVGReactRouter from "../../svgs/SVGReactRouter";

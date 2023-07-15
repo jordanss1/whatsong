@@ -34,7 +34,7 @@ const LandingButton = ({
         layout
         initial="hidden"
         animate="visible"
-        variants={buttonVariants}
+        // variants={buttonVariants}
         whileHover="hover"
         onMouseEnter={() => handleHover(true)}
         onMouseLeave={() => handleHover(false)}

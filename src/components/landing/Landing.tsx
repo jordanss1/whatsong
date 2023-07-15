@@ -65,6 +65,7 @@ const Landing = (): ReactElement => {
 
   useEffect(() => {
     sessionStorage.clear();
+    cycleMain(0);
   }, []);
 
   useEffect(() => {
