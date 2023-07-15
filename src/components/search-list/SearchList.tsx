@@ -7,13 +7,11 @@ import SongListSelectedItem from "../song-list/SongListSelectedSong";
 import ArtistList from "../artist-list/ArtistList";
 import SongList from "../song-list/SongList";
 import { motion } from "framer-motion";
-import SearchListContainer from "./SearchListContainer";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import "./styles/search-list.css";
 
 const SearchList = (): ReactElement => {
-  const { artists, totalArtists, tracks, totalTracks, setArtistsOrTracks } =
-    useContext(SearchContext);
+  const { artists, tracks, setArtistsOrTracks } = useContext(SearchContext);
 
   const location = useLocation();
 
@@ -37,61 +35,38 @@ const SearchList = (): ReactElement => {
       return "artistWholeListContainer d-flex flex-column px-1";
     }
 
-    return `songWholeListContainer 
-     container-fluid`;
+    return "";
   };
 
-  const renderSongs = (): ReactElement => {
-    if (!totalTracks) {
-      return (
-        <SearchListContainer isArtists={false} searchResults={false}>
-          <div className="d-flex align-items-center justify-content-center justify-content-between  flex-column flex-xl-row noResultsSearch border rounded-3">
-            <h2 className="ms-0 ms-xl-4 fs-3 pt-1 typeHeader">Songs</h2>
+  const renderSongs = (
+    <motion.section className="w-100 whole-songs-container d-grid">
+      {!is900 && <SongListSelectedItem />}
+      <div className="song-list-empty-div"></div>
+      {tracks && <SongList tracks={tracks} />}
+    </motion.section>
+  );
+
+  const renderArtists = (
+    <>
+      <motion.section className="w-100 h-100 d-flex">
+        <div className="artist-list-results d-grid h-100 py-4 px-1">
+          <div className="align-items-center justify-content-end d-flex search-input-container">
             <SearchBar />
           </div>
-          <div className="d-flex flex-column ms-2 align-items-center justify-content-center p-5 p-xl-0">
-            <h3>No results found</h3>
-          </div>
-        </SearchListContainer>
-      );
-    } else {
-      return (
-        <>
-          <SearchListContainer isArtists={false} searchResults>
-            {!is900 && <SongListSelectedItem />}
-            <div className="song-list-empty-div"></div>
-            {tracks && <SongList tracks={tracks} />}
-          </SearchListContainer>
-        </>
-      );
-    }
-  };
-
-  const renderArtists = (): ReactElement => {
-    if (!totalArtists) {
-      return (
-        <SearchListContainer isArtists searchResults={false}>
-          <div className="no-results-artists d-flex align-items-center">
-            <h3 className="text-center w-100">No results found</h3>
-          </div>
-        </SearchListContainer>
-      );
-    } else {
-      return (
-        <SearchListContainer isArtists searchResults>
           {artists && <ArtistList artists={artists} />}
-        </SearchListContainer>
-      );
-    }
-  };
+        </div>
+      </motion.section>
+      <div className="filler-div" />
+    </>
+  );
 
   return (
     <>
       <Header path={location.pathname} />
       <div className="filler-div" />
-      <motion.main id="main" className={songOrArtistContainerClasses()}>
-        {artists && renderArtists()}
-        {tracks && renderSongs()}
+      <motion.main className={songOrArtistContainerClasses()}>
+        {artists && renderArtists}
+        {tracks && renderSongs}
       </motion.main>
     </>
   );
