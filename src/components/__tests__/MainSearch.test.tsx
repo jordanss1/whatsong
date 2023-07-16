@@ -179,7 +179,7 @@ describe("All possibilities when no song results are returned from Search compon
     await renderComponentSearched(getByRole, "search-button-songs");
 
     await waitFor(() => {
-      expect(history.location.pathname).toBe("/songs");
+      expect(history.location.pathname).toBe("/tracks");
     });
   });
 

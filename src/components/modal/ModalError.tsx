@@ -26,13 +26,12 @@ export const errorVariants = {
 
 type ModalErrorPropTypes = {
   error: Error | null;
-  noResults: boolean | null;
-  emptyState: ResetModelOrSpotifyType;
+  handleClick: () => void;
 };
 
 const ModalError = ({
   error,
-  emptyState,
+  handleClick,
 }: ModalErrorPropTypes): ReactElement => {
   const heading = error ? error.name : "No results found";
   const message = error ? error.message : "Please try to search again";
@@ -47,7 +46,7 @@ const ModalError = ({
         <h3 className="fw-bold pb-2">{heading}</h3>
         <span className="pb-3">{message}</span>
         <motion.button
-          onClick={() => emptyState("modal")}
+          onClick={() => handleClick()}
           whileHover={{ scale: 1.1, backgroundColor: "rgba(0, 0, 0, 0.5)" }}
           whileTap={{ scale: 1 }}
           className="error-button"

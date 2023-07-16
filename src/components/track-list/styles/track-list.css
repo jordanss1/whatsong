@@ -1,4 +1,23 @@
-.song-list-container-results {
+.songWholeListContainer {
+  height: 100vh;
+}
+
+.whole-songs-container {
+  height: 100%;
+  grid-template-columns: 220px auto;
+  transition: 1s;
+}
+
+.filler-div {
+  height: 90px;
+}
+
+.track-list-empty-div {
+  max-width: 320px;
+  width: 100%;
+}
+
+.track-list-container {
   display: grid;
   justify-self: center;
   padding: 40px 20px;
@@ -6,22 +25,6 @@
   width: 100%;
   max-width: 900px;
   min-height: 100vh;
-}
-
-.song-list-container-none {
-  display: grid;
-  justify-self: center;
-  padding: 40px 20px;
-  row-gap: 100px;
-  width: 100%;
-  max-width: 900px;
-  height: 100%;
-}
-
-.typeHeader {
-  font-family: "Raleway", sans-serif;
-  color: rgba(255, 255, 255, 0.3) !important;
-  letter-spacing: 2px;
 }
 
 .trackItem {
@@ -53,14 +56,6 @@
   transition: 0.5s;
   width: 220px;
   margin-top: -10px;
-}
-
-.selectedDivAnimation {
-  width: 260px;
-}
-
-.containerAnimate {
-  grid-template-columns: 250px auto !important;
 }
 
 .noSongHeader,
@@ -120,6 +115,11 @@
 @media screen and (max-width: 900px) {
   .trackItem .content {
     max-width: 450px;
+  }
+  .whole-songs-container {
+    display: block !important;
+    grid-template-columns: 250px auto;
+    transition: 1s;
   }
 }
 

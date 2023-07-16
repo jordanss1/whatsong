@@ -13,7 +13,7 @@ import { useArtistsOrTracks } from "../../hooks/ArtistsAndTracksHook";
 import { CancelTokenSource } from "axios";
 
 export const SearchState = () => {
-  const [selectedSong, setSelectedSong] =
+  const [selectedTrack, setSelectedTrack] =
     useState<Required<TopTracksDetailsType> | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -35,6 +35,7 @@ export const SearchState = () => {
     topTracks,
     topTrack,
     setProfile,
+    emptyProfile,
     setAlbum,
     setTopTrack,
     artistDetailError,
@@ -75,7 +76,7 @@ export const SearchState = () => {
     artistDetail,
     albums,
     album,
-    selectedSong,
+    selectedTrack,
     artists,
     tracks,
     setArtistsOrTracks,
@@ -83,9 +84,10 @@ export const SearchState = () => {
     setTopTrack,
     setAlbum,
     setProfile,
+    emptyProfile,
     handleArtistsOrSongsSearch,
     handleArtistDetailSearch,
-    setSelectedSong,
+    setSelectedTrack,
     navigate,
   };
 
@@ -107,14 +109,15 @@ const initSearchContextState: UseSearchStateContext = {
   setAlbum: () => {},
   setArtistsOrTracks: () => {},
   resetModalOrSpotify: () => {},
-  selectedSong: null,
+  selectedTrack: null,
   artists: null,
   tracks: null,
   setTopTrack: () => {},
   setProfile: () => {},
+  emptyProfile: () => {},
   handleArtistsOrSongsSearch: () => {},
   handleArtistDetailSearch: () => {},
-  setSelectedSong: () => {},
+  setSelectedTrack: () => {},
   navigate: () => {},
 };
 

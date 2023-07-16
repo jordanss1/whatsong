@@ -58,6 +58,8 @@
 .powered {
   color: #fff !important;
   white-space: nowrap;
+  cursor: default;
+  user-select: none;
 }
 
 .spotify-nav {

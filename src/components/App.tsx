@@ -1,12 +1,13 @@
 import { ReactElement, useContext } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import SearchList from "./search-list/SearchList";
 import { AnimatePresence } from "framer-motion";
+import MainSearch from "./main-search/MainSearch";
+import ArtistList from "./artist-list/ArtistList";
 import ArtistDetails from "./artist-details/ArtistDetails";
-import SearchContext from "../contexts/searchContext/SearchState";
 import Modal from "./modal/Modal";
 import Landing from "./landing/Landing";
-import MainSearch from "./main-search/MainSearch";
+import SearchContext from "../contexts/searchContext/SearchState";
+import TrackList from "./track-list/TrackList";
 
 const App = (): ReactElement => {
   const location = useLocation();
@@ -25,14 +26,14 @@ const App = (): ReactElement => {
           <Route path="/" key={location.key} element={<Landing />} />
           <Route path="/search" key={location.key} element={<MainSearch />} />
           <Route path="/artists">
-            <Route index key={location.key} element={<SearchList />} />
+            <Route index key={location.key} element={<ArtistList />} />
             <Route
               path="/artists/:id"
               key={location.key}
               element={<ArtistDetails />}
             />
           </Route>
-          <Route path="/songs" key={location.key} element={<SearchList />} />
+          <Route path="/tracks" key={location.key} element={<TrackList />} />
         </Routes>
       </AnimatePresence>
     </>

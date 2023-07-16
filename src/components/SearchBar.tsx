@@ -5,10 +5,14 @@ import {
   useContext,
   useEffect,
 } from "react";
-import SearchContext from "../../contexts/searchContext/SearchStore";
-import "./styles/search-list.css";
+import SearchContext from "../contexts/searchContext/SearchStore";
+import "../styles/all.css";
 
-const SearchBar = (): ReactElement => {
+const SearchBar = ({
+  setSearched,
+}: {
+  setSearched: React.Dispatch<React.SetStateAction<boolean>>;
+}): ReactElement => {
   const { handleArtistsOrSongsSearch, artists, tracks } =
     useContext(SearchContext);
 
@@ -28,6 +32,7 @@ const SearchBar = (): ReactElement => {
     const category = artists ? "artist" : "track";
 
     if (searchTerm) {
+      setSearched(true);
       handleArtistsOrSongsSearch(searchTerm, category);
       setSearchTerm("");
     }

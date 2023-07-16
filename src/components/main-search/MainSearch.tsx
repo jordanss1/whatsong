@@ -78,8 +78,7 @@ export type HandleCategoryHoverType = (hovered?: "artists" | "songs") => void;
 
 const MainSearch = (): ReactElement => {
   const {
-    setArtistsOrTracks,
-    setSelectedSong,
+    setSelectedTrack,
     artists,
     tracks,
     handleArtistsOrSongsSearch,
@@ -107,7 +106,7 @@ const MainSearch = (): ReactElement => {
 
   useEffect(() => {
     resetModalOrSpotify("spotify");
-    setSelectedSong(null);
+    setSelectedTrack(null);
     const category = sessionStorage.getItem("category");
 
     if (category) {
@@ -128,7 +127,7 @@ const MainSearch = (): ReactElement => {
     if ((artists || tracks) && !error && category) {
       setSearchTerm("");
       sessionStorage.setItem(key, JSON.stringify(item));
-      navigate(artists ? "/artists" : "/songs");
+      navigate(artists ? "/artists" : "/tracks");
     }
   }, [tracks, artists]);
 

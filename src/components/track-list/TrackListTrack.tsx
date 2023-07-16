@@ -1,18 +1,18 @@
 import { memo, ReactElement } from "react";
 import { TopTracksDetailsType } from "../../types";
-import { HandleSelectedSongType } from "./SongList";
-import "./styles/song-list.css";
+import { HandleSelectedTrackType } from "./TrackList";
+import "./styles/track-list.css";
 
 type PropTypes = {
-  song: Required<TopTracksDetailsType>;
+  track: Required<TopTracksDetailsType>;
   hidden: boolean;
-  handleSelectedSong: HandleSelectedSongType;
+  handleSelectedTrack: HandleSelectedTrackType;
 };
 
-const SongListItem = ({
-  song,
+const TrackListTrack = ({
+  track,
   hidden,
-  handleSelectedSong,
+  handleSelectedTrack,
 }: PropTypes): ReactElement => {
   return (
     <div
@@ -23,30 +23,30 @@ const SongListItem = ({
         <div className="right floated content d-flex align-items-center">
           <div
             hidden={hidden}
-            onClick={() => handleSelectedSong(song)}
+            onClick={() => handleSelectedTrack(track)}
             className="ui button"
           >
             Details
           </div>
           <div
-            onClick={() => window.open(song.external_urls.spotify, "_blank")}
+            onClick={() => window.open(track.external_urls.spotify, "_blank")}
             className="ui button listen-button"
-            title={song.external_urls.spotify}
+            title={track.external_urls.spotify}
           >
             Listen
           </div>
         </div>
-        {song.album?.images[2]?.url ? (
-          <img className="ui avatar image" src={song.album?.images[2].url} />
+        {track.album?.images[2]?.url ? (
+          <img className="ui avatar image" src={track.album?.images[2].url} />
         ) : (
           <div className="ui avatar image">
             <h6>No album image</h6>
           </div>
         )}
-        <h3 className="content fs-4 pt-1">{`${song.artists[0]?.name} - ${song.name}`}</h3>
+        <h3 className="content fs-4 pt-1">{`${track.artists[0]?.name} - ${track.name}`}</h3>
       </div>
     </div>
   );
 };
 
-export default memo(SongListItem);
+export default memo(TrackListTrack);

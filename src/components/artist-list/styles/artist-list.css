@@ -1,3 +1,23 @@
+.artistWholeListContainer {
+  min-height: 100vh;
+  background-attachment: fixed !important;
+}
+
+.artist-list-container {
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  row-gap: 25px;
+}
+
+.filler-div {
+  height: 90px;
+}
+
+.search-input-container {
+  padding: 5px 0;
+}
+
 .artist-grid {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   row-gap: 10px;
@@ -27,19 +47,6 @@
 }
 
 @media screen and (max-width: 576px) {
-  .noResultsSearch {
-    background: linear-gradient(
-      to right,
-      rgb(26, 26, 26) 0%,
-      rgb(13, 13, 13) 100%
-    ) !important;
-    height: 160px;
-    margin-left: 20px;
-    width: 70%;
-    padding: 10px;
-    flex-direction: column;
-  }
-
   .artist-grid-less {
     justify-content: center;
   }

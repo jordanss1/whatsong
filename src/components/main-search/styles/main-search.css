@@ -71,6 +71,7 @@
 
 .redo {
   cursor: pointer;
+  user-select: none;
 }
 
 .redo-button {

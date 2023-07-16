@@ -8,7 +8,7 @@ import {
 } from "../../../test-utils/test-utils";
 import MainSearch from "../main-search/MainSearch";
 import SearchList from "../search-list/SearchList";
-import SelectedItem from "../song-list/SongListSelectedSong";
+import SelectedItem from "../track-list/TrackListSelectedTrack";
 import { SearchStore } from "../../contexts/searchContext/SearchStore";
 import { history } from "../../../test-utils";
 import {
@@ -388,7 +388,7 @@ describe("The SearchList component on the /songs path", () => {
 
   describe("Route and history testing on /songs path", () => {
     it("Clicking the header/NavBar component should route to /search path", async () => {
-      history.push("/songs");
+      history.push("/tracks");
 
       const { getByRole } = customRender(
         WrapperComponent,
@@ -398,7 +398,7 @@ describe("The SearchList component on the /songs path", () => {
         </>
       );
 
-      expect(history.location.pathname).toBe("/songs");
+      expect(history.location.pathname).toBe("/tracks");
 
       await user.click(getByRole("link"));
 

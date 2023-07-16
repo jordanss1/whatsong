@@ -3,7 +3,6 @@ import { MotionValue, motion, useMotionValue } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import LandingCircles from "../landing/LandingCircles";
 import "./styles/header.css";
-import SearchContext from "../../contexts/searchContext/SearchState";
 
 const HeaderSearch = (): ReactElement => {
   const x = useMotionValue(0);
@@ -21,7 +20,10 @@ const HeaderSearch = (): ReactElement => {
 
   return (
     <NavLink className="text-uppercase text-decoration-none" to={"/search"}>
-      <motion.div className="d-flex listNavbar px-5">
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        className="d-flex listNavbar px-5"
+      >
         <motion.div
           style={{ opacity }}
           initial={{ opacity: 0 }}

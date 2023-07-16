@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
-import { ArtistDetailsType } from "../../types";
+import { ArtistsType } from "../../types";
 import { NavigateFunction } from "react-router-dom";
 import "./styles/artist-details.css";
 
 type PropTypes = {
-  artistDetail: ArtistDetailsType;
+  artistDetail: ArtistsType;
   isWidth992: boolean;
   navigate: NavigateFunction;
   styles: { background: string };

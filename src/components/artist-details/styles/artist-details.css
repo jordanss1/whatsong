@@ -30,6 +30,10 @@ hr {
   color: white;
 }
 
+.artist-image {
+  cursor: pointer;
+}
+
 .artistHeading h1 {
   font-family: "Barlow", sans-serif !important;
   font-weight: 400;
@@ -63,24 +67,12 @@ hr {
   width: 100%;
 }
 
-.artist-card {
-  transition: 0.5s;
-}
-
 .artist-card .header {
   cursor: pointer;
 }
 
-.artist-card:hover {
-  transform: translateY(-5px);
-}
-
 .artist-album-card {
   width: 170px !important;
-  position: relative;
-  left: 0;
-  right: 0;
-  transition: 0.5s;
 }
 
 .artist-album-card img {

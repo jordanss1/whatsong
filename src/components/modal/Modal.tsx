@@ -32,7 +32,12 @@ const backgroundVariants: Variants = {
 };
 
 const Modal = ({ error, loading, noResults }: ModalPropsType): ReactElement => {
-  const { resetModalOrSpotify } = useContext(SearchContext);
+  const { resetModalOrSpotify, emptyProfile } = useContext(SearchContext);
+
+  const handleClick = () => {
+    emptyProfile();
+    resetModalOrSpotify("modal");
+  };
 
   return (
     <motion.div
@@ -46,11 +51,7 @@ const Modal = ({ error, loading, noResults }: ModalPropsType): ReactElement => {
       <AnimatePresence>{loading && <ModalLoader />}</AnimatePresence>
       <AnimatePresence>
         {(error || noResults) && (
-          <ModalError
-            noResults={noResults}
-            error={error}
-            emptyState={resetModalOrSpotify}
-          />
+          <ModalError error={error} handleClick={handleClick} />
         )}
       </AnimatePresence>
     </motion.div>

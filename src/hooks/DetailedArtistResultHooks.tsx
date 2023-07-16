@@ -10,7 +10,7 @@ import { AlbumDetailsType, ArtistsType, TopTracksDetailsType } from "../types";
 
 const REDUCER_ACTION_TYPES = {
   ADD: "ADD",
-  ERROR: "ERROR",
+  EMPTY_DETAILS: "EMPTY_DETAILS",
 };
 
 const artistArray = [...Object.values(REDUCER_ACTION_TYPES)] as const;
@@ -26,7 +26,7 @@ export interface ReducerStateType {
 
 type ReducerAction = {
   type: ActionReturnedTypes;
-  payload: ReducerStateType;
+  payload?: ReducerStateType;
 };
 
 export const artistInitState: ReducerStateType = {
@@ -42,6 +42,8 @@ export type ArtistAndAlbumStateSetter = (
   artistTopTracks: TopTracksDetailsType[] | [],
   error?: Error | null
 ) => void;
+
+export type EmptyDetailsType = () => void;
 
 export type SetAlbumType = (
   classString: "leftClick" | "rightClick",
@@ -93,6 +95,16 @@ export const useArtistResults = () => {
           };
         }
 
+        case REDUCER_ACTION_TYPES.EMPTY_DETAILS: {
+          return {
+            ...state,
+            artistDetail: null,
+            albums: [],
+            topTracks: [],
+            artistDetailError: null,
+          };
+        }
+
         default:
           return { ...state };
       }
@@ -114,6 +126,10 @@ export const useArtistResults = () => {
     },
     []
   );
+
+  const emptyProfile = useCallback<EmptyDetailsType>(() => {
+    dispatch({ type: REDUCER_ACTION_TYPES.EMPTY_DETAILS });
+  }, []);
 
   useEffect(() => {
     setAlbumIndex(0);
@@ -172,6 +188,7 @@ export const useArtistResults = () => {
     albums,
     topTracks,
     setProfile,
+    emptyProfile,
     album,
     setAlbum,
     topTrack,
