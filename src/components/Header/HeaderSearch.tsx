@@ -4,7 +4,11 @@ import { NavLink } from "react-router-dom";
 import LandingCircles from "../landing/LandingCircles";
 import "./styles/header.css";
 
-const HeaderSearch = (): ReactElement => {
+const HeaderSearch = ({
+  scrollY,
+}: {
+  scrollY: MotionValue<number>;
+}): ReactElement => {
   const x = useMotionValue(0);
   const opacity = useMotionValue(0);
 

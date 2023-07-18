@@ -5,8 +5,9 @@ import {
   useTransform,
   useMotionValue,
 } from "framer-motion";
+import "./styles/landing.css";
 
-const SVGFramer = (): ReactElement => {
+const LandingSVGFramer = (): ReactElement => {
   const x = useMotionValue(0);
 
   const opacity = useTransform(x, [0, 62, 135, 187, 250], [0, 0, 1, 1, 0]);
@@ -17,7 +18,6 @@ const SVGFramer = (): ReactElement => {
     x: [0, 320],
     transition: { duration: 4, repeat: Infinity, repeatDelay: 2 },
   };
-
 
   return (
     <motion.svg
@@ -59,4 +59,4 @@ const SVGFramer = (): ReactElement => {
   );
 };
 
-export default SVGFramer;
+export default LandingSVGFramer;

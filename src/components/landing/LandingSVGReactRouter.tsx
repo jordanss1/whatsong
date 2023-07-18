@@ -6,10 +6,10 @@ import {
   useMotionTemplate,
   AnimationDefinition,
 } from "framer-motion";
+import "./styles/landing.css";
 
-const SVGReactRouter = (): ReactElement => {
+const LandingSVGReactRouter = (): ReactElement => {
   const x = useMotionValue(0);
-
 
   const opacity = useTransform(x, [0, 62, 150, 187, 250], [0, 0, 1, 1, 0]);
   const scale = useTransform(x, [0, 150, 250], [0.8, 1, 0.8]);
@@ -60,4 +60,4 @@ const SVGReactRouter = (): ReactElement => {
   );
 };
 
-export default SVGReactRouter;
+export default LandingSVGReactRouter;

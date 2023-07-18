@@ -5,8 +5,9 @@ import {
   useMotionValue,
   useMotionTemplate,
 } from "framer-motion";
+import "./styles/landing.css";
 
-const SVGTypeScript = (): ReactElement => {
+const LandingSVGTypeScript = (): ReactElement => {
   const x = useMotionValue(0);
 
   const opacity = useTransform(x, [0, 62, 135, 187, 250], [0, 0, 1, 1, 0]);
@@ -94,4 +95,4 @@ const SVGTypeScript = (): ReactElement => {
   );
 };
 
-export default SVGTypeScript;
+export default LandingSVGTypeScript;

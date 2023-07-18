@@ -5,8 +5,9 @@ import {
   useMotionValue,
   useMotionTemplate,
 } from "framer-motion";
+import "./styles/landing.css";
 
-const SVGReact = (): ReactElement => {
+const LandingSVGReact = (): ReactElement => {
   const x = useMotionValue(0);
 
   const opacity = useTransform(x, [0, 62, 135, 187, 250], [0, 0, 1, 1, 0]);
@@ -53,4 +54,4 @@ const SVGReact = (): ReactElement => {
   );
 };
 
-export default SVGReact;
+export default LandingSVGReact;

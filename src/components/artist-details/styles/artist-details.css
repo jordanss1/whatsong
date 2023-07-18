@@ -114,6 +114,8 @@ hr {
   overflow: hidden !important;
   white-space: nowrap !important;
   color: white !important;
+  cursor: pointer;
+  user-select: none;
 }
 
 .iconRed {

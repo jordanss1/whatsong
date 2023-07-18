@@ -1,5 +1,5 @@
-import { ReactElement, memo } from "react";
-import { Variants, motion } from "framer-motion";
+import { ReactElement, memo, useRef } from "react";
+import { Variants, motion, useInView } from "framer-motion";
 import { AlbumDetailsType, ArtistsType } from "../../types";
 import "./styles/artist-details.css";
 
@@ -38,8 +38,22 @@ const ArtistOrAlbumCard = ({
   album,
   artist,
   handleProfileClick,
+  index,
 }: ArtistOrAlbumCardType): ReactElement => {
   const artistId = artist?.id ? artist.id : "";
+  const ref = useRef(null);
+
+  const isInView = useInView(ref, {
+    amount: 0.2,
+  });
+
+  if (!index) index = 0;
+
+  if (index % 5 === 0) index = index % 5;
+  if (index % 6 === 0) index = index % 5;
+  if (index % 7 === 0) index = index % 5;
+  if (index % 8 === 0) index = index % 5;
+  if (index % 9 === 0) index = index % 5;
 
   let handleProfileClickFunc = handleProfileClick
     ? () => handleProfileClick(artistId)
@@ -67,9 +81,20 @@ const ArtistOrAlbumCard = ({
       variants={artistCardVariant}
       className="artist-album-card"
       title="View artist profile"
+      whileHover={{
+        scale: [null, 1.1],
+        y: [null, -5],
+        transition: { duration: 0.1 },
+      }}
+      ref={ref}
       layout
     >
-      <div
+      <motion.div
+        style={{
+          transform: isInView ? "translateX(0)" : "translateX(-100px)",
+          opacity: isInView ? 1 : 0,
+          transition: `all 0.9s ${0.01 * index}s`,
+        }}
         onClick={handleProfileClickFunc}
         className="image d-flex justify-content-center align-items-center artist-image"
       >
@@ -78,13 +103,18 @@ const ArtistOrAlbumCard = ({
         ) : (
           <h3 className="card-no-image-artist">No image</h3>
         )}
-      </div>
-      <h3
+      </motion.div>
+      <motion.h3
+        style={{
+          transform: isInView ? "translateX(0)" : "translateX(-100px)",
+          opacity: isInView ? 1 : 0,
+          transition: `all 0.9s ${0.01 * index}s`,
+        }}
         onClick={handleProfileClickFunc}
         className="header fs-5 text-center w-100 pt-2"
       >
         {artist?.name}
-      </h3>
+      </motion.h3>
     </motion.div>
   );
 

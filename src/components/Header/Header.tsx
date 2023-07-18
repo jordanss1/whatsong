@@ -6,6 +6,8 @@ import {
   useMotionValue,
   motion,
   Variants,
+  MotionValue,
+  useTransform,
 } from "framer-motion";
 import "./styles/header.css";
 import "../../styles/all.css";
@@ -28,8 +30,14 @@ const containerVarients: Variants = {
   }),
 };
 
-const Header = ({ path }: { path: string }): ReactElement => {
+type HeaderPropsType = {
+  path: string;
+  scrollY?: MotionValue<number>;
+};
+
+const Header = ({ path, scrollY }: HeaderPropsType): ReactElement => {
   const containerClass = path === "/" ? "header-landing" : "header-search";
+  // const background = useTransform(scrollY, [])
 
   return (
     <>
@@ -42,10 +50,9 @@ const Header = ({ path }: { path: string }): ReactElement => {
         className={`${containerClass} d-grid justify-content-center`}
       >
         <AnimatePresence mode="sync">
-          {path === "/" ? (
-            <HeaderLanding key="landing1" />
-          ) : (
-            <HeaderSearch key="search1" />
+          {path === "/" && <HeaderLanding key="landing" />}
+          {(path === "/artists" || path === "/tracks") && scrollY && (
+            <HeaderSearch scrollY={scrollY} key="search" />
           )}
         </AnimatePresence>
       </motion.header>

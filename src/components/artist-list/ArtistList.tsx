@@ -1,6 +1,12 @@
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { motion, Variants, AnimatePresence, useAnimate } from "framer-motion";
+import {
+  motion,
+  Variants,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import Header from "../header/Header";
 import ArtistListGrid from "./ArtistListGrid";
 import SearchBar from "../SearchBar";
@@ -55,9 +61,14 @@ const artistSearchBarVariants: Variants = {
 };
 
 const ArtistList = (): ReactElement => {
-  const { artists, setArtistsOrTracks, noResults, error } =
-    useContext(SearchContext);
+  const { artists, setArtistsOrTracks } = useContext(SearchContext);
   const [searched, setSearched] = useState(false);
+
+  const { scrollY } = useScroll();
+
+  const opacity = useTransform(scrollY, [20, 60], [1, 0]);
+
+  scrollY.on("change", () => console.log(scrollY.get()));
 
   const location = useLocation();
 
@@ -81,14 +92,16 @@ const ArtistList = (): ReactElement => {
           exit="exit"
           className="artistWholeListContainer d-flex flex-column px-1"
         >
-          <Header path={location.pathname} />
+          <Header scrollY={scrollY} path={location.pathname} />
           <div className="filler-div" />
           <section className="w-100 h-100 artist-list-container d-grid py-4 px-1">
             <motion.div
               variants={artistSearchBarVariants}
               className="align-items-center justify-content-end d-flex search-input-container"
             >
-              <SearchBar setSearched={setSearched} />
+              {/* <motion.div style={{ opacity }}> */}
+                <SearchBar setSearched={setSearched} />
+              {/* </motion.div> */}
             </motion.div>
             <AnimatePresence mode="wait">
               {!searched && (

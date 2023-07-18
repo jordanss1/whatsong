@@ -1,9 +1,9 @@
-import { ReactElement } from "react";
+import { ReactElement, memo } from "react";
 import { motion } from "framer-motion";
-import SVGFramer from "../../svgs/SVGFramer";
-import SVGReact from "../../svgs/SVGReact";
-import SVGReactRouter from "../../svgs/SVGReactRouter";
-import SVGTypeScript from "../../svgs/SVGTypeScript";
+import SVGFramer from "./LandingSVGFramer";
+import SVGReact from "./LandingSVGReact";
+import SVGReactRouter from "./LandingSVGReactRouter";
+import SVGTypeScript from "./LandingSVGTypeScript";
 import "./styles/landing.css";
 
 const LandingScroll = (): ReactElement => {
