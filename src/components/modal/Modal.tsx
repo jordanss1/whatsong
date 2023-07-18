@@ -9,6 +9,7 @@ type ModalPropsType = {
   error: Error | null;
   loading: boolean;
   noResults: boolean | null;
+  pathname: string;
 };
 
 const backgroundVariants: Variants = {
@@ -31,12 +32,29 @@ const backgroundVariants: Variants = {
   },
 };
 
-const Modal = ({ error, loading, noResults }: ModalPropsType): ReactElement => {
-  const { resetModalOrSpotify, emptyProfile } = useContext(SearchContext);
+const Modal = ({
+  error,
+  loading,
+  noResults,
+  pathname,
+}: ModalPropsType): ReactElement => {
+  const { resetModalOrSpotify, emptyProfile, setArtistsOrTracks } =
+    useContext(SearchContext);
 
   const handleClick = () => {
+    const artists = sessionStorage.getItem("artists");
+    const tracks = sessionStorage.getItem("tracks");
+
     emptyProfile();
     resetModalOrSpotify("modal");
+
+    if (pathname === "/artists" && artists) {
+      setArtistsOrTracks(JSON.parse(artists));
+    }
+
+    if (pathname !== "/search" && tracks) {
+      setArtistsOrTracks(JSON.parse(tracks));
+    }
   };
 
   return (

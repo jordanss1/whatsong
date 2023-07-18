@@ -50,14 +50,15 @@ export const SearchState = () => {
       query,
       cancelToken,
       typeOfSearch,
-      setArtistsOrTracks
+      setArtistsOrTracks,
+      setLoading
     );
   };
 
   const handleArtistDetailSearch = (id: string) => {
     if (cancelToken.current) cancelToken.current.cancel();
 
-    spotifyArtistDetailsSearch(id, cancelToken, setProfile);
+    spotifyArtistDetailsSearch(id, cancelToken, setProfile, setLoading);
   };
 
   let error: Error | null = null;

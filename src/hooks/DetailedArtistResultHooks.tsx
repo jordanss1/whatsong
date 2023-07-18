@@ -19,8 +19,8 @@ type ActionReturnedTypes = (typeof artistArray)[number];
 
 export interface ReducerStateType {
   artistDetail: ArtistsType | null;
-  albums: AlbumDetailsType[] | [];
-  topTracks: TopTracksDetailsType[] | [];
+  albums: AlbumDetailsType[] | null;
+  topTracks: TopTracksDetailsType[] | null;
   artistDetailError?: Error | null;
 }
 
@@ -31,15 +31,15 @@ type ReducerAction = {
 
 export const artistInitState: ReducerStateType = {
   artistDetail: null,
-  albums: [],
-  topTracks: [],
+  albums: null,
+  topTracks: null,
   artistDetailError: null,
 };
 
 export type ArtistAndAlbumStateSetter = (
   artistDetail: ArtistsType | null,
-  artistAlbums: AlbumDetailsType[] | [],
-  artistTopTracks: TopTracksDetailsType[] | [],
+  artistAlbums: AlbumDetailsType[] | null,
+  artistTopTracks: TopTracksDetailsType[] | null,
   error?: Error | null
 ) => void;
 
@@ -99,8 +99,8 @@ export const useArtistResults = () => {
           return {
             ...state,
             artistDetail: null,
-            albums: [],
-            topTracks: [],
+            albums: null,
+            topTracks: null,
             artistDetailError: null,
           };
         }
@@ -141,12 +141,6 @@ export const useArtistResults = () => {
   const setAlbumOrTrack: TrackOrAlbumFuncType = (arrowType, itemType) => {
     let array = itemType === "album" ? albums : topTracks;
     let setter = itemType === "album" ? setAlbumIndex : setTrackIndex;
-
-    if (arrowType === "right" && array.length > 1) {
-      setter((prev) => (prev + 1 === array.length ? 0 : prev + 1));
-    } else if (arrowType === "left" && array.length > 1) {
-      setter((prev) => (prev - 1 < 0 ? array.length - 1 : prev - 1));
-    }
   };
 
   const setAlbum: SetAlbumType = (classString, direction) => {
@@ -155,7 +149,7 @@ export const useArtistResults = () => {
       clearTimeout(timeoutId.current[1]);
     }
 
-    if (albums.length > 1) {
+    if (albums && albums?.length > 1) {
       const album = document.getElementsByClassName("artist-album-card")[0];
       album.classList.add(`${classString}`);
       timeoutId.current[0] = setTimeout(

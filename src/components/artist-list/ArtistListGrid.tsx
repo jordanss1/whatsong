@@ -5,15 +5,11 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useAnimate,
-  usePresence,
-} from "framer-motion";
-import SearchContext from "../../contexts/searchContext/SearchState";
-import { ArtistsType } from "../../types";
+import { Variants, motion, AnimationScope } from "framer-motion";
 import ArtistOrAlbumCard from "../artist-details/ArtistOrAlbumCard";
+import SearchContext from "../../contexts/searchContext/SearchState";
+
+import { ArtistsType } from "../../types";
 import "./styles/artist-list.css";
 
 export type HandleProfileClickType = (id: string) => void;
@@ -21,13 +17,31 @@ export type HandleProfileClickType = (id: string) => void;
 type ArtistListGridPropsType = {
   artists: ArtistsType[];
   searched: boolean;
-  setSearched: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const artistGridVariants: Variants = {
+  initial: {
+    opacity: 1,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.02,
+    },
+  },
+  exit: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+      staggerChildren: 0.01,
+      when: "afterChildren",
+    },
+  },
 };
 
 const ArtistListGrid = ({
   artists,
   searched,
-  setSearched,
 }: ArtistListGridPropsType): ReactElement => {
   const {
     handleArtistDetailSearch,
@@ -38,30 +52,7 @@ const ArtistListGrid = ({
     error,
   } = useContext(SearchContext);
 
-  const [scope, animate] = useAnimate();
-  const [isPresent, safeToRemove] = usePresence();
-
   const idRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    if (!isPresent) {
-      const exitAnimation = async () => {
-        await animate(
-          ".artist-image",
-          {
-            x: 100,
-            opacity: 0,
-          },
-          {
-            duration: 1,
-          }
-        );
-        safeToRemove();
-      };
-      console.log("first");
-      exitAnimation();
-    }
-  }, [isPresent]);
 
   useEffect(() => {
     if (albums && topTracks && idRef.current && !error) {
@@ -85,20 +76,20 @@ const ArtistListGrid = ({
   const gridClass = artists.length < 6 ? "artist-grid-less" : "artist-grid";
 
   return (
-    <motion.div layout className={`d-grid ${gridClass}`}>
-      {artists.map((artist, i) => {
-        return (
-          <div key={i} ref={scope}>
-            <ArtistOrAlbumCard
-              key={i}
-              index={i}
-              cardType="artist"
-              artist={artist}
-              handleProfileClick={handleProfileClick}
-            />
-          </div>
-        );
-      })}
+    <motion.div
+      layout
+      variants={artistGridVariants}
+      className={`d-grid ${gridClass}`}
+    >
+      {artists.map((artist, i) => (
+        <ArtistOrAlbumCard
+          key={i}
+          index={i}
+          cardType="artist"
+          artist={artist}
+          handleProfileClick={handleProfileClick}
+        />
+      ))}
     </motion.div>
   );
 };

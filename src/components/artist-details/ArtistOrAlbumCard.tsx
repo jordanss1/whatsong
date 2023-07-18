@@ -64,7 +64,6 @@ const ArtistOrAlbumCard = ({
 
   const renderArtistCard = (
     <motion.div
-      key={artist?.id}
       variants={artistCardVariant}
       className="artist-album-card"
       title="View artist profile"
@@ -92,7 +91,7 @@ const ArtistOrAlbumCard = ({
   return (
     <>
       {cardType === "album" && renderAlbumCard}
-      {cardType === "artist" && artist && renderArtistCard}
+      {cardType === "artist" && renderArtistCard}
     </>
   );
 };

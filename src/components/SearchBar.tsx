@@ -20,8 +20,10 @@ const SearchBar = ({
 
   useEffect(() => {
     if (artists) {
+      setSearched(false);
       sessionStorage.setItem("artists", JSON.stringify(artists));
     } else if (tracks) {
+      setSearched(false);
       sessionStorage.setItem("tracks", JSON.stringify(tracks));
     }
   }, [tracks, artists]);

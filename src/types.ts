@@ -80,14 +80,16 @@ export type ArtistDetailsHandlerType = (
 export type SpotifyArtistDetailsSearchType = (
   id: string,
   cancelToken: MutableRefObject<CancelTokenSource | null>,
-  stateSetter: ArtistAndAlbumStateSetter
+  setArtistDetails: ArtistAndAlbumStateSetter,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => Promise<void>;
 
 export type SpotifyArtistsOrSongsSearchType = (
   query: string,
   cancelToken: MutableRefObject<CancelTokenSource | null>,
   typeOfSearch: string,
-  setArtistOrTracks: ArtistsAndTracksSetterType
+  setArtistOrTracks: ArtistsAndTracksSetterType,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => void;
 
 export type SpotifyTokenFunctionType = (

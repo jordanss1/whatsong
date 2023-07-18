@@ -1,6 +1,6 @@
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, AnimatePresence, useAnimate } from "framer-motion";
 import Header from "../header/Header";
 import ArtistListGrid from "./ArtistListGrid";
 import SearchBar from "../SearchBar";
@@ -18,7 +18,7 @@ const artistContainerVariants: Variants = {
     transition: {
       delay: 0.5,
       duration: 0.5,
-      staggerChildren: 0.04,
+      staggerChildren: 0.02,
       when: "beforeChildren",
     },
   },
@@ -27,8 +27,8 @@ const artistContainerVariants: Variants = {
       "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)",
     transition: {
       duration: 0.3,
-      delay: 0.4,
-      staggerChildren: 0.02,
+      when: "afterChildren",
+      staggerChildren: 0.005,
     },
   },
 };
@@ -55,7 +55,8 @@ const artistSearchBarVariants: Variants = {
 };
 
 const ArtistList = (): ReactElement => {
-  const { artists, setArtistsOrTracks } = useContext(SearchContext);
+  const { artists, setArtistsOrTracks, noResults, error } =
+    useContext(SearchContext);
   const [searched, setSearched] = useState(false);
 
   const location = useLocation();
@@ -89,11 +90,11 @@ const ArtistList = (): ReactElement => {
             >
               <SearchBar setSearched={setSearched} />
             </motion.div>
-            <ArtistListGrid
-              setSearched={setSearched}
-              searched={searched}
-              artists={artists}
-            />
+            <AnimatePresence mode="wait">
+              {!searched && (
+                <ArtistListGrid searched={searched} artists={artists} />
+              )}
+            </AnimatePresence>
           </section>
           <div className="filler-div" />
         </motion.main>

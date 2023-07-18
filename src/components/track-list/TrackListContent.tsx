@@ -1,6 +1,6 @@
 import { ReactElement, memo } from "react";
 import SearchBar from "../SearchBar";
-import TrackListTrack from "./TrackListTrack";
+import TrackListContentTrack from "./TrackListContentTrack";
 import { TopTracksDetailsType } from "../../types";
 import "./styles/track-list.css";
 import { HandleSelectedTrackType } from "./TrackList";
@@ -25,7 +25,7 @@ const TrackListContent = ({
         {tracks &&
           tracks.map((track, i) => {
             return (
-              <TrackListTrack
+              <TrackListContentTrack
                 key={i}
                 track={track}
                 hidden={is900}

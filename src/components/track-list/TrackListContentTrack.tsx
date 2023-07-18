@@ -9,7 +9,7 @@ type PropTypes = {
   handleSelectedTrack: HandleSelectedTrackType;
 };
 
-const TrackListTrack = ({
+const TrackListContentTrack = ({
   track,
   hidden,
   handleSelectedTrack,
@@ -49,4 +49,4 @@ const TrackListTrack = ({
   );
 };
 
-export default memo(TrackListTrack);
+export default memo(TrackListContentTrack);

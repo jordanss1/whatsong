@@ -1,4 +1,4 @@
-import { ReactElement, useContext } from "react";
+import { ReactElement, useContext, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import MainSearch from "./main-search/MainSearch";
@@ -18,7 +18,7 @@ const App = (): ReactElement => {
     <>
       <AnimatePresence mode="wait">
         {(loading || error || noResults) && (
-          <Modal noResults={noResults} error={error} loading={loading} />
+          <Modal pathname={location.pathname} noResults={noResults} error={error} loading={loading} />
         )}
       </AnimatePresence>
       <AnimatePresence mode="wait">

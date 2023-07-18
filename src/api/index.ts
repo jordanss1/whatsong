@@ -53,7 +53,11 @@ const spotifyTokenFunction: SpotifyTokenFunctionType = async (cancelToken) => {
 };
 
 export const spotifyArtistDetailsSearch: SpotifyArtistDetailsSearchType =
-  async (id, cancelToken, setArtistDetails) => {
+  async (id, cancelToken, setArtistDetails, setLoading) => {
+    let timer;
+
+    timer = setTimeout(() => setLoading(true), 1000);
+
     const artistAndAlbum = [
       `${id}`,
       `${id}/albums?include_groups=album&limit=50`,
@@ -67,7 +71,7 @@ export const spotifyArtistDetailsSearch: SpotifyArtistDetailsSearchType =
     }
 
     if (data instanceof Error) {
-      setArtistDetails(null, [], [], data);
+      setArtistDetails(null, null, null, data);
       return;
     }
 
@@ -112,15 +116,19 @@ export const spotifyArtistDetailsSearch: SpotifyArtistDetailsSearchType =
           `Issue retrieving artist detail: ${err.message} please search again`
         );
 
-        setArtistDetails(null, [], [], error);
+        setArtistDetails(null, null, null, error);
       }
     } finally {
+      clearTimeout(timer);
+      setLoading(false);
       cancelToken.current = null;
     }
   };
 
 export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
-  async (query, cancelToken, typeOfSearch, setArtistOrTracks) => {
+  async (query, cancelToken, typeOfSearch, setArtistOrTracks, setLoading) => {
+    const timer = setTimeout(() => setLoading(true), 300);
+
     let data = await spotifyTokenFunction(cancelToken);
 
     const searchType = `${typeOfSearch}s`;
@@ -172,6 +180,8 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
         setArtistOrTracks(undefined, undefined, error);
       }
     } finally {
+      clearTimeout(timer);
+      setLoading(false);
       cancelToken.current = null;
     }
   };
