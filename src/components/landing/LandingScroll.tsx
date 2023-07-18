@@ -8,11 +8,11 @@ import "./styles/landing.css";
 
 const LandingScroll = (): ReactElement => {
   return (
-    <motion.div
-      whileHover={{ scale: [null, 1.1] }}
-      className="ribbon-div w-100 d-flex justify-content-center"
-    >
-      <div className="scolling-container d-flex">
+    <motion.div className="ribbon-div w-100 d-flex justify-content-center">
+      <motion.div
+        whileHover={{ scale: [null, 1.1] }}
+        className="scolling-container d-flex"
+      >
         <div className="framer-icon">
           <SVGFramer />
         </div>
@@ -25,7 +25,7 @@ const LandingScroll = (): ReactElement => {
         <div className="typescript-icon">
           <SVGTypeScript />
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
