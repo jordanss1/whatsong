@@ -76,3 +76,15 @@
   color: rgb(255, 255, 255, 0.5);
   width: 30px !important;
 }
+
+@media screen and (max-width: 553px) {
+  .search-input-container {
+    justify-content: center !important;
+  }
+}
+
+@media screen and (max-width: 468px) {
+  .search-button-nav {
+    margin-left: auto;
+  }
+}

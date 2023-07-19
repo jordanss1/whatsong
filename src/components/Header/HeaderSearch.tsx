@@ -48,9 +48,10 @@ const HeaderSearch = ({
 }: HeaderSearchPropsType): ReactElement => {
   const is468 = useMediaQuery(468);
 
-  const flex = is468
-    ? "justify-content-start justify-content-evenly"
-    : "justify-content-center";
+  const flex =
+    is468 && headerCycle === "transparent"
+      ? "justify-content-start"
+      : "justify-content-center";
 
   return (
     <motion.header
