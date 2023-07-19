@@ -1,6 +1,23 @@
 import React, { useEffect } from "react";
 import { MotionValue, Variants, motion } from "framer-motion";
 
+const containerVarients: Variants = {
+  initial: { opacity: 1 },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+    },
+  },
+  exit: {
+    y: -300,
+    transition: {
+      duration: 1,
+      delay: 1.3,
+    },
+  },
+};
+
 const boxVariants: Variants = {
   hidden: {
     opacity: 0,
@@ -66,45 +83,54 @@ const letterVariants: Variants = {
 
 const HeaderLanding = () => {
   return (
-    <motion.div
-      style={{ gridRow: 1, gridColumn: 1 }}
-      className="header-container text-uppercase"
-      variants={boxVariants}
-      initial="hidden"
-      animate="visible"
+    <motion.header
+      variants={containerVarients}
+      initial="initial"
+      exit="exit"
+      animate="animate"
+      className="header-landing d-flex align-items-center justify-content-center px-4"
       layout
     >
       <motion.div
-        custom={true}
-        exit="exit"
+        style={{ gridRow: 1, gridColumn: 1 }}
+        className="header-container text-uppercase"
+        variants={boxVariants}
+        initial="hidden"
         animate="visible"
-        variants={letterVariants}
+        layout
       >
-        w
+        <motion.div
+          custom={true}
+          exit="exit"
+          animate="visible"
+          variants={letterVariants}
+        >
+          w
+        </motion.div>
+        <motion.div
+          exit="exit"
+          variants={wordVariants}
+          className="me-1 pt-2 extraText fs-5"
+        >
+          .hat
+        </motion.div>
+        <motion.div
+          custom={false}
+          exit="exit"
+          animate="visible"
+          variants={letterVariants}
+        >
+          s
+        </motion.div>
+        <motion.div
+          exit="exit"
+          variants={wordVariants}
+          className="ms-2 extraText fs-5"
+        >
+          .ong
+        </motion.div>
       </motion.div>
-      <motion.div
-        exit="exit"
-        variants={wordVariants}
-        className="me-1 pt-2 extraText fs-5"
-      >
-        .hat
-      </motion.div>
-      <motion.div
-        custom={false}
-        exit="exit"
-        animate="visible"
-        variants={letterVariants}
-      >
-        s
-      </motion.div>
-      <motion.div
-        exit="exit"
-        variants={wordVariants}
-        className="ms-2 extraText fs-5"
-      >
-        .ong
-      </motion.div>
-    </motion.div>
+    </motion.header>
   );
 };
 

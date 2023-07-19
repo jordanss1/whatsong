@@ -5,15 +5,12 @@ import {
   useContext,
   useEffect,
 } from "react";
-import SearchContext from "../contexts/searchContext/SearchStore";
-import "../styles/all.css";
+import SearchContext from "../../contexts/searchContext/SearchStore";
+import "./styles/searchbar.css";
+import SearchButton from "./SearchButton";
 
-const SearchBar = ({
-  setSearched,
-}: {
-  setSearched: React.Dispatch<React.SetStateAction<boolean>>;
-}): ReactElement => {
-  const { handleArtistsOrSongsSearch, artists, tracks } =
+const SearchBar = (): ReactElement => {
+  const { handleArtistsOrSongsSearch, artists, tracks, setSearched } =
     useContext(SearchContext);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -53,14 +50,7 @@ const SearchBar = ({
           placeholder={`${artists ? "Search artists" : "Search songs"}`}
           type="text"
         />
-        <button
-          role="searchList-button"
-          disabled={!searchTerm}
-          type="submit"
-          className="search-button"
-        >
-          <i className="search icon fs-5" />
-        </button>
+        <SearchButton searchTerm={searchTerm} />
       </div>
     </form>
   );

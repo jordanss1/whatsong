@@ -1,15 +1,16 @@
-import { ReactElement, useContext, useEffect, useState } from "react";
+import { ReactElement, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
   motion,
   Variants,
   AnimatePresence,
   useScroll,
-  useTransform,
+  useAnimationControls,
+  useCycle,
 } from "framer-motion";
 import Header from "../header/Header";
 import ArtistListGrid from "./ArtistListGrid";
-import SearchBar from "../SearchBar";
+import ArtistListSearchBar from "./ArtistListSearchBar";
 import SearchContext from "../../contexts/searchContext/SearchState";
 import "./styles/artist-list.css";
 
@@ -39,36 +40,13 @@ const artistContainerVariants: Variants = {
   },
 };
 
-const artistSearchBarVariants: Variants = {
-  initial: {
-    x: -100,
-    opacity: 0,
-  },
-  animate: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-    },
-  },
-  exit: {
-    x: 100,
-    opacity: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-
 const ArtistList = (): ReactElement => {
-  const { artists, setArtistsOrTracks } = useContext(SearchContext);
-  const [searched, setSearched] = useState(false);
+  const { artists, setArtistsOrTracks, searched } = useContext(SearchContext);
 
   const { scrollY } = useScroll();
 
-  const opacity = useTransform(scrollY, [20, 60], [1, 0]);
-
-  scrollY.on("change", () => console.log(scrollY.get()));
+  const controls = useAnimationControls();
+  const [headerCycle, cycleHeader] = useCycle("animate", "transparent");
 
   const location = useLocation();
 
@@ -82,6 +60,30 @@ const ArtistList = (): ReactElement => {
     }
   }, []);
 
+  useEffect(() => {
+    scrollY.on("change", async () => {
+      if (scrollY.get() > 55) {
+        await controls.start({
+          opacity: 0,
+          x: 20,
+          transition: {
+            duration: 0.3,
+          },
+        });
+        cycleHeader(1);
+      } else {
+        cycleHeader(0);
+        await controls.start({
+          opacity: 1,
+          x: 0,
+          transition: {
+            duration: 0.3,
+          },
+        });
+      }
+    });
+  }, []);
+
   return (
     <>
       {artists && (
@@ -92,17 +94,10 @@ const ArtistList = (): ReactElement => {
           exit="exit"
           className="artistWholeListContainer d-flex flex-column px-1"
         >
-          <Header scrollY={scrollY} path={location.pathname} />
+          <Header headerCycle={headerCycle} path={location.pathname} />
           <div className="filler-div" />
           <section className="w-100 h-100 artist-list-container d-grid py-4 px-1">
-            <motion.div
-              variants={artistSearchBarVariants}
-              className="align-items-center justify-content-end d-flex search-input-container"
-            >
-              {/* <motion.div style={{ opacity }}> */}
-                <SearchBar setSearched={setSearched} />
-              {/* </motion.div> */}
-            </motion.div>
+            <ArtistListSearchBar controls={controls} />
             <AnimatePresence mode="wait">
               {!searched && (
                 <ArtistListGrid searched={searched} artists={artists} />

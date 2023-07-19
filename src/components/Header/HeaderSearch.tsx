@@ -1,89 +1,84 @@
-import { ReactElement, useContext, useEffect } from "react";
-import { MotionValue, motion, useMotionValue } from "framer-motion";
-import { NavLink } from "react-router-dom";
-import LandingCircles from "../landing/LandingCircles";
+import { ReactElement } from "react";
+import { motion, Variants } from "framer-motion";
+import HeaderSearchLogo from "./HeaderSearchLogo";
+import SearchBar from "../searchbar/SearchBar";
+import SearchButton from "../searchbar/SearchButton";
+import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import "./styles/header.css";
 
+const containerVarients: Variants = {
+  initial: { opacity: 0 },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+      delay: 1,
+    },
+  },
+  exit: {
+    y: -300,
+    transition: {
+      duration: 0.5,
+      delay: 0,
+    },
+  },
+  transparent: {
+    background:
+      "linear-gradient(to right,rgb(0, 3, 55, .5) 10%,rgb(0, 3, 79) 50%,rgb(0, 3, 55, .5) 95%)",
+    opacity: 1,
+  },
+};
+
+const searchBarVariants: Variants = {
+  initial: { y: -20, opacity: 0 },
+  animate: { y: 0, opacity: 1 },
+  exit: { y: -20, opacity: 0 },
+};
+
+type HeaderSearchPropsType = {
+  headerCycle: string;
+  searchCycle: boolean;
+  handleClick: () => void;
+};
+
 const HeaderSearch = ({
-  scrollY,
-}: {
-  scrollY: MotionValue<number>;
-}): ReactElement => {
-  const x = useMotionValue(0);
-  const opacity = useMotionValue(0);
+  headerCycle,
+  handleClick,
+  searchCycle,
+}: HeaderSearchPropsType): ReactElement => {
+  const is468 = useMediaQuery(468);
 
-  const color = useMotionValue("rgba(30, 215, 96)");
-
-  x.on("change", (latest) => {
-    if (Math.round(latest) >= 45) {
-      color.set("rgba(30, 215, 96)");
-    } else {
-      color.set("rgba(30, 215, 96, 0.5)");
-    }
-  });
+  const flex = is468
+    ? "justify-content-start justify-content-evenly"
+    : "justify-content-center";
 
   return (
-    <NavLink className="text-uppercase text-decoration-none" to={"/search"}>
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        className="d-flex listNavbar px-5"
-      >
+    <motion.header
+      variants={containerVarients}
+      initial="initial"
+      animate={headerCycle}
+      exit="exit"
+      className="header-search d-flex flex-column align-items-center justify-content-center"
+      layout
+    >
+      <div className={`d-flex ${flex} align-items-center px-3 w-100`}>
+        <HeaderSearchLogo />
+        {headerCycle === "transparent" && (
+          <SearchButton x={is468 ? 0 : 25} size={4} handleClick={handleClick} />
+        )}
+      </div>
+      {searchCycle && headerCycle === "transparent" && (
         <motion.div
-          style={{ opacity }}
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            transition: {
-              delay: 1.5,
-              duration: 0.5,
-            },
-          }}
-          className="text-lowercase"
+          variants={searchBarVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="header-search-bar px-3"
         >
-          <span className="w">w.</span>
-          <span className="pink me-2">s</span>
+          <SearchBar />
         </motion.div>
-        <motion.span
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-            transition: {
-              delay: 1.5,
-              duration: 0.5,
-            },
-          }}
-          className="underScore ms-1"
-        >
-          _
-        </motion.span>
-        <motion.div
-          initial={{
-            opacity: 0,
-            x: 300,
-          }}
-          animate={{
-            opacity: 1,
-            x: 0,
-            transition: {
-              delay: 1,
-              duration: 0.5,
-            },
-          }}
-          className="d-flex align-items-end ps-2 pb-3 listSpotify"
-        >
-          <h2 className="fs-6 me-2 mt-3 poweredList text-lowercase">
-            powered by
-          </h2>
-          <motion.i
-            style={{ color }}
-            className="spotify icon mb-1 pe-1 spotifyIconList"
-          ></motion.i>
-        </motion.div>
-        <LandingCircles x={x} containerStyle={{ bottom: 0, right: "45px" }} />
-      </motion.div>
-    </NavLink>
+      )}
+    </motion.header>
   );
 };
 

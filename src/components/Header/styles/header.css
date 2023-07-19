@@ -38,8 +38,22 @@
   );
 
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
   overflow: hidden;
+}
+
+.header-search-bar {
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+  background: linear-gradient(
+    45deg,
+    rgb(21, 21, 21, 0.5),
+    rgba(0, 0, 0),
+    rgb(21, 21, 21, 0.5)
+  );
+  border-radius: 10px;
 }
 
 .navClassList {
@@ -79,9 +93,7 @@
 }
 
 .listNavbar {
-  max-width: 400px;
-  position: relative;
-  left: 25px;
+  max-width: 260px;
   user-select: none;
 }
 
@@ -100,10 +112,4 @@
 .underScore {
   color: rgb(255, 255, 255, 0.4);
   font-weight: 900;
-}
-
-@media screen and (max-width: 576px) {
-  .navClassList {
-    position: sticky;
-  }
 }

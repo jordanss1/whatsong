@@ -1,5 +1,5 @@
 import { ReactElement, memo } from "react";
-import SearchBar from "../SearchBar";
+import SearchBar from "../searchbar/SearchBar";
 import TrackListContentTrack from "./TrackListContentTrack";
 import { TopTracksDetailsType } from "../../types";
 import "./styles/track-list.css";

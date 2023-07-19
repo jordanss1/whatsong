@@ -16,6 +16,7 @@ export const SearchState = () => {
   const [selectedTrack, setSelectedTrack] =
     useState<Required<TopTracksDetailsType> | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [searched, setSearched] = useState(false);
 
   const cancelToken = useRef<CancelTokenSource | null>(null);
 
@@ -68,6 +69,8 @@ export const SearchState = () => {
   if (artistOrTrackError) error = artistOrTrackError;
 
   const providerValues = {
+    searched,
+    setSearched,
     error,
     noResults,
     setLoading,
@@ -98,6 +101,8 @@ export const SearchState = () => {
 export type UseSearchStateContext = ReturnType<typeof SearchState>;
 
 const initSearchContextState: UseSearchStateContext = {
+  searched: false,
+  setSearched: () => {},
   error: null,
   noResults: null,
   setLoading: () => {},

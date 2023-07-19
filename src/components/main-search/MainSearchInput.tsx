@@ -1,5 +1,6 @@
 import { FormEvent, ReactElement } from "react";
 import { motion, Variants } from "framer-motion";
+import SearchButton from "../searchbar/SearchButton";
 
 const wrapperVariants: Variants = {
   initial: {
@@ -60,13 +61,7 @@ const MainSearchInput = ({
             placeholder="Search"
             type="text"
           />
-          <button
-            disabled={!searchTerm}
-            type="submit"
-            className="search-button"
-          >
-            <i className="search icon fs-5" />
-          </button>
+          <SearchButton searchTerm={searchTerm} />
         </motion.div>
       </div>
     </form>
