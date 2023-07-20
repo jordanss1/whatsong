@@ -8,6 +8,7 @@ import ArtistDetailsTopTracks from "./ArtistDetailsTopTracks";
 import { motion } from "framer-motion";
 import ArtistDetailsArtist from "./ArtistDetailsArtist";
 import "./styles/artist-details.css";
+import Exit from "../Exit";
 
 const ArtistDetails = (): ReactElement => {
   const {
@@ -58,10 +59,7 @@ const ArtistDetails = (): ReactElement => {
           <section className="w-100 h-100 d-grid artistRight">
             <div className="d-flex flex-column align-items-center justify-content-end artistHeading">
               <div className="w-100 d-flex justify-content-end pe-5">
-                <i
-                  onClick={() => navigate("artists")}
-                  className="window close outline icon iconRed fs-1"
-                ></i>
+                <Exit size={1} handleClick={() => navigate("/artists")} />
               </div>
               <Loader />
             </div>

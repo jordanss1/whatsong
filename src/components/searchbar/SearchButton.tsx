@@ -1,8 +1,8 @@
 import { ReactElement, useContext, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import "./styles/searchbar.css";
-import Caret from "./Caret";
-import Magnifier from "./Magnifier";
+import Caret from "../Caret";
+import Magnifier from "../Magnifier";
 import SearchContext from "../../contexts/searchContext/SearchState";
 
 type SearchButtonPropsTypes = {

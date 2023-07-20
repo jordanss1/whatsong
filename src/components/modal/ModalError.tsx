@@ -38,7 +38,7 @@ const ModalError = ({
   const button = error ? "Retry" : "Search again";
 
   return (
-    <div className="error-container d-flex align-items-center justify-content-center px-5">
+    <div className="error-container w-100 d-flex align-items-center justify-content-center px-3">
       <motion.div
         variants={errorVariants}
         className="error-message w-100 d-flex flex-column"

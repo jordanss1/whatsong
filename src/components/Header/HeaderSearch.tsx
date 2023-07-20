@@ -1,7 +1,6 @@
-import { ReactElement } from "react";
+import { ReactElement, memo } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import HeaderSearchLogo from "./HeaderSearchLogo";
-import SearchBar from "../searchbar/SearchBar";
 import SearchButton from "../searchbar/SearchButton";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import "./styles/header.css";
@@ -49,27 +48,33 @@ const HeaderSearch = ({
       : "justify-content-center";
 
   return (
-    <motion.header
-      variants={containerVarients}
-      initial="initial"
-      animate={headerCycle}
-      exit="exit"
-      className="header-search d-flex flex-column align-items-center justify-content-center"
-      layout
-    >
-      <div className={`d-flex ${flex} align-items-center px-3 w-100`}>
-        <HeaderSearchLogo />
-        {headerCycle === "transparent" && (
-          <SearchButton x={is468 ? 0 : 25} size={4} handleClick={handleClick} />
-        )}
-      </div>
+    <header className="header-search-container w-100 d-flex flex-column align-items-center justify-content-center">
+      <motion.div
+        variants={containerVarients}
+        initial="initial"
+        animate={headerCycle}
+        exit="exit"
+        className="header-search w-100 d-flex align-items-center justify-content-center"
+        layout
+      >
+        <div className={`d-flex ${flex} h-100 align-items-center px-3 w-100`}>
+          <HeaderSearchLogo />
+          {headerCycle === "transparent" && (
+            <SearchButton
+              x={is468 ? 0 : 25}
+              size={4}
+              handleClick={handleClick}
+            />
+          )}
+        </div>
+      </motion.div>
       <AnimatePresence onExitComplete={() => handleClick(true)}>
         {searchCycle && headerCycle === "transparent" && (
           <HeaderSearchSearchBar />
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 };
 
-export default HeaderSearch;
+export default memo(HeaderSearch);

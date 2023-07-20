@@ -49,11 +49,14 @@ const ArtistOrAlbumCard = ({
 
   if (!index) index = 0;
 
-  if (index % 5 === 0) index = index % 5;
-  if (index % 6 === 0) index = index % 5;
-  if (index % 7 === 0) index = index % 5;
-  if (index % 8 === 0) index = index % 5;
-  if (index % 9 === 0) index = index % 5;
+  if (index % 1) index = 1;
+  if (index % 2) index = 2;
+  if (index % 3) index = 3;
+  if (index % 4) index = 4;
+  if (index % 5) index = 5;
+
+  let transform = isInView ? "translateX(0)" : "translateX(-100px)";
+  let opacity = isInView ? 1 : 0;
 
   let handleProfileClickFunc = handleProfileClick
     ? () => handleProfileClick(artistId)
@@ -91,9 +94,9 @@ const ArtistOrAlbumCard = ({
     >
       <motion.div
         style={{
-          transform: isInView ? "translateX(0)" : "translateX(-100px)",
-          opacity: isInView ? 1 : 0,
-          transition: `all 0.9s ${0.01 * index}s`,
+          transform,
+          opacity,
+          transition: `all 0.6s ${0.05 * index}s`,
         }}
         onClick={handleProfileClickFunc}
         className="image d-flex justify-content-center align-items-center artist-image"
@@ -106,9 +109,9 @@ const ArtistOrAlbumCard = ({
       </motion.div>
       <motion.h3
         style={{
-          transform: isInView ? "translateX(0)" : "translateX(-100px)",
-          opacity: isInView ? 1 : 0,
-          transition: `all 0.9s ${0.01 * index}s`,
+          transform,
+          opacity,
+          transition: `all 0.6s ${0.03 * index}s`,
         }}
         onClick={handleProfileClickFunc}
         className="header fs-5 text-center w-100 pt-2"

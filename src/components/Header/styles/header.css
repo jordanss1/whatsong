@@ -26,17 +26,20 @@
   overflow: hidden;
 }
 
-.header-search {
+.header-search-container {
+  height: auto;
   position: fixed;
-  width: 100%;
   z-index: 2;
+}
+
+.header-search {
   background: linear-gradient(
     to right,
     rgb(0, 3, 55) 20%,
     rgb(0, 3, 79) 50%,
     rgb(0, 3, 55) 80%
   );
-
+  height: 90px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   overflow: hidden;
 }
@@ -44,14 +47,14 @@
 .header-search-bar {
   z-index: 2;
   width: 100%;
+  padding: 10px 0;
   display: flex;
   justify-content: center;
-  padding: 15px 0;
   background: linear-gradient(
     45deg,
-    rgb(21, 21, 21, 0.5),
-    rgba(0, 0, 0),
-    rgb(21, 21, 21, 0.5)
+    rgb(10, 10, 10, 0),
+    rgba(0, 0, 0, 0),
+    rgb(10, 10, 0, 0)
   );
 }
 

@@ -23,7 +23,7 @@ const artistContainerVariants: Variants = {
     transition: {
       delay: 0.5,
       duration: 0.5,
-      staggerChildren: 0.02,
+      staggerChildren: 0.5,
       when: "beforeChildren",
     },
   },
@@ -33,7 +33,7 @@ const artistContainerVariants: Variants = {
     transition: {
       duration: 0.3,
       when: "afterChildren",
-      staggerChildren: 0.005,
+      staggerChildren: 0.5,
     },
   },
 };
@@ -63,6 +63,8 @@ const ArtistList = (): ReactElement => {
         cycleHeader(0);
       }
     });
+
+    return () => scrollY.clearListeners();
   }, []);
 
   return (

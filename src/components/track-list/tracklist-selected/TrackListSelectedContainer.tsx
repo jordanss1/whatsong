@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
 import { Variants, motion } from "framer-motion";
-import { TopTracksDetailsType } from "../../types";
+import { TopTracksDetailsType } from "../../../types";
 import TrackListSelectedTrack from "./TrackListSelectedTrack";
 import TrackListSelectedNone from "./TrackListSelectedNone";
-import "./styles/track-list.css";
-import { HandleSelectedTrackType } from "./TrackList";
+import "../styles/track-list.css";
+import { HandleSelectedTrackType } from "../TrackList";
 
 const selectedContainerVariant: Variants = {
   initial: {
@@ -40,18 +40,20 @@ const TrackListSelectedContainer = ({
     <motion.div
       variants={selectedContainerVariant}
       layout
-      className={`selectedDiv d-flex align-items-center ${
-        selectedTrack ? "flex-column" : ""
-      } justify-content-evenly`}
+      className="selected-container"
     >
-      {selectedTrack ? (
-        <TrackListSelectedTrack
-          selectedTrack={selectedTrack}
-          handleSelectedTrack={handleSelectedTrack}
-        />
-      ) : (
-        <TrackListSelectedNone />
-      )}
+      <motion.div
+        className={`selected-inner d-flex align-items-center flex-column justify-content-evenly`}
+      >
+        {selectedTrack ? (
+          <TrackListSelectedTrack
+            selectedTrack={selectedTrack}
+            handleSelectedTrack={handleSelectedTrack}
+          />
+        ) : (
+          <TrackListSelectedNone />
+        )}
+      </motion.div>
     </motion.div>
   );
 };

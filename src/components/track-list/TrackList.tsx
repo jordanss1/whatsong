@@ -1,8 +1,9 @@
 import { useContext, useEffect } from "react";
 import { motion, useCycle, useScroll, Variants } from "framer-motion";
 import Header from "../header/Header";
-import TrackListSelectedContainer from "./TrackListSelectedContainer";
-import TrackListGrid from "./TrackListGrid";
+import TrackListSelectedContainer from "./tracklist-selected/TrackListSelectedContainer";
+import TrackListGridSearchBar from "./tracklist-grid/TrackListGridSearchBar";
+import TrackListGrid from "./tracklist-grid/TrackListGrid";
 import SearchContext from "../../contexts/searchContext/SearchState";
 import { TopTracksDetailsType } from "../../types";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
@@ -15,7 +16,7 @@ export type HandleSelectedTrackType = (
 const trackContainerVariants: Variants = {
   initial: {
     background:
-      "radial-gradient(circle at 100% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at 0% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%)",
+      "radial-gradient(circle at 110% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at -10% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%)",
   },
   animate: {
     background:
@@ -23,7 +24,7 @@ const trackContainerVariants: Variants = {
     transition: {
       delay: 0.5,
       duration: 0.5,
-      staggerChildren: 0.02,
+      staggerChildren: 0.1,
       when: "beforeChildren",
     },
   },
@@ -33,14 +34,19 @@ const trackContainerVariants: Variants = {
     transition: {
       duration: 0.3,
       when: "afterChildren",
-      staggerChildren: 0.005,
+      staggerChildren: 0.02,
     },
   },
 };
 
 const TrackList = () => {
-  const { setSelectedTrack, setArtistsOrTracks, tracks, selectedTrack } =
-    useContext(SearchContext);
+  const {
+    setSelectedTrack,
+    setArtistsOrTracks,
+    tracks,
+    selectedTrack,
+    searched,
+  } = useContext(SearchContext);
 
   const [headerCycle, cycleHeader] = useCycle("animate", "transparent");
 
@@ -48,12 +54,14 @@ const TrackList = () => {
 
   useEffect(() => {
     scrollY.on("change", async () => {
-      if (scrollY.get() > 70) {
+      if (scrollY.get() > 55) {
         cycleHeader(1);
       } else {
         cycleHeader(0);
       }
     });
+
+    return () => scrollY.clearListeners();
   }, []);
 
   const is900 = useMediaQuery(900);
@@ -72,31 +80,37 @@ const TrackList = () => {
   };
 
   return (
-    <motion.main
-      variants={trackContainerVariants}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      className="whole-songs-container"
-    >
-      <Header headerCycle={headerCycle} />
-      <div className="filler-div" />
-      <section className="w-100 whole-songs-section d-grid">
-        {!is900 && (
-          <TrackListSelectedContainer
-            selectedTrack={selectedTrack}
-            handleSelectedTrack={handleSelectedTrack}
-          />
-        )}
-        <div className="track-list-empty-div" />
-        <TrackListGrid
-          handleSelectedTrack={handleSelectedTrack}
-          is900={is900}
-          tracks={tracks}
-          cycle={headerCycle}
-        />
-      </section>
-    </motion.main>
+    <>
+      {tracks && (
+        <motion.main
+          variants={trackContainerVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="whole-songs-container"
+        >
+          <Header headerCycle={headerCycle} />
+          <div className="filler-div" />
+          <section className="w-100 whole-songs-section d-grid">
+            {!is900 && (
+              <TrackListSelectedContainer
+                selectedTrack={selectedTrack}
+                handleSelectedTrack={handleSelectedTrack}
+              />
+            )}
+            <div className="track-list-empty-div" />
+            <motion.div className="track-list-container d-flex align-items-center flex-column">
+              <TrackListGridSearchBar cycle={headerCycle} />
+              <TrackListGrid
+                handleSelectedTrack={handleSelectedTrack}
+                is900={is900}
+                tracks={tracks}
+              />
+            </motion.div>
+          </section>
+        </motion.main>
+      )}
+    </>
   );
 };
 

@@ -17,7 +17,7 @@ const backgroundVariants: Variants = {
     backgroundColor: "rgba(0, 0, 0, 0)",
   },
   visible: (error) => ({
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
     transition: {
       delay: error ? 0.2 : 0,
       duration: 0.3,
@@ -53,7 +53,7 @@ const Modal = ({
       setArtistsOrTracks(JSON.parse(artists));
     }
 
-    if (pathname !== "/search" && tracks) {
+    if (pathname !== "/tracks" && tracks) {
       setArtistsOrTracks(JSON.parse(tracks));
     }
   };
@@ -66,7 +66,10 @@ const Modal = ({
       animate="visible"
       exit="exit"
       className="modal-background w-100"
-      onClick={() => handleClick()}
+      onClick={(e) => {
+        if (e.target !== e.currentTarget || loading) return;
+        handleClick();
+      }}
     >
       <AnimatePresence>{loading && <ModalLoader />}</AnimatePresence>
       <AnimatePresence>

@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useReducer, useMemo } from "react";
 import { ArtistsType, TopTracksDetailsType } from "../types";
 
 const REDUCER_ACTION_TYPES = {
@@ -11,8 +11,8 @@ const actionTypeArray = [...Object.values(REDUCER_ACTION_TYPES)] as const;
 type ActionTypes = (typeof actionTypeArray)[number];
 
 type ReducerStateType = {
-  artists: ArtistsType[] | null;
-  tracks: Required<TopTracksDetailsType>[] | null;
+  reducerArtists: ArtistsType[] | null;
+  reducerTracks: Required<TopTracksDetailsType>[] | null;
   artistOrTrackError?: Error | null;
   noResults: boolean | null;
 };
@@ -39,8 +39,8 @@ export type ArtistsAndTracksSetterType = (
 export type ResetModelOrSpotifyType = (state: "modal" | "spotify") => void;
 
 const initialState: ReducerStateType = {
-  artists: null,
-  tracks: null,
+  reducerArtists: null,
+  reducerTracks: null,
   artistOrTrackError: null,
   noResults: null,
 };
@@ -54,23 +54,26 @@ export const useArtistsOrTracks = () => {
             throw new Error("ADD_ARTISTS_TRACKS action must have a payload");
           }
 
-          let artists = action.payload.artists;
-          let tracks = action.payload.tracks;
-          let noResults = artists?.length || tracks?.length ? false : true;
+          let reducerArtists = action.payload.artists;
+          let reducerTracks = action.payload.tracks;
+
+          let noResults =
+            reducerArtists?.length || reducerTracks?.length ? false : true;
+
           let artistOrTrackError = action.payload.artistOrTrackError;
 
-          if (!artists?.length) {
-            artists = state.artists;
+          if (!reducerArtists?.length) {
+            reducerArtists = state.reducerArtists;
           }
 
-          if (!tracks?.length) {
-            tracks = state.tracks;
+          if (!reducerTracks?.length) {
+            reducerTracks = state.reducerTracks;
           }
 
           return {
             ...state,
-            tracks,
-            artists,
+            reducerTracks,
+            reducerArtists,
             noResults,
             artistOrTrackError,
           };
@@ -85,8 +88,8 @@ export const useArtistsOrTracks = () => {
 
           return {
             ...state,
-            artists: reset === "spotify" ? null : state.artists,
-            tracks: reset === "spotify" ? null : state.tracks,
+            reducerArtists: reset === "spotify" ? null : state.reducerArtists,
+            reducerTracks: reset === "spotify" ? null : state.reducerTracks,
             artistOrTrackError: null,
             noResults: null,
           };
@@ -134,7 +137,12 @@ export const useArtistsOrTracks = () => {
     });
   }, []);
 
-  const { artists, tracks, artistOrTrackError, noResults } = artistsAndTracks;
+  const { reducerArtists, reducerTracks, artistOrTrackError, noResults } =
+    artistsAndTracks;
+
+  const artists = useMemo(() => reducerArtists, [reducerArtists]);
+
+  const tracks = useMemo(() => reducerTracks, [reducerTracks]);
 
   return {
     artists,

@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
 import { motion, Variants } from "framer-motion";
-import "./styles/searchbar.css";
 
 type MagniferPropsType = {
   size: number;
@@ -21,7 +20,11 @@ const emptyVariant = {
   hover: {},
 };
 
-const Magnifier = ({ searchTerm, handleClick, size }: MagniferPropsType) => {
+const Magnifier = ({
+  searchTerm,
+  handleClick,
+  size,
+}: MagniferPropsType): ReactElement => {
   return (
     <motion.i
       layout

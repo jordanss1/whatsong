@@ -12,15 +12,17 @@ import { TopTracksDetailsType } from "../../types";
 import { TrackOrAlbumFuncType as SetTopTrackType } from "../../hooks/DetailedArtistResultHooks";
 import "./styles/artist-details.css";
 
+type ArtistDetailsTopTracksPropTypes = {
+  topTracks: TopTracksDetailsType[] | null;
+  topTrack: TopTracksDetailsType | null;
+  setTopTrack: SetTopTrackType;
+};
+
 const ArtistDetailsTopTracks = ({
   topTracks,
   topTrack,
   setTopTrack,
-}: {
-  topTracks: TopTracksDetailsType[];
-  topTrack: TopTracksDetailsType | null;
-  setTopTrack: SetTopTrackType;
-}) => {
+}: ArtistDetailsTopTracksPropTypes) => {
   const isWidth992 = useMediaQuery(992);
 
   const containerWidth = () => {
@@ -56,7 +58,9 @@ const ArtistDetailsTopTracks = ({
         <div className="d-flex justify-content-start smallArrowDiv">
           <LeftArrow
             testId="smallLeft"
-            style={topTracks.length > 1 ? leftSmall : leftSmallDisabled}
+            style={
+              topTracks && topTracks.length > 1 ? leftSmall : leftSmallDisabled
+            }
             func={setTopTrack}
           />
         </div>
@@ -64,7 +68,11 @@ const ArtistDetailsTopTracks = ({
         <div className="d-flex justify-content-end smallArrowDiv">
           <RightArrow
             testId="smallRight"
-            style={topTracks.length > 1 ? rightSmall : rightSmallDisabled}
+            style={
+              topTracks && topTracks.length > 1
+                ? rightSmall
+                : rightSmallDisabled
+            }
             func={setTopTrack}
           />
         </div>

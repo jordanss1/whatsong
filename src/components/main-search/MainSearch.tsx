@@ -61,7 +61,7 @@ const searchVarients: Variants = {
     background:
       category === "artist"
         ? "radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)"
-        : "radial-gradient(circle at 100% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at 0% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%)",
+        : "radial-gradient(circle at 110% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at -10% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%)",
     transition: {
       duration: 1,
       ease: "easeInOut",
@@ -86,6 +86,7 @@ const MainSearch = (): ReactElement => {
     resetModalOrSpotify,
     error,
     noResults,
+    setLoading,
   } = useContext<UseSearchStateContext>(SearchContext);
 
   const [category, setCategory] = useState<string>("");
@@ -107,6 +108,7 @@ const MainSearch = (): ReactElement => {
   useEffect(() => {
     resetModalOrSpotify("spotify");
     setSelectedTrack(null);
+    setLoading(false);
     const category = sessionStorage.getItem("category");
 
     if (category) {
@@ -125,6 +127,7 @@ const MainSearch = (): ReactElement => {
     const key = artists ? "artists" : "tracks";
 
     if ((artists || tracks) && !error && category) {
+      sessionStorage.clear();
       setSearchTerm("");
       sessionStorage.setItem(key, JSON.stringify(item));
       navigate(artists ? "/artists" : "/tracks");
@@ -198,7 +201,6 @@ const MainSearch = (): ReactElement => {
 
   const handleFormSubmit = (e: FormEvent, searchTerm: string) => {
     e.preventDefault();
-    sessionStorage.clear();
     handleArtistsOrSongsSearch(searchTerm, category);
   };
 

@@ -1,10 +1,4 @@
-import {
-  ReactElement,
-  useEffect,
-  useContext,
-  useCallback,
-  useState,
-} from "react";
+import { ReactElement, useEffect, useContext, useCallback } from "react";
 import HeaderLanding from "./HeaderLanding";
 import HeaderSearch from "./HeaderSearch";
 import { AnimatePresence, useCycle } from "framer-motion";
@@ -21,18 +15,15 @@ const Header = ({ headerCycle }: HeaderPropsType): ReactElement => {
 
   const [searchCycle, cycleSearch] = useCycle(false, true);
 
-  const handleClick = useCallback(
-    (exit?: boolean) => {
-      if (exit) {
-        setModal(false);
-        cycleSearch(0);
-      } else {
-        cycleSearch(searchCycle ? 0 : 1);
-        setModal((prev) => !prev);
-      }
-    },
-    [searchCycle, headerCycle]
-  );
+  const handleClick = useCallback((exit?: boolean) => {
+    if (exit) {
+      setModal(false);
+      cycleSearch(0);
+    } else {
+      cycleSearch(searchCycle ? 0 : 1);
+      setModal((prev) => !prev);
+    }
+  }, []);
 
   useEffect(() => {
     if (!modal) cycleSearch(0);

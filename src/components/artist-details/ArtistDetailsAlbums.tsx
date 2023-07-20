@@ -12,27 +12,29 @@ import { SetAlbumType } from "../../hooks/DetailedArtistResultHooks";
 import ArtistOrAlbumCard from "./ArtistOrAlbumCard";
 import "./styles/artist-details.css";
 
+type ArtistDetailsAlbumsPropsType = {
+  album: AlbumDetailsType | null;
+  setAlbum: SetAlbumType;
+  albums: AlbumDetailsType[] | null;
+};
+
 const ArtistDetailsAlbums = ({
   setAlbum,
   album,
   albums,
-}: {
-  album: AlbumDetailsType | null;
-  setAlbum: SetAlbumType;
-  albums: AlbumDetailsType[] | [];
-}): ReactElement => {
+}: ArtistDetailsAlbumsPropsType): ReactElement => {
   return (
     <section className="d-flex flex-row justify-content-center justify-content-evenly album-container">
       <LeftArrow
         testId="bigLeft"
         func={setAlbum}
-        style={album && albums.length > 1 ? leftStyle : leftDisabledStyle}
+        style={album && albums ? leftStyle : leftDisabledStyle}
       />
       <ArtistOrAlbumCard cardType="album" album={album} />
       <RightArrow
         testId="bigRight"
         func={setAlbum}
-        style={album && albums.length > 1 ? rightStyle : rightDisabledStyle}
+        style={album && albums ? rightStyle : rightDisabledStyle}
       />
     </section>
   );
