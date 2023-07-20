@@ -1,5 +1,5 @@
 import { useState, createContext, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   spotifyArtistsOrSongsSearch,
   spotifyArtistDetailsSearch,
@@ -18,6 +18,8 @@ export const SearchState = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [searched, setSearched] = useState(false);
   const [modal, setModal] = useState(false);
+
+  const lo = useLocation();
 
   const cancelToken = useRef<CancelTokenSource | null>(null);
 
@@ -69,7 +71,10 @@ export const SearchState = () => {
 
   if (artistOrTrackError) error = artistOrTrackError;
 
+  const location = lo.pathname;
+
   const providerValues = {
+    location,
     modal,
     setModal,
     searched,
@@ -104,6 +109,7 @@ export const SearchState = () => {
 export type UseSearchStateContext = ReturnType<typeof SearchState>;
 
 const initSearchContextState: UseSearchStateContext = {
+  location: "",
   modal: false,
   setModal: () => {},
   searched: false,

@@ -1,4 +1,10 @@
-import { ReactElement, useEffect, useContext, useCallback } from "react";
+import {
+  ReactElement,
+  useEffect,
+  useContext,
+  useCallback,
+  useState,
+} from "react";
 import HeaderLanding from "./HeaderLanding";
 import HeaderSearch from "./HeaderSearch";
 import { AnimatePresence, useCycle } from "framer-motion";
@@ -7,13 +13,13 @@ import "../../styles/all.css";
 import SearchContext from "../../contexts/searchContext/SearchState";
 
 type HeaderPropsType = {
-  path: string;
-  headerCycle: string;
+  headerCycle?: string;
 };
 
-const Header = ({ path, headerCycle }: HeaderPropsType): ReactElement => {
+const Header = ({ headerCycle }: HeaderPropsType): ReactElement => {
+  const { setModal, location, modal } = useContext(SearchContext);
+
   const [searchCycle, cycleSearch] = useCycle(false, true);
-  const { setModal } = useContext(SearchContext);
 
   const handleClick = useCallback(
     (exit?: boolean) => {
@@ -29,13 +35,17 @@ const Header = ({ path, headerCycle }: HeaderPropsType): ReactElement => {
   );
 
   useEffect(() => {
+    if (!modal) cycleSearch(0);
+  }, [modal]);
+
+  useEffect(() => {
     if (headerCycle === "transparent") cycleSearch(0);
   }, [headerCycle]);
 
   return (
-    <AnimatePresence mode="sync">
-      {path === "/" && <HeaderLanding key="landing" />}
-      {(path === "/artists" || path === "/tracks") && (
+    <AnimatePresence mode="sync" onExitComplete={() => handleClick(true)}>
+      {location === "/" && <HeaderLanding key="landing" />}
+      {(location === "/artists" || location === "/tracks") && headerCycle && (
         <HeaderSearch
           key="search"
           headerCycle={headerCycle}

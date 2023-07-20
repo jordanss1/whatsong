@@ -1,5 +1,4 @@
 import { ReactElement, useContext, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import {
   motion,
   Variants,
@@ -46,8 +45,6 @@ const ArtistList = (): ReactElement => {
 
   const [headerCycle, cycleHeader] = useCycle("animate", "transparent");
 
-  const location = useLocation();
-
   useEffect(() => {
     let artists = sessionStorage.getItem("artists");
 
@@ -78,14 +75,12 @@ const ArtistList = (): ReactElement => {
           exit="exit"
           className="artistWholeListContainer d-flex flex-column px-1"
         >
-          <Header headerCycle={headerCycle} path={location.pathname} />
+          <Header headerCycle={headerCycle} />
           <div className="filler-div" />
           <motion.section className="w-100 h-100 artist-list-container d-grid py-4 px-1">
             <ArtistListSearchBar cycle={headerCycle} />
             <AnimatePresence mode="wait">
-              {!searched && (
-                <ArtistListGrid searched={searched} artists={artists} />
-              )}
+              {!searched && <ArtistListGrid artists={artists} />}
             </AnimatePresence>
           </motion.section>
           <div className="filler-div" />

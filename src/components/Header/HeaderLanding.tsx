@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { MotionValue, Variants, motion } from "framer-motion";
+import { ReactElement } from "react";
+import { Variants, motion } from "framer-motion";
 
 const containerVarients: Variants = {
   initial: { opacity: 1 },
@@ -45,14 +45,6 @@ const wordVariants: Variants = {
       duration: 0.5,
     },
   },
-  exit: {
-    scale: 0.7,
-    x: 0,
-    opacity: 0,
-    transition: {
-      duration: 1.5,
-    },
-  },
 };
 
 const letterVariants: Variants = {
@@ -69,19 +61,9 @@ const letterVariants: Variants = {
       duration: 0.5,
     },
   },
-  exit: (isW) => ({
-    scale: 0.7,
-    x: isW ? -37 : -87,
-    y: 5,
-    color: isW ? "white" : "#de5aae",
-    transition: {
-      duration: 1,
-      delay: 0.5,
-    },
-  }),
 };
 
-const HeaderLanding = () => {
+const HeaderLanding = (): ReactElement => {
   return (
     <motion.header
       variants={containerVarients}
@@ -92,41 +74,25 @@ const HeaderLanding = () => {
       layout
     >
       <motion.div
-        style={{ gridRow: 1, gridColumn: 1 }}
         className="header-container text-uppercase"
         variants={boxVariants}
         initial="hidden"
         animate="visible"
         layout
       >
-        <motion.div
-          custom={true}
-          exit="exit"
-          animate="visible"
-          variants={letterVariants}
-        >
+        <motion.div animate="visible" variants={letterVariants}>
           w
         </motion.div>
         <motion.div
-          exit="exit"
           variants={wordVariants}
           className="me-1 pt-2 extraText fs-5"
         >
           .hat
         </motion.div>
-        <motion.div
-          custom={false}
-          exit="exit"
-          animate="visible"
-          variants={letterVariants}
-        >
+        <motion.div animate="visible" variants={letterVariants}>
           s
         </motion.div>
-        <motion.div
-          exit="exit"
-          variants={wordVariants}
-          className="ms-2 extraText fs-5"
-        >
+        <motion.div variants={wordVariants} className="ms-2 extraText fs-5">
           .ong
         </motion.div>
       </motion.div>

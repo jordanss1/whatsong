@@ -118,7 +118,7 @@ const Landing = (): ReactElement => {
 
   return (
     <>
-      <Header path={"/"} />
+      <Header />
       <motion.main
         variants={finalAnimation ? mainLeaveVariants : mainVariants}
         custom={intro}

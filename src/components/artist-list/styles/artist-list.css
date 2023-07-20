@@ -52,3 +52,14 @@
     justify-content: center;
   }
 }
+
+@media screen and (max-width: 389px) {
+  .artist-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    row-gap: 40px;
+  }
+
+  .artist-grid-less {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 120px));
+  }
+}

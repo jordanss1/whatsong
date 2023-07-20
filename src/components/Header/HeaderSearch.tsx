@@ -48,8 +48,6 @@ const HeaderSearch = ({
       ? "justify-content-start"
       : "justify-content-center";
 
-  console.log(searchCycle);
-
   return (
     <motion.header
       variants={containerVarients}

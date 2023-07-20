@@ -1,31 +1,31 @@
 import { ReactElement, memo } from "react";
-import SearchBar from "../searchbar/SearchBar";
-import TrackListContentTrack from "./TrackListContentTrack";
+import TrackListGridTrack from "./TrackListGridTrack";
 import { TopTracksDetailsType } from "../../types";
-import "./styles/track-list.css";
 import { HandleSelectedTrackType } from "./TrackList";
+import TrackListGridSearchBar from "./TrackListGridSearchBar";
+import "./styles/track-list.css";
 
-type TrackListContentSelectedProps = {
+type TrackListGridSelectedProps = {
   tracks: Required<TopTracksDetailsType>[] | null;
   handleSelectedTrack: HandleSelectedTrackType;
   is900: boolean;
+  cycle: string;
 };
 
-const TrackListContent = ({
+const TrackListGrid = ({
   tracks,
   handleSelectedTrack,
   is900,
-}: TrackListContentSelectedProps): ReactElement => {
+  cycle,
+}: TrackListGridSelectedProps): ReactElement => {
   return (
     <div className="track-list-container">
-      <div className="d-flex align-items-center justify-content-end search-list-div">
-        <SearchBar />
-      </div>
+      <TrackListGridSearchBar cycle={cycle} />
       <div className="d-grid pb-5">
         {tracks &&
           tracks.map((track, i) => {
             return (
-              <TrackListContentTrack
+              <TrackListGridTrack
                 key={i}
                 track={track}
                 hidden={is900}
@@ -38,4 +38,4 @@ const TrackListContent = ({
   );
 };
 
-export default memo(TrackListContent);
+export default memo(TrackListGrid);

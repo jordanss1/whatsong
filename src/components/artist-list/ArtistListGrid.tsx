@@ -6,10 +6,9 @@ import {
   useEffect,
   memo,
 } from "react";
-import { Variants, motion, AnimationScope } from "framer-motion";
+import { Variants, motion } from "framer-motion";
 import ArtistOrAlbumCard from "../artist-details/ArtistOrAlbumCard";
 import SearchContext from "../../contexts/searchContext/SearchState";
-
 import { ArtistsType } from "../../types";
 import "./styles/artist-list.css";
 
@@ -17,7 +16,6 @@ export type HandleProfileClickType = (id: string) => void;
 
 type ArtistListGridPropsType = {
   artists: ArtistsType[];
-  searched: boolean;
 };
 
 const artistGridVariants: Variants = {
@@ -40,10 +38,7 @@ const artistGridVariants: Variants = {
   },
 };
 
-const ArtistListGrid = ({
-  artists,
-  searched,
-}: ArtistListGridPropsType): ReactElement => {
+const ArtistListGrid = ({ artists }: ArtistListGridPropsType): ReactElement => {
   const {
     handleArtistDetailSearch,
     setProfile,

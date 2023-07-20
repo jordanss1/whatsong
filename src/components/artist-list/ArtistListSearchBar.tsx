@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import SearchBar from "../searchbar/SearchBar";
 
-const searchBarContainerVariants: Variants = {
+export const searchBarContainerVariants: Variants = {
   initial: {
     x: -100,
     opacity: 0,
@@ -23,7 +23,7 @@ const searchBarContainerVariants: Variants = {
   },
 };
 
-const searchBarVariants: Variants = {
+export const searchBarVariants: Variants = {
   initial: {
     opacity: 0,
     x: 20,

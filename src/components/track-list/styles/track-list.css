@@ -3,9 +3,12 @@
 }
 
 .whole-songs-container {
+  background-attachment: fixed !important;
+}
+
+.whole-songs-section {
   height: 100%;
   grid-template-columns: 220px auto;
-  transition: 1s;
 }
 
 .filler-div {
@@ -53,7 +56,6 @@
   background-color: black;
   border-right: 1px solid rgba(255, 255, 255, 0.6);
   padding: 0 10px;
-  transition: 0.5s;
   width: 220px;
   margin-top: -10px;
 }
@@ -69,6 +71,10 @@
 
 .noSongHeader p {
   max-width: 200px;
+}
+
+.track-list-search {
+  min-height: 40px;
 }
 
 .songItem {
@@ -116,7 +122,7 @@
   .trackItem .content {
     max-width: 450px;
   }
-  .whole-songs-container {
+  .whole-songs-section {
     display: block !important;
     grid-template-columns: 250px auto;
     transition: 1s;

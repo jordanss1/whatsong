@@ -433,3 +433,22 @@ hr {
     min-width: 150px;
   }
 }
+
+@media screen and (max-width: 389px) {
+  .artist-album-card {
+    width: 110px !important;
+    height: 110px;
+  }
+  .artist-album-card .image {
+    width: 110px !important;
+    height: 110px;
+  }
+  .artist-album-card img {
+    width: 110px !important;
+    height: 110px;
+  }
+
+  .artist-album-card h3 {
+    font-size: 16px !important;
+  }
+}

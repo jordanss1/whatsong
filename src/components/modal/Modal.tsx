@@ -38,7 +38,7 @@ const Modal = ({
   noResults,
   pathname,
 }: ModalPropsType): ReactElement => {
-  const { resetModalOrSpotify, emptyProfile, setArtistsOrTracks } =
+  const { resetModalOrSpotify, emptyProfile, setArtistsOrTracks, setModal } =
     useContext(SearchContext);
 
   const handleClick = () => {
@@ -47,6 +47,7 @@ const Modal = ({
 
     emptyProfile();
     resetModalOrSpotify("modal");
+    setModal(false);
 
     if (pathname === "/artists" && artists) {
       setArtistsOrTracks(JSON.parse(artists));
@@ -65,6 +66,7 @@ const Modal = ({
       animate="visible"
       exit="exit"
       className="modal-background w-100"
+      onClick={() => handleClick()}
     >
       <AnimatePresence>{loading && <ModalLoader />}</AnimatePresence>
       <AnimatePresence>
