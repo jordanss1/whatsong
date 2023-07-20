@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
-import { AnimationControls, motion, Variants } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import SearchBar from "../searchbar/SearchBar";
 
-const artistSearchBarVariants: Variants = {
+const searchBarContainerVariants: Variants = {
   initial: {
     x: -100,
     opacity: 0,
@@ -23,19 +23,45 @@ const artistSearchBarVariants: Variants = {
   },
 };
 
+const searchBarVariants: Variants = {
+  initial: {
+    opacity: 0,
+    x: 20,
+  },
+  animate: {
+    opacity: 1,
+    x: 0,
+  },
+  exit: {
+    opacity: 0,
+    x: 20,
+  },
+};
+
+type ArtistListSearchbarPropTypes = {
+  cycle: string;
+};
+
 const ArtistListSearchBar = ({
-  controls,
-}: {
-  controls: AnimationControls;
-}): ReactElement => {
+  cycle,
+}: ArtistListSearchbarPropTypes): ReactElement => {
   return (
     <motion.div
-      variants={artistSearchBarVariants}
+      variants={searchBarContainerVariants}
       className="align-items-center justify-content-end d-flex search-input-container"
     >
-      <motion.div animate={controls}>
-        <SearchBar />
-      </motion.div>
+      <AnimatePresence mode="wait">
+        {cycle === "animate" && (
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={searchBarVariants}
+          >
+            <SearchBar />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

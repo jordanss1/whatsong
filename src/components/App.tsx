@@ -12,13 +12,20 @@ import TrackList from "./track-list/TrackList";
 const App = (): ReactElement => {
   const location = useLocation();
 
-  const { error, loading, noResults } = useContext(SearchContext);
+  const { error, loading, noResults, modal } = useContext(SearchContext);
+
+  const showModal = loading || error || noResults || modal;
 
   return (
     <>
       <AnimatePresence mode="wait">
-        {(loading || error || noResults) && (
-          <Modal pathname={location.pathname} noResults={noResults} error={error} loading={loading} />
+        {showModal && (
+          <Modal
+            pathname={location.pathname}
+            noResults={noResults}
+            error={error}
+            loading={loading}
+          />
         )}
       </AnimatePresence>
       <AnimatePresence mode="wait">

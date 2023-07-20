@@ -1,10 +1,11 @@
 import { ReactElement } from "react";
-import { motion, Variants } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import HeaderSearchLogo from "./HeaderSearchLogo";
 import SearchBar from "../searchbar/SearchBar";
 import SearchButton from "../searchbar/SearchButton";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import "./styles/header.css";
+import HeaderSearchSearchBar from "./HeaderSearchSearchBar";
 
 const containerVarients: Variants = {
   initial: { opacity: 0 },
@@ -29,16 +30,10 @@ const containerVarients: Variants = {
   },
 };
 
-const searchBarVariants: Variants = {
-  initial: { y: -20, opacity: 0 },
-  animate: { y: 0, opacity: 1 },
-  exit: { y: -20, opacity: 0 },
-};
-
 type HeaderSearchPropsType = {
   headerCycle: string;
   searchCycle: boolean;
-  handleClick: () => void;
+  handleClick: (exit?: boolean) => void;
 };
 
 const HeaderSearch = ({
@@ -52,6 +47,8 @@ const HeaderSearch = ({
     is468 && headerCycle === "transparent"
       ? "justify-content-start"
       : "justify-content-center";
+
+  console.log(searchCycle);
 
   return (
     <motion.header
@@ -68,17 +65,11 @@ const HeaderSearch = ({
           <SearchButton x={is468 ? 0 : 25} size={4} handleClick={handleClick} />
         )}
       </div>
-      {searchCycle && headerCycle === "transparent" && (
-        <motion.div
-          variants={searchBarVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          className="header-search-bar px-3"
-        >
-          <SearchBar />
-        </motion.div>
-      )}
+      <AnimatePresence onExitComplete={() => handleClick(true)}>
+        {searchCycle && headerCycle === "transparent" && (
+          <HeaderSearchSearchBar />
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 };

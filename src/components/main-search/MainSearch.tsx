@@ -214,7 +214,7 @@ const MainSearch = (): ReactElement => {
     >
       <AnimatePresence mode="wait">
         {category || sessionStorage.getItem("category") ? (
-          <div className="actual-search-box d-flex flex-column gap-4 w-100">
+          <div className="actual-search-box d-flex flex-column gap-4 px-4 w-100">
             <MainSearchHeader
               key="header"
               handleClick={handleResetCategoryClick}

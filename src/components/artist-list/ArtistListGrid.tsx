@@ -4,6 +4,7 @@ import {
   useRef,
   useCallback,
   useEffect,
+  memo,
 } from "react";
 import { Variants, motion, AnimationScope } from "framer-motion";
 import ArtistOrAlbumCard from "../artist-details/ArtistOrAlbumCard";
@@ -94,4 +95,4 @@ const ArtistListGrid = ({
   );
 };
 
-export default ArtistListGrid;
+export default memo(ArtistListGrid);

@@ -5,7 +5,6 @@ import {
   Variants,
   AnimatePresence,
   useScroll,
-  useAnimationControls,
   useCycle,
 } from "framer-motion";
 import Header from "../header/Header";
@@ -45,7 +44,6 @@ const ArtistList = (): ReactElement => {
 
   const { scrollY } = useScroll();
 
-  const controls = useAnimationControls();
   const [headerCycle, cycleHeader] = useCycle("animate", "transparent");
 
   const location = useLocation();
@@ -63,23 +61,9 @@ const ArtistList = (): ReactElement => {
   useEffect(() => {
     scrollY.on("change", async () => {
       if (scrollY.get() > 55) {
-        await controls.start({
-          opacity: 0,
-          x: 20,
-          transition: {
-            duration: 0.3,
-          },
-        });
         cycleHeader(1);
       } else {
         cycleHeader(0);
-        await controls.start({
-          opacity: 1,
-          x: 0,
-          transition: {
-            duration: 0.3,
-          },
-        });
       }
     });
   }, []);
@@ -96,14 +80,14 @@ const ArtistList = (): ReactElement => {
         >
           <Header headerCycle={headerCycle} path={location.pathname} />
           <div className="filler-div" />
-          <section className="w-100 h-100 artist-list-container d-grid py-4 px-1">
-            <ArtistListSearchBar controls={controls} />
+          <motion.section className="w-100 h-100 artist-list-container d-grid py-4 px-1">
+            <ArtistListSearchBar cycle={headerCycle} />
             <AnimatePresence mode="wait">
               {!searched && (
                 <ArtistListGrid searched={searched} artists={artists} />
               )}
             </AnimatePresence>
-          </section>
+          </motion.section>
           <div className="filler-div" />
         </motion.main>
       )}

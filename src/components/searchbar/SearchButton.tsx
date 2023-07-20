@@ -8,7 +8,7 @@ type SearchButtonPropsTypes = {
   searchTerm?: string;
   size?: number;
   x?: number;
-  handleClick?: () => void;
+  handleClick?: (exit?: boolean) => void;
 };
 
 const SearchButton = ({
