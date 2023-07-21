@@ -71,11 +71,13 @@ hr {
   cursor: pointer;
 }
 
-.artist-album-card {
+.album-card {
   width: 170px !important;
 }
 
-.artist-album-card img {
+
+
+.album-card img {
   width: 170px !important;
   height: 170px;
   object-fit: cover;
@@ -83,7 +85,7 @@ hr {
   border-radius: 5px;
 }
 
-.artist-album-card .image {
+.album-card .image {
   height: 170px;
   box-shadow: 0px 0px 5px 2px rgba(255, 255, 255, 0.6) !important;
   border-radius: 5px;
@@ -107,7 +109,7 @@ hr {
   letter-spacing: 1px;
 }
 
-.artist-album-card .header {
+.album-card .header {
   font-family: "Barlow", sans-serif !important;
   font-weight: 400 !important;
   text-overflow: ellipsis !important;
@@ -435,20 +437,20 @@ hr {
 }
 
 @media screen and (max-width: 389px) {
-  .artist-album-card {
+  .album-card {
     width: 110px !important;
     height: 110px;
   }
-  .artist-album-card .image {
+  .album-card .image {
     width: 110px !important;
     height: 110px;
   }
-  .artist-album-card img {
+  .album-card img {
     width: 110px !important;
     height: 110px;
   }
 
-  .artist-album-card h3 {
+  .album-card h3 {
     font-size: 16px !important;
   }
 }

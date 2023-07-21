@@ -9,7 +9,7 @@ import {
 } from "../../styles/inline";
 import { AlbumDetailsType } from "../../types";
 import { SetAlbumType } from "../../hooks/DetailedArtistResultHooks";
-import ArtistOrAlbumCard from "./ArtistOrAlbumCard";
+import ArtistDetailsAlbumCard from "./ArtistDetailsAlbumCard";
 import "./styles/artist-details.css";
 
 type ArtistDetailsAlbumsPropsType = {
@@ -30,7 +30,7 @@ const ArtistDetailsAlbums = ({
         func={setAlbum}
         style={album && albums ? leftStyle : leftDisabledStyle}
       />
-      <ArtistOrAlbumCard cardType="album" album={album} />
+      <ArtistDetailsAlbumCard album={album} />
       <RightArrow
         testId="bigRight"
         func={setAlbum}

@@ -26,7 +26,10 @@
 .track-list-grid {
   row-gap: 20px;
   max-width: 800px;
+}
 
+.track-item-orchestrated {
+  min-height: 100px;
 }
 
 .track-item-container {
@@ -99,7 +102,6 @@
 .track-list-search {
   min-height: 40px;
   max-width: 800px;
-  
 }
 
 .song-item {

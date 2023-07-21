@@ -102,8 +102,8 @@ const TrackList = () => {
             <motion.div className="track-list-container d-flex align-items-center flex-column">
               <TrackListGridSearchBar cycle={headerCycle} />
               <TrackListGrid
+                searched={searched}
                 handleSelectedTrack={handleSelectedTrack}
-                is900={is900}
                 tracks={tracks}
               />
             </motion.div>
