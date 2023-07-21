@@ -55,7 +55,7 @@ const TrackListGridTrack = ({
   const ref = useRef(null);
 
   let modifiedIndex = 0;
-  const image = track.album?.images[2].url;
+  const image = track.album?.images?.[0]?.url;
   const artist = `${track.artists[0]?.name} - `;
 
   const isInView = useInView(ref, {

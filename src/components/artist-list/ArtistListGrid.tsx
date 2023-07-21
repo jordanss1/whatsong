@@ -1,22 +1,54 @@
-import { ReactElement, memo } from "react";
+import {
+  ReactElement,
+  useEffect,
+  useContext,
+  useRef,
+  useCallback,
+} from "react";
 import ArtistListGridCard from "./ArtistListGridCard";
 import { ArtistsType } from "../../types";
+import SearchContext from "../../contexts/searchContext/SearchState";
 import "./styles/artist-list.css";
-
-export type HandleProfileClickType = (id: string) => void;
 
 type ArtistListGridPropsType = {
   artists: ArtistsType[];
-  searched: boolean;
-  handleClick: HandleProfileClickType;
 };
 
-const ArtistListGrid = ({
-  artists,
-  searched,
-  handleClick,
-}: ArtistListGridPropsType): ReactElement => {
+export type HandleProfileClickType = (id: string) => void;
+
+const ArtistListGrid = ({ artists }: ArtistListGridPropsType): ReactElement => {
+  const {
+    albums,
+    topTracks,
+    error,
+    navigate,
+    searched,
+    handleArtistDetailSearch,
+    setProfile,
+  } = useContext(SearchContext);
+
+  const idRef = useRef<string | null>(null);
+
   const gridClass = artists.length < 6 ? "artist-grid-less" : "artist-grid";
+
+  useEffect(() => {
+    if (albums && topTracks && idRef.current && !error) {
+      navigate(`/artists/${idRef.current}`);
+      idRef.current = null;
+    }
+
+    if (error) {
+      idRef.current = null;
+    }
+  }, [albums, topTracks]);
+
+  const handleProfileClick = useCallback<HandleProfileClickType>(
+    (id) => {
+      idRef.current = id;
+      handleArtistDetailSearch(id);
+    },
+    [setProfile, handleArtistDetailSearch]
+  );
 
   return (
     <div className={`d-grid ${gridClass}`}>
@@ -25,7 +57,7 @@ const ArtistListGrid = ({
           key={i}
           index={i}
           artist={artist}
-          handleClick={handleClick}
+          handleClick={handleProfileClick}
           searched={searched}
         />
       ))}

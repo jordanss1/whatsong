@@ -1,16 +1,9 @@
-import {
-  ReactElement,
-  useContext,
-  useEffect,
-  useCallback,
-  useRef,
-} from "react";
+import { ReactElement, useContext, useEffect, useRef } from "react";
 import { motion, Variants, useScroll, useCycle } from "framer-motion";
 import Header from "../header/Header";
 import ArtistListGrid from "./ArtistListGrid";
 import ArtistListSearchBar from "./ArtistListSearchBar";
 import SearchContext from "../../contexts/searchContext/SearchState";
-import { HandleProfileClickType } from "./ArtistListGrid";
 import "./styles/artist-list.css";
 
 const artistContainerVariants: Variants = {
@@ -40,19 +33,7 @@ const artistContainerVariants: Variants = {
 };
 
 const ArtistList = (): ReactElement => {
-  const {
-    artists,
-    setArtistsOrTracks,
-    albums,
-    topTracks,
-    error,
-    navigate,
-    handleArtistDetailSearch,
-    searched,
-    setProfile,
-  } = useContext(SearchContext);
-
-  const idRef = useRef<string | null>(null);
+  const { artists, setArtistsOrTracks } = useContext(SearchContext);
 
   const { scrollY } = useScroll();
 
@@ -67,25 +48,6 @@ const ArtistList = (): ReactElement => {
       setArtistsOrTracks(JSON.parse(artists));
     }
   }, []);
-
-  useEffect(() => {
-    if (albums && topTracks && idRef.current && !error) {
-      navigate(`/artists/${idRef.current}`);
-      idRef.current = null;
-    }
-
-    if (error) {
-      idRef.current = null;
-    }
-  }, [albums, topTracks]);
-
-  const handleProfileClick = useCallback<HandleProfileClickType>(
-    (id) => {
-      idRef.current = id;
-      handleArtistDetailSearch(id);
-    },
-    [setProfile, handleArtistDetailSearch]
-  );
 
   useEffect(() => {
     scrollY.on("change", async () => {
@@ -113,11 +75,7 @@ const ArtistList = (): ReactElement => {
           <div className="filler-div" />
           <motion.section className="w-100 h-100 artist-list-container d-grid py-4 px-1">
             <ArtistListSearchBar cycle={headerCycle} />
-            <ArtistListGrid
-              searched={searched}
-              handleClick={handleProfileClick}
-              artists={artists}
-            />
+            <ArtistListGrid artists={artists} />
           </motion.section>
           <div className="filler-div" />
         </motion.main>

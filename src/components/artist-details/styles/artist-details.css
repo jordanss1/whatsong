@@ -75,8 +75,6 @@ hr {
   width: 170px !important;
 }
 
-
-
 .album-card img {
   width: 170px !important;
   height: 170px;
@@ -110,7 +108,7 @@ hr {
 }
 
 .album-card .header {
-  font-family: "Barlow", sans-serif !important;
+  font-family: "Varela Round", sans-serif !important;
   font-weight: 400 !important;
   text-overflow: ellipsis !important;
   overflow: hidden !important;

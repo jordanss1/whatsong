@@ -1,8 +1,10 @@
 import { ReactElement, memo, useRef } from "react";
 import { Variants, motion, useInView, AnimatePresence } from "framer-motion";
 import { ArtistsType } from "../../types";
-import { HandleProfileClickType } from "../artist-list/ArtistListGrid";
+import { HandleProfileClickType } from "./ArtistListGrid";
 import "./styles/artist-list.css";
+import ImageCard from "../ImageCard";
+import ImageHeader from "../ImageHeader";
 
 type ArtistListGridCardPropType = {
   artist: ArtistsType;
@@ -14,18 +16,15 @@ type ArtistListGridCardPropType = {
 const artistCardVariant: Variants = {
   initial: {
     x: -75,
-    scale: 0.9,
     opacity: 0,
   },
-  animate: {
+  animate: (index) => ({
     x: 0,
-    scale: 1,
     opacity: 1,
-    transition: { duration: 0.3 },
-  },
+    transition: { duration: 0.3, delay: 0.1 * index },
+  }),
   exit: {
     x: 75,
-    scale: 0.9,
     opacity: 0,
     transition: { duration: 0.2 },
   },
@@ -34,18 +33,15 @@ const artistCardVariant: Variants = {
 const artistOrchestrationVariant: Variants = {
   initial: {
     x: -75,
-    scale: 0.9,
     opacity: 0,
   },
   animate: {
     x: 0,
-    scale: 1,
     opacity: 1,
     transition: { duration: 0.1 },
   },
   exit: {
     x: 75,
-    scale: 0.9,
     opacity: 0,
     transition: { duration: 0.05 },
   },
@@ -57,26 +53,25 @@ const ArtistListGridCard = ({
   index,
   searched,
 }: ArtistListGridCardPropType): ReactElement => {
-  const artistId = artist?.id ? artist.id : "";
   const ref = useRef(null);
+  let modifiedIndex = 0;
+  const image = artist?.images?.[0]?.url;
 
   const isInView = useInView(ref, {
     amount: 0.2,
   });
 
-  if (!index) index = 0;
+  if (!index) modifiedIndex = 0;
 
-  if (index % 0) index = 0;
-  if (index % 1) index = 1;
-  if (index % 2) index = 2;
-  if (index % 3) index = 3;
-  if (index % 4) index = 4;
-  if (index % 5) index = 5;
+  if (index % 0) modifiedIndex = 0;
+  if (index % 1) modifiedIndex = 1;
+  if (index % 2) modifiedIndex = 2;
+  if (index % 3) modifiedIndex = 3;
+  if (index % 4) modifiedIndex = 4;
+  if (index % 5) modifiedIndex = 5;
 
   let transform = isInView ? "translateX(0)" : "translateX(-75px)";
   let opacity = isInView ? 1 : 0;
-
-  let handleClickFunc = handleClick ? () => handleClick(artistId) : () => {};
 
   return (
     <motion.div
@@ -91,41 +86,36 @@ const ArtistListGridCard = ({
             initial="initial"
             animate="animate"
             exit="exit"
+            key={index}
+            custom={index}
             className="artist-card"
             title="View artist profile"
+            layout
             whileHover={{
               scale: [null, 1.1],
               y: [null, -5],
               transition: { duration: 0.1 },
             }}
-            layout
           >
-            <motion.div
-              style={{
+            <ImageCard
+              motionStyle={{
                 transform,
                 opacity,
-                transition: `all 0.6s ${0.05 * index}s`,
+                transition: `all 0.6s ${0.05 * modifiedIndex}s`,
               }}
-              onClick={handleClickFunc}
-              className="image d-flex justify-content-center align-items-center artist-image"
-            >
-              {artist?.images[0] ? (
-                <img src={artist.images[0].url} />
-              ) : (
-                <h3 className="card-no-image-artist">No image</h3>
-              )}
-            </motion.div>
-            <motion.h3
-              style={{
+              url={image}
+              iconSize={76}
+              onClick={() => handleClick(artist.id)}
+            />
+            <ImageHeader
+              motionStyle={{
                 transform,
                 opacity,
-                transition: `all 0.6s ${0.03 * index}s`,
+                transition: `all 0.6s ${0.03 * modifiedIndex}s`,
               }}
-              onClick={handleClickFunc}
-              className="header fs-5 text-center w-100 pt-2"
-            >
-              {artist?.name}
-            </motion.h3>
+              text={artist?.name}
+              onClick={() => handleClick(artist.id)}
+            />
           </motion.div>
         )}
       </AnimatePresence>

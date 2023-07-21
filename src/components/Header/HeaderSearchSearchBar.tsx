@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Variants, easeInOut, motion } from "framer-motion";
+import { Variants, motion } from "framer-motion";
 import SearchBar from "../searchbar/SearchBar";
 
 const searchBarVariants: Variants = {

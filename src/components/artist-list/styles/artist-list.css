@@ -22,7 +22,7 @@
 .artist-grid {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   row-gap: 25px;
-  column-gap: 25px;
+  column-gap: 10px;
   max-width: 100%;
   align-items: center;
   justify-items: center;
@@ -35,7 +35,7 @@
 
 .artist-orchestration-card {
   width: 170px !important;
-  height: 190px !important;
+  height: 198px !important;
 }
 
 .artist-card {
@@ -43,14 +43,13 @@
 }
 
 .artist-card .header {
-  font-family: "Barlow", sans-serif !important;
-  font-weight: 400 !important;
   text-overflow: ellipsis !important;
   overflow: hidden !important;
   white-space: nowrap !important;
   color: white !important;
   cursor: pointer;
   user-select: none;
+  font-family: "Varela Round", sans-serif !important;
 }
 
 .artist-card img {
@@ -64,6 +63,7 @@
   height: 170px;
   box-shadow: 0px 0px 8px 2px rgba(255, 255, 255, 0.6) !important;
   border-radius: 30%;
+  cursor: pointer;
 }
 
 .card-no-image-artist {

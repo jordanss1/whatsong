@@ -2,6 +2,8 @@ import { ReactElement, memo } from "react";
 import { Variants, motion } from "framer-motion";
 import { AlbumDetailsType } from "../../types";
 import "./styles/artist-details.css";
+import ImageCard from "../ImageCard";
+import ImageHeader from "../ImageHeader";
 
 type ArtistDetailsAlbumCardPropsType = {
   album: AlbumDetailsType | null;
@@ -15,18 +17,14 @@ const albumCardVariant: Variants = {
 const ArtistDetailsAlbumCard = ({
   album,
 }: ArtistDetailsAlbumCardPropsType): ReactElement => {
+  const image = album?.images[1].url;
+
   return (
     <>
       {album ? (
         <motion.div variants={albumCardVariant} className="album-card">
-          <div className="image d-flex justify-content-center">
-            {album?.images[1] ? (
-              <img src={`${album?.images[1].url}`} />
-            ) : (
-              <h3 className="card-no-image-album">No image</h3>
-            )}
-          </div>
-          <h3 className="header fs-5 text-center w-100 pt-2">{album?.name}</h3>
+          <ImageCard url={image} />
+          <ImageHeader text={album.name} />
         </motion.div>
       ) : (
         <div className="h-100 d-flex align-items-center justify-content-center">

@@ -11,7 +11,7 @@ type HeaderPropsType = {
 };
 
 const Header = ({ headerCycle }: HeaderPropsType): ReactElement => {
-  const { setModal, location, modal } = useContext(SearchContext);
+  const { setModal, location, modal, searched } = useContext(SearchContext);
 
   const [searchCycle, cycleSearch] = useCycle(false, true);
 
@@ -30,7 +30,7 @@ const Header = ({ headerCycle }: HeaderPropsType): ReactElement => {
   }, [modal]);
 
   useEffect(() => {
-    if (headerCycle === "transparent") cycleSearch(0);
+    if (!searched && headerCycle === "transparent") cycleSearch(0);
   }, [headerCycle]);
 
   return (

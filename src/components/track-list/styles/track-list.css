@@ -56,7 +56,6 @@
 .track-item .content {
   color: rgb(210, 210, 210);
   font-family: "Varela Round", sans-serif !important;
-  font-weight: 200;
   max-width: 600px;
   white-space: nowrap;
   overflow: hidden;
