@@ -79,6 +79,8 @@
   height: 100px;
   position: relative;
   top: 40px;
+  max-width: 150px;
+  margin: 0 auto;
 }
 
 .ribbon {
@@ -87,7 +89,6 @@
   bottom: 0;
   right: 0;
   left: 0;
-  margin: 0 auto;
 }
 
 .framer-icon,

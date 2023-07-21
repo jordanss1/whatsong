@@ -10,12 +10,12 @@ import "./styles/landing.css";
 const LandingSVGFramer = (): ReactElement => {
   const x = useMotionValue(0);
 
-  const opacity = useTransform(x, [0, 62, 135, 187, 250], [0, 0, 1, 1, 0]);
-  const scale = useTransform(x, [0, 135, 250], [0.8, 1, 0.8]);
-  const shadowSize = useTransform(x, [0, 135, 250], [3, 5, 3]);
+  const opacity = useTransform(x, [0, 62, 135, 187, 270], [0, 0, 1, 1, 0]);
+  const scale = useTransform(x, [0, 135, 270], [0.8, 1, 0.8]);
+  const shadowSize = useTransform(x, [0, 135, 270], [3, 5, 3]);
 
   const cycleX = {
-    x: [0, 320],
+    x: [0, 300],
     transition: { duration: 4, repeat: Infinity, repeatDelay: 2 },
   };
 

@@ -11,12 +11,12 @@ import "./styles/landing.css";
 const LandingSVGReactRouter = (): ReactElement => {
   const x = useMotionValue(0);
 
-  const opacity = useTransform(x, [0, 62, 150, 187, 250], [0, 0, 1, 1, 0]);
-  const scale = useTransform(x, [0, 150, 250], [0.8, 1, 0.8]);
-  const shadowSize = useTransform(x, [0, 135, 250], [3, 5, 3]);
+  const opacity = useTransform(x, [0, 62, 150, 187, 270], [0, 0, 1, 1, 0]);
+  const scale = useTransform(x, [0, 150, 270], [0.8, 1, 0.8]);
+  const shadowSize = useTransform(x, [0, 135, 270], [3, 5, 3]);
 
   const cycleX: AnimationDefinition = {
-    x: [0, 320],
+    x: [0, 300],
     transition: {
       duration: 4,
       repeat: Infinity,
