@@ -1,25 +1,34 @@
-import { memo, ReactElement, useRef } from "react";
-import { TopTracksDetailsType } from "../../../types";
+import { memo, MutableRefObject, ReactElement, useRef } from "react";
+import { TopTracksDetailsType } from "../../../types/types";
 import { HandleSelectedTrackType } from "../TrackList";
-import { Variants, motion, useInView, AnimatePresence } from "framer-motion";
+import {
+  Variants,
+  motion,
+  useInView,
+  AnimatePresence,
+  useCycle,
+} from "framer-motion";
 import CircularImage from "../../CircularImage";
+import DraggableBall from "../../DraggableBall";
+import TrackDetails from "../../TrackDetails";
+import { useMediaQuery } from "../../../hooks/MediaQueryHook";
 import "../styles/track-list.css";
 
-const trackOrchestratedVariant = {
-  initial: {
-    x: -100,
+const trackOrchestratedVariant: Variants = {
+  initial: (isMobile) => ({
+    x: isMobile ? -50 : -100,
     opacity: 0,
-  },
+  }),
   animate: {
     x: 0,
     opacity: 1,
     transition: { duration: 0.3 },
   },
-  exit: {
-    x: 100,
+  exit: (isMobile) => ({
+    x: isMobile ? 50 : -100,
     opacity: 0,
     transition: { duration: 0.2 },
-  },
+  }),
 };
 
 const trackVariant: Variants = {
@@ -39,11 +48,90 @@ const trackVariant: Variants = {
   }),
 };
 
+const trackMobileVariant: Variants = {
+  initial: {
+    x: -50,
+    opacity: 0,
+  },
+  animate: (index) => ({
+    x: 0,
+    opacity: 1,
+    transition: { duration: 0.3, delay: 0.1 * index },
+  }),
+  exit: (index) => ({
+    x: 50,
+    opacity: 0,
+    transition: { duration: 0.1, delay: 0.1 * index },
+  }),
+};
+
+const dragBallVariant: Variants = {
+  hidden: {
+    opacity: 0,
+    x: 20,
+    transition: {
+      duration: 0.3,
+    },
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    scale: [0.95, 1.3, 1.6, 0.95],
+    borderRadius: ["50%", "20%", "20%", "50%"],
+    boxShadow: [
+      "0px 0px 0px 0px rgba(222, 90, 174)",
+      "0px 0px 5px 2px rgba(222, 90, 174)",
+      "0px 0px 5px 2px rgba(222, 90, 174)",
+      "0px 0px 0px 0px rgba(222, 90, 174)",
+    ],
+    rotate: [0, 720, 0, 720],
+    transition: {
+      duration: 0.7,
+      stiffness: 200,
+      borderRadius: {
+        repeat: Infinity,
+        repeatDelay: 1,
+        duration: 4,
+        times: [0, 0.25, 0.75, 1],
+      },
+      scale: {
+        repeat: Infinity,
+        repeatDelay: 1,
+        times: [0, 0.25, 0.75, 1],
+        duration: 4,
+      },
+      boxShadow: {
+        repeat: Infinity,
+        repeatDelay: 1,
+        times: [0, 0.25, 0.75, 1],
+        duration: 4,
+      },
+      rotate: {
+        repeat: Infinity,
+        repeatDelay: 1,
+        times: [0, 0.25, 0.75, 1],
+        duration: 4,
+      },
+    },
+  },
+  whileTap: {
+    borderRadius: "50%",
+    boxShadow: [null, "0px 0px 5px 3px rgba(222, 90, 174)"],
+    scale: [null, 1.5],
+    backgroundColor: "rgba(255,255,255)",
+    rotate: [null, 0],
+    transition: {
+      duration: 0.3,
+    },
+  },
+};
+
 type PropTypes = {
   track: Required<TopTracksDetailsType>;
   handleSelectedTrack: HandleSelectedTrackType;
   index: number;
   searched: boolean;
+  dragRef: MutableRefObject<null>;
 };
 
 const TrackListGridTrack = ({
@@ -51,12 +139,11 @@ const TrackListGridTrack = ({
   handleSelectedTrack,
   index,
   searched,
+  dragRef,
 }: PropTypes): ReactElement => {
   const ref = useRef(null);
-
-  let modifiedIndex = 0;
-  const image = track.album?.images?.[0]?.url;
-  const artist = `${track.artists[0]?.name} - `;
+  const isMobile = useMediaQuery(480);
+  const [ballCycle, cycleBall] = useCycle("hidden", "visible", "drag");
 
   const isInView = useInView(ref, {
     amount: 0.2,
@@ -65,20 +152,36 @@ const TrackListGridTrack = ({
   let transform = isInView ? "translateX(0)" : "translateX(-100px)";
   let opacity = isInView ? 1 : 0;
 
+  let modifiedIndex = 0;
+  const image = track.album?.images?.[0]?.url;
+  const artist = `${track.artists[0]?.name} - `;
+
   if (!index) modifiedIndex = 0;
 
   if (index > 20) modifiedIndex = index / 5;
 
   return (
     <motion.div
-      className="track-item-orchestrated"
+      className="track-item-orchestrated d-flex align-items-center gap-5 ps-3"
       variants={trackOrchestratedVariant}
+      custom={isMobile}
+      onMouseEnter={() => cycleBall(1)}
+      onMouseLeave={() => cycleBall(0)}
       ref={ref}
     >
+      <DraggableBall
+        drag
+        onDrag={() => cycleBall(1)}
+        variants={dragBallVariant}
+        animate={ballCycle}
+        whileTap="whileTap"
+        dragConstraints={dragRef}
+        className="drag-ball"
+      />
       <AnimatePresence mode="wait">
         {!searched && (
           <motion.div
-            variants={trackVariant}
+            variants={isMobile ? trackMobileVariant : trackVariant}
             initial="initial"
             animate="animate"
             exit="exit"
@@ -96,10 +199,7 @@ const TrackListGridTrack = ({
               className="track-item d-grid align-items-center p-3"
             >
               <CircularImage image={image} size={1} />
-              <div className="content">
-                <span className="fs-2 fw-bold">{artist}</span>
-                <span className="fs-3">{track.name}</span>
-              </div>
+              <TrackDetails artist={artist} track={track.name} />
             </motion.div>
           </motion.div>
         )}

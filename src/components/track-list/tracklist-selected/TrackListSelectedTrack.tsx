@@ -1,7 +1,7 @@
 import { ReactElement, useCallback } from "react";
 import { motion } from "framer-motion";
 import Exit from "../../Exit";
-import { TopTracksDetailsType } from "../../../types";
+import { TopTracksDetailsType } from "../../../types/types";
 import { HandleSelectedTrackType } from "../TrackList";
 import "../styles/track-list.css";
 

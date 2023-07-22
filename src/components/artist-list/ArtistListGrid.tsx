@@ -6,7 +6,7 @@ import {
   useCallback,
 } from "react";
 import ArtistListGridCard from "./ArtistListGridCard";
-import { ArtistsType } from "../../types";
+import { ArtistsType } from "../../types/types";
 import SearchContext from "../../contexts/searchContext/SearchState";
 import "./styles/artist-list.css";
 

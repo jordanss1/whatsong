@@ -1,4 +1,4 @@
-import { ReactElement, useContext, useEffect } from "react";
+import { ReactElement, useContext } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import MainSearch from "./main-search/MainSearch";

@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { AnimatePresence, motion, Variants } from "framer-motion";
+import { ReactElement, useEffect } from "react";
+import { AnimatePresence, motion, MotionValue, Variants } from "framer-motion";
 import SearchBar from "../searchbar/SearchBar";
 
 export const searchBarContainerVariants: Variants = {
@@ -40,11 +40,19 @@ export const searchBarVariants: Variants = {
 
 type ArtistListSearchbarPropTypes = {
   cycle: string;
+  searched: boolean;
 };
 
 const ArtistListSearchBar = ({
   cycle,
+  searched,
 }: ArtistListSearchbarPropTypes): ReactElement => {
+  useEffect(() => {
+    if (!searched && cycle === "transparent") {
+      window.scrollTo({ top: 0 });
+    }
+  }, [searched]);
+
   return (
     <motion.div
       variants={searchBarContainerVariants}

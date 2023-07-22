@@ -31,7 +31,7 @@ const Header = ({ headerCycle }: HeaderPropsType): ReactElement => {
 
   useEffect(() => {
     if (!searched && headerCycle === "transparent") cycleSearch(0);
-  }, [headerCycle]);
+  }, [headerCycle, searched]);
 
   return (
     <AnimatePresence mode="sync" onExitComplete={() => handleClick(true)}>

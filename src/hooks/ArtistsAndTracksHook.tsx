@@ -1,5 +1,5 @@
 import { useCallback, useReducer, useMemo } from "react";
-import { ArtistsType, TopTracksDetailsType } from "../types";
+import { ArtistsType, TopTracksDetailsType } from "../types/types";
 
 const REDUCER_ACTION_TYPES = {
   ADD_ARTISTS_TRACKS: "ADD_ARTISTS_TRACKS",

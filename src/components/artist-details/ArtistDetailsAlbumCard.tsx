@@ -1,6 +1,6 @@
 import { ReactElement, memo } from "react";
 import { Variants, motion } from "framer-motion";
-import { AlbumDetailsType } from "../../types";
+import { AlbumDetailsType } from "../../types/types";
 import "./styles/artist-details.css";
 import ImageCard from "../ImageCard";
 import ImageHeader from "../ImageHeader";

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ArtistsType } from "../../types";
+import { ArtistsType } from "../../types/types";
 import { NavigateFunction } from "react-router-dom";
 import "./styles/artist-details.css";
 

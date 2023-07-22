@@ -53,13 +53,8 @@
   border-radius: 10px;
 }
 
-.track-item .content {
-  color: rgb(210, 210, 210);
-  font-family: "Varela Round", sans-serif !important;
+.track-details {
   max-width: 600px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .selected-container {
@@ -91,11 +86,24 @@
 }
 
 .no-selected-song {
-  margin-bottom: 200px !important;
+  width: 100%;
+  height: 100%;
+  padding-top: 150px;
 }
 
 .no-selected-song p {
-  max-width: 200px;
+  font-family: "Varela Round", sans-serif !important;
+  font-size: 23px;
+  color: rgb(210, 210, 210);
+}
+
+.face {
+  /* background-image: url("../../../assets/border.svg"); */
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 240px;
+  padding: 10px;
+  gap: 10px;
 }
 
 .track-list-search {
@@ -117,41 +125,20 @@
   height: 40%;
 }
 
-@media screen and (max-width: 958px) {
-  .track-item .content {
-    max-width: 340px;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .track-item .content {
-    max-width: 450px;
-  }
+@media screen and (max-width: 850px) {
   .whole-songs-section {
     display: block !important;
-    grid-template-columns: 250px auto;
-    transition: 1s;
   }
-}
 
-@media screen and (max-width: 688px) {
-  .track-item .content {
-    max-width: 300px;
-    font-size: 18px !important;
+  .selected-container {
+    height: auto !important;
+    width: 100%;
+    top: auto;
+    bottom: 0;
   }
-}
 
-@media screen and (max-width: 576px) {
-  .track-item .content {
-    max-width: 250px;
-    font-size: 14px !important;
-  }
-}
-
-@media screen and (max-width: 438px) {
-  .track-item .content {
-    max-width: 200px;
-    font-size: 14px !important;
+  .no-selected-song {
+    margin: 0 !important;
   }
 }
 
@@ -160,8 +147,7 @@
     padding: 5px !important;
   }
 
-  .track-item .content {
+  .track-item .track-details {
     max-width: 175px;
-    font-size: 13px !important;
   }
 }

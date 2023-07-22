@@ -1,6 +1,6 @@
-import { ReactElement, memo } from "react";
+import { MutableRefObject, ReactElement, memo } from "react";
 import TrackListGridTrack from "./TrackListGridTrack";
-import { TopTracksDetailsType } from "../../../types";
+import { TopTracksDetailsType } from "../../../types/types";
 import { HandleSelectedTrackType } from "../TrackList";
 import "../styles/track-list.css";
 
@@ -8,12 +8,14 @@ type TrackListGridSelectedProps = {
   searched: boolean;
   tracks: Required<TopTracksDetailsType>[];
   handleSelectedTrack: HandleSelectedTrackType;
+  dragRef: MutableRefObject<null>;
 };
 
 const TrackListGrid = ({
   searched,
   tracks,
   handleSelectedTrack,
+  dragRef,
 }: TrackListGridSelectedProps): ReactElement => {
   return (
     <div className="d-grid pb-5 w-100 track-list-grid">
@@ -25,6 +27,7 @@ const TrackListGrid = ({
             index={i}
             track={track}
             handleSelectedTrack={handleSelectedTrack}
+            dragRef={dragRef}
           />
         );
       })}

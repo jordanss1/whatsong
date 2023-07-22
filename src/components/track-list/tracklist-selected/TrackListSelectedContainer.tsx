@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { Variants, motion } from "framer-motion";
-import { TopTracksDetailsType } from "../../../types";
+import { TopTracksDetailsType } from "../../../types/types";
 import TrackListSelectedTrack from "./TrackListSelectedTrack";
 import TrackListSelectedNone from "./TrackListSelectedNone";
 import "../styles/track-list.css";
@@ -16,6 +16,7 @@ const selectedContainerVariant: Variants = {
     x: 0,
     transition: {
       duration: 0.3,
+      when: "beforeChildren",
     },
   },
   exit: {
@@ -23,6 +24,7 @@ const selectedContainerVariant: Variants = {
     x: -150,
     transition: {
       duration: 0.3,
+      when: "afterChildren",
     },
   },
 };
@@ -51,7 +53,7 @@ const TrackListSelectedContainer = ({
             handleSelectedTrack={handleSelectedTrack}
           />
         ) : (
-          <TrackListSelectedNone />
+          <TrackListSelectedNone dragging={false} />
         )}
       </motion.div>
     </motion.div>

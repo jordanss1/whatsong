@@ -8,7 +8,7 @@ import {
   rightSmallDisabled,
 } from "../../styles/inline";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
-import { TopTracksDetailsType } from "../../types";
+import { TopTracksDetailsType } from "../../types/types";
 import { TrackOrAlbumFuncType as SetTopTrackType } from "../../hooks/DetailedArtistResultHooks";
 import "./styles/artist-details.css";
 

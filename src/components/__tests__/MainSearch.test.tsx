@@ -11,7 +11,7 @@ import {
   ArtistAndTrackHandlerDataType,
   ArtistAndTrackHandlersType,
   ArtistDetailsHandlerDataType,
-} from "../../types";
+} from "../../types/types";
 import { history } from "../../../test-utils";
 import {
   artistResultsNone,

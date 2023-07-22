@@ -1,13 +1,20 @@
 import React, { MutableRefObject } from "react";
 import { CancelTokenSource } from "axios";
-import { ArtistAndAlbumStateSetter } from "./hooks/DetailedArtistResultHooks";
+import { ArtistAndAlbumStateSetter } from "../hooks/DetailedArtistResultHooks";
 import {
   ArtistResultsTestType,
   SongResultsTestType,
   AlbumAndTracksTestType,
-} from "./mocks/api";
+} from "../mocks/api";
 import { RestHandler, MockedRequest } from "msw";
-import { ArtistsAndTracksSetterType } from "./hooks/ArtistsAndTracksHook";
+import { ArtistsAndTracksSetterType } from "../hooks/ArtistsAndTracksHook";
+import {
+  Target,
+  VariantLabels,
+  AnimationControls,
+  TargetAndTransition,
+  Variants,
+} from "framer-motion";
 
 export type ArtistsType = {
   external_urls: { spotify: string };

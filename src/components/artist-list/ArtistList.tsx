@@ -33,11 +33,14 @@ const artistContainerVariants: Variants = {
 };
 
 const ArtistList = (): ReactElement => {
-  const { artists, setArtistsOrTracks } = useContext(SearchContext);
+  const { artists, setArtistsOrTracks, searched } = useContext(SearchContext);
 
   const { scrollY } = useScroll();
 
-  const [headerCycle, cycleHeader] = useCycle("animate", "transparent");
+  const [headerCycle, cycleHeader] = useCycle<"animate" | "transparent">(
+    "animate",
+    "transparent"
+  );
 
   useEffect(() => {
     let artists = sessionStorage.getItem("artists");
@@ -50,7 +53,7 @@ const ArtistList = (): ReactElement => {
   }, []);
 
   useEffect(() => {
-    scrollY.on("change", async () => {
+    scrollY.on("change", () => {
       if (scrollY.get() > 55) {
         cycleHeader(1);
       } else {
@@ -74,7 +77,7 @@ const ArtistList = (): ReactElement => {
           <Header headerCycle={headerCycle} />
           <div className="filler-div" />
           <motion.section className="w-100 h-100 artist-list-container d-grid py-4 px-1">
-            <ArtistListSearchBar cycle={headerCycle} />
+            <ArtistListSearchBar searched={searched} cycle={headerCycle} />
             <ArtistListGrid artists={artists} />
           </motion.section>
           <div className="filler-div" />

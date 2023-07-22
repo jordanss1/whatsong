@@ -6,20 +6,20 @@ import {
   useEffect,
 } from "react";
 import SearchContext from "../../contexts/searchContext/SearchStore";
-import "./styles/searchbar.css";
 import SearchButton from "./SearchButton";
+import "./styles/searchbar.css";
 
 const SearchBar = (): ReactElement => {
-  const { handleArtistsOrSongsSearch, artists, tracks, setSearched } =
+  const { handleArtistsOrSongsSearch, artists, tracks, searched, setSearched } =
     useContext(SearchContext);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
-    if (artists) {
+    if (artists && searched) {
       setSearched(false);
       sessionStorage.setItem("artists", JSON.stringify(artists));
-    } else if (tracks) {
+    } else if (tracks && searched) {
       setSearched(false);
       sessionStorage.setItem("tracks", JSON.stringify(tracks));
     }

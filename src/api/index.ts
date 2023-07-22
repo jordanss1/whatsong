@@ -1,11 +1,11 @@
 import axios from "axios";
 import { Buffer } from "buffer";
-import { AlbumDetailsType, ArtistsType } from "../types";
+import { AlbumDetailsType, ArtistsType } from "../types/types";
 import {
   SpotifyArtistDetailsSearchType,
   SpotifyArtistsOrSongsSearchType,
   SpotifyTokenFunctionType,
-} from "../types";
+} from "../types/types";
 
 const clientId = process.env.REACT_APP_ID;
 const clientSecret = process.env.REACT_APP_SECRET;

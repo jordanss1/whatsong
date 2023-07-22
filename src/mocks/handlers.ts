@@ -4,7 +4,7 @@ import {
   ArtistDetailsHandlerDataType,
   ArtistAndTrackHandlerDataType,
   ArtistDetailsHandlerType,
-} from "../types";
+} from "../types/types";
 
 type GetResponseType<T> = { code: number; body: T };
 

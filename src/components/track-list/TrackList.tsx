@@ -1,11 +1,17 @@
-import { useContext, useEffect } from "react";
-import { motion, useCycle, useScroll, Variants } from "framer-motion";
+import { useContext, useEffect, useRef } from "react";
+import {
+  motion,
+  useCycle,
+  useDragControls,
+  useScroll,
+  Variants,
+} from "framer-motion";
 import Header from "../header/Header";
 import TrackListSelectedContainer from "./tracklist-selected/TrackListSelectedContainer";
 import TrackListGridSearchBar from "./tracklist-grid/TrackListGridSearchBar";
 import TrackListGrid from "./tracklist-grid/TrackListGrid";
 import SearchContext from "../../contexts/searchContext/SearchState";
-import { TopTracksDetailsType } from "../../types";
+import { TopTracksDetailsType } from "../../types/types";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import "./styles/track-list.css";
 
@@ -48,7 +54,10 @@ const TrackList = () => {
     searched,
   } = useContext(SearchContext);
 
+  const dragRef = useRef(null);
+
   const [headerCycle, cycleHeader] = useCycle("animate", "transparent");
+  const is850 = useMediaQuery(850);
 
   const { scrollY } = useScroll();
 
@@ -63,8 +72,6 @@ const TrackList = () => {
 
     return () => scrollY.clearListeners();
   }, []);
-
-  const is900 = useMediaQuery(900);
 
   useEffect(() => {
     let tracks = sessionStorage.getItem("tracks");
@@ -91,8 +98,8 @@ const TrackList = () => {
         >
           <Header headerCycle={headerCycle} />
           <div className="filler-div" />
-          <section className="w-100 whole-songs-section d-grid">
-            {!is900 && (
+          <section ref={dragRef} className="w-100 whole-songs-section d-grid">
+            {!is850 && (
               <TrackListSelectedContainer
                 selectedTrack={selectedTrack}
                 handleSelectedTrack={handleSelectedTrack}
@@ -102,10 +109,17 @@ const TrackList = () => {
             <motion.div className="track-list-container d-flex align-items-center flex-column">
               <TrackListGridSearchBar cycle={headerCycle} />
               <TrackListGrid
+                dragRef={dragRef}
                 searched={searched}
                 handleSelectedTrack={handleSelectedTrack}
                 tracks={tracks}
               />
+              {is850 && (
+                <TrackListSelectedContainer
+                  selectedTrack={selectedTrack}
+                  handleSelectedTrack={handleSelectedTrack}
+                />
+              )}
             </motion.div>
           </section>
         </motion.main>

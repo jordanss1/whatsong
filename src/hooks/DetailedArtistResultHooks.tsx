@@ -6,7 +6,11 @@ import {
   useRef,
   useMemo,
 } from "react";
-import { AlbumDetailsType, ArtistsType, TopTracksDetailsType } from "../types";
+import {
+  AlbumDetailsType,
+  ArtistsType,
+  TopTracksDetailsType,
+} from "../types/types";
 
 const REDUCER_ACTION_TYPES = {
   ADD: "ADD",

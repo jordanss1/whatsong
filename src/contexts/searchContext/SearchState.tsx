@@ -8,7 +8,7 @@ import {
   useArtistResults,
   artistInitState,
 } from "../../hooks/DetailedArtistResultHooks";
-import { TopTracksDetailsType } from "../../types";
+import { TopTracksDetailsType } from "../../types/types";
 import { useArtistsOrTracks } from "../../hooks/ArtistsAndTracksHook";
 import { CancelTokenSource } from "axios";
 

@@ -15,6 +15,20 @@
   width: 30px !important;
 }
 
+.track-details {
+  color: rgb(210, 210, 210);
+  font-family: "Varela Round", sans-serif !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drag-ball {
+  height: 15px;
+  width: 15px;
+  background-color: rgb(255, 255, 255);
+}
+
 @media screen and (max-width: 380px) {
   .list-search-div {
     justify-content: center !important;

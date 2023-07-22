@@ -7,7 +7,7 @@ import {
   rightStyle,
   rightDisabledStyle,
 } from "../../styles/inline";
-import { AlbumDetailsType } from "../../types";
+import { AlbumDetailsType } from "../../types/types";
 import { SetAlbumType } from "../../hooks/DetailedArtistResultHooks";
 import ArtistDetailsAlbumCard from "./ArtistDetailsAlbumCard";
 import "./styles/artist-details.css";

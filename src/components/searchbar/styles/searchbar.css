@@ -77,12 +77,6 @@
   width: 30px !important;
 }
 
-@media screen and (max-width: 604px) {
-  .search-input-container {
-    justify-content: center !important;
-  }
-}
-
 @media screen and (max-width: 468px) {
   .search-button-nav {
     margin-left: auto;
