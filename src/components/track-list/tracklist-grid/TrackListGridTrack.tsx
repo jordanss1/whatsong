@@ -146,7 +146,7 @@ const TrackListGridTrack = ({
   const ref = useRef(null);
   const isMobile = useMediaQuery(480);
   const [ballCycle, cycleBall] = useCycle("hidden", "visible", "drag");
-  const [artist, setArtist] = useState(`${track.artists[0]?.name} - `);
+  const [x, setX] = useState(0);
 
   const isInView = useInView(ref, {
     amount: 0.2,
@@ -157,15 +157,17 @@ const TrackListGridTrack = ({
 
   let modifiedIndex = 0;
   const image = track.album?.images?.[0]?.url;
-  // let artist = ;
+  const artist = `${x} - `;
 
   if (!index) modifiedIndex = 0;
 
   if (index > 20) modifiedIndex = index / 5;
 
   const handleDrag: HandleDragType = (e) => {
-    console.log(e.type);
-    setArtist(e.type);
+    e.preventDefault();
+    e = e as MouseEvent;
+    setX(e.clientX);
+    console.log(e.clientX);
     cycleBall(1);
   };
 
