@@ -98,6 +98,7 @@ const ArtistListGridCard = ({
       ref={ref}
       custom={isMobile}
       variants={artistOrchestrationVariant}
+      layout
     >
       <AnimatePresence mode="wait">
         {!searched && (

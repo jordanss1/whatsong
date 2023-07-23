@@ -18,8 +18,9 @@ export const SearchState = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [searched, setSearched] = useState(false);
   const [modal, setModal] = useState(false);
+  const [popout, setPopout] = useState(false);
 
-  const lo = useLocation();
+  const location = useLocation();
 
   const cancelToken = useRef<CancelTokenSource | null>(null);
 
@@ -71,10 +72,12 @@ export const SearchState = () => {
 
   if (artistOrTrackError) error = artistOrTrackError;
 
-  const location = lo.pathname;
+  const pathname = location.pathname;
 
   const providerValues = {
-    location,
+    popout,
+    setPopout,
+    pathname,
     modal,
     setModal,
     searched,
@@ -109,7 +112,9 @@ export const SearchState = () => {
 export type UseSearchStateContext = ReturnType<typeof SearchState>;
 
 const initSearchContextState: UseSearchStateContext = {
-  location: "",
+  popout: false,
+  setPopout: () => {},
+  pathname: "",
   modal: false,
   setModal: () => {},
   searched: false,

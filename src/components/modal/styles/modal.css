@@ -1,7 +1,7 @@
 .modal-background {
   height: 100vh;
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   font-family: "Varela Round", sans-serif !important;
   display: flex;
   justify-content: center;

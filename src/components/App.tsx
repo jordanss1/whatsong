@@ -8,13 +8,16 @@ import Modal from "./modal/Modal";
 import Landing from "./landing/Landing";
 import SearchContext from "../contexts/searchContext/SearchState";
 import TrackList from "./track-list/TrackList";
+import Popout from "./popout/Popout";
+import "../styles/all.css";
 
 const App = (): ReactElement => {
   const location = useLocation();
 
-  const { error, loading, noResults, modal } = useContext(SearchContext);
+  const { error, loading, noResults, modal, popout } =
+    useContext(SearchContext);
 
-  const showModal = loading || error || noResults || modal;
+  const showModal = loading || error || noResults || modal || popout;
 
   return (
     <>
@@ -25,6 +28,7 @@ const App = (): ReactElement => {
             noResults={noResults}
             error={error}
             loading={loading}
+            popout={popout}
           />
         )}
       </AnimatePresence>

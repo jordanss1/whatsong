@@ -1,4 +1,4 @@
-import { ReactElement, useContext, useEffect, useRef } from "react";
+import { ReactElement, useContext, useEffect } from "react";
 import { motion, Variants, useScroll, useCycle } from "framer-motion";
 import Header from "../header/Header";
 import ArtistListGrid from "./ArtistListGrid";

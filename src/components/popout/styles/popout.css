@@ -1,0 +1,23 @@
+.popout {
+  z-index: 3;
+  min-height: 100px;
+  background: linear-gradient(
+    to right,
+    rgb(13, 13, 13) 0%,
+    rgb(18, 18, 18) 50%,
+    rgb(13, 13, 13) 100%
+  );
+  border-radius: 20px;
+  color: rgb(255, 255, 255, 0.5);
+  box-shadow: 0px 0px 2px 1px rgba(255, 255, 255, 0.3) !important;
+  font-family: "Varela Round", sans-serif !important;
+}
+
+.popout button {
+  letter-spacing: 0.5px;
+  color: rgb(255, 255, 255, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+}

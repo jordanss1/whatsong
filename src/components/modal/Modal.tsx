@@ -8,11 +8,12 @@ import { AnimatePresence, Variants, motion } from "framer-motion";
 type ModalPropsType = {
   error: Error | null;
   loading: boolean;
+  popout: boolean;
   noResults: boolean | null;
   pathname: string;
 };
 
-const backgroundVariants: Variants = {
+const errorVariants: Variants = {
   hidden: {
     backgroundColor: "rgba(0, 0, 0, 0)",
   },
@@ -32,16 +33,50 @@ const backgroundVariants: Variants = {
   },
 };
 
+const popoutVariants: Variants = {
+  hidden: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    zIndex: 3,
+  },
+  visible: {
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    zIndex: 3,
+    transition: {
+      delay: 0,
+      duration: 0.3,
+    },
+  },
+  exit: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
+
 const Modal = ({
   error,
   loading,
+  popout,
   noResults,
   pathname,
 }: ModalPropsType): ReactElement => {
-  const { resetModalOrSpotify, emptyProfile, setArtistsOrTracks, setModal } =
-    useContext(SearchContext);
+  const {
+    resetModalOrSpotify,
+    emptyProfile,
+    setArtistsOrTracks,
+    setModal,
+    setPopout,
+  } = useContext(SearchContext);
 
-  const handleClick = () => {
+  const handleClick = (e?: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if ((e && e.target !== e.currentTarget) || loading) return;
+
+    if (popout) {
+      setPopout(false);
+      return;
+    }
+
     const artists = sessionStorage.getItem("artists");
     const tracks = sessionStorage.getItem("tracks");
 
@@ -61,15 +96,12 @@ const Modal = ({
   return (
     <motion.div
       custom={error}
-      variants={backgroundVariants}
+      variants={popout ? popoutVariants : errorVariants}
       initial="hidden"
       animate="visible"
       exit="exit"
       className="modal-background w-100"
-      onClick={(e) => {
-        if (e.target !== e.currentTarget || loading) return;
-        handleClick();
-      }}
+      onClick={(e) => handleClick(e)}
     >
       <AnimatePresence>{loading && <ModalLoader />}</AnimatePresence>
       <AnimatePresence>

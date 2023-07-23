@@ -2,16 +2,15 @@ import { ReactElement, useEffect, useContext, useCallback } from "react";
 import HeaderLanding from "./HeaderLanding";
 import HeaderSearch from "./HeaderSearch";
 import { AnimatePresence, useCycle } from "framer-motion";
-import "./styles/header.css";
-import "../../styles/all.css";
 import SearchContext from "../../contexts/searchContext/SearchState";
+import "./styles/header.css";
 
 type HeaderPropsType = {
   headerCycle?: string;
 };
 
 const Header = ({ headerCycle }: HeaderPropsType): ReactElement => {
-  const { setModal, location, modal, searched } = useContext(SearchContext);
+  const { setModal, pathname, modal, searched } = useContext(SearchContext);
 
   const [searchCycle, cycleSearch] = useCycle(false, true);
 
@@ -35,8 +34,8 @@ const Header = ({ headerCycle }: HeaderPropsType): ReactElement => {
 
   return (
     <AnimatePresence mode="sync" onExitComplete={() => handleClick(true)}>
-      {location === "/" && <HeaderLanding key="landing" />}
-      {(location === "/artists" || location === "/tracks") && headerCycle && (
+      {pathname === "/" && <HeaderLanding key="landing" />}
+      {(pathname === "/artists" || pathname === "/tracks") && headerCycle && (
         <HeaderSearch
           key="search"
           headerCycle={headerCycle}
