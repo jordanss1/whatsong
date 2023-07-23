@@ -6,7 +6,6 @@ interface DrabbleBallProps extends MotionProps {
 }
 
 const DraggableBall = ({
-  dragConstraints,
   initial,
   animate,
   exit,
@@ -15,6 +14,11 @@ const DraggableBall = ({
   className,
   whileDrag,
   whileTap,
+  dragConstraints,
+  dragSnapToOrigin,
+  dragElastic,
+  dragMomentum,
+  style,
 }: DrabbleBallProps): ReactElement => {
   return (
     <motion.div
@@ -28,7 +32,11 @@ const DraggableBall = ({
       whileDrag={whileDrag}
       whileTap={whileTap}
       dragConstraints={dragConstraints}
+      dragSnapToOrigin={dragSnapToOrigin}
+      dragElastic={dragElastic}
+      dragMomentum={dragMomentum}
       className={className}
+      style={style}
     />
   );
 };

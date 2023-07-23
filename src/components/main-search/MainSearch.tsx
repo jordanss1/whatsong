@@ -128,6 +128,8 @@ const MainSearch = (): ReactElement => {
 
     if ((artists || tracks) && !error && category) {
       sessionStorage.clear();
+      // sessionStorage.removeItem(key);
+
       setSearchTerm("");
       sessionStorage.setItem(key, JSON.stringify(item));
       navigate(artists ? "/artists" : "/tracks");

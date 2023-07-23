@@ -1,4 +1,4 @@
-import { memo, MutableRefObject, ReactElement, useRef } from "react";
+import { memo, MutableRefObject, ReactElement, useRef, useState } from "react";
 import { TopTracksDetailsType } from "../../../types/types";
 import { HandleSelectedTrackType } from "../TrackList";
 import {
@@ -134,6 +134,8 @@ type PropTypes = {
   dragRef: MutableRefObject<null>;
 };
 
+type HandleDragType = (e: MouseEvent | TouchEvent | PointerEvent) => void;
+
 const TrackListGridTrack = ({
   track,
   handleSelectedTrack,
@@ -144,6 +146,7 @@ const TrackListGridTrack = ({
   const ref = useRef(null);
   const isMobile = useMediaQuery(480);
   const [ballCycle, cycleBall] = useCycle("hidden", "visible", "drag");
+  const [artist, setArtist] = useState(`${track.artists[0]?.name} - `);
 
   const isInView = useInView(ref, {
     amount: 0.2,
@@ -154,11 +157,17 @@ const TrackListGridTrack = ({
 
   let modifiedIndex = 0;
   const image = track.album?.images?.[0]?.url;
-  const artist = `${track.artists[0]?.name} - `;
+  // let artist = ;
 
   if (!index) modifiedIndex = 0;
 
   if (index > 20) modifiedIndex = index / 5;
+
+  const handleDrag: HandleDragType = (e) => {
+    console.log(e.type);
+    setArtist(e.type);
+    cycleBall(1);
+  };
 
   return (
     <motion.div
@@ -171,14 +180,16 @@ const TrackListGridTrack = ({
     >
       <DraggableBall
         drag
-        onDrag={() => cycleBall(1)}
+        dragSnapToOrigin
+        dragConstraints={dragRef}
+        onDrag={(e) => handleDrag(e)}
         variants={dragBallVariant}
         animate={ballCycle}
+        style={{ zIndex: 5 }}
         whileTap="whileTap"
-        dragConstraints={dragRef}
         className="drag-ball"
       />
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {!searched && (
           <motion.div
             variants={isMobile ? trackMobileVariant : trackVariant}

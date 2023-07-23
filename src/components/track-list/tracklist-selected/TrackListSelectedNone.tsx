@@ -39,7 +39,7 @@ const TrackListSelectedNone = ({
               key="drag"
               className="mb-0 pt-3 fw-bold w-100 text-center"
             >
-              Drag songs here
+              Drag orbs here
             </motion.p>
           )}
           {dragging ? (

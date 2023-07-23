@@ -95,6 +95,7 @@
   font-family: "Varela Round", sans-serif !important;
   font-size: 23px;
   color: rgb(210, 210, 210);
+  user-select: none;
 }
 
 .face {

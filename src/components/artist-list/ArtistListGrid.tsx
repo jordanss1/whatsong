@@ -10,8 +10,8 @@ import Popout from "../popout/Popout";
 import { AnimatePresence, Variants, motion } from "framer-motion";
 import { ArtistsType } from "../../types/types";
 import SearchContext from "../../contexts/searchContext/SearchState";
-import "./styles/artist-list.css";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
+import "./styles/artist-list.css";
 
 type ArtistListGridPropsType = {
   artists: ArtistsType[];
@@ -28,20 +28,20 @@ const popoutContainerVariants: Variants = {
   },
   visible: {
     padding: "20px",
+    borderRadius: "20px",
     y: -100,
     x: 50,
     zIndex: 3,
     backgroundColor: "rgba(0,0,0,0.5)",
-
     opacity: 1,
     scale: 1.2,
     transition: {
       ease: "easeOut",
-      duration: 1,
+      duration: 0.5,
     },
   },
   exit: {
-    y: 0,
+    backgroundColor: "rgba(0,0,0,0)",
     opacity: 0,
     transition: {
       duration: 0.2,
@@ -62,9 +62,11 @@ const popoutVariants: Variants = {
     },
   },
   exit: {
+    y: 50,
     opacity: 0,
+    scale: 0,
     transition: {
-      duration: 0.2,
+      duration: 0.3,
     },
   },
 };
@@ -141,19 +143,19 @@ const ArtistListGrid = ({ artists }: ArtistListGridPropsType): ReactElement => {
     <>
       {artists.map((artist, i) => {
         return (
-          <AnimatePresence mode="wait">
+          <AnimatePresence key={i} mode="wait">
             {popout && i === 0 ? (
               <motion.div
                 variants={popoutContainerVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                key={i}
+                key="popoutContainer"
                 className="d-flex flex-column gap-4 align-items-center"
               >
                 {renderPopout}
                 <ArtistListGridCard
-                  key={i}
+                  key="popout"
                   index={i}
                   artist={artist}
                   handleClick={handleProfileClick}
