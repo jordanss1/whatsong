@@ -98,11 +98,19 @@
   user-select: none;
 }
 
-.face {
-  /* background-image: url("../../../assets/border.svg"); */
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 240px;
+.invisible-inner-ball {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  bottom: 250%;
+  right: 270%;
+  z-index: 3;
+}
+
+.drag-landing {
+}
+
+.face-frown {
   padding: 10px;
   gap: 10px;
 }

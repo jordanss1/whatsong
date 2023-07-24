@@ -1,25 +1,26 @@
-import { ReactElement } from "react";
+import { ReactElement, memo } from "react";
 import TrackListSelectedSmile from "./TrackListSelectedSmile";
 import TrackListSelectedFrown from "./TrackListSelectedFrown";
-import { AnimatePresence, Variants, motion } from "framer-motion";
+import { AnimatePresence, Variants, motion, MotionValue } from "framer-motion";
 import "../styles/track-list.css";
 
 type TrackListSelectedNone = {
   dragging: boolean;
+  ballCoords: { ballX: MotionValue<number>; ballY: MotionValue<number> };
 };
 
-const instructionsVariant: Variants = {
+const dragLandingVariants: Variants = {
   initial: {
     x: -100,
     opacity: 0,
   },
-  animate: {
+  animate: (dragged) => ({
     x: 0,
     opacity: 1,
     transition: {
       duration: 0.4,
     },
-  },
+  }),
   exit: {
     scale: 0,
     opacity: 0,
@@ -28,29 +29,24 @@ const instructionsVariant: Variants = {
 
 const TrackListSelectedNone = ({
   dragging,
+  ballCoords,
 }: TrackListSelectedNone): ReactElement => {
   return (
-    <div className="no-selected-song">
-      <motion.div className="face d-flex flex-column align-items-center">
-        <AnimatePresence mode="wait">
-          {!dragging && (
-            <motion.p
-              variants={instructionsVariant}
-              key="drag"
-              className="mb-0 pt-3 fw-bold w-100 text-center"
-            >
-              Drag orbs here
-            </motion.p>
-          )}
+    <motion.div className="no-selected-song">
+      <motion.div
+        layout
+        className="drag-container d-flex flex-column align-items-center"
+      >
+        <AnimatePresence presenceAffectsLayout mode="wait">
           {dragging ? (
-            <TrackListSelectedSmile key="smile" />
+            <TrackListSelectedSmile ballCoords={ballCoords} key="smile" />
           ) : (
             <TrackListSelectedFrown key="frown" />
           )}
         </AnimatePresence>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 
-export default TrackListSelectedNone;
+export default memo(TrackListSelectedNone);

@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Variants, motion } from "framer-motion";
+import { ReactElement, memo } from "react";
+import { MotionValue, Variants, motion } from "framer-motion";
 import { TopTracksDetailsType } from "../../../types/types";
 import TrackListSelectedTrack from "./TrackListSelectedTrack";
 import TrackListSelectedNone from "./TrackListSelectedNone";
@@ -32,11 +32,15 @@ const selectedContainerVariant: Variants = {
 type TrackListSelectedProps = {
   selectedTrack: Required<TopTracksDetailsType> | null;
   handleSelectedTrack: HandleSelectedTrackType;
+  dragCycle: boolean;
+  ballCoords: { ballX: MotionValue<number>; ballY: MotionValue<number> };
 };
 
 const TrackListSelectedContainer = ({
   selectedTrack,
   handleSelectedTrack,
+  dragCycle,
+  ballCoords,
 }: TrackListSelectedProps): ReactElement => {
   return (
     <motion.div
@@ -53,11 +57,11 @@ const TrackListSelectedContainer = ({
             handleSelectedTrack={handleSelectedTrack}
           />
         ) : (
-          <TrackListSelectedNone dragging={false} />
+          <TrackListSelectedNone ballCoords={ballCoords} dragging={dragCycle} />
         )}
       </motion.div>
     </motion.div>
   );
 };
 
-export default TrackListSelectedContainer;
+export default memo(TrackListSelectedContainer);

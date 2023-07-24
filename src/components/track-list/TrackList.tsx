@@ -1,8 +1,10 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useMemo } from "react";
 import {
+  Cycle,
   motion,
+  PanInfo,
   useCycle,
-  useDragControls,
+  useMotionValue,
   useScroll,
   Variants,
 } from "framer-motion";
@@ -45,6 +47,12 @@ const trackContainerVariants: Variants = {
   },
 };
 
+export type HandleDragType = (
+  e: PanInfo,
+  cycleBall: Cycle,
+  end?: boolean
+) => void;
+
 const TrackList = () => {
   const {
     setSelectedTrack,
@@ -53,10 +61,16 @@ const TrackList = () => {
     selectedTrack,
     searched,
   } = useContext(SearchContext);
-
   const dragRef = useRef(null);
 
   const [headerCycle, cycleHeader] = useCycle("animate", "transparent");
+  const [dragCycle, cycleDrag] = useCycle(false, true);
+  const ballX = useMotionValue(0);
+  const ballY = useMotionValue(0);
+  const coords = { ballX, ballY };
+
+  const ballCoords = useMemo(() => coords, [ballX, ballY]);
+
   const is850 = useMediaQuery(850);
 
   const { scrollY } = useScroll();
@@ -86,6 +100,19 @@ const TrackList = () => {
     else setSelectedTrack(null);
   };
 
+  const handleDrag: HandleDragType = (info, cycleBall, end) => {
+    ballX.set(info.point.x);
+    ballY.set(info.point.y);
+
+    if (end) {
+      cycleDrag(0);
+      return;
+    }
+
+    cycleDrag(1);
+    cycleBall(1);
+  };
+
   return (
     <>
       {tracks && (
@@ -95,14 +122,17 @@ const TrackList = () => {
           animate="animate"
           exit="exit"
           className="whole-songs-container"
+          ref={dragRef}
         >
           <Header headerCycle={headerCycle} />
           <div className="filler-div" />
-          <section ref={dragRef} className="w-100 whole-songs-section d-grid">
+          <section className="w-100 whole-songs-section d-grid">
             {!is850 && (
               <TrackListSelectedContainer
                 selectedTrack={selectedTrack}
                 handleSelectedTrack={handleSelectedTrack}
+                dragCycle={dragCycle}
+                ballCoords={ballCoords}
               />
             )}
             <div className="track-list-empty-div" />
@@ -113,11 +143,14 @@ const TrackList = () => {
                 searched={searched}
                 handleSelectedTrack={handleSelectedTrack}
                 tracks={tracks}
+                handleDrag={handleDrag}
               />
               {is850 && (
                 <TrackListSelectedContainer
                   selectedTrack={selectedTrack}
                   handleSelectedTrack={handleSelectedTrack}
+                  dragCycle={dragCycle}
+                  ballCoords={ballCoords}
                 />
               )}
             </motion.div>
