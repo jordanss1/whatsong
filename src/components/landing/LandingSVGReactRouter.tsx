@@ -4,7 +4,6 @@ import {
   useTransform,
   useMotionValue,
   useMotionTemplate,
-  AnimationDefinition,
 } from "framer-motion";
 import "./styles/landing.css";
 
@@ -15,16 +14,6 @@ const LandingSVGReactRouter = (): ReactElement => {
   const scale = useTransform(x, [0, 150, 270], [0.8, 1, 0.8]);
   const shadowSize = useTransform(x, [0, 135, 270], [3, 5, 3]);
 
-  const cycleX: AnimationDefinition = {
-    x: [0, 300],
-    transition: {
-      duration: 4,
-      repeat: Infinity,
-      delay: 3,
-      repeatDelay: 2,
-    },
-  };
-
   return (
     <motion.svg
       style={{
@@ -33,7 +22,15 @@ const LandingSVGReactRouter = (): ReactElement => {
         scale,
         filter: useMotionTemplate`drop-shadow(${shadowSize}px ${shadowSize}px 2px rgb(0 0 0 / 0.7))`,
       }}
-      animate={cycleX}
+      animate={{
+        x: [0, 300],
+        transition: {
+          duration: 4,
+          repeat: Infinity,
+          delay: 3,
+          repeatDelay: 2,
+        },
+      }}
       width="80px"
       height="90px"
       viewBox="0 -58 256 256"

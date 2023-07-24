@@ -5,7 +5,8 @@ import DraggableBall from "../../DraggableBall";
 type TrackListGridBallPropsType = {
   ballCycle: string;
   dragRef: MutableRefObject<null>;
-  onDrag: (i: PanInfo, end?: boolean) => void;
+  onDrag: (e: React.PointerEvent, end?: boolean) => void;
+  pointerFunction: (pointer: boolean) => void;
 };
 
 const dragBallVariant: Variants = {
@@ -77,19 +78,25 @@ const TrackListGridBall = ({
   ballCycle,
   onDrag,
   dragRef,
+  pointerFunction,
 }: TrackListGridBallPropsType): ReactElement => {
   return (
     <>
-      {ballCycle === "visible" || ballCycle === "drag" ? (
+      {ballCycle === "visible" ||
+      ballCycle === "drag" ||
+      ballCycle === "finished" ? (
         <DraggableBall
           drag
-          onDrag={(e, i) => onDrag(i)}
-          onDragEnd={(e, i) => onDrag(i, true)}
+          onPointerDown={() => pointerFunction(true)}
+          onPointerUp={(e) => {
+            pointerFunction(false);
+            onDrag(e, true);
+          }}
+          onPointerMove={(e) => onDrag(e)}
           dragSnapToOrigin
-          dragConstraints={dragRef}
+          dragConstraints={ballCycle !== "finished" && dragRef}
           dragPropagation={true}
           dragElastic={0.7}
-          onDragTransitionEnd={() => console.log("first")}
           variants={dragBallVariant}
           dragMomentum={false}
           initial="hidden"

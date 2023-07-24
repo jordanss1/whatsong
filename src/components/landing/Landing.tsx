@@ -7,13 +7,12 @@ import {
   useCycle,
   usePresence,
 } from "framer-motion";
-import { UseSearchStateContext } from "../../contexts/searchContext/SearchState";
-import "./styles/landing.css";
 import LandingScroll from "./LandingScroll";
 import LandingButton from "./LandingButton";
 import LandingPowered from "./LandingPowered";
 import Header from "../header/Header";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
+import "./styles/landing.css";
 
 const mainVariants: Variants = {
   initial: {
@@ -52,7 +51,7 @@ const mainLeaveVariants: Variants = {
 };
 
 const Landing = (): ReactElement => {
-  const { navigate } = useContext<UseSearchStateContext>(SearchContext);
+  const { navigate } = useContext(SearchContext);
   const [intro, setIntro] = useState(true);
   const [finalAnimation, setFinalAnimation] = useState(false);
 
@@ -67,13 +66,6 @@ const Landing = (): ReactElement => {
     sessionStorage.removeItem("category");
     cycleMain(0);
   }, []);
-
-  useEffect(() => {
-    if (mainCycle === "prepare") {
-      setIntro(false);
-      cyclePowered(1);
-    }
-  }, [mainCycle]);
 
   useEffect(() => {
     if (finalAnimation) {
@@ -109,6 +101,11 @@ const Landing = (): ReactElement => {
   }, [isPresent]);
 
   const handleHover = (hovered: boolean) => {
+    if (mainCycle === "intro" && intro && hovered) {
+      setIntro(false);
+      cyclePowered(1);
+    }
+
     if (hovered && !finalAnimation) {
       cycleMain(1);
     } else if (!hovered && !finalAnimation) {

@@ -1,4 +1,4 @@
-import { ReactElement, memo } from "react";
+import { ReactElement } from "react";
 import { motion } from "framer-motion";
 import SVGFramer from "./LandingSVGFramer";
 import SVGReact from "./LandingSVGReact";
@@ -8,7 +8,7 @@ import "./styles/landing.css";
 
 const LandingScroll = (): ReactElement => {
   return (
-    <motion.div className="ribbon-div w-100 d-flex justify-content-center">
+    <div className="ribbon-div w-100 d-flex justify-content-center">
       <motion.div
         whileHover={{ scale: [null, 1.1] }}
         className="scolling-container d-flex"
@@ -26,7 +26,7 @@ const LandingScroll = (): ReactElement => {
           <SVGTypeScript />
         </div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
 

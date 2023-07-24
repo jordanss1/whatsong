@@ -48,7 +48,6 @@ const TrackListSelectedFrown = (): ReactElement => {
   return (
     <>
       <motion.p
-        layout
         variants={instructionsVariant}
         initial="initial"
         animate="animate"
@@ -64,6 +63,7 @@ const TrackListSelectedFrown = (): ReactElement => {
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="border-svg"
       >
         <motion.path
           variants={pathVariants}

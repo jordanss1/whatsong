@@ -71,7 +71,6 @@
 .scolling-container {
   position: relative;
   top: 20px;
-  overflow-y: visible;
   max-width: 210px;
 }
 

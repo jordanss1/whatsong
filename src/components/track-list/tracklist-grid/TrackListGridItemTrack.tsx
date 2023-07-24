@@ -4,7 +4,7 @@ import TrackDetails from "../../TrackDetails";
 import { motion, MotionStyle, Variants } from "framer-motion";
 import { TopTracksDetailsType } from "../../../types/types";
 
-type TrackListGridTrackPropsType = {
+type TrackListGridItemTrackPropsType = {
   isMobile: boolean;
   index: number;
   style: MotionStyle;
@@ -45,12 +45,12 @@ const trackMobileVariant: Variants = {
   }),
 };
 
-const TrackListGridTrack = ({
+const TrackListGridItemTrack = ({
   isMobile,
   index,
   style,
   track,
-}: TrackListGridTrackPropsType): ReactElement => {
+}: TrackListGridItemTrackPropsType): ReactElement => {
   const image = track.album?.images?.[0]?.url;
   const artist = `${track.artists[0]?.name} - `;
 
@@ -77,4 +77,4 @@ const TrackListGridTrack = ({
   );
 };
 
-export default TrackListGridTrack;
+export default TrackListGridItemTrack;

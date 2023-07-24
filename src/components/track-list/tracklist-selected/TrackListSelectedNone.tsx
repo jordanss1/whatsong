@@ -1,4 +1,4 @@
-import { ReactElement, memo } from "react";
+import { ReactElement, memo, useEffect } from "react";
 import TrackListSelectedSmile from "./TrackListSelectedSmile";
 import TrackListSelectedFrown from "./TrackListSelectedFrown";
 import { AnimatePresence, Variants, motion, MotionValue } from "framer-motion";
@@ -31,12 +31,17 @@ const TrackListSelectedNone = ({
   dragging,
   ballCoords,
 }: TrackListSelectedNone): ReactElement => {
+  useEffect(() => {
+    if (dragging) {
+      console.log("dragged");
+    } else {
+      console.log("dragged done");
+    }
+  }, [dragging]);
+
   return (
     <motion.div className="no-selected-song">
-      <motion.div
-        layout
-        className="drag-container d-flex flex-column align-items-center"
-      >
+      <motion.div className="drag-container d-flex flex-column align-items-center">
         <AnimatePresence presenceAffectsLayout mode="wait">
           {dragging ? (
             <TrackListSelectedSmile ballCoords={ballCoords} key="smile" />

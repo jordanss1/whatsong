@@ -10,7 +10,7 @@ import {
   useMotionValue,
   PanInfo,
 } from "framer-motion";
-import TrackListGridTrack from "./TrackListGridTrack";
+import TrackListGridItemTrack from "./TrackListGridItemTrack";
 import TrackListGridBall from "./TrackListGridBall";
 import { useMediaQuery } from "../../../hooks/MediaQueryHook";
 import "../styles/track-list.css";
@@ -50,10 +50,14 @@ const TrackListGridItem = ({
   handleDrag,
 }: TrackListGridItemPropTypes): ReactElement => {
   const ref = useRef(null);
+  const pointerRef = useRef(false);
   const isMobile = useMediaQuery(480);
-  const [ballCycle, cycleBall] = useCycle("hidden", "visible", "drag");
-
-  const x = useMotionValue(0);
+  const [ballCycle, cycleBall] = useCycle(
+    "hidden",
+    "visible",
+    "drag",
+    "finished"
+  );
 
   const isInView = useInView(ref, {
     amount: 0.2,
@@ -68,12 +72,17 @@ const TrackListGridItem = ({
 
   if (index > 20) modifiedIndex = index / 5;
 
-  const handleDragged = (i: PanInfo, end?: boolean) => {
+  const handleDragged = (e: React.PointerEvent, end?: boolean) => {
     if (end) {
-      handleDrag(i, cycleBall, true);
+      handleDrag(e, cycleBall, pointerRef, true);
       return;
     }
-    handleDrag(i, cycleBall);
+
+    handleDrag(e, cycleBall, pointerRef);
+  };
+
+  const pointerFunction = (pointer: boolean) => {
+    pointerRef.current = pointer;
   };
 
   return (
@@ -95,13 +104,13 @@ const TrackListGridItem = ({
           onDrag={handleDragged}
           dragRef={dragRef}
           ballCycle={ballCycle}
+          pointerFunction={pointerFunction}
         />
       </AnimatePresence>
       <AnimatePresence>
         {!searched && (
-          <TrackListGridTrack
+          <TrackListGridItemTrack
             style={{
-              x,
               transform,
               opacity,
               transition: `all .4s ${modifiedIndex}s`,

@@ -1,4 +1,10 @@
-import { useContext, useEffect, useRef, useMemo } from "react";
+import {
+  useContext,
+  useEffect,
+  useRef,
+  MutableRefObject,
+  useMemo,
+} from "react";
 import {
   Cycle,
   motion,
@@ -48,8 +54,9 @@ const trackContainerVariants: Variants = {
 };
 
 export type HandleDragType = (
-  e: PanInfo,
+  e: React.PointerEvent,
   cycleBall: Cycle,
+  ref: MutableRefObject<boolean>,
   end?: boolean
 ) => void;
 
@@ -69,7 +76,7 @@ const TrackList = () => {
   const ballY = useMotionValue(0);
   const coords = { ballX, ballY };
 
-  const ballCoords = useMemo(() => coords, [ballX, ballY]);
+  const ballCoords = useMemo(() => coords, [ballX.get(), ballY.get()]);
 
   const is850 = useMediaQuery(850);
 
@@ -100,17 +107,30 @@ const TrackList = () => {
     else setSelectedTrack(null);
   };
 
-  const handleDrag: HandleDragType = (info, cycleBall, end) => {
-    ballX.set(info.point.x);
-    ballY.set(info.point.y);
+  const handleDrag: HandleDragType = (e, cycleBall, ref, end) => {
+    const { top, left } = e.currentTarget.getBoundingClientRect();
 
-    if (end) {
-      cycleDrag(0);
-      return;
+    const xDone = left < 188 && left > 40;
+    const yDone = top > 250 && top < 403;
+
+    if (ref.current && !end) {
+      ballX.set(left);
+      ballY.set(top);
+      cycleBall(1);
+      cycleDrag(1);
     }
 
-    cycleDrag(1);
-    cycleBall(1);
+    if (!ref.current && end && xDone && yDone) {
+      ballX.set(left);
+      ballY.set(top);
+      console.log(top);
+      console.log(left);
+    }
+
+    if (!ref.current && end && (!xDone || !yDone)) {
+      cycleBall(0);
+      cycleDrag(0);
+    }
   };
 
   return (

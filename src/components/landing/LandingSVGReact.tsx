@@ -14,26 +14,23 @@ const LandingSVGReact = (): ReactElement => {
   const scale = useTransform(x, [0, 135, 270], [0.8, 1, 0.8]);
   const shadowSize = useTransform(x, [0, 135, 270], [3, 5, 3]);
 
-  const cycleX = {
-    x: [0, 300],
-    transition: {
-      duration: 4,
-      repeat: Infinity,
-      delay: 1.5,
-      repeatDelay: 2,
-    },
-  };
-
   return (
     <motion.svg
-      layout
       style={{
         x,
         opacity,
         scale,
         filter: useMotionTemplate`drop-shadow(${shadowSize}px ${shadowSize}px 2px rgb(0 0 0 / 0.7))`,
       }}
-      animate={cycleX}
+      animate={{
+        x: [null, 300],
+        transition: {
+          duration: 4,
+          repeat: Infinity,
+          delay: 1.5,
+          repeatDelay: 2,
+        },
+      }}
       width="90px"
       height="90px"
       viewBox="0 0 32 32"

@@ -1,4 +1,5 @@
-import { Cycle, Variants, motion } from "framer-motion";
+import { ReactElement } from "react";
+import { Variants, motion } from "framer-motion";
 
 const buttonVariants: Variants = {
   hidden: {
@@ -21,20 +22,21 @@ const buttonVariants: Variants = {
   },
 };
 
+type LandingButtonPropsType = {
+  handleHover: (hovered: boolean) => void;
+  setFinalAnimation: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 const LandingButton = ({
   setFinalAnimation,
   handleHover,
-}: {
-  handleHover: (hovered: boolean) => void;
-  setFinalAnimation: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+}: LandingButtonPropsType): ReactElement => {
   return (
     <div className="d-flex justify-content-center align-items-end">
       <motion.button
-        layout
         initial="hidden"
         animate="visible"
-        // variants={buttonVariants}
+        variants={buttonVariants}
         whileHover="hover"
         onMouseEnter={() => handleHover(true)}
         onMouseLeave={() => handleHover(false)}
