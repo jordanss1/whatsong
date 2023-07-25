@@ -25,6 +25,7 @@ const TrackListGridSearchBar = ({
             initial="initial"
             animate="animate"
             exit="exit"
+            className="track-list-search-div"
           >
             <SearchBar />
           </motion.div>

@@ -29,11 +29,35 @@ const selectedContainerVariant: Variants = {
   },
 };
 
+const innerVariants: Variants = {
+  normal: {
+    width: "250px",
+    background:
+      "linear-gradient(45deg,rgb(0, 3, 79, 0.5) 20%,rgb(0, 0, 0) 50%,rgb(0, 3, 79, 0.5) 80%)",
+    transition: {
+      type: "spring",
+      duration: 2,
+      stiffness: 130,
+    },
+  },
+  expanded: {
+    width: "320px",
+    background:
+      "linear-gradient(45deg,rgb(0, 0, 0) 20%,rgb(0, 3, 79, .8) 50%,rgb(0, 0, 0) 80%)",
+    transition: {
+      type: "spring",
+      duration: 2,
+      stiffness: 130,
+    },
+  },
+};
+
 type TrackListSelectedProps = {
   selectedTrack: Required<TopTracksDetailsType> | null;
   handleSelectedTrack: HandleSelectedTrackType;
   dragCycle: boolean;
   ballCoords: { ballX: MotionValue<number>; ballY: MotionValue<number> };
+  expandCycle: string;
 };
 
 const TrackListSelectedContainer = ({
@@ -41,14 +65,16 @@ const TrackListSelectedContainer = ({
   handleSelectedTrack,
   dragCycle,
   ballCoords,
+  expandCycle,
 }: TrackListSelectedProps): ReactElement => {
   return (
     <motion.div
       variants={selectedContainerVariant}
-      layout
       className="selected-container"
     >
       <motion.div
+        variants={innerVariants}
+        animate={expandCycle}
         className={`selected-inner d-flex align-items-center flex-column justify-content-evenly`}
       >
         {selectedTrack ? (

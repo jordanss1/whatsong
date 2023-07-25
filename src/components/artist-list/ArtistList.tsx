@@ -33,7 +33,8 @@ const artistContainerVariants: Variants = {
 };
 
 const ArtistList = (): ReactElement => {
-  const { artists, setArtistsOrTracks, searched } = useContext(SearchContext);
+  const { artists, setArtistsOrTracks, searched, navigate } =
+    useContext(SearchContext);
 
   const { scrollY } = useScroll();
 
@@ -49,7 +50,10 @@ const ArtistList = (): ReactElement => {
 
     if (artists && typeof artists === "string") {
       setArtistsOrTracks(JSON.parse(artists));
+      return;
     }
+
+    navigate("/search");
   }, []);
 
   useEffect(() => {

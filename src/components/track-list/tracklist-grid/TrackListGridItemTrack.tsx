@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import CircularImage from "../../CircularImage";
 import TrackDetails from "../../TrackDetails";
 import { motion, MotionStyle, Variants } from "framer-motion";
+import { useScreenWidth } from "../../../hooks/MediaQueryHook";
 import { TopTracksDetailsType } from "../../../types/types";
 
 type TrackListGridItemTrackPropsType = {
@@ -51,8 +52,27 @@ const TrackListGridItemTrack = ({
   style,
   track,
 }: TrackListGridItemTrackPropsType): ReactElement => {
+  const width = useScreenWidth();
+
   const image = track.album?.images?.[0]?.url;
   const artist = `${track.artists[0]?.name} - `;
+  let artistSize = 2;
+  let trackSize = 3;
+
+  if (width < 851) {
+    artistSize += 1;
+    trackSize += 1;
+  }
+
+  if (width < 600) {
+    artistSize += 1;
+    trackSize += 1;
+  }
+
+  if (width < 480) {
+    artistSize += 1;
+    trackSize += 1;
+  }
 
   return (
     <motion.div
@@ -71,7 +91,12 @@ const TrackListGridItemTrack = ({
         className="track-item d-grid align-items-center p-3"
       >
         <CircularImage image={image} size={1} />
-        <TrackDetails artist={artist} track={track.name} />
+        <TrackDetails
+          artist={artist}
+          track={track.name}
+          artistSize={artistSize}
+          trackSize={trackSize}
+        />
       </motion.div>
     </motion.div>
   );

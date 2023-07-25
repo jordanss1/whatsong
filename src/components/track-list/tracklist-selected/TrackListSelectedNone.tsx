@@ -31,14 +31,6 @@ const TrackListSelectedNone = ({
   dragging,
   ballCoords,
 }: TrackListSelectedNone): ReactElement => {
-  useEffect(() => {
-    if (dragging) {
-      console.log("dragged");
-    } else {
-      console.log("dragged done");
-    }
-  }, [dragging]);
-
   return (
     <motion.div className="no-selected-song">
       <motion.div className="drag-container d-flex flex-column align-items-center">

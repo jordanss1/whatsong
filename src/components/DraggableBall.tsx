@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, memo } from "react";
 import { MotionProps, motion } from "framer-motion";
 
 interface DrabbleBallProps extends MotionProps {
@@ -19,6 +19,7 @@ const DraggableBall = ({
   className,
   whileDrag,
   whileTap,
+  custom,
   dragConstraints,
   dragSnapToOrigin,
   dragElastic,
@@ -51,9 +52,10 @@ const DraggableBall = ({
       dragMomentum={dragMomentum}
       dragPropagation={dragPropagation}
       className={className}
+      custom={custom}
       style={style}
     >
-      <motion.div className={invisibleClass} />
+      <motion.div layout className={invisibleClass} />
     </motion.div>
   );
 };

@@ -1,14 +1,19 @@
-import { MutableRefObject, ReactElement, useRef } from "react";
+import {
+  MutableRefObject,
+  ReactElement,
+  useRef,
+  useCallback,
+  useEffect,
+} from "react";
 import { TopTracksDetailsType } from "../../../types/types";
-import { HandleDragType, HandleSelectedTrackType } from "../TrackList";
+import { HandleDragType } from "../TrackList";
 import {
   Variants,
   motion,
   useInView,
   AnimatePresence,
   useCycle,
-  useMotionValue,
-  PanInfo,
+  MotionStyle,
 } from "framer-motion";
 import TrackListGridItemTrack from "./TrackListGridItemTrack";
 import TrackListGridBall from "./TrackListGridBall";
@@ -34,30 +39,30 @@ const trackOrchestratedVariant: Variants = {
 
 type TrackListGridItemPropTypes = {
   track: Required<TopTracksDetailsType>;
-  handleSelectedTrack: HandleSelectedTrackType;
   index: number;
   searched: boolean;
   dragRef: MutableRefObject<null>;
-  handleDrag: HandleDragType;
+  expandCycle: string;
+  handleDrag?: HandleDragType;
+  style?: MotionStyle;
 };
 
 const TrackListGridItem = ({
   track,
-  handleSelectedTrack,
   index,
   searched,
   dragRef,
   handleDrag,
+  expandCycle,
+  style,
 }: TrackListGridItemPropTypes): ReactElement => {
   const ref = useRef(null);
   const pointerRef = useRef(false);
+
   const isMobile = useMediaQuery(480);
-  const [ballCycle, cycleBall] = useCycle(
-    "hidden",
-    "visible",
-    "drag",
-    "finished"
-  );
+  const is850 = useMediaQuery(850);
+
+  const [ballCycle, cycleBall] = useCycle("hidden", "visible", "drag");
 
   const isInView = useInView(ref, {
     amount: 0.2,
@@ -72,13 +77,39 @@ const TrackListGridItem = ({
 
   if (index > 20) modifiedIndex = index / 5;
 
-  const handleDragged = (e: React.PointerEvent, end?: boolean) => {
-    if (end) {
-      handleDrag(e, cycleBall, pointerRef, true);
+  useEffect(() => {
+    const visited = sessionStorage.getItem("tracks-visited");
+
+    if (!visited) cycleBall(0);
+  }, []);
+
+  useEffect(() => {
+    if (track) cycleBall(0);
+  }, [track]);
+  const handleDragged = useCallback((e: React.PointerEvent, end?: boolean) => {
+    if (handleDrag) {
+      if (end) {
+        handleDrag(e, cycleBall, pointerRef, true, track);
+        return;
+      }
+
+      handleDrag(e, cycleBall, pointerRef);
+    }
+  }, []);
+
+  const handleMouseEvent = (enter?: boolean) => {
+    if (enter && ballCycle !== "drag" && ballCycle === "hidden") {
+      cycleBall(1);
       return;
     }
 
-    handleDrag(e, cycleBall, pointerRef);
+    if (
+      ballCycle !== "drag" &&
+      ballCycle === "visible" &&
+      !pointerRef.current
+    ) {
+      cycleBall(0);
+    }
   };
 
   const pointerFunction = (pointer: boolean) => {
@@ -90,13 +121,13 @@ const TrackListGridItem = ({
       className="track-item-orchestrated d-flex align-items-center gap-5 ps-3"
       variants={trackOrchestratedVariant}
       custom={isMobile}
-      onMouseEnter={() => {
-        if (ballCycle !== "drag" && ballCycle === "hidden") cycleBall(1);
-      }}
-      onMouseLeave={() => {
-        if (ballCycle !== "drag" && ballCycle === "visible") cycleBall(0);
-      }}
+      onMouseEnter={is850 ? () => {} : () => handleMouseEvent(true)}
+      onMouseLeave={is850 ? () => {} : () => handleMouseEvent()}
+      onClick={
+        is850 ? () => cycleBall(ballCycle === "hidden" ? 1 : 0) : () => {}
+      }
       layout
+      style={style}
       ref={ref}
     >
       <AnimatePresence mode="wait">
@@ -105,6 +136,7 @@ const TrackListGridItem = ({
           dragRef={dragRef}
           ballCycle={ballCycle}
           pointerFunction={pointerFunction}
+          expandCycle={expandCycle}
         />
       </AnimatePresence>
       <AnimatePresence>

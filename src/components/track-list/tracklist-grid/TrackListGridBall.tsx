@@ -1,12 +1,14 @@
-import { ReactElement, MutableRefObject } from "react";
-import { motion, PanInfo, Variants } from "framer-motion";
+import { ReactElement, MutableRefObject, memo } from "react";
+import { motion, Variants } from "framer-motion";
 import DraggableBall from "../../DraggableBall";
+import { useMediaQuery } from "../../../hooks/MediaQueryHook";
 
 type TrackListGridBallPropsType = {
   ballCycle: string;
   dragRef: MutableRefObject<null>;
   onDrag: (e: React.PointerEvent, end?: boolean) => void;
   pointerFunction: (pointer: boolean) => void;
+  expandCycle: string;
 };
 
 const dragBallVariant: Variants = {
@@ -62,16 +64,16 @@ const dragBallVariant: Variants = {
       duration: 0.3,
     },
   },
-  whileTap: {
+  whileTap: (is850) => ({
     borderRadius: "50%",
     boxShadow: [null, "0px 0px 5px 3px rgba(222, 90, 174)"],
-    scale: [null, 1.5],
+    scale: [null, is850 ? 3 : 1.5],
     backgroundColor: "rgba(255,255,255)",
     rotate: [null, 0],
     transition: {
       duration: 0.3,
     },
-  },
+  }),
 };
 
 const TrackListGridBall = ({
@@ -79,39 +81,50 @@ const TrackListGridBall = ({
   onDrag,
   dragRef,
   pointerFunction,
+  expandCycle,
 }: TrackListGridBallPropsType): ReactElement => {
-  return (
-    <>
-      {ballCycle === "visible" ||
-      ballCycle === "drag" ||
-      ballCycle === "finished" ? (
-        <DraggableBall
-          drag
-          onPointerDown={() => pointerFunction(true)}
-          onPointerUp={(e) => {
-            pointerFunction(false);
-            onDrag(e, true);
-          }}
-          onPointerMove={(e) => onDrag(e)}
-          dragSnapToOrigin
-          dragConstraints={ballCycle !== "finished" && dragRef}
-          dragPropagation={true}
-          dragElastic={0.7}
-          variants={dragBallVariant}
-          dragMomentum={false}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          whileTap="whileTap"
-          style={{ zIndex: 3 }}
-          invisibleClass="invisible-inner-ball"
-          className="drag-ball"
-        />
-      ) : (
-        <motion.div style={{ width: "17px", zIndex: 3 }} />
-      )}
-    </>
+  const is850 = useMediaQuery(850);
+
+  const renderBall = (
+    <DraggableBall
+      drag
+      custom={is850}
+      onPointerDown={() => pointerFunction(true)}
+      onPointerUp={(e) => {
+        pointerFunction(false);
+        onDrag(e, true);
+      }}
+      onPointerMove={(e) => onDrag(e)}
+      dragSnapToOrigin
+      dragConstraints={dragRef}
+      dragPropagation={true}
+      dragElastic={0.7}
+      variants={dragBallVariant}
+      dragMomentum={false}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      whileTap="whileTap"
+      style={{ zIndex: 4 }}
+      invisibleClass="invisible-inner-ball"
+      className="drag-ball"
+    />
   );
+
+  if (is850) {
+    return <>{ballCycle === "hidden" ? <></> : renderBall}</>;
+  } else {
+    return (
+      <>
+        {expandCycle === "normal" &&
+        (ballCycle === "visible" || ballCycle === "drag") ? (
+          renderBall
+        ) : (
+          <motion.div style={{ width: "17px", zIndex: 3 }} />
+        )}
+      </>
+    );
+  }
 };
 
-export default TrackListGridBall;
+export default memo(TrackListGridBall);

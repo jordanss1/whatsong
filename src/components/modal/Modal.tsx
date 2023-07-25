@@ -73,6 +73,10 @@ const Modal = ({
     if ((e && e.target !== e.currentTarget) || loading) return;
 
     if (popout) {
+      const key =
+        pathname === "/artists" ? "artists-visited" : "tracks-visited";
+
+      sessionStorage.setItem(key, key);
       setPopout(false);
       return;
     }

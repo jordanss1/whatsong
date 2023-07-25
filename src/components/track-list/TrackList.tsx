@@ -4,11 +4,11 @@ import {
   useRef,
   MutableRefObject,
   useMemo,
+  useCallback,
 } from "react";
 import {
   Cycle,
   motion,
-  PanInfo,
   useCycle,
   useMotionValue,
   useScroll,
@@ -53,11 +53,31 @@ const trackContainerVariants: Variants = {
   },
 };
 
+const gridVariants: Variants = {
+  normal: {
+    gridTemplateColumns: "250px auto",
+    transition: {
+      type: "spring",
+      duration: 1,
+      stiffness: 130,
+    },
+  },
+  expanded: {
+    gridTemplateColumns: "320px auto",
+    transition: {
+      type: "spring",
+      duration: 1,
+      stiffness: 130,
+    },
+  },
+};
+
 export type HandleDragType = (
   e: React.PointerEvent,
   cycleBall: Cycle,
   ref: MutableRefObject<boolean>,
-  end?: boolean
+  end?: boolean,
+  track?: Required<TopTracksDetailsType>
 ) => void;
 
 const TrackList = () => {
@@ -67,20 +87,26 @@ const TrackList = () => {
     tracks,
     selectedTrack,
     searched,
+    navigate,
   } = useContext(SearchContext);
   const dragRef = useRef(null);
 
+  const { scrollY } = useScroll();
+
   const [headerCycle, cycleHeader] = useCycle("animate", "transparent");
   const [dragCycle, cycleDrag] = useCycle(false, true);
+  const [expandCycle, cycleExpand] = useCycle("normal", "expanded");
+
   const ballX = useMotionValue(0);
   const ballY = useMotionValue(0);
   const coords = { ballX, ballY };
 
-  const ballCoords = useMemo(() => coords, [ballX.get(), ballY.get()]);
+  const x = ballX.get();
+  const y = ballY.get();
+
+  const ballCoords = useMemo(() => coords, [x, y]);
 
   const is850 = useMediaQuery(850);
-
-  const { scrollY } = useScroll();
 
   useEffect(() => {
     scrollY.on("change", async () => {
@@ -92,46 +118,59 @@ const TrackList = () => {
     });
 
     return () => scrollY.clearListeners();
-  }, []);
+  }, [cycleHeader, scrollY]);
 
   useEffect(() => {
     let tracks = sessionStorage.getItem("tracks");
 
     if (tracks && typeof tracks === "string") {
       setArtistsOrTracks(undefined, JSON.parse(tracks));
-    }
-  }, []);
-
-  const handleSelectedTrack = (track?: Required<TopTracksDetailsType>) => {
-    if (track) setSelectedTrack(track);
-    else setSelectedTrack(null);
-  };
-
-  const handleDrag: HandleDragType = (e, cycleBall, ref, end) => {
-    const { top, left } = e.currentTarget.getBoundingClientRect();
-
-    const xDone = left < 188 && left > 40;
-    const yDone = top > 250 && top < 403;
-
-    if (ref.current && !end) {
-      ballX.set(left);
-      ballY.set(top);
-      cycleBall(1);
-      cycleDrag(1);
+      return;
     }
 
-    if (!ref.current && end && xDone && yDone) {
-      ballX.set(left);
-      ballY.set(top);
-      console.log(top);
-      console.log(left);
-    }
+    navigate("/search");
+  }, [setArtistsOrTracks]);
 
-    if (!ref.current && end && (!xDone || !yDone)) {
-      cycleBall(0);
-      cycleDrag(0);
-    }
-  };
+  const handleSelectedTrack = useCallback(
+    (track?: Required<TopTracksDetailsType>) => {
+      if (track) {
+        setSelectedTrack(track);
+        cycleDrag(0);
+        return;
+      }
+      cycleExpand(0);
+      setSelectedTrack(null);
+    },
+    [setSelectedTrack]
+  );
+
+  const handleDrag: HandleDragType = useCallback(
+    (e, cycleBall, ref, end, track) => {
+      const { top, left } = e.currentTarget.getBoundingClientRect();
+
+      const xDone = left < 200 && left > 21;
+      const yDone = top > 235 && top < 422;
+
+      if (ref.current) {
+        ballX.set(left);
+        ballY.set(top);
+        cycleBall(1);
+        cycleDrag(1);
+      }
+
+      if (end && xDone && yDone) {
+        cycleExpand(1);
+        cycleBall(0);
+        handleSelectedTrack(track);
+      }
+
+      if (end && (!xDone || !yDone)) {
+        cycleBall(0);
+        cycleDrag(0);
+      }
+    },
+    [ballX, ballY, cycleDrag, cycleExpand]
+  );
 
   return (
     <>
@@ -146,24 +185,31 @@ const TrackList = () => {
         >
           <Header headerCycle={headerCycle} />
           <div className="filler-div" />
-          <section className="w-100 whole-songs-section d-grid">
+          <motion.section
+            variants={gridVariants}
+            animate={dragCycle && expandCycle}
+            layout
+            layoutDependency={dragCycle}
+            className="w-100 whole-songs-section d-grid"
+          >
             {!is850 && (
               <TrackListSelectedContainer
                 selectedTrack={selectedTrack}
                 handleSelectedTrack={handleSelectedTrack}
                 dragCycle={dragCycle}
                 ballCoords={ballCoords}
+                expandCycle={expandCycle}
               />
             )}
-            <div className="track-list-empty-div" />
+            {!is850 && <motion.div className="track-list-empty-div" />}
             <motion.div className="track-list-container d-flex align-items-center flex-column">
               <TrackListGridSearchBar cycle={headerCycle} />
               <TrackListGrid
                 dragRef={dragRef}
                 searched={searched}
-                handleSelectedTrack={handleSelectedTrack}
                 tracks={tracks}
                 handleDrag={handleDrag}
+                expandCycle={expandCycle}
               />
               {is850 && (
                 <TrackListSelectedContainer
@@ -171,10 +217,11 @@ const TrackList = () => {
                   handleSelectedTrack={handleSelectedTrack}
                   dragCycle={dragCycle}
                   ballCoords={ballCoords}
+                  expandCycle={expandCycle}
                 />
               )}
             </motion.div>
-          </section>
+          </motion.section>
         </motion.main>
       )}
     </>

@@ -1,11 +1,10 @@
-import { ReactElement, useRef, useEffect } from "react";
+import { ReactElement, useRef, useEffect, memo } from "react";
 import {
   Variants,
   motion,
   MotionValue,
   useTransform,
   useMotionTemplate,
-  useMotionValue,
 } from "framer-motion";
 
 const containerVariants: Variants = {
@@ -38,7 +37,7 @@ const borderSVGVariants: Variants = {
     y: 0,
   },
   animate: {
-    y: -105,
+    y: -130,
     transition: {
       duration: 0.3,
       type: "spring",
@@ -56,11 +55,9 @@ const borderSVGVariants: Variants = {
 const smileVariants: Variants = {
   initial: {
     pathLength: 0,
-    scale: 1.3,
   },
   animate: {
     pathLength: 1,
-    scale: 0.8,
     transition: {
       duration: 0.3,
       type: "spring",
@@ -69,7 +66,6 @@ const smileVariants: Variants = {
   },
   exit: {
     pathLength: 0,
-    scale: 0.6,
     opacity: 0,
     transition: {
       duration: 0.1,
@@ -78,11 +74,8 @@ const smileVariants: Variants = {
 };
 
 const borderVariants: Variants = {
-  initial: {
-    scale: 1,
-  },
+  initial: {},
   animate: {
-    scale: 1.1,
     transition: {
       duration: 0.3,
       type: "spring",
@@ -107,13 +100,22 @@ const TrackListSelectedSmile = ({
 }: TrackListSelectedSmilePropsType): ReactElement => {
   const { ballX, ballY } = ballCoords;
 
-  const scale = useTransform(ballX, [400, 0], [1.1, 1.3]);
-  const strokeDashOffset = useTransform(ballX, [400, 0], [117, 50]);
+  const smileScaleY = useTransform(
+    ballY,
+    [675, 420, 230, 80],
+    [0.3, 0.4, 0.4, 0.3]
+  );
+  const smileScaleX = useTransform(ballX, [400, 202], [0.3, 0.4]);
 
-  ballY.on("change", () => {
-    console.log("x", ballX.get());
-    // console.log("y", ballY.get());
-  });
+  const smileScale = useTransform(smileScaleX, (x) => x + smileScaleY.get());
+
+  const borderStrokeOpacity = useTransform(smileScale, [0.6, 0.8], [1, 0.3]);
+  const borderScale = useTransform(smileScale, [0.6, 0.8], [0.8, 1.1]);
+  const borderStrokeWidth = useTransform(smileScale, [0.6, 0.8], [0.5, 0.2]);
+  const borderDashOffset = useTransform(smileScale, [0.6, 0.8], [117, 50]);
+
+  const smileOpacity = useTransform(smileScale, [0.8, 0.6], [1, 0.3]);
+  const smileStrokeWidth = useTransform(smileScale, [0.6, 0.8], [0.1, 1]);
 
   return (
     <>
@@ -127,17 +129,18 @@ const TrackListSelectedSmile = ({
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        layout
       >
         <motion.path
           initial="initial"
           animate="animate"
           exit="exit"
-          style={{ opacity: 0.3 }}
+          style={{
+            scale: smileScale,
+          }}
           variants={smileVariants}
           d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14M15 9H15.01M8 9H10M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM15.5 9C15.5 9.27614 15.2761 9.5 15 9.5C14.7239 9.5 14.5 9.27614 14.5 9C14.5 8.72386 14.7239 8.5 15 8.5C15.2761 8.5 15.5 8.72386 15.5 9Z"
-          stroke="rgb(210, 210, 210, .3)"
-          strokeWidth=".3"
+          stroke={useMotionTemplate`rgb(255, 255, 255, ${smileOpacity})`}
+          strokeWidth={smileStrokeWidth}
           strokeLinecap="square"
           strokeLinejoin="round"
         />
@@ -147,23 +150,24 @@ const TrackListSelectedSmile = ({
         initial="initial"
         animate="animate"
         exit="exit"
-        width="170px"
-        height="170px"
+        width="229px"
+        height="229px"
         fill="transparent"
         viewBox="0 0 48 48"
         xmlns="http://www.w3.org/2000/svg"
       >
         <motion.path
-          style={{ scale }}
+          style={{ scale: borderScale }}
           initial="initial"
           animate="animate"
           exit="exit"
           variants={borderVariants}
-          stroke="rgb(210, 210, 210, 1)"
-          strokeWidth=".25"
-          strokeDashoffset={strokeDashOffset}
+          stroke="rgb(250, 250, 250)"
+          strokeWidth={borderStrokeWidth}
+          strokeDashoffset={borderDashOffset}
           strokeLinecap="round"
           strokeDasharray="3"
+          strokeOpacity={borderStrokeOpacity}
           d="M40.5,5.5H7.5a2,2,0,0,0-2,2v33a2,2,0,0,0,2,2h33a2,2,0,0,0,2-2V7.5A2,2,0,0,0,40.5,5.5Z"
         />
       </motion.svg>
@@ -171,4 +175,4 @@ const TrackListSelectedSmile = ({
   );
 };
 
-export default TrackListSelectedSmile;
+export default memo(TrackListSelectedSmile);

@@ -33,6 +33,15 @@ body {
   background-color: rgb(255, 255, 255);
 }
 
+@media screen and (max-width: 416px) {
+  .track-details .artist {
+    font-size: 14px !important;
+  }
+  .track-details .track {
+    font-size: 13px !important;
+  }
+}
+
 @media screen and (max-width: 380px) {
   .list-search-div {
     justify-content: center !important;

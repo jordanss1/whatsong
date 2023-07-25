@@ -9,7 +9,6 @@ const loaderVariant: Variants = {
     opacity: 1,
     rotateY: 360,
     transition: {
-      delay: 0.5,
       rotateY: {
         repeat: Infinity,
         type: "spring",

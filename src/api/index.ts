@@ -127,7 +127,7 @@ export const spotifyArtistDetailsSearch: SpotifyArtistDetailsSearchType =
 
 export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
   async (query, cancelToken, typeOfSearch, setArtistOrTracks, setLoading) => {
-    const timer = setTimeout(() => setLoading(true), 300);
+    const timer = setTimeout(() => setLoading(true), 1000);
 
     let data = await spotifyTokenFunction(cancelToken);
 
