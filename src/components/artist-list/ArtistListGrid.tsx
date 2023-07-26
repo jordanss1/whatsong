@@ -36,6 +36,7 @@ const popoutContainerVariants: Variants = {
     opacity: 1,
     scale: 1.2,
     transition: {
+      type: "tween",
       ease: "easeOut",
       duration: 0.5,
     },
@@ -57,6 +58,7 @@ const popoutVariants: Variants = {
     opacity: 1,
     transition: {
       ease: "easeOut",
+      type: "tween",
       duration: 1,
       delay: 0.5,
     },
@@ -90,11 +92,11 @@ const ArtistListGrid = ({ artists }: ArtistListGridPropsType): ReactElement => {
   const gridClass = artists.length < 6 ? "artist-grid-less" : "artist-grid";
 
   useEffect(() => {
-    const visited = sessionStorage.getItem("artist-visited");
+    const visited = localStorage.getItem("artist-visited");
 
     if (visited) return;
 
-    sessionStorage.setItem("artist-visited", "artist-visited");
+    localStorage.setItem("artist-visited", "artist-visited");
     setTimeout(() => setPopout(true), 1200);
   }, []);
 

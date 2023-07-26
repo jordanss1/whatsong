@@ -9,7 +9,6 @@ import SearchContext from "../../../contexts/searchContext/SearchState";
 import "../styles/track-list.css";
 
 type TrackListGridSelectedProps = {
-  searched: boolean;
   tracks: Required<TopTracksDetailsType>[];
   dragRef: MutableRefObject<null>;
   handleDrag: HandleDragType;
@@ -28,13 +27,14 @@ export const popoutContainerVariants: Variants = {
     borderRadius: "20px",
     y: is850 ? 0 : -70,
     x: 0,
-    maxWidth: is850 ? "500" : "650px",
+    maxWidth: is850 ? "500px" : "650px",
     zIndex: 3,
     backgroundColor: "rgba(0,0,0,0.5)",
     opacity: 1,
-    scale: is850 ? 1 : 1.2,
+    scale: 1.2,
     transition: {
       ease: "easeOut",
+      type: "tween",
       duration: 0.5,
     },
   }),
@@ -55,6 +55,7 @@ const popoutVariants: Variants = {
     opacity: 1,
     transition: {
       ease: "easeOut",
+      type: "tween",
       duration: 1,
       delay: 0.5,
     },
@@ -70,21 +71,20 @@ const popoutVariants: Variants = {
 };
 
 const TrackListGrid = ({
-  searched,
   tracks,
   dragRef,
   handleDrag,
   expandCycle,
 }: TrackListGridSelectedProps): ReactElement => {
-  const { setPopout, popout } = useContext(SearchContext);
+  const { setPopout, popout, searched } = useContext(SearchContext);
   const is850 = useMediaQuery(850);
 
   useEffect(() => {
-    const visited = sessionStorage.getItem("tracks-visited");
+    const visited = localStorage.getItem("tracks-visited");
 
     if (visited) return;
 
-    sessionStorage.setItem("tracks-visited", "tracks-visited");
+    localStorage.setItem("tracks-visited", "tracks-visited");
     setTimeout(() => setPopout(true), 1200);
   }, []);
 
@@ -94,7 +94,7 @@ const TrackListGrid = ({
       style={{
         maxWidth: is850 ? "250px" : "350px",
         width: "100%",
-        fontSize: is850 ? "12px" : "15px",
+        fontSize: is850 ? "14px" : "15px",
         display: "flex",
         flexDirection: "column",
         padding: "15px",

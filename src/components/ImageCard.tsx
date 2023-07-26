@@ -1,20 +1,25 @@
 import { ReactElement } from "react";
-import { MotionStyle, motion } from "framer-motion";
+import { MotionProps, MotionStyle, motion } from "framer-motion";
 
-type ImageCardPropsType = {
-  motionStyle?: MotionStyle;
+interface ImageCardPropsType extends MotionProps {
   onClick?: () => void;
   url?: string;
   icon?: string;
   iconSize?: number;
-};
+}
 
 const ImageCard = ({
-  motionStyle,
   onClick,
   url,
   icon,
   iconSize,
+  style,
+  variants,
+  initial,
+  animate,
+  exit,
+  custom,
+  whileHover,
 }: ImageCardPropsType): ReactElement => {
   const handleClick = onClick ? onClick : () => {};
   icon = icon ?? "fa-solid fa-user";
@@ -22,7 +27,13 @@ const ImageCard = ({
 
   return (
     <motion.div
-      style={motionStyle}
+      style={style}
+      variants={variants}
+      initial={initial}
+      animate={animate}
+      exit={exit}
+      custom={custom}
+      whileHover={whileHover}
       onClick={() => handleClick()}
       className="image d-flex justify-content-center align-items-center"
     >

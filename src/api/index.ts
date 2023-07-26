@@ -71,6 +71,7 @@ export const spotifyArtistDetailsSearch: SpotifyArtistDetailsSearchType =
     }
 
     if (data instanceof Error) {
+      clearTimeout(timer);
       setArtistDetails(null, null, null, data);
       return;
     }
@@ -127,17 +128,19 @@ export const spotifyArtistDetailsSearch: SpotifyArtistDetailsSearchType =
 
 export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
   async (query, cancelToken, typeOfSearch, setArtistOrTracks, setLoading) => {
-    const timer = setTimeout(() => setLoading(true), 1000);
+    const timer = setTimeout(() => setLoading(true), 700);
 
     let data = await spotifyTokenFunction(cancelToken);
 
     const searchType = `${typeOfSearch}s`;
 
     if (!data) {
+      clearTimeout(timer);
       return;
     }
 
     if (data instanceof Error) {
+      clearTimeout(timer);
       setArtistOrTracks(undefined, undefined, data);
       return;
     }
@@ -172,6 +175,7 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
 
       if (!axios.isCancel(err) && err instanceof Error) {
         console.error("error", err);
+        console.log("done");
 
         const error = new Error(
           `Issue during search: ${err.message} please search again`

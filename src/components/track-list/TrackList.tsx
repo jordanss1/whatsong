@@ -20,7 +20,7 @@ import TrackListGridSearchBar from "./tracklist-grid/TrackListGridSearchBar";
 import TrackListGrid from "./tracklist-grid/TrackListGrid";
 import SearchContext from "../../contexts/searchContext/SearchState";
 import { TopTracksDetailsType } from "../../types/types";
-import { useMediaQuery } from "../../hooks/MediaQueryHook";
+import { useMediaQuery, useScreenWidth } from "../../hooks/MediaQueryHook";
 import "./styles/track-list.css";
 
 export type HandleSelectedTrackType = (
@@ -53,25 +53,6 @@ const trackContainerVariants: Variants = {
   },
 };
 
-const gridVariants: Variants = {
-  normal: {
-    gridTemplateColumns: "250px auto",
-    transition: {
-      type: "spring",
-      duration: 1,
-      stiffness: 130,
-    },
-  },
-  expanded: {
-    gridTemplateColumns: "320px auto",
-    transition: {
-      type: "spring",
-      duration: 1,
-      stiffness: 130,
-    },
-  },
-};
-
 export type HandleDragType = (
   e: React.PointerEvent,
   cycleBall: Cycle,
@@ -86,9 +67,16 @@ const TrackList = () => {
     setArtistsOrTracks,
     tracks,
     selectedTrack,
-    searched,
     navigate,
+    searched,
+    noResults,
+    setModal,
+    modal,
   } = useContext(SearchContext);
+  const is850 = useMediaQuery(850);
+
+  const screenWidth = useScreenWidth();
+
   const dragRef = useRef(null);
 
   const { scrollY } = useScroll();
@@ -97,16 +85,14 @@ const TrackList = () => {
   const [dragCycle, cycleDrag] = useCycle(false, true);
   const [expandCycle, cycleExpand] = useCycle("normal", "expanded");
 
-  const ballX = useMotionValue(0);
-  const ballY = useMotionValue(0);
+  const ballX = useMotionValue(100000);
+  const ballY = useMotionValue(100000);
   const coords = { ballX, ballY };
 
   const x = ballX.get();
   const y = ballY.get();
 
   const ballCoords = useMemo(() => coords, [x, y]);
-
-  const is850 = useMediaQuery(850);
 
   useEffect(() => {
     scrollY.on("change", async () => {
@@ -121,23 +107,38 @@ const TrackList = () => {
   }, [cycleHeader, scrollY]);
 
   useEffect(() => {
+    if (!modal && selectedTrack) {
+      cycleExpand(0);
+      setSelectedTrack(null);
+    }
+  }, [modal, selectedTrack]);
+
+  useEffect(() => {
     let tracks = sessionStorage.getItem("tracks");
 
-    if (tracks && typeof tracks === "string") {
-      setArtistsOrTracks(undefined, JSON.parse(tracks));
-      return;
+    if (!tracks) {
+      navigate("/search");
     }
+  }, []);
 
-    navigate("/search");
-  }, [setArtistsOrTracks]);
+  useEffect(() => {
+    let tracks = sessionStorage.getItem("tracks");
+
+    if (tracks && typeof tracks === "string" && !noResults) {
+      setArtistsOrTracks(undefined, JSON.parse(tracks));
+    }
+  }, [noResults]);
 
   const handleSelectedTrack = useCallback(
     (track?: Required<TopTracksDetailsType>) => {
       if (track) {
+        setModal(true);
         setSelectedTrack(track);
         cycleDrag(0);
         return;
       }
+
+      setModal(false);
       cycleExpand(0);
       setSelectedTrack(null);
     },
@@ -148,8 +149,26 @@ const TrackList = () => {
     (e, cycleBall, ref, end, track) => {
       const { top, left } = e.currentTarget.getBoundingClientRect();
 
-      const xDone = left < 200 && left > 21;
-      const yDone = top > 235 && top < 422;
+      const rightAllowance =
+        screenWidth > 610 ? 0.6 : screenWidth > 400 ? 0.66 : 0.71;
+
+      const leftAllowance =
+        screenWidth > 700
+          ? 0.35
+          : screenWidth > 500
+          ? 0.32
+          : screenWidth > 420
+          ? 0.25
+          : screenWidth > 375
+          ? 0.21
+          : 0.15;
+
+      const insideGoalMobile =
+        left < screenWidth * rightAllowance &&
+        left > screenWidth * leftAllowance;
+
+      const xDone = is850 ? insideGoalMobile : left < 200 && left > 21;
+      const yDone = is850 ? top > 565 : top > 235 && top < 422;
 
       if (ref.current) {
         ballX.set(left);
@@ -172,6 +191,25 @@ const TrackList = () => {
     [ballX, ballY, cycleDrag, cycleExpand]
   );
 
+  const gridVariants = {
+    normal: {
+      gridTemplateColumns: "250px auto",
+      transition: {
+        type: "tween",
+        duration: 1,
+        ease: "easeInOut",
+      },
+    },
+    expanded: {
+      gridTemplateColumns: "400px auto",
+      transition: {
+        type: "tween",
+        duration: 1,
+        ease: "easeInOut",
+      },
+    },
+  };
+
   return (
     <>
       {tracks && (
@@ -186,13 +224,16 @@ const TrackList = () => {
           <Header headerCycle={headerCycle} />
           <div className="filler-div" />
           <motion.section
-            variants={gridVariants}
-            animate={dragCycle && expandCycle}
+            animate={
+              expandCycle === "normal"
+                ? gridVariants.normal
+                : gridVariants.expanded
+            }
             layout
             layoutDependency={dragCycle}
             className="w-100 whole-songs-section d-grid"
           >
-            {!is850 && (
+            {(!is850 || (is850 && dragCycle) || selectedTrack) && (
               <TrackListSelectedContainer
                 selectedTrack={selectedTrack}
                 handleSelectedTrack={handleSelectedTrack}
@@ -203,23 +244,13 @@ const TrackList = () => {
             )}
             {!is850 && <motion.div className="track-list-empty-div" />}
             <motion.div className="track-list-container d-flex align-items-center flex-column">
-              <TrackListGridSearchBar cycle={headerCycle} />
+              <TrackListGridSearchBar searched={searched} cycle={headerCycle} />
               <TrackListGrid
                 dragRef={dragRef}
-                searched={searched}
                 tracks={tracks}
                 handleDrag={handleDrag}
                 expandCycle={expandCycle}
               />
-              {is850 && (
-                <TrackListSelectedContainer
-                  selectedTrack={selectedTrack}
-                  handleSelectedTrack={handleSelectedTrack}
-                  dragCycle={dragCycle}
-                  ballCoords={ballCoords}
-                  expandCycle={expandCycle}
-                />
-              )}
             </motion.div>
           </motion.section>
         </motion.main>

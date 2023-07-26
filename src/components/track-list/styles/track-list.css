@@ -30,6 +30,9 @@
 
 .track-item-orchestrated {
   min-height: 100px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
 }
 
 .track-item-container {
@@ -60,7 +63,8 @@
 .selected-container {
   position: fixed;
   height: 100% !important;
-  width: 250px;
+  max-width: 400px;
+  z-index: 3;
 }
 
 .selected-inner {
@@ -117,11 +121,15 @@
 .song-item {
   width: 100%;
   height: 100%;
-  max-width: 250px;
+  max-width: 400px;
+  color: rgb(210, 210, 210);
+  font-family: "Varela Round", sans-serif !important;
 }
 
 .song-item img {
-  margin-bottom: -40px;
+  width: 100%;
+  border-radius: 20px;
+  max-width: 250px;
 }
 
 .description {
@@ -133,21 +141,22 @@
     display: block !important;
   }
 
-  .selected-container {
-    height: auto !important;
-    width: 100%;
-    top: auto;
-    bottom: 0;
-  }
-
   .no-selected-song {
     margin: 0 !important;
     padding-top: 0;
     padding: 20px;
   }
 
+  .selected-container {
+    z-index: 3;
+    height: 210px !important;
+    width: 100%;
+    top: auto;
+    bottom: 0;
+  }
+
   .selected-inner {
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
     padding: 0 10px;
     height: 100%;
     width: 100% !important;
@@ -161,6 +170,9 @@
 
   .track-item-orchestrated {
     padding-left: 0 !important;
+    display: grid;
+    grid-template-columns: auto;
+    gap: 30px;
   }
 }
 

@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { MotionStyle, motion } from "framer-motion";
 import "../styles/all.css";
 
-type TrackDetailsPropsType = {
+type TrackPropsType = {
   artist: string;
   track: string;
   motionStyle?: MotionStyle;
@@ -10,13 +10,13 @@ type TrackDetailsPropsType = {
   trackSize?: number;
 };
 
-const TrackDetails = ({
+const Track = ({
   artist,
   track,
   motionStyle,
   artistSize,
   trackSize,
-}: TrackDetailsPropsType): ReactElement => {
+}: TrackPropsType): ReactElement => {
   artistSize = artistSize ?? 2;
   trackSize = trackSize ?? 3;
 
@@ -28,4 +28,4 @@ const TrackDetails = ({
   );
 };
 
-export default TrackDetails;
+export default Track;

@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { HandleCategoryHoverType } from "./MainSearch";
 import { motion, Variants } from "framer-motion";
+import Seperator from "../Seperator";
 
 const buttonVariants: Variants = {
   initialArtist: {
@@ -98,10 +99,11 @@ const MainSearchCategory = ({
         >
           Artists
         </motion.button>
-        <motion.div
+        <Seperator
+          width="2px"
+          height="100px"
           variants={separatorVariants}
           custom={redo}
-          whileHover="hover"
           animate="animate"
           initial="initial"
           exit="exit"

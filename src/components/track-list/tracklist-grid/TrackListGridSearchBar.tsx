@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SearchBar from "../../searchbar/SearchBar";
 import {
@@ -8,11 +8,19 @@ import {
 
 type TrackListGridSearchBarPropsType = {
   cycle: string;
+  searched: boolean;
 };
 
 const TrackListGridSearchBar = ({
   cycle,
+  searched,
 }: TrackListGridSearchBarPropsType): ReactElement => {
+  useEffect(() => {
+    if (!searched && cycle === "transparent") {
+      window.scrollTo({ top: 0 });
+    }
+  }, [searched]);
+
   return (
     <motion.div
       variants={searchBarContainerVariants}

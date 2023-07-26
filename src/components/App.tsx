@@ -8,7 +8,6 @@ import Modal from "./modal/Modal";
 import Landing from "./landing/Landing";
 import SearchContext from "../contexts/searchContext/SearchState";
 import TrackList from "./track-list/TrackList";
-import Popout from "./popout/Popout";
 import "../styles/all.css";
 
 const App = (): ReactElement => {

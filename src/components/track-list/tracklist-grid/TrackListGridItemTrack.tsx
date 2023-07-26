@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import CircularImage from "../../CircularImage";
-import TrackDetails from "../../TrackDetails";
+import Track from "../../Track";
 import { motion, MotionStyle, Variants } from "framer-motion";
 import { useScreenWidth } from "../../../hooks/MediaQueryHook";
 import { TopTracksDetailsType } from "../../../types/types";
@@ -91,7 +91,7 @@ const TrackListGridItemTrack = ({
         className="track-item d-grid align-items-center p-3"
       >
         <CircularImage image={image} size={1} />
-        <TrackDetails
+        <Track
           artist={artist}
           track={track.name}
           artistSize={artistSize}

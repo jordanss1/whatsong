@@ -20,6 +20,7 @@ const SearchBar = (): ReactElement => {
       setSearched(false);
       sessionStorage.setItem("artists", JSON.stringify(artists));
     } else if (tracks && searched) {
+      console.log("first");
       setSearched(false);
       sessionStorage.setItem("tracks", JSON.stringify(tracks));
     }

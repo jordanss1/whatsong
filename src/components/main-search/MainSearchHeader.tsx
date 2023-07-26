@@ -24,6 +24,7 @@ const containerVariants: Variants = {
             delay: 0.2,
             duration: 0.5,
             ease: "easeInOut",
+            type: "tween",
           },
         }
       : {},

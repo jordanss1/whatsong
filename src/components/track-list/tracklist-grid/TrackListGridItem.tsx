@@ -68,6 +68,9 @@ const TrackListGridItem = ({
     amount: 0.2,
   });
 
+  const gridTemplateColumns =
+    is850 && ballCycle !== "hidden" ? "0px auto" : "auto";
+
   let transform = isInView ? "translateX(0)" : "translateX(-100px)";
   let opacity = isInView ? 1 : 0;
 
@@ -84,8 +87,11 @@ const TrackListGridItem = ({
   }, []);
 
   useEffect(() => {
-    if (track) cycleBall(0);
+    if (track) {
+      cycleBall(0);
+    }
   }, [track]);
+
   const handleDragged = useCallback((e: React.PointerEvent, end?: boolean) => {
     if (handleDrag) {
       if (end) {
@@ -98,7 +104,7 @@ const TrackListGridItem = ({
   }, []);
 
   const handleMouseEvent = (enter?: boolean) => {
-    if (enter && ballCycle !== "drag" && ballCycle === "hidden") {
+    if (enter && ballCycle !== "drag" && ballCycle === "hidden" && !is850) {
       cycleBall(1);
       return;
     }
@@ -106,7 +112,8 @@ const TrackListGridItem = ({
     if (
       ballCycle !== "drag" &&
       ballCycle === "visible" &&
-      !pointerRef.current
+      !pointerRef.current &&
+      !is850
     ) {
       cycleBall(0);
     }
@@ -118,16 +125,15 @@ const TrackListGridItem = ({
 
   return (
     <motion.div
-      className="track-item-orchestrated d-flex align-items-center gap-5 ps-3"
+      className="track-item-orchestrated ps-3"
       variants={trackOrchestratedVariant}
       custom={isMobile}
-      onMouseEnter={is850 ? () => {} : () => handleMouseEvent(true)}
-      onMouseLeave={is850 ? () => {} : () => handleMouseEvent()}
+      onMouseEnter={() => handleMouseEvent(true)}
+      onMouseLeave={() => handleMouseEvent()}
       onClick={
         is850 ? () => cycleBall(ballCycle === "hidden" ? 1 : 0) : () => {}
       }
-      layout
-      style={style}
+      style={{ ...style, gridTemplateColumns }}
       ref={ref}
     >
       <AnimatePresence mode="wait">
@@ -139,12 +145,12 @@ const TrackListGridItem = ({
           expandCycle={expandCycle}
         />
       </AnimatePresence>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {!searched && (
           <TrackListGridItemTrack
             style={{
-              transform,
               opacity,
+              transform,
               transition: `all .4s ${modifiedIndex}s`,
             }}
             track={track}

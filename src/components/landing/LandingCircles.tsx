@@ -9,6 +9,7 @@ const circle1Variants: Variants = {
     opacity: [0, 0, 1, 1, 0],
     transition: {
       repeat: Infinity,
+      type: "tween",
       ease: "easeInOut",
       duration: 3,
     },
@@ -22,6 +23,7 @@ const circle2Variants: Variants = {
     opacity: [0, 0, 1, 1, 0],
     transition: {
       repeat: Infinity,
+      type: "tween",
       ease: "easeInOut",
       duration: 3,
     },

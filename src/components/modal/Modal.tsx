@@ -67,7 +67,10 @@ const Modal = ({
     setArtistsOrTracks,
     setModal,
     setPopout,
+    setSelectedTrack,
   } = useContext(SearchContext);
+
+  const zIndex = error || noResults ? 4 : 2;
 
   const handleClick = (e?: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if ((e && e.target !== e.currentTarget) || loading) return;
@@ -75,8 +78,7 @@ const Modal = ({
     if (popout) {
       const key =
         pathname === "/artists" ? "artists-visited" : "tracks-visited";
-
-      sessionStorage.setItem(key, key);
+      localStorage.setItem(key, key);
       setPopout(false);
       return;
     }
@@ -94,6 +96,7 @@ const Modal = ({
 
     if (pathname !== "/tracks" && tracks) {
       setArtistsOrTracks(JSON.parse(tracks));
+      setSelectedTrack(null);
     }
   };
 
@@ -104,6 +107,7 @@ const Modal = ({
       initial="hidden"
       animate="visible"
       exit="exit"
+      style={{ zIndex }}
       className="modal-background w-100"
       onClick={(e) => handleClick(e)}
     >

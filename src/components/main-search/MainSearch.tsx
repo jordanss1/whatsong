@@ -65,6 +65,7 @@ const searchVarients: Variants = {
     transition: {
       duration: 1,
       ease: "easeInOut",
+      type: "tween",
     },
   }),
 };

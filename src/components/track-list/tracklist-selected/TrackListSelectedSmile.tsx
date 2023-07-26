@@ -1,4 +1,4 @@
-import { ReactElement, useRef, useEffect, memo } from "react";
+import { ReactElement, memo } from "react";
 import {
   Variants,
   motion,
@@ -6,24 +6,20 @@ import {
   useTransform,
   useMotionTemplate,
 } from "framer-motion";
-
-const containerVariants: Variants = {
-  initial: {},
-  animate: {},
-};
+import { useMediaQuery, useScreenWidth } from "../../../hooks/MediaQueryHook";
 
 const svgSmileVariants: Variants = {
   initial: {
     y: 0,
   },
-  animate: {
-    y: 40,
+  animate: (is850) => ({
+    y: is850 ? 20 : 40,
     transition: {
       duration: 0.3,
       type: "spring",
       stiffness: 200,
     },
-  },
+  }),
   exit: {
     y: 0,
     transition: {
@@ -36,14 +32,14 @@ const borderSVGVariants: Variants = {
   initial: {
     y: 0,
   },
-  animate: {
-    y: -130,
+  animate: (is850) => ({
+    y: is850 ? -150 : -130,
     transition: {
       duration: 0.3,
       type: "spring",
       stiffness: 200,
     },
-  },
+  }),
   exit: {
     y: 0,
     transition: {
@@ -98,14 +94,29 @@ type TrackListSelectedSmilePropsType = {
 const TrackListSelectedSmile = ({
   ballCoords,
 }: TrackListSelectedSmilePropsType): ReactElement => {
+  const screenWidth = useScreenWidth();
+  const is850 = useMediaQuery(850);
+
   const { ballX, ballY } = ballCoords;
+
+  const transformYCoords = is850 ? [0, 600] : [675, 420, 230, 80];
+  const smileScaleYIncrement = is850 ? [0.3, 0.4] : [0.3, 0.4, 0.4, 0.3];
+
+  const transformXCoords = is850
+    ? [0, screenWidth * 0.45, screenWidth * 0.46, screenWidth]
+    : [ballX.get(), 180];
+  const smileScaleXIncrement = is850 ? [0.3, 0.4, 0.4, 0.3] : [0.3, 0.4];
 
   const smileScaleY = useTransform(
     ballY,
-    [675, 420, 230, 80],
-    [0.3, 0.4, 0.4, 0.3]
+    transformYCoords,
+    smileScaleYIncrement
   );
-  const smileScaleX = useTransform(ballX, [400, 202], [0.3, 0.4]);
+  const smileScaleX = useTransform(
+    ballX,
+    transformXCoords,
+    smileScaleXIncrement
+  );
 
   const smileScale = useTransform(smileScaleX, (x) => x + smileScaleY.get());
 
@@ -121,6 +132,7 @@ const TrackListSelectedSmile = ({
     <>
       <motion.svg
         variants={svgSmileVariants}
+        custom={is850}
         initial="initial"
         animate="animate"
         exit="exit"
@@ -147,6 +159,7 @@ const TrackListSelectedSmile = ({
       </motion.svg>
       <motion.svg
         variants={borderSVGVariants}
+        custom={is850}
         initial="initial"
         animate="animate"
         exit="exit"

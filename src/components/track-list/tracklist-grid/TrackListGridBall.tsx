@@ -22,10 +22,10 @@ const dragBallVariant: Variants = {
     scale: [0.95, 1.3, 1.6, 0.95],
     borderRadius: ["50%", "20%", "20%", "50%"],
     boxShadow: [
-      "0px 0px 0px 0px rgba(222, 90, 174)",
+      "0px 0px 2px 2px rgba(222, 90, 174)",
       "0px 0px 5px 2px rgba(222, 90, 174)",
       "0px 0px 5px 2px rgba(222, 90, 174)",
-      "0px 0px 0px 0px rgba(222, 90, 174)",
+      "0px 0px 2px 2px rgba(222, 90, 174)",
     ],
     rotate: [0, 720, 0, 720],
     transition: {
@@ -67,11 +67,11 @@ const dragBallVariant: Variants = {
   whileTap: (is850) => ({
     borderRadius: "50%",
     boxShadow: [null, "0px 0px 5px 3px rgba(222, 90, 174)"],
-    scale: [null, is850 ? 3 : 1.5],
+    scale: [null, is850 ? 3.5 : 1.5],
     backgroundColor: "rgba(255,255,255)",
     rotate: [null, 0],
     transition: {
-      duration: 0.3,
+      duration: 0.5,
     },
   }),
 };

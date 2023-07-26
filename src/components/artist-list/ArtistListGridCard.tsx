@@ -73,6 +73,7 @@ const ArtistListGridCard = ({
 }: ArtistListGridCardPropType): ReactElement => {
   const isMobile = useMediaQuery(480);
   const ref = useRef(null);
+
   let modifiedIndex = 0;
   const image = artist?.images?.[0]?.url;
 
