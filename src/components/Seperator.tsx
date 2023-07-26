@@ -24,9 +24,9 @@ const Seperator = ({
         style={{ ...style, width, height }}
         variants={variants}
         custom={custom}
-        animate="animate"
-        initial="initial"
-        exit="exit"
+        animate={animate}
+        initial={initial}
+        exit={exit}
         className={className}
       />
     </div>

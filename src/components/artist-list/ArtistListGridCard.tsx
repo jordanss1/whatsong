@@ -2,10 +2,10 @@ import { ReactElement, memo, useRef } from "react";
 import { Variants, motion, useInView, AnimatePresence } from "framer-motion";
 import { ArtistsType } from "../../types/types";
 import { HandleProfileClickType } from "./ArtistListGrid";
-import "./styles/artist-list.css";
 import ImageCard from "../ImageCard";
 import ImageHeader from "../ImageHeader";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
+import "./styles/artist-list.css";
 
 type ArtistListGridCardPropType = {
   artist: ArtistsType;
@@ -120,7 +120,7 @@ const ArtistListGridCard = ({
             }}
           >
             <ImageCard
-              motionStyle={{
+              style={{
                 transform,
                 opacity,
                 transition: `all 0.6s ${0.05 * modifiedIndex}s`,
