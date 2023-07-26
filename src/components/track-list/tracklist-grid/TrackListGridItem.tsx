@@ -90,18 +90,21 @@ const TrackListGridItem = ({
     if (track) {
       cycleBall(0);
     }
-  }, [track]);
+  }, [track.id]);
 
-  const handleDragged = useCallback((e: React.PointerEvent, end?: boolean) => {
-    if (handleDrag) {
-      if (end) {
-        handleDrag(e, cycleBall, pointerRef, true, track);
-        return;
+  const handleDragged = useCallback(
+    (e: React.PointerEvent, end?: boolean) => {
+      if (handleDrag) {
+        if (end) {
+          handleDrag(e, cycleBall, pointerRef, true, track);
+          return;
+        }
+
+        handleDrag(e, cycleBall, pointerRef);
       }
-
-      handleDrag(e, cycleBall, pointerRef);
-    }
-  }, []);
+    },
+    [track.id]
+  );
 
   const handleMouseEvent = (enter?: boolean) => {
     if (enter && ballCycle !== "drag" && ballCycle === "hidden" && !is850) {

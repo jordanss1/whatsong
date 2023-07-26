@@ -20,11 +20,10 @@ const SearchBar = (): ReactElement => {
       setSearched(false);
       sessionStorage.setItem("artists", JSON.stringify(artists));
     } else if (tracks && searched) {
-      console.log("first");
       setSearched(false);
       sessionStorage.setItem("tracks", JSON.stringify(tracks));
     }
-  }, [tracks, artists]);
+  }, [tracks?.[0], artists?.[0]]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -142,7 +142,7 @@ const TrackList = () => {
       cycleExpand(0);
       setSelectedTrack(null);
     },
-    [setSelectedTrack]
+    [setSelectedTrack, tracks]
   );
 
   const handleDrag: HandleDragType = useCallback(
