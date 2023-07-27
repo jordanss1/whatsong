@@ -78,7 +78,8 @@ const TrackListGridItem = ({
 
   if (!index) modifiedIndex = 0;
 
-  if (index > 20) modifiedIndex = index / 5;
+  if (index < 30) modifiedIndex = index * 0.01;
+  if (index > 30) modifiedIndex = index * 0.005;
 
   useEffect(() => {
     const visited = sessionStorage.getItem("tracks-visited");
