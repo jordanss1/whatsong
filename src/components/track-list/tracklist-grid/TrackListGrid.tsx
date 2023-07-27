@@ -101,9 +101,7 @@ const TrackListGrid = ({
         gap: "10px",
       }}
     >
-      <div>
-        Hover tracks to reveal orbs. On mobile, tap tracks to reveal orb.
-      </div>
+      <div>${is850 ? "Hover over" : "Click on"} tracks to reveal orbs.</div>
       <motion.button
         onClick={() => setPopout(false)}
         whileHover={{ scale: 1.05, color: "rgb(255,255,255)" }}

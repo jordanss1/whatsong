@@ -94,9 +94,9 @@ const TrackDetail = ({
         <TrackDetailLine variants={lineVariants} custom={0.2}>
           <motion.span
             style={
-              screenWidth > 480
+              screenWidth > 850
                 ? {
-                    maxWidth: screenWidth < 851 ? "400px" : "250px",
+                    maxWidth: "250px",
                     ...lineStyle,
                   }
                 : albumStyle
@@ -121,7 +121,12 @@ const TrackDetail = ({
           <motion.span style={albumStyle} className="pe-1">
             {albumType}
           </motion.span>
-          <span className="ps-1">{albumDetail}</span>
+          <motion.span
+            style={{ minWidth: screenWidth < 851 ? "110px" : "auto", textAlign: "center" }}
+            className="ps-1 "
+          >
+            {albumDetail}
+          </motion.span>
         </TrackDetailLine>
       </motion.div>
     </motion.div>
