@@ -48,6 +48,7 @@ const innerVariants: Variants = {
       type: "tween",
       duration: 1,
       ease: "easeInOut",
+      delay: 0.3,
     },
   },
   expanded: {
@@ -58,7 +59,6 @@ const innerVariants: Variants = {
       type: "tween",
       duration: 1,
       ease: "easeInOut",
-      staggerChildren: 0.3,
       background: {
         delay: 0.5,
       },
@@ -119,11 +119,13 @@ const TrackListSelectedContainer = ({
         <AnimatePresence mode="wait">
           {selectedTrack ? (
             <TrackListSelectedTrack
+              key="selected"
               selectedTrack={selectedTrack}
               handleSelectedTrack={handleSelectedTrack}
             />
           ) : (
             <TrackListSelectedNone
+              key="none"
               ballCoords={ballCoords}
               dragging={dragCycle}
             />

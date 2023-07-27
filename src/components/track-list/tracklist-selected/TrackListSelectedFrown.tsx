@@ -10,7 +10,8 @@ const instructionsVariant: Variants = {
     x: 0,
     opacity: 1,
     transition: {
-      duration: 0.4,
+      duration: 0.3,
+      delay: 0.3,
     },
   },
   exit: {
@@ -24,14 +25,17 @@ const instructionsVariant: Variants = {
 
 const pathVariants: Variants = {
   initial: {
+    opacity: 0,
     pathLength: 0,
     scale: 1.3,
   },
   animate: {
+    opacity: 1,
     pathLength: 1,
     scale: 1,
     transition: {
-      duration: 0.2,
+      delay: 0.3,
+      duration: 0.1,
       type: "spring",
       stiffness: 200,
     },
