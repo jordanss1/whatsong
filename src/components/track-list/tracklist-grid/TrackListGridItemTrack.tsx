@@ -87,6 +87,7 @@ const TrackListGridItemTrack = ({
       className="track-item-container w-100"
     >
       <motion.div
+        layout
         style={style}
         className="track-item d-grid align-items-center p-3"
       >

@@ -145,21 +145,27 @@
     margin: 0 !important;
     padding-top: 0;
     padding: 20px;
+    max-height: 210px;
+  }
+
+  .song-item {
+    max-width: 100%;
   }
 
   .selected-container {
     z-index: 3;
-    height: 210px !important;
+    height: auto !important;
+    max-width: 100%;
     width: 100%;
-    top: auto;
     bottom: 0;
+    border-radius: 20px;
   }
 
   .selected-inner {
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    height: 0;
     padding: 0 10px;
-    height: 100%;
     width: 100% !important;
+    border-right: none;
   }
 
   .track-list-grid {
@@ -189,5 +195,6 @@
 @media screen and (max-width: 416px) {
   .track-item {
     padding: 10px !important;
+    gap: 4px;
   }
 }

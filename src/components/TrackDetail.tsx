@@ -4,6 +4,7 @@ import { TopTracksDetailsType } from "../types/types";
 import Seperator from "./Seperator";
 import ImageCard from "./ImageCard";
 import TrackDetailLine from "./TrackDetailLine";
+import { useScreenWidth } from "../hooks/MediaQueryHook";
 
 interface TrackDetailPropsType extends MotionProps {
   selectedTrack: Required<TopTracksDetailsType>;
@@ -17,6 +18,7 @@ const TrackDetail = ({
   lineVariants,
 }: TrackDetailPropsType): ReactElement => {
   const { album, artists, duration_ms, name, track_number } = selectedTrack;
+  const screenWidth = useScreenWidth();
 
   const durationConvert = (): string => {
     const seconds = Math.floor((duration_ms / 1000) % 60);
@@ -51,7 +53,7 @@ const TrackDetail = ({
     album.album_type === "single"
       ? {}
       : {
-          maxWidth: "180px",
+          maxWidth: screenWidth < 851 ? "350px" : "180px",
           textAlign: "center",
           display: "-webkit-box",
           WebkitLineClamp: 2,
@@ -74,31 +76,31 @@ const TrackDetail = ({
       />
       <motion.div
         style={{ height: "230px" }}
-        className="pt-4 d-flex flex-column justify-content-evenly w-100"
+        className={`pt-4 d-flex flex-column justify-content-evenly w-100 ${
+          screenWidth < 851 && "px-4"
+        }`}
       >
-        <TrackDetailLine
-          variants={lineVariants}
-          custom={0.1}
-          style={{
-            maxWidth: "379px",
-            ...lineStyle,
-          }}
-        >
-          <span className="fw-bold fs-2 text-center">{artist}</span>
-        </TrackDetailLine>
-        <TrackDetailLine
-          variants={lineVariants}
-          custom={0.2}
-          style={{
-            maxWidth: "250px",
-            ...lineStyle,
-          }}
-        >
+        <TrackDetailLine variants={lineVariants} custom={0.1}>
           <motion.span
             style={{
-              maxWidth: "250px",
+              maxWidth: screenWidth < 851 ? "450px" : "379px",
               ...lineStyle,
             }}
+            className="fw-bold fs-2 text-center"
+          >
+            {artist}
+          </motion.span>
+        </TrackDetailLine>
+        <TrackDetailLine variants={lineVariants} custom={0.2}>
+          <motion.span
+            style={
+              screenWidth > 480
+                ? {
+                    maxWidth: screenWidth < 851 ? "400px" : "250px",
+                    ...lineStyle,
+                  }
+                : albumStyle
+            }
             className="pe-3"
           >
             {name}
@@ -108,7 +110,12 @@ const TrackDetail = ({
             width="5px"
             height="25px"
           />
-          <span className="ps-3">{songLength}</span>
+          <motion.span
+            style={{ minWidth: screenWidth < 851 ? "100px" : "auto" }}
+            className="ps-3"
+          >
+            {songLength}
+          </motion.span>
         </TrackDetailLine>
         <TrackDetailLine variants={lineVariants} custom={0.3}>
           <motion.span style={albumStyle} className="pe-1">

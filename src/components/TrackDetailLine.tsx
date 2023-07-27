@@ -7,7 +7,7 @@ interface TrackDetailLinePropsType extends MotionProps {
   children: ReactNode;
 }
 
-const TrackDetailLine = ({
+const   TrackDetailLine = ({
   size,
   className,
   variants,

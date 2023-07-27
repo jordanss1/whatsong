@@ -4,6 +4,7 @@ import {
   MotionValue,
   Variants,
   motion,
+  useMotionTemplate,
   useTransform,
 } from "framer-motion";
 import { TopTracksDetailsType } from "../../../types/types";
@@ -37,33 +38,6 @@ const selectedContainerVariant: Variants = {
       when: "afterChildren",
     },
   }),
-};
-
-const innerVariants: Variants = {
-  normal: {
-    background:
-      "linear-gradient(45deg,rgb(0, 3, 79, 0.5) 20%,rgb(0, 0, 0) 50%,rgb(0, 3, 79, 0.5) 80%)",
-    width: "250px",
-    transition: {
-      type: "tween",
-      duration: 1,
-      ease: "easeInOut",
-      delay: 0.3,
-    },
-  },
-  expanded: {
-    width: "400px",
-    background:
-      "linear-gradient(45deg,rgb(6, 6, 6) 20%,rgb(0, 0, 0) 50%,rgb(10, 10, 10) 80%)",
-    transition: {
-      type: "tween",
-      duration: 1,
-      ease: "easeInOut",
-      background: {
-        delay: 0.5,
-      },
-    },
-  },
 };
 
 type TrackListSelectedProps = {
@@ -102,6 +76,62 @@ const TrackListSelectedContainer = ({
 
   const background = useTransform(ballX, transformCoords, backgroundKeyframes);
 
+  const borderTop = useTransform(
+    ballX,
+    transformCoords,
+    is850 ? [0, 0.5, 0.5, 0] : [0, 0]
+  );
+
+  const innerVariants = {
+    normal: {
+      background:
+        "linear-gradient(45deg,rgb(0, 3, 79, 0.5) 20%,rgb(0, 0, 0) 50%,rgb(0, 3, 79, 0.5) 80%)",
+      width: is850 ? "100%" : "250px",
+      height: is850 && dragCycle ? "210px" : is850 && !dragCycle ? "0" : "100%",
+      transition: {
+        type: "tween",
+        duration: 0.5,
+        ease: "easeInOut",
+        width: { delay: 0.5 },
+        height: { delay: dragCycle ? 0 : 0.8 },
+        background: {
+          type: "spring",
+          delay: 0.5,
+          duration: 1,
+        },
+      },
+    },
+    expanded: {
+      width: is850 ? "100%" : "400px",
+      height: is850 ? "600px" : "100%",
+      background: is850
+        ? "linear-gradient(45deg,rgb(6, 6, 6) 20%,rgb(0, 0, 0) 50%,rgb(10, 10, 10) 80%)"
+        : "linear-gradient(to right, rgb(0, 0, 0) 20%, rgb(10, 10, 10) 50%, rgb(16, 16, 16) 80%)",
+      transition: {
+        type: "tween",
+        duration: 1,
+        ease: "easeInOut",
+        background: {
+          type: "spring",
+          delay: 0.5,
+          duration: 1,
+        },
+      },
+    },
+    exit: is850
+      ? {}
+      : {
+          height: "0px",
+          opacity: 0,
+          transition: {
+            type: "tween",
+            duration: 0.5,
+            delay: 0.5,
+            ease: "easeInOut",
+          },
+        },
+  };
+
   return (
     <motion.div
       variants={selectedContainerVariant}
@@ -111,7 +141,12 @@ const TrackListSelectedContainer = ({
       <motion.div
         variants={innerVariants}
         animate={expandCycle}
-        style={{ background }}
+        style={{
+          background,
+          borderTop: useMotionTemplate`1px solid rgba(210,210,210, ${borderTop})`,
+        }}
+        exit={innerVariants.exit}
+        layout
         className={`selected-inner d-flex align-items-center flex-column ${
           selectedTrack ? "" : "justify-content-evenly"
         }`}

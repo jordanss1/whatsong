@@ -2,6 +2,7 @@ import { ReactElement, memo, useEffect } from "react";
 import TrackListSelectedSmile from "./TrackListSelectedSmile";
 import TrackListSelectedFrown from "./TrackListSelectedFrown";
 import { AnimatePresence, Variants, motion, MotionValue } from "framer-motion";
+import { useMediaQuery } from "../../../hooks/MediaQueryHook";
 import "../styles/track-list.css";
 
 type TrackListSelectedNone = {
@@ -31,6 +32,15 @@ const TrackListSelectedNone = ({
   dragging,
   ballCoords,
 }: TrackListSelectedNone): ReactElement => {
+  const is850 = useMediaQuery(850);
+
+  const renderContent = (
+    <AnimatePresence presenceAffectsLayout mode="wait">
+      {is850 && dragging && (
+        <TrackListSelectedSmile ballCoords={ballCoords} key="smile" />
+      )}
+    </AnimatePresence>
+  );
   return (
     <motion.div className="no-selected-song">
       <motion.div className="drag-container d-flex flex-column align-items-center">

@@ -7,6 +7,7 @@ import {
   useCallback,
 } from "react";
 import {
+  AnimatePresence,
   Cycle,
   motion,
   useCycle,
@@ -233,7 +234,7 @@ const TrackList = () => {
             layoutDependency={dragCycle}
             className="w-100 whole-songs-section d-grid"
           >
-            {(!is850 || (is850 && dragCycle) || selectedTrack) && (
+            <AnimatePresence mode="wait">
               <TrackListSelectedContainer
                 selectedTrack={selectedTrack}
                 handleSelectedTrack={handleSelectedTrack}
@@ -241,7 +242,7 @@ const TrackList = () => {
                 ballCoords={ballCoords}
                 expandCycle={expandCycle}
               />
-            )}
+            </AnimatePresence>
             {!is850 && <motion.div className="track-list-empty-div" />}
             <motion.div className="track-list-container d-flex align-items-center flex-column">
               <TrackListGridSearchBar searched={searched} cycle={headerCycle} />

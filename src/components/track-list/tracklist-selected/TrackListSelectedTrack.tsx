@@ -59,7 +59,7 @@ const imageVariants: Variants = {
     boxShadow: "0px 0px 2px 1px rgba(222, 90, 174, 0)",
     transition: {
       duration: 0.2,
-      delay: 0.1,
+      delay: 0.2,
     },
   },
   hover: (albumImage) => ({
@@ -86,7 +86,7 @@ const lineVariants: Variants = {
     x: -50,
     transition: {
       duration: 0.2,
-      delay: 0.1 + order,
+      delay: 0.2 + order,
     },
   }),
 };
