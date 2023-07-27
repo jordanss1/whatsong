@@ -150,6 +150,10 @@ const TrackList = () => {
     (e, cycleBall, ref, end, track) => {
       const { top, left } = e.currentTarget.getBoundingClientRect();
 
+      const handleTouch = (event: TouchEvent) => {
+        event.stopPropagation();
+      };
+
       const rightAllowance =
         screenWidth > 610 ? 0.6 : screenWidth > 400 ? 0.66 : 0.71;
 
@@ -172,6 +176,7 @@ const TrackList = () => {
       const yDone = is850 ? top > 565 : top > 235 && top < 422;
 
       if (ref.current) {
+        document.documentElement.addEventListener("touchmove", handleTouch);
         ballX.set(left);
         ballY.set(top);
         cycleBall(1);
@@ -179,12 +184,14 @@ const TrackList = () => {
       }
 
       if (end && xDone && yDone) {
+        document.documentElement.removeEventListener("touchmove", handleTouch);
         cycleExpand(1);
         cycleBall(0);
         handleSelectedTrack(track);
       }
 
       if (end && (!xDone || !yDone)) {
+        document.documentElement.removeEventListener("touchmove", handleTouch);
         cycleBall(0);
         cycleDrag(0);
       }
