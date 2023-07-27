@@ -1,4 +1,4 @@
-import { ReactElement, memo } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { MotionProps, motion } from "framer-motion";
 
 interface DrabbleBallProps extends MotionProps {
@@ -31,10 +31,28 @@ const DraggableBall = ({
   onPointerMove,
   style,
 }: DrabbleBallProps): ReactElement => {
+  const [allowScroll, setAllowScroll] = useState(false);
+
+  useEffect(() => {
+    if (allowScroll) {
+      const handleTouch = (event) => {
+        event.stopPropagation();
+        console.log(event.type);
+      };
+
+      document.documentElement.addEventListener("touchmove", handleTouch);
+      return () =>
+        document.documentElement.removeEventListener("touchmove", handleTouch);
+    }
+  }, [allowScroll]);
+
   return (
     <motion.div
       drag
       layout
+      onDragStart={(e, i) =>
+        setAllowScroll(Math.abs(i.delta.y) > Math.abs(i.delta.x))
+      }
       onPointerUp={onPointerUp}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove ? (e) => onPointerMove(e) : () => {}}
