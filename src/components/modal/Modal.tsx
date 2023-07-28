@@ -70,7 +70,7 @@ const Modal = ({
     setSelectedTrack,
   } = useContext(SearchContext);
 
-  const zIndex = error || noResults ? 4 : 2;
+  const zIndex = error || noResults ? 4 : 3;
 
   const handleClick = (e?: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if ((e && e.target !== e.currentTarget) || loading) return;

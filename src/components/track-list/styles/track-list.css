@@ -64,7 +64,7 @@
   position: fixed;
   height: 100% !important;
   max-width: 400px;
-  z-index: 3;
+  z-index: 4;
 }
 
 .selected-inner {
@@ -102,7 +102,7 @@
   position: relative;
   bottom: 250%;
   right: 270%;
-  z-index: 3;
+  z-index: 4;
 }
 
 .drag-landing {
@@ -154,7 +154,7 @@
 
   .selected-container {
     position: fixed;
-    z-index: 3;
+    z-index: 4;
     height: 0 !important;
     max-width: 100%;
     width: 100%;
@@ -165,7 +165,7 @@
 
   .selected-container-normal {
     position: fixed;
-    z-index: 3;
+    z-index: 4;
     height: 210px !important;
     max-width: 100%;
     width: 100%;
@@ -175,12 +175,13 @@
 
   .selected-container-expanded {
     position: fixed;
-    z-index: 3;
+    z-index: 4;
     height: 70% !important;
     max-width: 100%;
     width: 100%;
     bottom: 0;
     border-radius: 20px;
+    min-height: 550px;
   }
 
   .selected-inner {

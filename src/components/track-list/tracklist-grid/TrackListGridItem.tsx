@@ -82,7 +82,7 @@ const TrackListGridItem = ({
   if (index > 30) modifiedIndex = index * 0.005;
 
   useEffect(() => {
-    const visited = sessionStorage.getItem("tracks-visited");
+    const visited = localStorage.getItem("tracks-visited");
 
     if (!visited) cycleBall(0);
   }, []);

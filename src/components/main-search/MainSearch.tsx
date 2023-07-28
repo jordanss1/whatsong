@@ -127,15 +127,19 @@ const MainSearch = (): ReactElement => {
     const item = artists ? artists : tracks;
     const key = artists ? "artists" : "tracks";
 
+    if (error) {
+      sessionStorage.clear();
+      return;
+    }
+
     if ((artists || tracks) && !error && category) {
       sessionStorage.clear();
-      // sessionStorage.removeItem(key);
 
       setSearchTerm("");
       sessionStorage.setItem(key, JSON.stringify(item));
       navigate(artists ? "/artists" : "/tracks");
     }
-  }, [tracks, artists]);
+  }, [tracks, artists, error]);
 
   useEffect(() => {
     if (!isPresent) {

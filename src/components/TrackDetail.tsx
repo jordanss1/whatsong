@@ -76,7 +76,7 @@ const TrackDetail = ({
       />
       <motion.div
         style={{ height: "230px" }}
-        className={`pt-4 d-flex flex-column justify-content-evenly w-100 ${
+        className={`pt-4 pb-4 d-flex flex-column justify-content-evenly w-100 ${
           screenWidth < 851 && "px-4"
         }`}
       >
@@ -118,12 +118,19 @@ const TrackDetail = ({
           </motion.span>
         </TrackDetailLine>
         <TrackDetailLine variants={lineVariants} custom={0.3}>
-          <motion.span style={albumStyle} className="pe-1">
+          <motion.span
+            style={albumStyle}
+            className={`pe-${albumType === "album" && 1}`}
+          >
             {albumType}
           </motion.span>
           <motion.span
-            style={{ minWidth: screenWidth < 851 ? "110px" : "auto", textAlign: "center" }}
-            className="ps-1 "
+            style={{
+              minWidth:
+                screenWidth < 851 && albumType === "album" ? "110px" : "auto",
+              textAlign: "center",
+            }}
+            className={`ps-${albumType === "album" && 1}`}
           >
             {albumDetail}
           </motion.span>
