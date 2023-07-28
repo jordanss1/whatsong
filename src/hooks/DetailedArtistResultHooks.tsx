@@ -85,11 +85,6 @@ export const useArtistResults = () => {
 
           const topTracks = action.payload.topTracks;
 
-          sessionStorage.setItem(
-            "artist-details",
-            JSON.stringify([artistDetail, albums, topTracks])
-          );
-
           return {
             ...state,
             artistDetail,

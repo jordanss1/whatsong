@@ -25,7 +25,7 @@ const ArtistDetailsArtist = ({
   return (
     <>
       <section
-        className={`w-100  ${imageExistsOrWidth992 ? "d-none" : ""} d-flex
+        className={`w-100 ${imageExistsOrWidth992 ? "d-none" : ""} d-flex
                  justify-content-end`}
       >
         <div className="artistBg w-100 h-100" style={styles}></div>

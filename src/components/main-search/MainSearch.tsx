@@ -21,10 +21,11 @@ import "./styles/main-search.css";
 import MainSearchHeader from "./MainSearchHeader";
 
 const categoryVarients: Variants = {
-  initial: {
-    background:
-      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, 0) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
-  },
+  initial: (length) => ({
+    background: length
+      ? "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)"
+      : "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, 0) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
+  }),
   intro: {
     background:
       "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
@@ -119,7 +120,11 @@ const MainSearch = (): ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (error || noResults) return;
+    if (error || noResults) {
+      sessionStorage.clear();
+      return;
+    }
+
     setSearchTerm("");
   }, [error, noResults]);
 
@@ -127,14 +132,8 @@ const MainSearch = (): ReactElement => {
     const item = artists ? artists : tracks;
     const key = artists ? "artists" : "tracks";
 
-    if (error) {
-      sessionStorage.clear();
-      return;
-    }
-
     if ((artists || tracks) && !error && category) {
       sessionStorage.clear();
-
       setSearchTerm("");
       sessionStorage.setItem(key, JSON.stringify(item));
       navigate(artists ? "/artists" : "/tracks");
@@ -215,7 +214,7 @@ const MainSearch = (): ReactElement => {
     <motion.main
       className="search-main d-flex"
       ref={scope}
-      custom={category}
+      custom={category ? category : sessionStorage.length}
       variants={category ? searchVarients : categoryVarients}
       initial="initial"
       animate={mainCycle}

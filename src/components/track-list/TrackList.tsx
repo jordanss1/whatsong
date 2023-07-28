@@ -44,12 +44,20 @@ const trackContainerVariants: Variants = {
     },
   },
   exit: {
-    background:
+    background: [
+      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%)",
       "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)",
+      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
+    ],
     transition: {
-      duration: 0.3,
+      duration: 0.5,
       when: "afterChildren",
-      staggerChildren: 0.02,
+      staggerChildren: 0.01,
+      background: {
+        duration: 1,
+        type: "tween",
+        ease: "easeInOut",
+      },
     },
   },
 };

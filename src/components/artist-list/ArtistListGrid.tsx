@@ -74,6 +74,7 @@ const popoutVariants: Variants = {
 
 const ArtistListGrid = ({ artists }: ArtistListGridPropsType): ReactElement => {
   const {
+    artistDetail,
     albums,
     topTracks,
     error,
@@ -100,14 +101,24 @@ const ArtistListGrid = ({ artists }: ArtistListGridPropsType): ReactElement => {
   }, []);
 
   useEffect(() => {
+    let timer: string | number | NodeJS.Timeout | undefined;
+
     if (albums && topTracks && idRef.current && !error) {
-      navigate(`/artists/${idRef.current}`);
-      idRef.current = null;
+      sessionStorage.setItem(
+        "artist-details",
+        JSON.stringify([artistDetail, albums, topTracks])
+      );
+
+      timer = setTimeout(() => {
+        navigate(`/artists/${idRef.current}`);
+        idRef.current = null;
+      }, 1000);
+      return;
     }
 
-    if (error) {
-      idRef.current = null;
-    }
+    idRef.current = null;
+
+    return () => clearTimeout(timer);
   }, [albums, topTracks]);
 
   const renderPopout = (
