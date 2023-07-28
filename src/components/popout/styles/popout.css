@@ -1,5 +1,5 @@
 .popout {
-  z-index: 4;
+  z-index: 3;
   min-height: 100px;
   background: linear-gradient(
     to right,

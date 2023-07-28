@@ -19,7 +19,6 @@ export const popoutContainerVariants: Variants = {
   hidden: {
     y: -20,
     opacity: 0,
-    zIndex: 3,
     backgroundColor: "rgba(0,0,0,0.2)",
   },
   visible: (is850) => ({
@@ -28,7 +27,7 @@ export const popoutContainerVariants: Variants = {
     y: is850 ? 0 : -70,
     x: 0,
     maxWidth: is850 ? "500px" : "650px",
-    zIndex: 3,
+    zIndex: 4,
     backgroundColor: "rgba(0,0,0,0.5)",
     opacity: 1,
     scale: 1.2,

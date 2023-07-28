@@ -23,7 +23,6 @@ const popoutContainerVariants: Variants = {
   hidden: {
     y: -50,
     opacity: 0,
-    zIndex: 3,
     backgroundColor: "rgba(0,0,0,0.2)",
   },
   visible: {
@@ -31,7 +30,7 @@ const popoutContainerVariants: Variants = {
     borderRadius: "20px",
     y: -100,
     x: 50,
-    zIndex: 3,
+    zIndex: 4,
     backgroundColor: "rgba(0,0,0,0.5)",
     opacity: 1,
     scale: 1.2,
