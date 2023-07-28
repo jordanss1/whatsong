@@ -154,23 +154,11 @@ const TrackList = () => {
         event.stopPropagation();
       };
 
-      const rightAllowance =
-        screenWidth > 610 ? 0.6 : screenWidth > 400 ? 0.66 : 0.71;
+      const rightAllowance = screenWidth / 2 - 25 + 80;
 
-      const leftAllowance =
-        screenWidth > 700
-          ? 0.35
-          : screenWidth > 500
-          ? 0.32
-          : screenWidth > 420
-          ? 0.25
-          : screenWidth > 375
-          ? 0.21
-          : 0.15;
+      const leftAllowance = screenWidth / 2 - 25 - 87;
 
-      const insideGoalMobile =
-        left < screenWidth * rightAllowance &&
-        left > screenWidth * leftAllowance;
+      const insideGoalMobile = left < rightAllowance && left > leftAllowance;
 
       const xDone = is850 ? insideGoalMobile : left < 200 && left > 21;
       const yDone = is850 ? top > 565 : top > 235 && top < 422;
