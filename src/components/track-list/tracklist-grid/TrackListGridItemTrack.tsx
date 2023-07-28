@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import CircularImage from "../../CircularImage";
 import Track from "../../Track";
 import { motion, MotionStyle, Variants } from "framer-motion";
-import { useScreenWidth } from "../../../hooks/MediaQueryHook";
+import { useScreenSize } from "../../../hooks/MediaQueryHook";
 import { TopTracksDetailsType } from "../../../types/types";
 
 type TrackListGridItemTrackPropsType = {
@@ -52,7 +52,7 @@ const TrackListGridItemTrack = ({
   style,
   track,
 }: TrackListGridItemTrackPropsType): ReactElement => {
-  const width = useScreenWidth();
+  const width = useScreenSize();
 
   const image = track.album?.images?.[0]?.url;
   const artist = `${track.artists[0]?.name} - `;

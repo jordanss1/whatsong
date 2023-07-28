@@ -12,7 +12,7 @@ import TrackListSelectedTrack from "./TrackListSelectedTrack";
 import TrackListSelectedNone from "./TrackListSelectedNone";
 import "../styles/track-list.css";
 import { HandleSelectedTrackType } from "../TrackList";
-import { useMediaQuery, useScreenWidth } from "../../../hooks/MediaQueryHook";
+import { useMediaQuery, useScreenSize } from "../../../hooks/MediaQueryHook";
 
 const selectedContainerVariant: Variants = {
   initial: (is850) => ({
@@ -40,6 +40,8 @@ const selectedContainerVariant: Variants = {
   }),
 };
 
+const expandedContainerVariants: Variants = {};
+
 type TrackListSelectedProps = {
   selectedTrack: Required<TopTracksDetailsType> | null;
   handleSelectedTrack: HandleSelectedTrackType;
@@ -55,10 +57,17 @@ const TrackListSelectedContainer = ({
   ballCoords,
   expandCycle,
 }: TrackListSelectedProps): ReactElement => {
-  const screenWidth = useScreenWidth();
+  const screenWidth = useScreenSize();
   const is850 = useMediaQuery(850);
 
   const { ballX } = ballCoords;
+
+  const containerClass =
+    is850 && dragCycle
+      ? "-normal"
+      : is850 && expandCycle === "expanded"
+      ? "-expanded"
+      : "";
 
   const farBG =
     "linear-gradient(45deg,rgb(0, 3, 79, 0.5) 20%,rgb(0, 0, 0) 50%,rgb(0, 3, 79, 0.5) 80%)";
@@ -87,7 +96,6 @@ const TrackListSelectedContainer = ({
       background:
         "linear-gradient(45deg,rgb(0, 3, 79, 0.5) 20%,rgb(0, 0, 0) 50%,rgb(0, 3, 79, 0.5) 80%)",
       width: is850 ? "100%" : "250px",
-      height: is850 && dragCycle ? "210px" : is850 && !dragCycle ? "0" : "100%",
       transition: {
         type: "tween",
         duration: 0.5,
@@ -103,7 +111,6 @@ const TrackListSelectedContainer = ({
     },
     expanded: {
       width: is850 ? "100%" : "400px",
-      height: is850 ? "600px" : "100%",
       background: is850
         ? "linear-gradient(45deg,rgb(6, 6, 6) 20%,rgb(0, 0, 0) 50%,rgb(10, 10, 10) 80%)"
         : "linear-gradient(to right, rgb(0, 0, 0) 20%, rgb(10, 10, 10) 50%, rgb(16, 16, 16) 80%)",
@@ -121,7 +128,6 @@ const TrackListSelectedContainer = ({
     exit: is850
       ? {}
       : {
-          height: "0px",
           opacity: 0,
           transition: {
             type: "tween",
@@ -136,7 +142,7 @@ const TrackListSelectedContainer = ({
     <motion.div
       variants={selectedContainerVariant}
       custom={is850}
-      className="selected-container"
+      className={`selected-container${containerClass}`}
     >
       <motion.div
         variants={innerVariants}

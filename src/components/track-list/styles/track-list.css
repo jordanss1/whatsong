@@ -145,7 +145,7 @@
     margin: 0 !important;
     padding-top: 0;
     padding: 20px;
-    max-height: 210px;
+    height: 100%;
   }
 
   .song-item {
@@ -153,8 +153,30 @@
   }
 
   .selected-container {
+    position: fixed;
     z-index: 3;
-    height: auto !important;
+    height: 0 !important;
+    max-width: 100%;
+    width: 100%;
+    bottom: 0;
+    border-radius: 20px;
+    transition: height 0.5s 0.5s;
+  }
+
+  .selected-container-normal {
+    position: fixed;
+    z-index: 3;
+    height: 210px !important;
+    max-width: 100%;
+    width: 100%;
+    bottom: 0;
+    border-radius: 20px;
+  }
+
+  .selected-container-expanded {
+    position: fixed;
+    z-index: 3;
+    height: 70% !important;
     max-width: 100%;
     width: 100%;
     bottom: 0;
@@ -166,6 +188,7 @@
     padding: 0 10px;
     width: 100% !important;
     border-right: none;
+    height: 100%;
   }
 
   .track-list-grid {

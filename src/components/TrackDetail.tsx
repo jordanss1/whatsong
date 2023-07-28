@@ -4,7 +4,7 @@ import { TopTracksDetailsType } from "../types/types";
 import Seperator from "./Seperator";
 import ImageCard from "./ImageCard";
 import TrackDetailLine from "./TrackDetailLine";
-import { useScreenWidth } from "../hooks/MediaQueryHook";
+import { useScreenSize } from "../hooks/MediaQueryHook";
 
 interface TrackDetailPropsType extends MotionProps {
   selectedTrack: Required<TopTracksDetailsType>;
@@ -18,7 +18,7 @@ const TrackDetail = ({
   lineVariants,
 }: TrackDetailPropsType): ReactElement => {
   const { album, artists, duration_ms, name, track_number } = selectedTrack;
-  const screenWidth = useScreenWidth();
+  const screenWidth = useScreenSize();
 
   const durationConvert = (): string => {
     const seconds = Math.floor((duration_ms / 1000) % 60);

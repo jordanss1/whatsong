@@ -6,7 +6,7 @@ import {
   useTransform,
   useMotionTemplate,
 } from "framer-motion";
-import { useMediaQuery, useScreenWidth } from "../../../hooks/MediaQueryHook";
+import { useMediaQuery, useScreenSize } from "../../../hooks/MediaQueryHook";
 
 const svgSmileVariants: Variants = {
   initial: {
@@ -94,7 +94,7 @@ type TrackListSelectedSmilePropsType = {
 const TrackListSelectedSmile = ({
   ballCoords,
 }: TrackListSelectedSmilePropsType): ReactElement => {
-  const screenWidth = useScreenWidth();
+  const screenWidth = useScreenSize();
   const is850 = useMediaQuery(850);
 
   const { ballX, ballY } = ballCoords;

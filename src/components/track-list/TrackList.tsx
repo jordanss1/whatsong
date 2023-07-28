@@ -21,7 +21,7 @@ import TrackListGridSearchBar from "./tracklist-grid/TrackListGridSearchBar";
 import TrackListGrid from "./tracklist-grid/TrackListGrid";
 import SearchContext from "../../contexts/searchContext/SearchState";
 import { TopTracksDetailsType } from "../../types/types";
-import { useMediaQuery, useScreenWidth } from "../../hooks/MediaQueryHook";
+import { useMediaQuery, useScreenSize } from "../../hooks/MediaQueryHook";
 import "./styles/track-list.css";
 
 export type HandleSelectedTrackType = (
@@ -76,7 +76,8 @@ const TrackList = () => {
   } = useContext(SearchContext);
   const is850 = useMediaQuery(850);
 
-  const screenWidth = useScreenWidth();
+  const screenWidth = useScreenSize();
+  const screenHeight = useScreenSize(true);
 
   const dragRef = useRef(null);
 
@@ -148,7 +149,7 @@ const TrackList = () => {
 
   const handleDrag: HandleDragType = useCallback(
     (e, cycleBall, ref, end, track) => {
-      const { top, left } = e.currentTarget.getBoundingClientRect();
+      const { top, left, bottom } = e.currentTarget.getBoundingClientRect();
 
       const handleTouch = (event: TouchEvent) => {
         event.stopPropagation();
@@ -158,10 +159,12 @@ const TrackList = () => {
 
       const leftAllowance = screenWidth / 2 - 25 - 87;
 
-      const insideGoalMobile = left < rightAllowance && left > leftAllowance;
+      const mobileXGoal = left < rightAllowance && left > leftAllowance;
 
-      const xDone = is850 ? insideGoalMobile : left < 200 && left > 21;
-      const yDone = is850 ? top > 565 : top > 235 && top < 422;
+      const xDone = is850 ? mobileXGoal : left < 200 && left > 21;
+      const yDone = is850
+        ? bottom > screenHeight - 171
+        : top > 235 && top < 422;
 
       if (ref.current) {
         document.documentElement.addEventListener("touchmove", handleTouch);

@@ -34,13 +34,6 @@ const TrackListSelectedNone = ({
 }: TrackListSelectedNone): ReactElement => {
   const is850 = useMediaQuery(850);
 
-  const renderContent = (
-    <AnimatePresence presenceAffectsLayout mode="wait">
-      {is850 && dragging && (
-        <TrackListSelectedSmile ballCoords={ballCoords} key="smile" />
-      )}
-    </AnimatePresence>
-  );
   return (
     <motion.div className="no-selected-song">
       <motion.div className="drag-container d-flex flex-column align-items-center">

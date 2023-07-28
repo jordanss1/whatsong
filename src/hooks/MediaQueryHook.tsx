@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useScreenWidth(height?: boolean): number {
+export function useScreenSize(height?: boolean): number {
   const [size, setSize] = useState<number>(
     height ? window.innerHeight : window.innerWidth
   );
@@ -15,7 +15,7 @@ export function useScreenWidth(height?: boolean): number {
 }
 
 export function useMediaQuery(query: number, height?: boolean): boolean {
-  const size = useScreenWidth(height);
+  const size = useScreenSize(height);
 
   return size <= query;
 }
