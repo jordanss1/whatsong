@@ -1,11 +1,14 @@
 import { ReactNode } from "react";
 import { ArtistsType } from "../../types/types";
 import { NavigateFunction } from "react-router-dom";
+import Spotify from "../Spotify";
+import Exit from "../Exit";
 import "./styles/artist-details.css";
+import Seperator from "../Seperator";
 
 type PropTypes = {
   artistDetail: ArtistsType;
-  isWidth992: boolean;
+  isOneColumn: boolean;
   navigate: NavigateFunction;
   styles: { background: string };
   children: ReactNode;
@@ -13,47 +16,58 @@ type PropTypes = {
 
 const ArtistDetailsArtist = ({
   artistDetail,
-  isWidth992,
+  isOneColumn,
   navigate,
   styles,
   children,
 }: PropTypes) => {
-  const { external_urls, name, followers, images } = artistDetail;
+  const { external_urls, name, followers } = artistDetail;
 
-  const imageExistsOrWidth992: boolean = !images[0]?.url || isWidth992;
+  const renderArtistHeader = (
+    <>
+      {followers.total ? (
+        <>
+          <h1 className="fs-1">{name}</h1>
+        </>
+      ) : (
+        <div className="d-flex align-items-baseline">
+          <h1 className="fs-1">{name}</h1>
+          <Spotify url={external_urls.spotify} size={2} className="ps-3" />
+        </div>
+      )}
+    </>
+  );
+
+  const renderFollowers = (
+    <div className="d-flex w-100 justify-content-center">
+      <Spotify className="pe-5 me-3" url={external_urls.spotify} />
+      <Seperator
+        style={{ backgroundColor: "rgb(255,255,255,.5)", borderRadius: "10px" }}
+        width="1px"
+        height="100%"
+      />
+      <h2 className="fs-5 pt-1 ps-4">
+        {followers.total?.toLocaleString("US")} followers
+      </h2>
+    </div>
+  );
 
   return (
     <>
       <section
-        className={`w-100 ${imageExistsOrWidth992 ? "d-none" : ""} d-flex
-                 justify-content-end`}
+        className={`w-100 d-flex
+        justify-content-end ${isOneColumn ? "d-none" : ""}`}
       >
-        <div className="artistBg w-100 h-100" style={styles}></div>
+        <div className="artist-bg w-100 h-100" style={styles}></div>
       </section>
-      <section className={`w-100 h-100 d-grid artistRight`}>
-        <div className="d-flex flex-column align-items-center justify-content-center artistHeading">
+      <section className={`w-100 h-100 d-grid artist-right`}>
+        <div className="d-flex flex-column align-items-center justify-content-center artist-heading">
           <div className="w-100 d-flex justify-content-end pe-5">
-            <i
-              data-testid="red-x"
-              onClick={() => navigate("artists")}
-              className="window close outline icon iconRed fs-1"
-            ></i>
+            <Exit handleClick={() => navigate("artists")} size={1} />
           </div>
-          <h1 className="fs-1">{name}</h1>
+          {renderArtistHeader}
           <hr className="w-50 mt-1" />
-          <div className="d-flex flex-row w-75 justify-content-center ms-5">
-            <i
-              title={external_urls.spotify}
-              onClick={() => window.open(external_urls.spotify, "_blank")}
-              className="spotify icon fs-1 pe-5 me-3"
-            ></i>
-            {followers.total && <div className="vl" />}
-            <h2 className="fs-5 pt-1 ps-4">
-              {followers.total
-                ? `${followers.total?.toLocaleString("US")} followers`
-                : ""}
-            </h2>
-          </div>
+          {followers.total && renderFollowers}
         </div>
         {children}
       </section>

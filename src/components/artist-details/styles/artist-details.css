@@ -1,11 +1,15 @@
-.artistPage {
+.artist-page {
   grid-template-columns: 50% 50%;
   height: 100vh;
+  display: grid;
 }
 
-.artistPageOneColumn {
+.artist-page-one-column {
   height: 100vh;
   background-size: cover !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .centered-artist {
@@ -21,7 +25,7 @@
   background-size: cover !important;
 }
 
-.artistRight {
+.artist-right {
   grid-template-rows: repeat(3, 1fr);
   z-index: 1;
 }
@@ -34,30 +38,26 @@ hr {
   cursor: pointer;
 }
 
-.artistHeading h1 {
+.artist-heading h1 {
   font-family: "Barlow", sans-serif !important;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.632);
+  color: white;
 }
 
-.artistHeading h2 {
+.artist-heading h2 {
   font-family: "Barlow", sans-serif !important;
   font-weight: 200;
   color: white;
 }
 
-.artistHeading i {
+.artist-heading i {
   position: relative;
   bottom: 10px;
   color: green;
   cursor: pointer;
 }
 
-.vl {
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.artistBg {
+.artist-bg {
   background-size: cover !important;
 }
 
@@ -79,13 +79,12 @@ hr {
   width: 170px !important;
   height: 170px;
   object-fit: cover;
-  border: 0.5px solid rgb(0, 0, 0, 0);
   border-radius: 5px;
 }
 
 .album-card .image {
   height: 170px;
-  box-shadow: 0px 0px 5px 2px rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0px 0px 8px 1px rgba(255, 255, 255, 0.6) !important;
   border-radius: 5px;
 }
 
@@ -114,7 +113,6 @@ hr {
   overflow: hidden !important;
   white-space: nowrap !important;
   color: white !important;
-  cursor: pointer;
   user-select: none;
 }
 
@@ -359,13 +357,14 @@ hr {
   color: rgba(255, 255, 255, 0.1) !important;
 }
 
-.topTrackContainer h2 {
-  font-family: "Barlow", sans-serif !important;
+.top-track-container h2 {
+  font-family: "Varela Round", sans-serif !important;
   font-weight: 200;
+  margin-bottom: 0;
   color: white;
 }
 
-.topTrackItem {
+.top-track-item {
   background-color: rgb(26, 26, 26) !important;
   box-shadow: 0px 1px rgb(30, 30, 30) !important;
   color: white !important;
@@ -374,34 +373,34 @@ hr {
   max-width: 445px;
 }
 
-.topTrackItem img {
+.top-track-item img {
   width: 50px !important;
   height: 50px !important;
   border: 2px solid white !important;
 }
 
-.topTrackItem h3 {
-  font-family: "Barlow", sans-serif !important;
+.top-track-item h3 {
+  font-family: "Varela Round", sans-serif !important;
 }
 
-.topTrackContent {
+.top-track-content {
   max-width: 350px;
   min-width: 50px;
   font-family: "Barlow", sans-serif !important;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.744);
+  color: white;
   text-overflow: ellipsis !important;
   overflow: hidden !important;
   white-space: nowrap !important;
 }
 
-.trackContentContainer {
+.track-content-container {
   max-width: 350px;
   min-width: 220px;
 }
 
 @media screen and (max-width: 992px) {
-  .topTrackItem {
+  .top-track-item {
     background-color: rgb(26, 26, 26) !important;
     box-shadow: 0px 1px rgb(30, 30, 30) !important;
     color: white !important;
@@ -412,14 +411,14 @@ hr {
 }
 
 @media screen and (max-width: 576px) {
-  .topTrackItem {
+  .top-track-item {
     width: 75%;
   }
 
-  .topTrackContent {
+  .top-track-content {
     max-width: 250px;
     min-width: 75px;
-    font-family: "Barlow", sans-serif !important;
+    font-family: "Varela Round", sans-serif !important;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.744);
     text-overflow: ellipsis !important;
@@ -429,7 +428,7 @@ hr {
 }
 
 @media screen and (max-width: 438px) {
-  .trackContentContainer {
+  .track-content-container {
     min-width: 150px;
   }
 }

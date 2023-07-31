@@ -96,6 +96,9 @@ const TrackListSelectedContainer = ({
       background:
         "linear-gradient(45deg,rgb(0, 3, 79, 0.5) 20%,rgb(0, 0, 0) 50%,rgb(0, 3, 79, 0.5) 80%)",
       width: is850 ? "100%" : "250px",
+      boxShadow: is850
+        ? "0px 0px 0px 0px rgb(255,255,255, 0.4)"
+        : "0px 0px 0px 0px white, 1px 10px 12px 0px rgb(255,255,255, 0)",
       transition: {
         type: "tween",
         duration: 0.5,
@@ -114,6 +117,9 @@ const TrackListSelectedContainer = ({
       background: is850
         ? "linear-gradient(45deg,rgb(6, 6, 6) 20%,rgb(0, 0, 0) 50%,rgb(10, 10, 10) 80%)"
         : "linear-gradient(to right, rgb(0, 0, 0) 20%, rgb(10, 10, 10) 50%, rgb(16, 16, 16) 80%)",
+      boxShadow: is850
+        ? "0px 0px 30px 10px rgb(255,255,255, 0.4)"
+        : "0px 0px 0px 0px white, 0px 20px 30px 5px rgb(255,255,255, 0.4)",
       transition: {
         type: "tween",
         duration: 1,

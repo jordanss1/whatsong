@@ -37,23 +37,23 @@ const ArtistDetailsTopTracks = ({
       return <h3 className="fs-4">No tracks</h3>;
     } else {
       return (
-        <div className="d-flex align-items-center justify-content-center trackContentContainer">
+        <div className="d-flex align-items-center justify-content-center track-content-container">
           <img
             className={`ui avatar image ${topTrack.album.images[2] && "me2"}`}
             src={`${topTrack.album.images[2] && topTrack.album.images[2].url}`}
           />
-          <div className="content topTrackContent">{topTrack.name}</div>
+          <div className="content top-track-content">{topTrack.name}</div>
         </div>
       );
     }
   };
 
   return (
-    <section className="d-flex align-items-center justify-content-center flex-column topTrackContainer">
+    <section className="d-flex align-items-center justify-content-center flex-column top-track-container">
       <h2 className="fs-2">Top tracks</h2>
       <hr className="w-25 mt-1" />
       <div
-        className={`item d-flex topTrackItem justify-content-center align-items-center ${containerWidth()}  p-1`}
+        className={`item d-flex top-track-item justify-content-center align-items-center ${containerWidth()}  p-1`}
       >
         <div className="d-flex justify-content-start smallArrowDiv">
           <LeftArrow

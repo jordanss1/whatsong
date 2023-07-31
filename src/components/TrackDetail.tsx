@@ -40,7 +40,7 @@ const TrackDetail = ({
   const releaseDate = album.release_date.slice(0, 4);
   const trackOf = `Track ${track_number} of ${album.total_tracks}`;
   const albumImage = album.images[0].url;
-  const albumType = album.album_type === "single" ? "Single -" : album.name;
+  const albumType = album.album_type === "single" ? "Single" : album.name;
   const albumDetail = album.album_type === "single" ? releaseDate : trackOf;
 
   const lineStyle: MotionStyle = {
@@ -51,9 +51,13 @@ const TrackDetail = ({
 
   const albumStyle: MotionStyle =
     album.album_type === "single"
-      ? {}
+      ? {
+          minWidth: "100px",
+          textAlign: "end",
+        }
       : {
           maxWidth: screenWidth < 851 ? "350px" : "180px",
+          minWidth: "100px",
           textAlign: "center",
           display: "-webkit-box",
           WebkitLineClamp: 2,
@@ -96,6 +100,7 @@ const TrackDetail = ({
             style={
               screenWidth > 850
                 ? {
+                    minWidth: "100px",
                     maxWidth: "250px",
                     ...lineStyle,
                   }
@@ -110,27 +115,33 @@ const TrackDetail = ({
             width="5px"
             height="25px"
           />
-          <motion.span
-            style={{ minWidth: screenWidth < 851 ? "100px" : "auto" }}
-            className="ps-3"
-          >
+          <motion.span style={{ minWidth: "100px" }} className="ps-3">
             {songLength}
           </motion.span>
         </TrackDetailLine>
         <TrackDetailLine variants={lineVariants} custom={0.3}>
           <motion.span
             style={albumStyle}
-            className={`pe-${albumType === "album" && 1}`}
+            className={`pe-${album.album_type === "album" && 1}`}
           >
             {albumType}
           </motion.span>
+          {albumType === "Single" && (
+            <motion.span
+              style={{
+                minWidth: "30px",
+                textAlign: "center",
+              }}
+            >
+              -
+            </motion.span>
+          )}
           <motion.span
             style={{
-              minWidth:
-                screenWidth < 851 && albumType === "album" ? "110px" : "auto",
-              textAlign: "center",
+              minWidth: "110px",
+              textAlign: albumType === "Single" ? "start" : "center",
             }}
-            className={`ps-${albumType === "album" && 1}`}
+            className={`ps-${album.album_type === "album" && 3}`}
           >
             {albumDetail}
           </motion.span>
