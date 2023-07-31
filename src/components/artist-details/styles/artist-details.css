@@ -181,7 +181,7 @@ hr {
 }
 
 .smallArrowDiv {
-  width: 25%;
+  min-width: 106px;
 }
 
 .leftArrow {
@@ -364,6 +364,11 @@ hr {
   color: white;
 }
 
+.top-track-container hr {
+  height: 1px;
+  max-width: 129px;
+}
+
 .top-track-item {
   background-color: rgb(26, 26, 26) !important;
   box-shadow: 0px 1px rgb(30, 30, 30) !important;
@@ -411,10 +416,6 @@ hr {
 }
 
 @media screen and (max-width: 576px) {
-  .top-track-item {
-    width: 75%;
-  }
-
   .top-track-content {
     max-width: 250px;
     min-width: 75px;

@@ -1,10 +1,11 @@
-import { ReactNode } from "react";
+import { ReactNode, ReactElement } from "react";
 import { ArtistsType } from "../../types/types";
 import { NavigateFunction } from "react-router-dom";
+import { Variants, motion } from "framer-motion";
 import Spotify from "../Spotify";
 import Exit from "../Exit";
-import "./styles/artist-details.css";
 import Seperator from "../Seperator";
+import "./styles/artist-details.css";
 
 type PropTypes = {
   artistDetail: ArtistsType;
@@ -14,13 +15,65 @@ type PropTypes = {
   children: ReactNode;
 };
 
+const leftVariants: Variants = {
+  initial: {
+    width: "50%",
+    height: "100%",
+    opacity: 0,
+  },
+  animate: {
+    width: "100%",
+    height: "100%",
+    opacity: 1,
+    transition: {
+      type: "tween",
+      ease: "easeInOut",
+      delay: 1.5,
+      duration: 1,
+      opacity: {
+        delay: 1,
+        duration: 1,
+      },
+    },
+  },
+};
+
+const headerVariants: Variants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      type: "tween",
+      duration: 1,
+    },
+  },
+};
+
+const artistInfoVariants: Variants = {
+  initial: {
+    display: "none",
+  },
+  animate: (isOneColumn) => ({
+    display: "grid",
+    transition: {
+      delay: isOneColumn ? 1.2 : 1.7,
+      duration: 0.5,
+      when: "beforeChildren",
+      staggerChildren: 0.4,
+    },
+  }),
+  exit: {},
+};
+
 const ArtistDetailsArtist = ({
   artistDetail,
   isOneColumn,
   navigate,
   styles,
   children,
-}: PropTypes) => {
+}: PropTypes): ReactElement => {
   const { external_urls, name, followers } = artistDetail;
 
   const renderArtistHeader = (
@@ -54,23 +107,34 @@ const ArtistDetailsArtist = ({
 
   return (
     <>
-      <section
-        className={`w-100 d-flex
-        justify-content-end ${isOneColumn ? "d-none" : ""}`}
+      {!isOneColumn && (
+        <motion.section variants={leftVariants} layout layoutId="left">
+          <motion.div className="artist-bg w-100 h-100" style={styles} />
+        </motion.section>
+      )}
+      <motion.section
+        variants={artistInfoVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        custom={isOneColumn}
+        layout
+        layoutId="right"
+        className="w-100 h-100 artist-right"
       >
-        <div className="artist-bg w-100 h-100" style={styles}></div>
-      </section>
-      <section className={`w-100 h-100 d-grid artist-right`}>
-        <div className="d-flex flex-column align-items-center justify-content-center artist-heading">
+        <motion.div
+          variants={headerVariants}
+          className="d-flex flex-column align-items-center justify-content-center artist-heading"
+        >
           <div className="w-100 d-flex justify-content-end pe-5">
             <Exit handleClick={() => navigate("artists")} size={1} />
           </div>
           {renderArtistHeader}
           <hr className="w-50 mt-1" />
           {followers.total && renderFollowers}
-        </div>
+        </motion.div>
         {children}
-      </section>
+      </motion.section>
     </>
   );
 };

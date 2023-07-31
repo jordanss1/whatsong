@@ -10,6 +10,7 @@ import {
 import { AlbumDetailsType } from "../../types/types";
 import { SetAlbumType } from "../../hooks/DetailedArtistResultHooks";
 import ArtistDetailsAlbumCard from "./ArtistDetailsAlbumCard";
+import { motion, Variants } from "framer-motion";
 import "./styles/artist-details.css";
 
 type ArtistDetailsAlbumsPropsType = {
@@ -18,13 +19,32 @@ type ArtistDetailsAlbumsPropsType = {
   albums: AlbumDetailsType[] | null;
 };
 
+const albumsVariants: Variants = {
+  initial: {
+    x: -70,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      type: "tween",
+      ease: "easeOut",
+    },
+  },
+};
+
 const ArtistDetailsAlbums = ({
   setAlbum,
   album,
   albums,
 }: ArtistDetailsAlbumsPropsType): ReactElement => {
   return (
-    <section className="d-flex flex-row justify-content-center justify-content-evenly album-container">
+    <motion.section
+      variants={albumsVariants}
+      className="d-flex flex-row justify-content-center align-items-center justify-content-evenly album-container"
+    >
       <LeftArrow
         testId="bigLeft"
         func={setAlbum}
@@ -36,7 +56,7 @@ const ArtistDetailsAlbums = ({
         func={setAlbum}
         style={album && albums ? rightStyle : rightDisabledStyle}
       />
-    </section>
+    </motion.section>
   );
 };
 

@@ -60,17 +60,13 @@ const artistDetailVariants: Variants = {
     background: [
       "radial-gradient(circle at 100% 0%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
       "radial-gradient(circle at 100% 40%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%)",
-      "radial-gradient(circle at 100% 40%,rgb(0, 5, 133, 0) 0%,rgb(0, 5, 133,0) 30%,transparent 70%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133, 0) 0%,rgb(0, 5, 133, 0) 30%,transparent 70%)",
     ],
     transition: {
-      duration: 0.5,
       when: "afterChildren",
       staggerChildren: 0.01,
-      background: {
-        duration: 1,
-        type: "tween",
-        ease: "easeInOut",
-      },
+      duration: 1,
+      type: "tween",
+      ease: "easeInOut",
     },
   },
 };
@@ -138,7 +134,7 @@ const ArtistList = (): ReactElement => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="artistWholeListContainer d-flex flex-column px-1"
+          className="artist-whole-list-container d-flex flex-column px-1"
         >
           <Header headerCycle={headerCycle} />
           <div className="filler-div" />

@@ -5,8 +5,63 @@ import ArtistDetailsArtist from "./ArtistDetailsArtist";
 import ArtistDetailsAlbums from "./ArtistDetailsAlbums";
 import ArtistDetailsTopTracks from "./ArtistDetailsTopTracks";
 import SearchContext from "../../contexts/searchContext/SearchState";
-import { motion } from "framer-motion";
+import { Variants, motion } from "framer-motion";
 import "./styles/artist-details.css";
+
+const artistDetailMainVariants: Variants = {
+  initial: (isOneColumn) => ({
+    background:
+      "radial-gradient(circle at 100% 40%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%)",
+    gridTemplateColumns: isOneColumn ? "" : "100% 0%",
+    justifyItems: isOneColumn ? "" : "center",
+    alignItems: isOneColumn ? "" : "center",
+  }),
+  animate: (isOneColumn) => ({
+    background:
+      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)",
+    gridTemplateColumns: isOneColumn ? "" : "50% 50%",
+    transition: {
+      type: "tween",
+      ease: "easeInOut",
+      gridTemplateColumns: {
+        delay: 1.5,
+        duration: 0.8,
+      },
+      background: {
+        when: "beforeChildren",
+        delay: 0.5,
+        duration: 0.5,
+      },
+    },
+  }),
+  exit: {
+    background: [
+      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)",
+      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
+      "radial-gradient(circle at 100% 40%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%)",
+    ],
+    transition: {
+      when: "afterChildren",
+      staggerChildren: 0.01,
+      duration: 1,
+      type: "tween",
+      ease: "easeInOut",
+    },
+  },
+};
+
+const backgroundVariants: Variants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      delay: 1,
+      duration: 0.5,
+    },
+  },
+};
 
 const ArtistDetails = (): ReactElement => {
   const {
@@ -47,8 +102,22 @@ const ArtistDetails = (): ReactElement => {
   return (
     <>
       {artistDetail && (
-        <motion.main className={containerClasses}>
-          {is992 && <div className="centered-artist" style={styles} />}
+        <motion.main
+          variants={artistDetailMainVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          layout
+          custom={isOneColumn}
+          className={containerClasses}
+        >
+          {is992 && (
+            <motion.div
+              variants={backgroundVariants}
+              className="centered-artist"
+              style={styles}
+            />
+          )}
           <ArtistDetailsArtist
             artistDetail={artistDetail}
             isOneColumn={isOneColumn}
