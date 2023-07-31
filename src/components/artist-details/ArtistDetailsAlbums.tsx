@@ -33,6 +33,14 @@ const albumsVariants: Variants = {
       ease: "easeOut",
     },
   },
+  exit: {
+    x: 70,
+    opacity: 0,
+    transition: {
+      type: "tween",
+      ease: "easeInOut",
+    },
+  },
 };
 
 const ArtistDetailsAlbums = ({
@@ -42,6 +50,7 @@ const ArtistDetailsAlbums = ({
 }: ArtistDetailsAlbumsPropsType): ReactElement => {
   return (
     <motion.section
+      key="albums"
       variants={albumsVariants}
       className="d-flex flex-row justify-content-center align-items-center justify-content-evenly album-container"
     >

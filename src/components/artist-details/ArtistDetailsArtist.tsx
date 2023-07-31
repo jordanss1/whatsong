@@ -1,7 +1,7 @@
 import { ReactNode, ReactElement } from "react";
 import { ArtistsType } from "../../types/types";
 import { NavigateFunction } from "react-router-dom";
-import { Variants, motion } from "framer-motion";
+import { AnimatePresence, Variants, motion } from "framer-motion";
 import Spotify from "../Spotify";
 import Exit from "../Exit";
 import Seperator from "../Seperator";
@@ -36,6 +36,16 @@ const leftVariants: Variants = {
       },
     },
   },
+  exit: {
+    scale: 1.1,
+    opacity: 0,
+    transition: {
+      delay: 0.5,
+      duration: 0.5,
+      type: "tween",
+      ease: "easeInOut",
+    },
+  },
 };
 
 const headerVariants: Variants = {
@@ -47,6 +57,14 @@ const headerVariants: Variants = {
     transition: {
       type: "tween",
       duration: 1,
+    },
+  },
+  exit: {
+    x: -70,
+    opacity: 0,
+    transition: {
+      type: "tween",
+      ease: "easeInOut",
     },
   },
 };
@@ -64,7 +82,13 @@ const artistInfoVariants: Variants = {
       staggerChildren: 0.4,
     },
   }),
-  exit: {},
+  exit: {
+    opacity: 0,
+    transition: {
+      delay: 0.5,
+      staggerChildren: 0.2,
+    },
+  },
 };
 
 const ArtistDetailsArtist = ({
@@ -106,17 +130,20 @@ const ArtistDetailsArtist = ({
   );
 
   return (
-    <>
+    <AnimatePresence mode="wait">
       {!isOneColumn && (
-        <motion.section variants={leftVariants} layout layoutId="left">
+        <motion.section
+          key="left-bg"
+          variants={leftVariants}
+          layout
+          layoutId="left"
+        >
           <motion.div className="artist-bg w-100 h-100" style={styles} />
         </motion.section>
       )}
       <motion.section
+        key="artist-details"
         variants={artistInfoVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
         custom={isOneColumn}
         layout
         layoutId="right"
@@ -135,7 +162,7 @@ const ArtistDetailsArtist = ({
         </motion.div>
         {children}
       </motion.section>
-    </>
+    </AnimatePresence>
   );
 };
 

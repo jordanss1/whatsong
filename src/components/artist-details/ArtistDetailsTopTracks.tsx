@@ -33,6 +33,14 @@ const topTracksVariants: Variants = {
       ease: "easeOut",
     },
   },
+  exit: {
+    x: -70,
+    opacity: 0,
+    transition: {
+      type: "tween",
+      ease: "easeInOut",
+    },
+  },
 };
 
 const ArtistDetailsTopTracks = ({
@@ -58,6 +66,7 @@ const ArtistDetailsTopTracks = ({
   return (
     <motion.section
       variants={topTracksVariants}
+      key="top-tracks"
       className="d-flex align-items-center justify-content-center flex-column top-track-container px-3"
     >
       <h2 className="fs-3">Top Tracks</h2>

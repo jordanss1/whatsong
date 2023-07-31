@@ -5,13 +5,13 @@ import ArtistDetailsArtist from "./ArtistDetailsArtist";
 import ArtistDetailsAlbums from "./ArtistDetailsAlbums";
 import ArtistDetailsTopTracks from "./ArtistDetailsTopTracks";
 import SearchContext from "../../contexts/searchContext/SearchState";
-import { Variants, motion } from "framer-motion";
+import { AnimatePresence, Variants, motion } from "framer-motion";
 import "./styles/artist-details.css";
 
 const artistDetailMainVariants: Variants = {
   initial: (isOneColumn) => ({
     background:
-      "radial-gradient(circle at 100% 40%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%)",
+      "radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
     gridTemplateColumns: isOneColumn ? "" : "100% 0%",
     justifyItems: isOneColumn ? "" : "center",
     alignItems: isOneColumn ? "" : "center",
@@ -38,11 +38,10 @@ const artistDetailMainVariants: Variants = {
     background: [
       "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)",
       "radial-gradient(circle at 100% 0%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
-      "radial-gradient(circle at 100% 40%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%)",
+      "radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
     ],
     transition: {
       when: "afterChildren",
-      staggerChildren: 0.01,
       duration: 1,
       type: "tween",
       ease: "easeInOut",
@@ -59,6 +58,16 @@ const backgroundVariants: Variants = {
     transition: {
       delay: 1,
       duration: 0.5,
+    },
+  },
+  exit: {
+    scale: 1.1,
+    opacity: 0,
+    transition: {
+      delay: 0.5,
+      duration: 0.5,
+      type: "tween",
+      ease: "easeInOut",
     },
   },
 };

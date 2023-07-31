@@ -44,7 +44,7 @@ const artistsNormalVariants: Variants = {
 const artistDetailVariants: Variants = {
   initial: {
     background:
-      "radial-gradient(circle at 100% 50%,rgb(0, 0, 0) 0%,rgba(0, 0, 0, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 0, 0) 0%,rgba(0, 0, 0, 1) 10%,transparent 60%)",
+      "radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
   },
   animate: {
     background:
@@ -58,8 +58,8 @@ const artistDetailVariants: Variants = {
   },
   exit: {
     background: [
-      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
-      "radial-gradient(circle at 100% 40%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 30%,transparent 70%)",
+      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, .2) 20%,transparent 60%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, .2) 20%,transparent 60%)",
+      "radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
     ],
     transition: {
       when: "afterChildren",
@@ -69,20 +69,6 @@ const artistDetailVariants: Variants = {
       ease: "easeInOut",
     },
   },
-};
-
-const fixedImageVariants: Variants = {
-  initial: {
-    opacity: 0,
-  },
-  animate: (artistImage) => ({
-    opacity: 1,
-    background: `${gradient1} url(${artistImage}) no-repeat center 0px/ 0px`,
-  }),
-  exit: (artistImage) => ({
-    opacity: 1,
-    background: `${gradient1} url(${artistImage}) no-repeat center 0px/ 0px`,
-  }),
 };
 
 const ArtistList = (): ReactElement => {
