@@ -1,32 +1,24 @@
 import { memo, ReactElement } from "react";
-import { funcIsSetAlbumType, SetterUnion } from "./LeftArrow";
+import { motion, MotionProps } from "framer-motion";
 import "../styles/artist-details.css";
 
-interface Props {
-  style: string;
+interface RightArrowPropsType extends MotionProps {
+  setAlbumOrTrack: () => void;
+  className: string;
   testId: "smallRight" | "bigRight";
-  func: SetterUnion;
 }
 
-type RightArrowType = (props: Props) => ReactElement;
+type RightArrowType = (props: RightArrowPropsType) => ReactElement;
 
-const RightArrow: RightArrowType = ({ func, style, testId }) => {
-  const returnTrueFunc = (): void => {
-    if (funcIsSetAlbumType(func)) {
-      return func("rightClick", "right");
-    }
-
-    return func("right", "track");
-  };
-
+const RightArrow: RightArrowType = ({ setAlbumOrTrack, className, testId }) => {
   return (
-    <div
+    <motion.div
       data-testid={testId}
-      onClick={() => returnTrueFunc()}
-      className={style}
+      onClick={setAlbumOrTrack}
+      className={`d-flex align-items-center ${className}`}
     >
-      <i className="right chevron icon align-self-center"></i>
-    </div>
+      <i className="right chevron icon align-self-center" />
+    </motion.div>
   );
 };
 

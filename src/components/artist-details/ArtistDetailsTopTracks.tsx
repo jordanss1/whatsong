@@ -1,22 +1,16 @@
 import { memo } from "react";
 import RightArrow from "./Arrows/RightArrow";
 import LeftArrow from "./Arrows/LeftArrow";
-import {
-  leftSmall,
-  leftSmallDisabled,
-  rightSmall,
-  rightSmallDisabled,
-} from "../../styles/inline";
-import { TopTracksDetailsType } from "../../types/types";
-import { TrackOrAlbumFuncType as SetTopTrackType } from "../../hooks/DetailedArtistResultHooks";
 import CircularImage from "../CircularImage";
+import { TopTracksDetailsType } from "../../types/types";
+import { SetAlbumOrTrackType } from "../../hooks/DetailedArtistResultHooks";
 import { motion, Variants } from "framer-motion";
 import "./styles/artist-details.css";
 
 type ArtistDetailsTopTracksPropTypes = {
   topTracks: TopTracksDetailsType[] | null;
   topTrack: TopTracksDetailsType | null;
-  setTopTrack: SetTopTrackType;
+  setTopTrack: SetAlbumOrTrackType;
 };
 
 const topTracksVariants: Variants = {
@@ -50,6 +44,18 @@ const ArtistDetailsTopTracks = ({
 }: ArtistDetailsTopTracksPropTypes) => {
   const image = topTrack?.album.images[0]?.url;
 
+  const leftClasses = `small-arrows pb-1 ${
+    topTracks && topTracks.length > 1
+      ? "left-small-arrow w-100"
+      : "left-small-arrow-disabled"
+  }`;
+
+  const rightClasses = `small-arrows pb-1 ${
+    topTracks && topTracks.length > 1
+      ? "justify-content-end  right-small-arrow  w-100"
+      : "right-small-arrow-disabled"
+  }`;
+
   const renderTopTrack = (
     <div className="d-flex gap-1 align-items-center justify-content-center track-content-container">
       {topTrack ? (
@@ -72,25 +78,19 @@ const ArtistDetailsTopTracks = ({
       <h2 className="fs-3">Top Tracks</h2>
       <hr className="w-100 mt-1" />
       <div className="item w-100 d-flex top-track-item justify-content-center align-items-center p-1">
-        <div className="d-flex justify-content-start smallArrowDiv">
+        <div className="d-flex justify-content-start small-arrow-div">
           <LeftArrow
+            setAlbumOrTrack={() => setTopTrack("left", "track")}
             testId="smallLeft"
-            style={
-              topTracks && topTracks.length > 1 ? leftSmall : leftSmallDisabled
-            }
-            func={setTopTrack}
+            className={leftClasses}
           />
         </div>
         {renderTopTrack}
-        <div className="d-flex justify-content-end smallArrowDiv">
+        <div className="d-flex justify-content-end small-arrow-div">
           <RightArrow
+            setAlbumOrTrack={() => setTopTrack("right", "track")}
             testId="smallRight"
-            style={
-              topTracks && topTracks.length > 1
-                ? rightSmall
-                : rightSmallDisabled
-            }
-            func={setTopTrack}
+            className={rightClasses}
           />
         </div>
       </div>

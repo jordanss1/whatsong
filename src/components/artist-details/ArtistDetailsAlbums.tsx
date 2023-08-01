@@ -1,21 +1,15 @@
-import { memo, ReactElement } from "react";
+import { memo, ReactElement, useEffect } from "react";
 import LeftArrow from "./Arrows/LeftArrow";
 import RightArrow from "./Arrows/RightArrow";
-import {
-  leftStyle,
-  leftDisabledStyle,
-  rightStyle,
-  rightDisabledStyle,
-} from "../../styles/inline";
-import { AlbumDetailsType } from "../../types/types";
-import { SetAlbumType } from "../../hooks/DetailedArtistResultHooks";
 import ArtistDetailsAlbumCard from "./ArtistDetailsAlbumCard";
-import { motion, Variants } from "framer-motion";
+import { AlbumDetailsType } from "../../types/types";
+import { SetAlbumOrTrackType } from "../../hooks/DetailedArtistResultHooks";
+import { AnimatePresence, motion, Variants, useCycle } from "framer-motion";
 import "./styles/artist-details.css";
 
 type ArtistDetailsAlbumsPropsType = {
   album: AlbumDetailsType | null;
-  setAlbum: SetAlbumType;
+  setAlbum: SetAlbumOrTrackType;
   albums: AlbumDetailsType[] | null;
 };
 
@@ -48,6 +42,50 @@ const ArtistDetailsAlbums = ({
   album,
   albums,
 }: ArtistDetailsAlbumsPropsType): ReactElement => {
+  const leftClasses = `justify-content-end arrows ${
+    album && albums ? "left-arrow" : "left-arrow-disabled"
+  }`;
+
+  const rightClasses = `arrows ${
+    album && albums ? "right-arrow" : "right-arrow-disabled"
+  }`;
+
+  const [direction, cycleDirection] = useCycle<"left" | "right">(
+    "left",
+    "right"
+  );
+
+  const [changed, cycleChanged] = useCycle(false, true);
+
+  useEffect(() => {
+    let timer: string | number | NodeJS.Timeout | undefined;
+
+    if (timer) clearTimeout(timer);
+
+    if (changed) {
+      timer = setTimeout(() => {
+        cycleChanged(0);
+      }, 250);
+    }
+
+    return () => clearTimeout(timer);
+  }, [changed]);
+
+  const handleAlbum = (direction: "left" | "right") => {
+    let timer: NodeJS.Timeout;
+
+    if (albums && albums?.length > 1) {
+      cycleDirection(direction === "left" ? 0 : 1);
+
+      timer = setTimeout(() => {
+        cycleChanged(1);
+        setAlbum(direction, "album");
+      }, 50);
+    }
+
+    return () => clearTimeout(timer);
+  };
+
   return (
     <motion.section
       key="albums"
@@ -55,15 +93,21 @@ const ArtistDetailsAlbums = ({
       className="d-flex flex-row justify-content-center align-items-center justify-content-evenly album-container"
     >
       <LeftArrow
+        setAlbumOrTrack={() => handleAlbum("left")}
         testId="bigLeft"
-        func={setAlbum}
-        style={album && albums ? leftStyle : leftDisabledStyle}
+        className={leftClasses}
       />
-      <ArtistDetailsAlbumCard album={album} />
+      <motion.div style={{ minWidth: "170px" }}>
+        <AnimatePresence mode="wait">
+          {!changed && (
+            <ArtistDetailsAlbumCard direction={direction} album={album} />
+          )}
+        </AnimatePresence>
+      </motion.div>
       <RightArrow
+        setAlbumOrTrack={() => handleAlbum("right")}
         testId="bigRight"
-        func={setAlbum}
-        style={album && albums ? rightStyle : rightDisabledStyle}
+        className={rightClasses}
       />
     </motion.section>
   );

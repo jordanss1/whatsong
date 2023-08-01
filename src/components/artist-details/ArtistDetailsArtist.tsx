@@ -130,7 +130,7 @@ const ArtistDetailsArtist = ({
   );
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="sync">
       {!isOneColumn && (
         <motion.section
           key="left-bg"

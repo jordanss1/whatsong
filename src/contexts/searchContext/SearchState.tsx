@@ -40,9 +40,8 @@ export const SearchState = () => {
     topTracks,
     topTrack,
     setProfile,
+    setAlbumOrTrack,
     emptyProfile,
-    setAlbum,
-    setTopTrack,
     artistDetailError,
   } = useArtistResults();
 
@@ -75,6 +74,7 @@ export const SearchState = () => {
   const pathname = location.pathname;
 
   const providerValues = {
+    setAlbumOrTrack,
     popout,
     setPopout,
     pathname,
@@ -96,8 +96,6 @@ export const SearchState = () => {
     tracks,
     setArtistsOrTracks,
     resetModalOrSpotify,
-    setTopTrack,
-    setAlbum,
     setProfile,
     emptyProfile,
     handleArtistsOrSongsSearch,
@@ -112,6 +110,7 @@ export const SearchState = () => {
 export type UseSearchStateContext = ReturnType<typeof SearchState>;
 
 const initSearchContextState: UseSearchStateContext = {
+  setAlbumOrTrack: () => {},
   popout: false,
   setPopout: () => {},
   pathname: "",
@@ -128,13 +127,11 @@ const initSearchContextState: UseSearchStateContext = {
   artistDetail: artistInitState.artistDetail,
   albums: [],
   album: null,
-  setAlbum: () => {},
   setArtistsOrTracks: () => {},
   resetModalOrSpotify: () => {},
   selectedTrack: null,
   artists: null,
   tracks: null,
-  setTopTrack: () => {},
   setProfile: () => {},
   emptyProfile: () => {},
   handleArtistsOrSongsSearch: () => {},

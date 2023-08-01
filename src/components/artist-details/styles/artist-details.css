@@ -121,52 +121,6 @@ hr {
   cursor: pointer;
 }
 
-.rightClick {
-  animation: right-click 400ms;
-}
-
-@keyframes right-click {
-  0% {
-    left: 0;
-    opacity: 1;
-  }
-  25% {
-    opacity: 0;
-    left: 50px;
-  }
-  75% {
-    opacity: 0;
-    left: 30px;
-  }
-  100% {
-    opacity: 1;
-    left: 0;
-  }
-}
-
-.leftClick {
-  animation: left-click 400ms;
-}
-
-@keyframes left-click {
-  0% {
-    left: 0;
-    opacity: 1;
-  }
-  25% {
-    opacity: 0;
-    left: -50px;
-  }
-  50% {
-    opacity: 0;
-    left: -30px;
-  }
-  100% {
-    opacity: 1;
-    left: 0;
-  }
-}
-
 .arrows {
   cursor: pointer;
   width: 90px;
@@ -174,18 +128,18 @@ hr {
   height: 80% !important;
 }
 
-.smallArrows {
+.small-arrows {
   cursor: pointer;
   width: 37px !important;
   transition: 0.5s;
 }
 
-.smallArrowDiv {
+.small-arrow-div {
   width: 100%;
   max-width: 106px;
 }
 
-.leftArrow {
+.left-arrow {
   background: linear-gradient(
     to right,
     rgba(255, 255, 255, 0) 10%,
@@ -197,7 +151,7 @@ hr {
   transition: 0.5s;
 }
 
-.leftSmallArrow {
+.left-small-arrow {
   background: linear-gradient(
     to right,
     rgba(255, 255, 255, 0.115) 20%,
@@ -209,7 +163,7 @@ hr {
   transition: 0.5s;
 }
 
-.rightArrow {
+.right-arrow {
   background: linear-gradient(
     to left,
     rgba(255, 255, 255, 0) 10%,
@@ -221,7 +175,7 @@ hr {
   transition: 0.5s;
 }
 
-.rightSmallArrow {
+.right-small-arrow {
   background: linear-gradient(
     to right,
     rgba(255, 255, 255, 0) 40%,
@@ -233,58 +187,30 @@ hr {
   transition: 0.5s;
 }
 
-.leftArrow i {
+.left-arrow i {
   position: relative;
   bottom: 10px;
   right: 0;
   transition: 0.5s;
 }
 
-.leftSmallArrow i {
+.left-small-arrow i {
   position: relative;
   left: 0;
   transition: 0.5s;
 }
 
-.rightArrow i {
+.right-arrow i {
   position: relative;
   bottom: 10px;
   left: 0;
   transition: 0.5s;
 }
 
-.rightSmallArrow i {
+.right-small-arrow i {
   position: relative;
   left: 3px;
   transition: 0.5s;
-}
-
-.leftArrow:hover {
-  width: 40px !important;
-}
-
-.leftSmallArrow:hover {
-  width: 55px !important;
-}
-
-.rightArrow:hover {
-  width: 40px !important;
-}
-
-.rightSmallArrow:hover {
-  width: 55px !important;
-}
-
-.leftArrow:hover i {
-  right: 6px;
-  bottom: 12px;
-  font-size: 21px;
-}
-
-.rightArrow:hover i {
-  left: 6px;
-  bottom: 12px;
-  font-size: 21px;
 }
 
 .arrows i {
@@ -292,19 +218,19 @@ hr {
   font-size: 20px;
 }
 
-.smallArrows i {
+.small-arrows i {
   color: rgba(255, 255, 255, 0.605);
   font-size: 13px;
 }
 
-.leftArrowDisabled {
+.left-arrow-disabled {
   background: rgba(255, 255, 255, 0);
   width: 35px;
   border-radius: 40px;
   cursor: default !important;
 }
 
-.leftSmallArrowDisabled {
+.left-small-arrow-disabled {
   background: linear-gradient(
     to right,
     rgba(255, 255, 255, 0) 10%,
@@ -317,24 +243,24 @@ hr {
   cursor: default !important;
 }
 
-.leftArrowDisabled i {
+.left-arrow-disabled i {
   color: rgba(255, 255, 255, 0.1) !important;
   position: relative;
   bottom: 6px;
 }
 
-.leftSmallArrowDisabled i {
+.left-small-arrow-disabled i {
   color: rgba(255, 255, 255, 0.1) !important;
 }
 
-.rightArrowDisabled {
+.right-arrow-disabled {
   background: rgba(255, 255, 255, 0);
   width: 35px;
   border-radius: 40px;
   cursor: default !important;
 }
 
-.rightSmallArrowDisabled {
+.right-small-arrow-disabled {
   background: linear-gradient(
     to left,
     rgba(255, 255, 255, 0) 20%,
@@ -348,13 +274,13 @@ hr {
   justify-content: end;
 }
 
-.rightArrowDisabled i {
+.right-arrow-disabled i {
   color: rgba(255, 255, 255, 0.1) !important;
   position: relative;
   bottom: 6px;
 }
 
-.rightSmallArrowDisabled i {
+.right-small-arrow-disabled i {
   color: rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -406,7 +332,7 @@ hr {
 
 .track-content-container {
   max-width: 350px;
-  min-width: 220px;
+  min-width: 227px;
 }
 
 @media screen and (max-width: 992px) {

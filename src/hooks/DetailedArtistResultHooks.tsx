@@ -49,15 +49,15 @@ export type ArtistAndAlbumStateSetter = (
 
 export type EmptyDetailsType = () => void;
 
-export type SetAlbumType = (
-  classString: "leftClick" | "rightClick",
-  direction: "right" | "left"
+export type SetAlbumOrTrackType = (
+  direction: "right" | "left",
+  type: "album" | "track"
 ) => void;
 
-export type TrackOrAlbumFuncType = (
-  arrowType: "right" | "left",
-  itemType: "album" | "track"
-) => void;
+type SetIndexLogicType = (
+  prevIndex: number,
+  array: AlbumDetailsType[] | TopTracksDetailsType[]
+) => number;
 
 export const useArtistResults = () => {
   const [albumIndex, setAlbumIndex] = useState<number>(0);
@@ -137,33 +137,26 @@ export const useArtistResults = () => {
 
   const { artistDetail, albums, topTracks, artistDetailError } = artistDetails;
 
-  const setAlbumOrTrack: TrackOrAlbumFuncType = (arrowType, itemType) => {
-    let array = itemType === "album" ? albums : topTracks;
-    let setter = itemType === "album" ? setAlbumIndex : setTrackIndex;
-  };
+  const setAlbumOrTrack: SetAlbumOrTrackType = (direction, type) => {
+    const array = type === "album" ? albums : topTracks;
+    const setIndex = type === "album" ? setAlbumIndex : setTrackIndex;
 
-  const setAlbum: SetAlbumType = (classString, direction) => {
-    if (timeoutId.current[0] || timeoutId.current[1]) {
-      clearTimeout(timeoutId.current[0]);
-      clearTimeout(timeoutId.current[1]);
+    const setIndexLogic: SetIndexLogicType = (prevIndex, array) => {
+      if (direction === "right") {
+        return prevIndex === array.length - 1 ? 0 : prevIndex + 1;
+      } else {
+        return prevIndex === 0 ? array.length - 1 : prevIndex - 1;
+      }
+    };
+
+    if (type === "album" && array && array?.length > 1) {
+      setIndex((prevIndex) => setIndexLogic(prevIndex, array));
     }
 
-    if (albums && albums?.length > 1) {
-      const album = document.getElementsByClassName("artist-album-card")[0];
-      album.classList.add(`${classString}`);
-      timeoutId.current[0] = setTimeout(
-        () => setAlbumOrTrack(direction, "album"),
-        100
-      );
-
-      timeoutId.current[1] = setTimeout(
-        () => album.classList.remove(`${classString}`),
-        400
-      );
+    if (type === "track" && array && array?.length > 1) {
+      setIndex((prevIndex) => setIndexLogic(prevIndex, array));
     }
   };
-
-  const setTopTrack = setAlbumOrTrack;
 
   let album: AlbumDetailsType | null = albums ? albums[albumIndex] : null;
 
@@ -181,11 +174,10 @@ export const useArtistResults = () => {
     albums,
     topTracks,
     setProfile,
+    setAlbumOrTrack,
     emptyProfile,
     album,
-    setAlbum,
     topTrack,
-    setTopTrack,
     artistDetailError,
   };
 };

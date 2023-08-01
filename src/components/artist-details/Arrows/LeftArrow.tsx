@@ -1,41 +1,24 @@
 import { memo, ReactElement } from "react";
-import {
-  SetAlbumType,
-  TrackOrAlbumFuncType as SetTopTrackType,
-} from "../../../hooks/DetailedArtistResultHooks";
+import { motion, MotionProps } from "framer-motion";
 import "../styles/artist-details.css";
 
-export type SetterUnion = SetAlbumType | SetTopTrackType;
-
-interface Props {
-  style: string;
+interface LeftArrowPropsType extends MotionProps {
+  setAlbumOrTrack: () => void;
+  className: string;
   testId: "smallLeft" | "bigLeft";
-  func: SetterUnion;
 }
 
-type LeftArrowType = (props: Props) => ReactElement;
+type LeftArrowType = (props: LeftArrowPropsType) => ReactElement;
 
-export const funcIsSetAlbumType = (func: SetterUnion): func is SetAlbumType => {
-  return func.name === "setAlbum";
-};
-
-const LeftArrow: LeftArrowType = ({ func, style, testId }) => {
-  const returnTrueFunc = (): void => {
-    if (funcIsSetAlbumType(func)) {
-      return func("leftClick", "left");
-    }
-
-    return func("left", "track");
-  };
-
+const LeftArrow: LeftArrowType = ({ setAlbumOrTrack, className, testId }) => {
   return (
-    <div
+    <motion.div
       data-testid={testId}
-      onClick={() => returnTrueFunc()}
-      className={style}
+      onClick={setAlbumOrTrack}
+      className={`d-flex align-items-center ${className}`}
     >
-      <i className="left chevron icon"></i>
-    </div>
+      <i className="left chevron icon" />
+    </motion.div>
   );
 };
 

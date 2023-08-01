@@ -5,7 +5,7 @@ import ArtistDetailsArtist from "./ArtistDetailsArtist";
 import ArtistDetailsAlbums from "./ArtistDetailsAlbums";
 import ArtistDetailsTopTracks from "./ArtistDetailsTopTracks";
 import SearchContext from "../../contexts/searchContext/SearchState";
-import { AnimatePresence, Variants, motion } from "framer-motion";
+import { Variants, motion } from "framer-motion";
 import "./styles/artist-details.css";
 
 const artistDetailMainVariants: Variants = {
@@ -78,11 +78,10 @@ const ArtistDetails = (): ReactElement => {
     artistDetail,
     album,
     albums,
-    setAlbum,
     topTracks,
     topTrack,
     setProfile,
-    setTopTrack,
+    setAlbumOrTrack,
   } = useContext(SearchContext);
 
   const is992 = useMediaQuery(992);
@@ -134,12 +133,12 @@ const ArtistDetails = (): ReactElement => {
             styles={styles}
           >
             <ArtistDetailsAlbums
-              setAlbum={setAlbum}
+              setAlbum={setAlbumOrTrack}
               album={album}
               albums={albums}
             />
             <ArtistDetailsTopTracks
-              setTopTrack={setTopTrack}
+              setTopTrack={setAlbumOrTrack}
               topTracks={topTracks}
               topTrack={topTrack}
             />
