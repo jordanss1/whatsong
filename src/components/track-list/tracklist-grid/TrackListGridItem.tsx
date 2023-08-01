@@ -134,9 +134,7 @@ const TrackListGridItem = ({
       custom={isMobile}
       onMouseEnter={() => handleMouseEvent(true)}
       onMouseLeave={() => handleMouseEvent()}
-      onClick={
-        is850 ? () => cycleBall(ballCycle === "hidden" ? 1 : 0) : () => {}
-      }
+      onClick={() => cycleBall(ballCycle === "hidden" ? 1 : 0)}
       style={{ ...style, gridTemplateColumns }}
       ref={ref}
     >

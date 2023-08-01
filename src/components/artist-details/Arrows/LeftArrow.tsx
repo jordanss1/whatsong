@@ -10,9 +10,17 @@ interface LeftArrowPropsType extends MotionProps {
 
 type LeftArrowType = (props: LeftArrowPropsType) => ReactElement;
 
-const LeftArrow: LeftArrowType = ({ setAlbumOrTrack, className, testId }) => {
+const LeftArrow: LeftArrowType = ({
+  setAlbumOrTrack,
+  className,
+  testId,
+  whileHover,
+  whileTap,
+}) => {
   return (
     <motion.div
+      whileHover={whileHover}
+      whileTap={whileTap}
       data-testid={testId}
       onClick={setAlbumOrTrack}
       className={`d-flex align-items-center ${className}`}

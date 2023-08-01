@@ -10,11 +10,11 @@ import "./styles/artist-list.css";
 const artistsNormalVariants: Variants = {
   initial: {
     background:
-      "radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
+      "radial-gradient(circle at 100% 50%,rgb(0, 5, 133, 1) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133, 1) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
   },
   animate: {
     background:
-      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
+      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 1) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 1) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
     transition: {
       delay: 0.5,
       duration: 0.5,
@@ -24,7 +24,7 @@ const artistsNormalVariants: Variants = {
   },
   exit: {
     background: [
-      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 1) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
+      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 1) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 1) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
       "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)",
       "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
     ],

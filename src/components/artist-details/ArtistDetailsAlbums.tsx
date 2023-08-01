@@ -1,6 +1,6 @@
 import { memo, ReactElement, useEffect } from "react";
-import LeftArrow from "./Arrows/LeftArrow";
-import RightArrow from "./Arrows/RightArrow";
+import LeftArrow from "./arrows/LeftArrow";
+import RightArrow from "./arrows/RightArrow";
 import ArtistDetailsAlbumCard from "./ArtistDetailsAlbumCard";
 import { AlbumDetailsType } from "../../types/types";
 import { SetAlbumOrTrackType } from "../../hooks/DetailedArtistResultHooks";
@@ -93,6 +93,24 @@ const ArtistDetailsAlbums = ({
       className="d-flex flex-row justify-content-center align-items-center justify-content-evenly album-container"
     >
       <LeftArrow
+        whileHover={
+          albums && albums?.length > 1
+            ? {
+                background:
+                  "linear-gradient(to right, rgba(255, 255, 255, 0) 10%,rgba(255, 255, 255, 0.35) 100%)",
+                scale: [null, 1.1],
+              }
+            : {}
+        }
+        whileTap={
+          albums && albums?.length > 1
+            ? {
+                background:
+                  "linear-gradient(to right,rgba(255, 255, 255, 0) 70%,rgba(255, 255, 255, 0.1) 100%)",
+                scale: [null, 0.8],
+              }
+            : {}
+        }
         setAlbumOrTrack={() => handleAlbum("left")}
         testId="bigLeft"
         className={leftClasses}
@@ -105,6 +123,24 @@ const ArtistDetailsAlbums = ({
         </AnimatePresence>
       </motion.div>
       <RightArrow
+        whileHover={
+          albums && albums?.length > 1
+            ? {
+                background:
+                  "linear-gradient(to left,rgba(255, 255, 255, 0) 20%,rgba(255, 255, 255, 0.35)100%)",
+                scale: [null, 1.1],
+              }
+            : {}
+        }
+        whileTap={
+          albums && albums?.length > 1
+            ? {
+                background:
+                  "linear-gradient(to left,rgba(255, 255, 255, 0) 70%,rgba(255, 255, 255, 0.1)100%)",
+                scale: [null, 0.8],
+              }
+            : {}
+        }
         setAlbumOrTrack={() => handleAlbum("right")}
         testId="bigRight"
         className={rightClasses}

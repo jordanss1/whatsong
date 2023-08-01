@@ -10,9 +10,17 @@ interface RightArrowPropsType extends MotionProps {
 
 type RightArrowType = (props: RightArrowPropsType) => ReactElement;
 
-const RightArrow: RightArrowType = ({ setAlbumOrTrack, className, testId }) => {
+const RightArrow: RightArrowType = ({
+  setAlbumOrTrack,
+  className,
+  testId,
+  whileHover,
+  whileTap,
+}) => {
   return (
     <motion.div
+      whileHover={whileHover}
+      whileTap={whileTap}
       data-testid={testId}
       onClick={setAlbumOrTrack}
       className={`d-flex align-items-center ${className}`}

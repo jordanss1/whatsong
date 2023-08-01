@@ -124,14 +124,12 @@ hr {
 .arrows {
   cursor: pointer;
   width: 90px;
-  transition: 0.5s;
   height: 80% !important;
 }
 
 .small-arrows {
   cursor: pointer;
   width: 37px !important;
-  transition: 0.5s;
 }
 
 .small-arrow-div {
@@ -142,13 +140,12 @@ hr {
 .left-arrow {
   background: linear-gradient(
     to right,
-    rgba(255, 255, 255, 0) 10%,
-    rgba(255, 255, 255, 0.315) 100%
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.25) 100%
   );
   width: 30px !important;
   height: 150px !important;
   border-radius: 10px;
-  transition: 0.5s;
 }
 
 .left-small-arrow {
@@ -160,19 +157,17 @@ hr {
   width: 30px !important;
   border-radius: 10px;
   height: 45px;
-  transition: 0.5s;
 }
 
 .right-arrow {
   background: linear-gradient(
     to left,
-    rgba(255, 255, 255, 0) 10%,
-    rgba(255, 255, 255, 0.315) 100%
+    rgba(255, 255, 255, 0) 25%,
+    rgba(255, 255, 255, 0.25) 100%
   );
   border-radius: 10px;
   width: 30px !important;
   height: 150px !important;
-  transition: 0.5s;
 }
 
 .right-small-arrow {
@@ -184,38 +179,34 @@ hr {
   width: 30px !important;
   border-radius: 10px;
   height: 45px;
-  transition: 0.5s;
 }
 
 .left-arrow i {
   position: relative;
-  bottom: 10px;
+  bottom: 8px;
   right: 0;
-  transition: 0.5s;
 }
 
 .left-small-arrow i {
   position: relative;
   left: 0;
-  transition: 0.5s;
 }
 
 .right-arrow i {
   position: relative;
-  bottom: 10px;
+  bottom: 8px;
   left: 0;
-  transition: 0.5s;
 }
 
 .right-small-arrow i {
   position: relative;
   left: 3px;
-  transition: 0.5s;
 }
 
 .arrows i {
   color: rgba(255, 255, 255, 0.605);
   font-size: 20px;
+  margin: 0 !important;
 }
 
 .small-arrows i {
@@ -239,7 +230,6 @@ hr {
   border: 7px solid rgb(26, 26, 26) !important;
   border-radius: 13px;
   width: 45px;
-  transition: 0.5s;
   cursor: default !important;
 }
 
@@ -269,7 +259,6 @@ hr {
   border: 7px solid rgb(26, 26, 26) !important;
   border-radius: 10px;
   width: 45px;
-  transition: 0.5s;
   cursor: default !important;
   justify-content: end;
 }

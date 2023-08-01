@@ -1,6 +1,6 @@
 import { memo } from "react";
-import RightArrow from "./Arrows/RightArrow";
-import LeftArrow from "./Arrows/LeftArrow";
+import RightArrow from "./arrows/RightArrow";
+import LeftArrow from "./arrows/LeftArrow";
 import CircularImage from "../CircularImage";
 import { TopTracksDetailsType } from "../../types/types";
 import { SetAlbumOrTrackType } from "../../hooks/DetailedArtistResultHooks";
