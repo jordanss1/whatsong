@@ -16,9 +16,13 @@ const LeftArrow: LeftArrowType = ({
   testId,
   whileHover,
   whileTap,
+  variants,
+  custom,
 }) => {
   return (
     <motion.div
+      variants={variants}
+      custom={custom}
       whileHover={whileHover}
       whileTap={whileTap}
       data-testid={testId}

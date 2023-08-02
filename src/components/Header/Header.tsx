@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useContext, useCallback } from "react";
 import HeaderLanding from "./HeaderLanding";
 import HeaderSearch from "./HeaderSearch";
 import { AnimatePresence, useCycle } from "framer-motion";
-import SearchContext from "../../contexts/searchContext/SearchState";
+import SearchContext from "../../contexts/SearchState";
 import "./styles/header.css";
 
 type HeaderPropsType = {

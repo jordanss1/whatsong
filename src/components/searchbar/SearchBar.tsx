@@ -5,7 +5,7 @@ import {
   useContext,
   useEffect,
 } from "react";
-import SearchContext from "../../contexts/searchContext/SearchStore";
+import SearchContext from "../../contexts/SearchStore";
 import SearchButton from "./SearchButton";
 import "./styles/searchbar.css";
 

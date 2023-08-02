@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
-import { SearchStore } from "../../contexts/searchContext/SearchStore";
+import { SearchStore } from "../../contexts/SearchStore";
 import { NavigationAndStore } from "../../../test-utils/test-utils";
 import { history } from "../../../test-utils";
 import Landing from "../landing/Landing";

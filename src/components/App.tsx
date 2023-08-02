@@ -6,7 +6,7 @@ import ArtistList from "./artist-list/ArtistList";
 import ArtistDetails from "./artist-details/ArtistDetails";
 import Modal from "./modal/Modal";
 import Landing from "./landing/Landing";
-import SearchContext from "../contexts/searchContext/SearchState";
+import SearchContext from "../contexts/SearchState";
 import TrackList from "./track-list/TrackList";
 import "../styles/all.css";
 

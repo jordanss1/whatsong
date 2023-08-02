@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { fireEvent, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import { SearchStore } from "../../contexts/searchContext/SearchStore";
+import { SearchStore } from "../../contexts/SearchStore";
 import MainSearch from "../main-search/MainSearch";
 import SearchList from "../search-list/SearchList";
 import server from "../../mocks/server";

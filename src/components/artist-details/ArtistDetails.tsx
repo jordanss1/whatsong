@@ -4,7 +4,7 @@ import { gradient1, gradient2 } from "../../styles/inline";
 import ArtistDetailsArtist from "./ArtistDetailsArtist";
 import ArtistDetailsAlbums from "./ArtistDetailsAlbums";
 import ArtistDetailsTopTracks from "./ArtistDetailsTopTracks";
-import SearchContext from "../../contexts/searchContext/SearchState";
+import SearchContext from "../../contexts/SearchState";
 import { Variants, motion } from "framer-motion";
 import "./styles/artist-details.css";
 

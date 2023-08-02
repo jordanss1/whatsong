@@ -1,11 +1,12 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import RightArrow from "./arrows/RightArrow";
 import LeftArrow from "./arrows/LeftArrow";
 import CircularImage from "../CircularImage";
 import { TopTracksDetailsType } from "../../types/types";
 import { SetAlbumOrTrackType } from "../../hooks/DetailedArtistResultHooks";
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, useCycle, AnimatePresence } from "framer-motion";
 import "./styles/artist-details.css";
+import ArtistDetailsTopTrackItem from "./ArtistDetailsTopTrackItem";
 
 type ArtistDetailsTopTracksPropTypes = {
   topTracks: TopTracksDetailsType[] | null;
@@ -37,13 +38,49 @@ const topTracksVariants: Variants = {
   },
 };
 
+const rightArrowVariants: Variants = {
+  hover: (topTracks) =>
+    topTracks && topTracks?.length > 1
+      ? {
+          background:
+            "linear-gradient(to right,rgba(255, 255, 255, 0) 25%,rgba(255, 255, 255, 0.22) 100%)",
+          scale: [null, 1.1],
+        }
+      : {},
+  tap: (topTracks) =>
+    topTracks && topTracks?.length > 1
+      ? {
+          background:
+            "linear-gradient(to right,rgba(255, 255, 255, 0) 60%,rgba(255, 255, 255, 0.15) 100%)",
+          scale: [null, 0.8],
+        }
+      : {},
+};
+
+const leftArrowVariants: Variants = {
+  hover: (topTracks) =>
+    topTracks && topTracks?.length > 1
+      ? {
+          background:
+            "linear-gradient(to right,rgba(255, 255, 255, 0.15) 20%,rgba(255, 255, 255, 0) 70%)",
+          scale: [null, 1.1],
+        }
+      : {},
+  tap: (topTracks) =>
+    topTracks && topTracks?.length > 1
+      ? {
+          background:
+            "linear-gradient(to right,rgba(255, 255, 255, 0.07) 20%,rgba(255, 255, 255, 0) 60%)",
+          scale: [null, 0.8],
+        }
+      : {},
+};
+
 const ArtistDetailsTopTracks = ({
   topTracks,
   topTrack,
   setTopTrack,
 }: ArtistDetailsTopTracksPropTypes) => {
-  const image = topTrack?.album.images[0]?.url;
-
   const leftClasses = `small-arrows pb-1 ${
     topTracks && topTracks.length > 1
       ? "left-small-arrow w-100"
@@ -56,18 +93,41 @@ const ArtistDetailsTopTracks = ({
       : "right-small-arrow-disabled"
   }`;
 
-  const renderTopTrack = (
-    <div className="d-flex gap-1 align-items-center justify-content-center track-content-container">
-      {topTrack ? (
-        <>
-          <CircularImage image={image} />
-          <div className="content top-track-content">{topTrack.name}</div>
-        </>
-      ) : (
-        <h3 className="fs-5">No tracks</h3>
-      )}
-    </div>
+  const [direction, cycleDirection] = useCycle<"left" | "right">(
+    "left",
+    "right"
   );
+
+  const [changed, cycleChanged] = useCycle(false, true);
+
+  useEffect(() => {
+    let timer: string | number | NodeJS.Timeout | undefined;
+
+    if (timer) clearTimeout(timer);
+
+    if (changed) {
+      timer = setTimeout(() => {
+        cycleChanged(0);
+      }, 250);
+    }
+
+    return () => clearTimeout(timer);
+  }, [changed]);
+
+  const handleTrack = (direction: "left" | "right") => {
+    let timer: NodeJS.Timeout;
+
+    if (topTracks && topTracks?.length > 1) {
+      cycleDirection(direction === "left" ? 0 : 1);
+
+      timer = setTimeout(() => {
+        cycleChanged(1);
+        setTopTrack(direction, "track");
+      }, 50);
+    }
+
+    return () => clearTimeout(timer);
+  };
 
   return (
     <motion.section
@@ -77,18 +137,39 @@ const ArtistDetailsTopTracks = ({
     >
       <h2 className="fs-3">Top Tracks</h2>
       <hr className="w-100 mt-1" />
-      <div className="item w-100 d-flex top-track-item justify-content-center align-items-center p-1">
+      <div
+        className={`item w-100 d-flex top-track-item justify-content-center align-items-center p-1 ${
+          !topTrack && "py-2"
+        }`}
+      >
         <div className="d-flex justify-content-start small-arrow-div">
           <LeftArrow
-            setAlbumOrTrack={() => setTopTrack("left", "track")}
+            variants={leftArrowVariants}
+            custom={topTracks}
+            whileHover="hover"
+            whileTap="tap"
+            setAlbumOrTrack={() => handleTrack("left")}
             testId="smallLeft"
             className={leftClasses}
           />
         </div>
-        {renderTopTrack}
+        <motion.div style={{ minWidth: "227px", height: "50px" }}>
+          <AnimatePresence mode="wait">
+            {!changed && (
+              <ArtistDetailsTopTrackItem
+                direction={direction}
+                topTrack={topTrack}
+              />
+            )}
+          </AnimatePresence>
+        </motion.div>
         <div className="d-flex justify-content-end small-arrow-div">
           <RightArrow
-            setAlbumOrTrack={() => setTopTrack("right", "track")}
+            variants={rightArrowVariants}
+            custom={topTracks}
+            whileHover="hover"
+            whileTap="tap"
+            setAlbumOrTrack={() => handleTrack("right")}
             testId="smallRight"
             className={rightClasses}
           />

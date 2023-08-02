@@ -19,7 +19,7 @@ import Header from "../header/Header";
 import TrackListSelectedContainer from "./tracklist-selected/TrackListSelectedContainer";
 import TrackListGridSearchBar from "./tracklist-grid/TrackListGridSearchBar";
 import TrackListGrid from "./tracklist-grid/TrackListGrid";
-import SearchContext from "../../contexts/searchContext/SearchState";
+import SearchContext from "../../contexts/SearchState";
 import { TopTracksDetailsType } from "../../types/types";
 import { useMediaQuery, useScreenSize } from "../../hooks/MediaQueryHook";
 import "./styles/track-list.css";

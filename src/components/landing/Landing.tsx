@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext, ReactElement } from "react";
-import SearchContext from "../../contexts/searchContext/SearchStore";
+import SearchContext from "../../contexts/SearchStore";
 import {
   Variants,
   motion,

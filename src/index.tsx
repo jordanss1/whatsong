@@ -1,8 +1,7 @@
 import ReactDOM from "react-dom/client";
 import App from "./components/App";
 import { BrowserRouter as Router } from "react-router-dom";
-import { SearchStore } from "./contexts/searchContext/SearchStore";
-import FramerStore from "./contexts/framerContext/FramerStore";
+import { SearchStore } from "./contexts/SearchStore";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLDivElement
@@ -11,9 +10,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Router>
     <SearchStore>
-      <FramerStore>
-        <App />
-      </FramerStore>
+      <App />
     </SearchStore>
   </Router>
 );

@@ -5,7 +5,7 @@ import {
   useState,
   FormEvent,
 } from "react";
-import SearchContext from "../../contexts/searchContext/SearchStore";
+import SearchContext from "../../contexts/SearchStore";
 import {
   AnimatePresence,
   Variants,
@@ -14,7 +14,7 @@ import {
   usePresence,
   useAnimate,
 } from "framer-motion";
-import { UseSearchStateContext } from "../../contexts/searchContext/SearchState";
+import { UseSearchStateContext } from "../../contexts/SearchState";
 import MainSearchCategory from "./MainSearchCategory";
 import MainSearchInput from "./MainSearchInput";
 import "./styles/main-search.css";

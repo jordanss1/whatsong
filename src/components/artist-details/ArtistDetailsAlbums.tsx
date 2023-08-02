@@ -37,16 +37,54 @@ const albumsVariants: Variants = {
   },
 };
 
+const rightArrowVariants: Variants = {
+  hover: (albums) =>
+    albums && albums?.length > 1
+      ? {
+          background:
+            "linear-gradient(to right,rgba(255, 255, 255, 0) 20%,rgba(255, 255, 255, 0.35)100%)",
+          scale: [null, 1.1],
+        }
+      : {},
+  tap: (albums) =>
+    albums && albums?.length > 1
+      ? {
+          background:
+            "linear-gradient(to right,rgba(255, 255, 255, 0) 70%,rgba(255, 255, 255, 0.1)100%)",
+          scale: [null, 0.8],
+        }
+      : {},
+};
+
+const leftArrowVariants: Variants = {
+  hover: (albums) =>
+    albums && albums?.length > 1
+      ? {
+          background:
+            "linear-gradient(to left, rgba(255, 255, 255, 0) 10%,rgba(255, 255, 255, 0.35) 100%)",
+          scale: [null, 1.1],
+        }
+      : {},
+  tap: (albums) =>
+    albums && albums?.length > 1
+      ? {
+          background:
+            "linear-gradient(to left,rgba(255, 255, 255, 0) 70%,rgba(255, 255, 255, 0.1) 100%)",
+          scale: [null, 0.8],
+        }
+      : {},
+};
+
 const ArtistDetailsAlbums = ({
   setAlbum,
   album,
   albums,
 }: ArtistDetailsAlbumsPropsType): ReactElement => {
-  const leftClasses = `justify-content-end arrows ${
+  const leftClasses = `justify-content-start arrows ${
     album && albums ? "left-arrow" : "left-arrow-disabled"
   }`;
 
-  const rightClasses = `arrows ${
+  const rightClasses = `justify-content-end arrows ${
     album && albums ? "right-arrow" : "right-arrow-disabled"
   }`;
 
@@ -93,24 +131,10 @@ const ArtistDetailsAlbums = ({
       className="d-flex flex-row justify-content-center align-items-center justify-content-evenly album-container"
     >
       <LeftArrow
-        whileHover={
-          albums && albums?.length > 1
-            ? {
-                background:
-                  "linear-gradient(to right, rgba(255, 255, 255, 0) 10%,rgba(255, 255, 255, 0.35) 100%)",
-                scale: [null, 1.1],
-              }
-            : {}
-        }
-        whileTap={
-          albums && albums?.length > 1
-            ? {
-                background:
-                  "linear-gradient(to right,rgba(255, 255, 255, 0) 70%,rgba(255, 255, 255, 0.1) 100%)",
-                scale: [null, 0.8],
-              }
-            : {}
-        }
+        variants={leftArrowVariants}
+        custom={albums}
+        whileHover="hover"
+        whileTap="tap"
         setAlbumOrTrack={() => handleAlbum("left")}
         testId="bigLeft"
         className={leftClasses}
@@ -123,24 +147,10 @@ const ArtistDetailsAlbums = ({
         </AnimatePresence>
       </motion.div>
       <RightArrow
-        whileHover={
-          albums && albums?.length > 1
-            ? {
-                background:
-                  "linear-gradient(to left,rgba(255, 255, 255, 0) 20%,rgba(255, 255, 255, 0.35)100%)",
-                scale: [null, 1.1],
-              }
-            : {}
-        }
-        whileTap={
-          albums && albums?.length > 1
-            ? {
-                background:
-                  "linear-gradient(to left,rgba(255, 255, 255, 0) 70%,rgba(255, 255, 255, 0.1)100%)",
-                scale: [null, 0.8],
-              }
-            : {}
-        }
+        variants={rightArrowVariants}
+        custom={albums}
+        whileHover="hover"
+        whileTap="tap"
         setAlbumOrTrack={() => handleAlbum("right")}
         testId="bigRight"
         className={rightClasses}

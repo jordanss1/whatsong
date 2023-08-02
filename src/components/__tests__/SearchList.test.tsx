@@ -9,7 +9,7 @@ import {
 import MainSearch from "../main-search/MainSearch";
 import SearchList from "../search-list/SearchList";
 import SelectedItem from "../track-list/TrackListSelectedTrack";
-import { SearchStore } from "../../contexts/searchContext/SearchStore";
+import { SearchStore } from "../../contexts/SearchStore";
 import { history } from "../../../test-utils";
 import {
   artistAndTrackHandlers,

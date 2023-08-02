@@ -3,13 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   spotifyArtistsOrSongsSearch,
   spotifyArtistDetailsSearch,
-} from "../../api";
+} from "../api";
 import {
   useArtistResults,
   artistInitState,
-} from "../../hooks/DetailedArtistResultHooks";
-import { TopTracksDetailsType } from "../../types/types";
-import { useArtistsOrTracks } from "../../hooks/ArtistsAndTracksHook";
+} from "../hooks/DetailedArtistResultHooks";
+import { TopTracksDetailsType } from "../types/types";
+import { useArtistsOrTracks } from "../hooks/ArtistsAndTracksHook";
 import { CancelTokenSource } from "axios";
 
 export const SearchState = () => {

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import "./styles/searchbar.css";
 import Caret from "../Caret";
 import Magnifier from "../Magnifier";
-import SearchContext from "../../contexts/searchContext/SearchState";
+import SearchContext from "../../contexts/SearchState";
 
 type SearchButtonPropsTypes = {
   searchTerm?: string;

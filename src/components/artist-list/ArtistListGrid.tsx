@@ -9,7 +9,7 @@ import ArtistListGridCard from "./ArtistListGridCard";
 import Popout from "../popout/Popout";
 import { AnimatePresence, Variants, motion } from "framer-motion";
 import { ArtistsType } from "../../types/types";
-import SearchContext from "../../contexts/searchContext/SearchState";
+import SearchContext from "../../contexts/SearchState";
 import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import "./styles/artist-list.css";
 

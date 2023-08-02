@@ -10,7 +10,7 @@ type ArtistDetailsAlbumCardPropsType = {
   direction: "left" | "right";
 };
 
-const albumVariants: Variants = {
+export const trackAndAlbumVariants: Variants = {
   initial: (direction) => ({
     scale: 0.9,
     opacity: 0,
@@ -47,7 +47,7 @@ const ArtistDetailsAlbumCard = ({
     <>
       {album ? (
         <motion.div
-          variants={albumVariants}
+          variants={trackAndAlbumVariants}
           custom={direction}
           initial="initial"
           animate="animate"
@@ -59,7 +59,7 @@ const ArtistDetailsAlbumCard = ({
         </motion.div>
       ) : (
         <div className="h-100 d-flex align-items-center justify-content-center">
-          <h3 className="align-self-center pb-5">No albums</h3>
+          <h3 className="no-albums">No albums</h3>
         </div>
       )}
     </>

@@ -5,7 +5,7 @@ import { TopTracksDetailsType } from "../../../types/types";
 import { HandleDragType } from "../TrackList";
 import Popout from "../../popout/Popout";
 import { useMediaQuery } from "../../../hooks/MediaQueryHook";
-import SearchContext from "../../../contexts/searchContext/SearchState";
+import SearchContext from "../../../contexts/SearchState";
 import "../styles/track-list.css";
 
 type TrackListGridSelectedProps = {

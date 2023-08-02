@@ -1,7 +1,7 @@
 import { ReactElement, useContext } from "react";
 import ModalLoader from "./ModalLoader";
 import ModalError from "./ModalError";
-import SearchContext from "../../contexts/searchContext/SearchState";
+import SearchContext from "../../contexts/SearchState";
 import "./styles/modal.css";
 import { AnimatePresence, Variants, motion } from "framer-motion";
 

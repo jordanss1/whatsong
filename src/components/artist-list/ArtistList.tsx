@@ -3,7 +3,7 @@ import { motion, Variants, useScroll, useCycle } from "framer-motion";
 import Header from "../header/Header";
 import ArtistListGrid from "./ArtistListGrid";
 import ArtistListSearchBar from "./ArtistListSearchBar";
-import SearchContext from "../../contexts/searchContext/SearchState";
+import SearchContext from "../../contexts/SearchState";
 import { gradient1 } from "../../styles/inline";
 import "./styles/artist-list.css";
 
