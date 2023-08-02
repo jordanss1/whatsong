@@ -107,9 +107,10 @@ const ArtistDetailsArtist = ({
           <h1 className="fs-1">{name}</h1>
         </>
       ) : (
-        <div className="d-flex align-items-baseline">
-          <h1 className="fs-1">{name}</h1>
-          <Spotify url={external_urls.spotify} size={2} className="ps-3" />
+        <div className="d-flex gap-1 align-items-center justify-content-center">
+          <h1 className="fs-1 pe-2 no-followers-name">{name}</h1>
+          <Seperator sharp={false} width="2px" height="30px" />
+          <Spotify url={external_urls.spotify} size={1} className="ps-2" />
         </div>
       )}
     </>
@@ -118,13 +119,10 @@ const ArtistDetailsArtist = ({
   const renderFollowers = (
     <div className="d-flex w-100 justify-content-center">
       <Spotify className="pe-5 me-3" url={external_urls.spotify} />
-      <Seperator
-        style={{ backgroundColor: "rgb(255,255,255,.5)", borderRadius: "10px" }}
-        width="1px"
-        height="100%"
-      />
+      <Seperator sharp={false} width="1px" height="100%" />
       <h2 className="fs-5 pt-1 ps-4">
-        {followers.total?.toLocaleString("US")} followers
+        {followers.total?.toLocaleString("US")}
+        {followers.total === 1 ? " follower" : " followers"}
       </h2>
     </div>
   );
@@ -158,7 +156,7 @@ const ArtistDetailsArtist = ({
           </div>
           {renderArtistHeader}
           <hr className="w-50 mt-1" />
-          {followers.total && renderFollowers}
+          {followers.total !== 0 && renderFollowers}
         </motion.div>
         {children}
       </motion.section>

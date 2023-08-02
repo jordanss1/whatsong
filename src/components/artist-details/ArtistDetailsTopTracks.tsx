@@ -153,7 +153,10 @@ const ArtistDetailsTopTracks = ({
             className={leftClasses}
           />
         </div>
-        <motion.div style={{ minWidth: "227px", height: "50px" }}>
+        <motion.div
+          className="d-flex align-items-center"
+          style={{ minWidth: "227px", height: "50px" }}
+        >
           <AnimatePresence mode="wait">
             {!changed && (
               <ArtistDetailsTopTrackItem

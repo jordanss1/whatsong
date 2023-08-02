@@ -4,10 +4,14 @@ import { MotionProps, motion } from "framer-motion";
 interface SeperatorPropsType extends MotionProps {
   width: string;
   height: string;
+  color?: string;
+  sharp?: boolean;
   className?: string;
 }
 
 const Seperator = ({
+  color,
+  sharp,
   width,
   height,
   variants,
@@ -18,10 +22,13 @@ const Seperator = ({
   custom,
   className,
 }: SeperatorPropsType): ReactElement => {
+  const backgroundColor = color ?? "rgb(255,255,255)";
+  const borderRadius = sharp ? "0" : "10px";
+
   return (
     <div>
       <motion.div
-        style={{ ...style, width, height }}
+        style={{ ...style, width, height, backgroundColor, borderRadius }}
         variants={variants}
         custom={custom}
         animate={animate}

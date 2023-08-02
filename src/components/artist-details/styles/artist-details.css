@@ -121,6 +121,13 @@ hr {
   user-select: none;
 }
 
+.no-followers-name {
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  max-width: 190px;
+}
+
 .no-albums {
   font-family: "Varela Round", sans-serif !important;
   color: white;

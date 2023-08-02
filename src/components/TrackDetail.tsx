@@ -110,11 +110,7 @@ const TrackDetail = ({
           >
             {name}
           </motion.span>
-          <Seperator
-            style={{ backgroundColor: "white", borderRadius: "50%" }}
-            width="5px"
-            height="25px"
-          />
+          <Seperator sharp={false} width="2px" height="25px" />
           <motion.span style={{ minWidth: "100px" }} className="ps-3">
             {songLength}
           </motion.span>
