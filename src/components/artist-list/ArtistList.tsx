@@ -4,7 +4,6 @@ import Header from "../header/Header";
 import ArtistListGrid from "./ArtistListGrid";
 import ArtistListSearchBar from "./ArtistListSearchBar";
 import SearchContext from "../../contexts/SearchState";
-import { gradient1 } from "../../styles/inline";
 import "./styles/artist-list.css";
 
 const artistsNormalVariants: Variants = {
@@ -96,8 +95,6 @@ const ArtistList = (): ReactElement => {
       setArtistsOrTracks(JSON.parse(artists));
       return;
     }
-
-    navigate("/search");
   }, []);
 
   useEffect(() => {

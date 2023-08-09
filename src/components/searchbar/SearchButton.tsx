@@ -1,9 +1,9 @@
 import { ReactElement, useContext, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import "./styles/searchbar.css";
 import Caret from "../Caret";
 import Magnifier from "../Magnifier";
 import SearchContext from "../../contexts/SearchState";
+import "./styles/searchbar.css";
 
 type SearchButtonPropsTypes = {
   searchTerm?: string;
@@ -41,7 +41,7 @@ const SearchButton = ({
 
   return (
     <motion.button
-      role="searchList-button"
+      data-testid="search-button"
       style={{ x }}
       disabled={searchTerm ? !searchTerm : false}
       type="submit"

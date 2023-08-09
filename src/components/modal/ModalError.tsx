@@ -44,7 +44,9 @@ const ModalError = ({
         className="error-message w-100 d-flex flex-column"
       >
         <h3 className="fw-bold pb-2">{heading}</h3>
-        <span className="pb-3">{message}</span>
+        <span data-testid="error-message" className="pb-3">
+          {message}
+        </span>
         <motion.button
           onClick={() => handleClick()}
           whileHover={{ scale: 1.1, backgroundColor: "rgba(0, 0, 0, 0.5)" }}

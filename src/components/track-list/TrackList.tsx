@@ -126,14 +126,6 @@ const TrackList = () => {
   useEffect(() => {
     let tracks = sessionStorage.getItem("tracks");
 
-    if (!tracks) {
-      navigate("/search");
-    }
-  }, []);
-
-  useEffect(() => {
-    let tracks = sessionStorage.getItem("tracks");
-
     if (tracks && typeof tracks === "string" && !noResults) {
       setArtistsOrTracks(undefined, JSON.parse(tracks));
     }

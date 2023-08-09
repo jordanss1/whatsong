@@ -13,6 +13,7 @@ beforeAll(() => {
 // so they don't affect other tests.
 
 afterEach(() => {
+  window.localStorage.clear();
   window.sessionStorage.clear();
   server.resetHandlers();
   cleanup();

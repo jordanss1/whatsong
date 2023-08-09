@@ -13,39 +13,32 @@ const WrapperComponent = ({ children }: { children: ReactNode }) => {
   );
 };
 
-test("On hover the div is visible/class added and the class removed from Nav", async () => {
+test("On hover the 'powered by' div is visible", async () => {
   const user = userEvent.setup();
 
   const { getByRole, container } = render(<Landing />, {
     wrapper: WrapperComponent,
   });
 
-  const button = getByRole("button", { name: "Get started!" });
-  const div = container.getElementsByClassName("spotifyDiv")[0];
-  const nav = getByRole("banner");
+  const button = getByRole("button", { name: "Start searching" });
+  const div = container.getElementsByClassName("spotify-div")[0];
 
-  expect(div).not.toHaveClass("spotifyLoad");
+  expect(div).not.toBeVisible();
 
   await user.hover(button);
 
-  expect(div).toHaveClass("spotifyLoad");
-  expect(nav).not.toHaveClass("navClassAnimate");
+  expect(div).toBeVisible();
 });
 
 test("On click of button, the Search component is mounted", async () => {
   const user = userEvent.setup();
 
   const { getByRole } = render(<Landing />, { wrapper: WrapperComponent });
-  const button = getByRole("button", { name: "Get started!" });
+  const button = getByRole("button", { name: "Start searching" });
 
   expect(history.location.pathname).toBe("/");
 
   user.click(button);
 
-  await waitFor(
-    () => {
-      expect(history.location.pathname).toBe("/search");
-    },
-    { timeout: 1500 }
-  );
+  await waitFor(() => expect(history.location.pathname).toBe("/search"));
 });

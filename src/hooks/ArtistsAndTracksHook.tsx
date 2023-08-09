@@ -81,7 +81,9 @@ export const useArtistsOrTracks = () => {
 
         case REDUCER_ACTION_TYPES.RESET_MODAL_OR_SPOTIFY: {
           if (!action.payload) {
-            throw new Error("ADD_ARTISTS_TRACKS action must have a payload");
+            throw new Error(
+              "RESET_MODAL_OR_SPOTIFY action must have a payload"
+            );
           }
 
           const reset = action.payload?.reset;

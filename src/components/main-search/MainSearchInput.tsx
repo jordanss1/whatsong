@@ -60,6 +60,7 @@ const MainSearchInput = ({
             className="flex-grow-1"
             placeholder="Search"
             type="text"
+            data-testid="main-search-input"
           />
           <SearchButton searchTerm={searchTerm} />
         </motion.div>

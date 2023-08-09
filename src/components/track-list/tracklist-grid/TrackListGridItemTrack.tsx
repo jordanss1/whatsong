@@ -83,7 +83,7 @@ const TrackListGridItemTrack = ({
       exit="exit"
       custom={index}
       key={index}
-      role="song-item"
+      data-testid="song-item"
       className="track-item-container w-100"
     >
       <motion.div

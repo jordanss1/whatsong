@@ -98,9 +98,10 @@ const MainSearchHeader = ({
             setConfirmRedo(true);
             cycleIcon(1);
           }}
+          data-testid="redo-button"
           className="redo d-flex"
         >
-          <motion.div variants={textVariant} className="pe-2 redo-category">
+          <motion.div data-testid="redo-category" variants={textVariant} className="pe-2 redo-category">
             {category}
           </motion.div>
           <button className="redo-button">

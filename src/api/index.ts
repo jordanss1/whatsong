@@ -135,7 +135,6 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
     const searchType = `${typeOfSearch}s`;
 
     if (!data) {
-      clearTimeout(timer);
       return;
     }
 
@@ -175,7 +174,6 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
 
       if (!axios.isCancel(err) && err instanceof Error) {
         console.error("error", err);
-        console.log("done");
 
         const error = new Error(
           `Issue during search: ${err.message} please search again`
