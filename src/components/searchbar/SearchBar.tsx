@@ -49,6 +49,7 @@ const SearchBar = (): ReactElement => {
           className="flex-grow-1"
           placeholder={`${artists ? "Search artists" : "Search songs"}`}
           type="text"
+          data-testid="small-search-bar"
         />
         <SearchButton searchTerm={searchTerm} />
       </div>

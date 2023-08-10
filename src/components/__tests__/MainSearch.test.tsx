@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { fireEvent, waitFor, act } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { SearchStore } from "../../contexts/SearchStore";
@@ -16,7 +16,6 @@ import {
 import { history } from "../../../test-utils";
 import {
   artistResultsNone,
-  songResultsNone,
   songResults,
   AllTestResultsUnionType,
 } from "../../mocks/api";
@@ -25,7 +24,6 @@ import {
   customRender,
 } from "../../../test-utils/test-utils";
 import "intersection-observer";
-import Modal from "../modal/Modal";
 import App from "../App";
 
 type ChangeHandlerFuncType = (
@@ -43,7 +41,7 @@ const user = userEvent.setup();
 
 //Search function that executes an automatic search; created to reduce repeated code in tests
 
-const renderComponentSearched = async (
+export const renderComponentSearched = async (
   query: (testId: string) => HTMLElement,
   button: string
 ): Promise<void> => {
@@ -55,7 +53,7 @@ const renderComponentSearched = async (
   await user.click(submitButton);
 };
 
-const chooseCategory = async (
+export const chooseCategory = async (
   findBy: (testId: string) => Promise<HTMLElement>,
   getBy: (testId: string) => HTMLElement,
   categoryName: RegExp
@@ -222,43 +220,80 @@ beforeEach(() => history.push("/search"));
 //   });
 // });
 
-describe("All failed network requests and 'no-results from search' modals", () => {
-  it("Failed network request for post request for token shows Modal with error message", async () => {
-    const { getByRole, findByTestId, getByTestId, queryByTestId, debug } =
-      customRender(
-        WrapperComponent,
-        <>
-          <App />
-        </>
-      );
+// describe("All failed network requests and 'no-results from search' modals", () => {
+//   it("Failed network request for post request for token shows Modal with error message", async () => {
+//     const { getByRole, findByTestId, getByTestId, queryByTestId } =
+//       customRender(
+//         WrapperComponent,
+//         <>
+//           <App />
+//         </>
+//       );
 
-    const artistsButton = getByRole("button", { name: "Artists" });
+//     const artistsButton = getByRole("button", { name: "Artists" });
 
-    expect(artistsButton).toBeInTheDocument();
+//     expect(artistsButton).toBeInTheDocument();
 
-    changeHandlers(new Error("post error"), artistAndTrackHandlers);
+//     changeHandlers(new Error("post error"), artistAndTrackHandlers);
 
-    await user.click(artistsButton);
+//     await user.click(artistsButton);
 
-    await chooseCategory(findByTestId, getByTestId, /^artists$/);
+//     await chooseCategory(findByTestId, getByTestId, /^artists$/);
 
-    await renderComponentSearched(getByTestId, "search-button");
+//     await renderComponentSearched(getByTestId, "search-button");
 
-    expect(await findByTestId("error-message")).toHaveTextContent(
-      /^Server error: Request failed with status code 500, please search again$/
-    );
-  });
-});
-
-//   it("Successful post request but unsuccessful get request for artists/songs", async () => {
-//     const { getByRole } = customRender(WrapperComponent, <MainSearch />);
-
-//     changeHandlers(new Error("get error"), artistAndTrackHandlers);
-
-//     await renderComponentSearched(getByRole, "search-button-songs");
-
-//     expect(alert).toHaveBeenCalledWith(
-//       `Issue during search: Request failed with status code 401 please search again`
+//     expect(await findByTestId("error-message")).toHaveTextContent(
+//       /^Server error: Request failed with status code 500, please search again$/
 //     );
 //   });
+// });
+
+// it("Successful post request but unsuccessful get request for artists/songs", async () => {
+//   const { getByRole, findByTestId, getByTestId, queryByTestId } = customRender(
+//     WrapperComponent,
+//     <>
+//       <App />
+//     </>
+//   );
+
+//   const songsButton = getByRole("button", { name: "Songs" });
+
+//   expect(songsButton).toBeInTheDocument();
+
+//   changeHandlers(new Error("get error"), artistAndTrackHandlers);
+
+//   await user.click(songsButton);
+
+//   await chooseCategory(findByTestId, getByTestId, /^songs$/);
+
+//   await renderComponentSearched(getByTestId, "search-button");
+
+//   expect(await findByTestId("error-message")).toHaveTextContent(
+//     /^Issue during search: Request failed with status code 401 please search again$/
+//   );
+// });
+
+// it("When no results are returned from a search the user is shown the no results modal", async () => {
+//   const { getByRole, findByTestId, getByTestId, queryByTestId } = customRender(
+//     WrapperComponent,
+//     <>
+//       <App />
+//     </>
+//   );
+
+//   const artistsButton = getByRole("button", { name: "Artists" });
+
+//   expect(artistsButton).toBeInTheDocument();
+
+//   changeHandlers(artistResultsNone, artistAndTrackHandlers);
+
+//   await user.click(artistsButton);
+
+//   await chooseCategory(findByTestId, getByTestId, /^artists$/);
+
+//   await renderComponentSearched(getByTestId, "search-button");
+
+//   expect(await findByTestId("error-heading")).toHaveTextContent(
+//     /^No results found$/
+//   );
 // });

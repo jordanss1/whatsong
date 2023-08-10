@@ -71,14 +71,8 @@ const artistDetailVariants: Variants = {
 };
 
 const ArtistList = (): ReactElement => {
-  const {
-    artists,
-    setArtistsOrTracks,
-    searched,
-    navigate,
-    setProfile,
-    artistDetail,
-  } = useContext(SearchContext);
+  const { artists, setArtistsOrTracks, searched, setProfile, artistDetail } =
+    useContext(SearchContext);
 
   const { scrollY } = useScroll();
 
@@ -93,7 +87,6 @@ const ArtistList = (): ReactElement => {
     if (artists && typeof artists === "string") {
       setProfile(null, null, null);
       setArtistsOrTracks(JSON.parse(artists));
-      return;
     }
   }, []);
 

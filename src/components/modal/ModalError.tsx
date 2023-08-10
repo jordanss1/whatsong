@@ -43,7 +43,9 @@ const ModalError = ({
         variants={errorVariants}
         className="error-message w-100 d-flex flex-column"
       >
-        <h3 className="fw-bold pb-2">{heading}</h3>
+        <h3 data-testid="error-heading" className="fw-bold pb-2">
+          {heading}
+        </h3>
         <span data-testid="error-message" className="pb-3">
           {message}
         </span>

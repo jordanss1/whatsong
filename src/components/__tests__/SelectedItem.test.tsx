@@ -8,7 +8,7 @@ import {
 } from "../../../test-utils/test-utils";
 import MainSearch from "../main-search/MainSearch";
 import SearchList from "../search-list/SearchList";
-import { searchComponent } from "./SearchList.test";
+import { searchComponent } from "./ArtistList.test";
 import { SearchStore } from "../../contexts/SearchStore";
 import { history } from "../../../test-utils";
 import { changeHandlers } from "./MainSearch.test";
