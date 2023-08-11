@@ -26,6 +26,7 @@ const HeaderSearchLogo = (): ReactElement => {
         style={{ scale: is468 ? 0.8 : 0.9, maxWidth: is468 ? 240 : 260 }}
         whileHover={{ scale: is468 ? 0.85 : 0.95 }}
         className="d-flex listNavbar"
+        data-testid="header-search"
         layout
       >
         <motion.div

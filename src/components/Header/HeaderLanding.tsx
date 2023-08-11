@@ -71,6 +71,7 @@ const HeaderLanding = (): ReactElement => {
       exit="exit"
       animate="animate"
       className="header-landing d-flex align-items-center justify-content-center px-4"
+      data-testid="header-landing"
       layout
     >
       <motion.div

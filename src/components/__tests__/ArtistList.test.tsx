@@ -1,7 +1,7 @@
 import { ReactNode, ReactElement } from "react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import { act, waitFor } from "@testing-library/react";
+import { act, waitFor, fireEvent } from "@testing-library/react";
 import {
   NavigationAndStore,
   customRender,
@@ -48,8 +48,8 @@ export const searchSmallSearchBar: SearchComponentFuncType = async (
   const input = getByTestId("small-search-bar");
   const button = getByTestId("search-button");
 
-  await act(async () => await user.type(input, "hi"));
-  await act(async () => await user.click(button));
+  await user.type(input, "hi");
+  await user.click(button);
 };
 
 describe("The ArtistList component on the /artists path", () => {
@@ -60,138 +60,132 @@ describe("The ArtistList component on the /artists path", () => {
     )
   );
 
-  // it("The input in ArtistList makes a search and returns artists", async () => {
-  //   history.push("/artists");
-
-  //   const { findAllByTitle, getByTestId } = customRender(
-  //     WrapperComponent,
-  //     <>
-  //       <ArtistList />
-  //     </>
-  //   );
-
-  //   expect(await findAllByTitle("View artist profile")).toHaveLength(10);
-
-  //   changeHandlers(artistResultsFull, artistAndTrackHandlers);
-
-  //   await searchSmallSearchBar(getByTestId);
-
-  //   await waitFor(
-  //     async () =>
-  //       expect(await findAllByTitle("View artist profile")).toHaveLength(37),
-  //     { timeout: 100 }
-  //   );
-  // });
-
-  it("The header is the shortened version for the ArtistList page", async () => {
+  it("The input in ArtistList makes a search and returns artists", async () => {
     history.push("/artists");
 
-    const { getByRole, findAllByTitle, getByPlaceholderText } = customRender(
+    const { findAllByTitle, getByTestId } = customRender(
       WrapperComponent,
-      <>
-        <App />
-      </>
+      <ArtistList />
     );
 
     expect(await findAllByTitle("View artist profile")).toHaveLength(10);
+
+    changeHandlers(artistResultsFull, artistAndTrackHandlers);
+
+    await searchSmallSearchBar(getByTestId);
+
+    await waitFor(
+      async () =>
+        expect(await findAllByTitle("View artist profile")).toHaveLength(37),
+      { timeout: 1000 }
+    );
   });
 
-  // it("The search input is added into the header when the user scrolls down the page", async () => {});
+  it("The header is the correct version for the ArtistList/search pages", async () => {
+    history.push("/artists");
 
-  // describe("Route and history testing on /artist path", () => {
-  //   it("Clicking the Header component logo should route to /search path", async () => {
-  //     history.push("/artists");
+    const { getByTestId, queryByTestId } = customRender(
+      WrapperComponent,
+      <App />
+    );
 
-  //     const { getByRole } = customRender(
-  //       WrapperComponent,
-  //       <>
-  //         <MainSearch />
-  //         <ArtistList />
-  //       </>
-  //     );
+    expect(queryByTestId("header-landing")).not.toBeInTheDocument();
 
-  //     expect(history.location.pathname).toBe("/artists");
+    expect(getByTestId("header-search")).toBeInTheDocument();
+  });
 
-  //     await user.click(getByRole("link"));
+  describe("Route and history testing on /artist path", () => {
+    it("Clicking the Header component logo should route to /search path", async () => {
+      history.push("/artists");
+      const { getByTestId, queryByTestId } = customRender(
+        WrapperComponent,
+        <App />
+      );
+      const header = getByTestId("header-search");
 
-  //     expect(history.location.pathname).toBe("/search");
-  //   });
+      expect(header).toBeInTheDocument();
 
-  //   it("Clicking on the artist card opens the /artist/:id path", async () => {
-  //     history.push("/search");
+      expect(history.location.pathname).toBe("/artists");
 
-  //     const { getByRole, getByText } = customRender(
-  //       WrapperComponent,
-  //       <>
-  //         <MainSearch />
-  //         <ArtistList />
-  //         <ArtistDetails />
-  //       </>
-  //     );
+      await user.click(header);
 
-  //     expect(history.location.pathname).toBe("/search");
+      expect(history.location.pathname).toBe("/search");
+    });
 
-  //     await searchComponent([
-  //       getByRole("search-all-input") as HTMLInputElement,
-  //       getByRole("search-button-artists") as HTMLButtonElement,
-  //     ]);
+    it("Clicking on the artist card opens the /artist/:id path", async () => {
+      history.push("/artists");
 
-  //     expect(history.location.pathname).toBe("/artists");
+      changeHandlers(albumAndTracks, artistDetailsHandler);
 
-  //     changeHandlers(albumAndTracks, artistDetailsHandler);
+      const { getByText } = customRender(WrapperComponent, <App />);
 
-  //     await user.click(getByText("Test 1"));
+      expect(history.location.pathname).toBe("/artists");
 
-  //     await waitFor(() => expect(history.location.pathname).toBe("/artists/1"));
-  //   });
-  // });
+      await user.click(getByText("Test 1"));
+
+      await waitFor(
+        () => expect(history.location.pathname).toBe("/artists/1"),
+        { timeout: 2000 }
+      );
+    });
+  });
+
+  describe("Failed network request on ArtistList component on /artists path and no results from search shows modal with error", () => {
+    it("Failed request after clicking artist card to retrieve artist details", async () => {
+      history.push("/artists");
+
+      const { findByTestId, getByText } = customRender(
+        WrapperComponent,
+        <App />
+      );
+
+      changeHandlers(new Error("get error"), artistDetailsHandler);
+
+      expect(history.location.pathname).toBe("/artists");
+
+      await user.click(getByText("Test 1"));
+
+      expect(await findByTestId("error-message")).toHaveTextContent(
+        /^Issue retrieving artist detail: Request failed with status code 401 please search again$/
+      );
+    });
+
+    it("Failed request after using search input shows error modal on ArtistList component", async () => {
+      history.push("/artists");
+
+      const { findByTestId, getByTestId } = customRender(
+        WrapperComponent,
+        <App />
+      );
+
+      changeHandlers(new Error("get error"), artistAndTrackHandlers);
+
+      await user.type(getByTestId("small-search-bar"), "hi");
+
+      await user.click(getByTestId("search-button"));
+
+      expect(await findByTestId("error-message")).toHaveTextContent(
+        /^Issue during search: Request failed with status code 401 please search again$/
+      );
+    });
+
+    it("No results shows no results modal after using search input on ArtistList component", async () => {
+      history.push("/artists");
+
+      const { findByTestId, getByTestId } = customRender(
+        WrapperComponent,
+        <App />
+      );
+
+      changeHandlers(artistResultsNone, artistAndTrackHandlers);
+
+      await user.type(getByTestId("small-search-bar"), "hi");
+
+      await user.click(getByTestId("search-button"));
+
+      expect(await findByTestId("error-heading")).toHaveTextContent(
+        /^No results found$/
+      );
+    });
+  });
 });
-
-// describe("Failed network request on ArtistList component on /artists path and no results from search shows modal with error", () => {
-//   it("Failed request after clicking artist card to retrieve artist details", async () => {
-//     const { getByRole, getByText } = customRender(
-//       WrapperComponent,
-//       <>
-//         <MainSearch />
-//         <ArtistList />
-//       </>
-//     );
-
-//     const alert = jest.spyOn(window, "alert").mockImplementation(() => {});
-
-//     await searchComponent([
-//       getByRole("search-all-input") as HTMLInputElement,
-//       getByRole("search-button-artists") as HTMLButtonElement,
-//     ]);
-
-//     changeHandlers(new Error("get"), artistDetailsHandler);
-
-//     expect(history.location.pathname).toBe("/artists");
-
-//     await user.click(getByText("Test 1"));
-
-//     expect(alert).toHaveBeenCalledWith(
-//       `Issue retrieving artist detail: Request failed with status code 401 please search again`
-//     );
-//   });
-
-//   it("Failed request shows error modal after using search input on ArtistList component", async () => {
-//     const { getByRole, getByText } = customRender(
-//       WrapperComponent,
-//       <>
-//         <MainSearch />
-//         <ArtistList />
-//       </>
-//     );
-//   });
-
-//   it("No results shows no results modal after using search input on ArtistList component", async () => {
-//     const { getByRole, getByText } = customRender(
-//       WrapperComponent,
-//       <>
-//         <MainSearch />
-//         <ArtistList />
-//       </>
-//     );
-//   });
-// });

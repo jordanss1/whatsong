@@ -1,7 +1,6 @@
 import { ReactElement } from "react";
 import { motion } from "framer-motion";
 import "./styles/modal.css";
-import { ResetModelOrSpotifyType } from "../../hooks/ArtistsAndTracksHook";
 
 export const errorVariants = {
   hidden: {
