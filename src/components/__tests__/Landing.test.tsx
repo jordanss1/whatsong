@@ -43,7 +43,7 @@ test("On click of button, the Search component is mounted", async () => {
 });
 
 test("The header is the correct version for the Landing pages", async () => {
-  history.push("/artists");
+  history.push("/");
 
   const { getByTestId, queryByTestId } = render(<App />, {
     wrapper: WrapperComponent,

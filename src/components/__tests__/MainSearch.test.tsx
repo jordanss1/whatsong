@@ -93,207 +93,206 @@ export const changeHandlers: ChangeHandlerFuncType = (
 
 beforeEach(() => history.push("/search"));
 
-// test("Artists and Songs button appear and when Artists is selected, the user is shown the input with artists category", async () => {
-//   const { getByRole, getByTestId, findByTestId } = customRender(
-//     WrapperComponent,
-//     <MainSearch />
-//   );
+test("Artists and Songs button appear and when Artists is selected, the user is shown the input with artists category", async () => {
+  const { getByRole, getByTestId, findByTestId } = customRender(
+    WrapperComponent,
+    <MainSearch />
+  );
 
-//   const artistsButton = getByRole("button", { name: "Artists" });
+  const artistsButton = getByRole("button", { name: "Artists" });
 
-//   expect(artistsButton).toBeInTheDocument();
+  expect(artistsButton).toBeInTheDocument();
 
-//   await user.click(artistsButton);
+  await user.click(artistsButton);
 
-//   await chooseCategory(findByTestId, getByTestId, /^artists$/);
-// });
+  await chooseCategory(findByTestId, getByTestId, /^artists$/);
+});
 
-// test("Artists and Songs button appear and when Songs is selected, the user is shown the input with songs category", async () => {
-//   const { getByRole, getByTestId, findByTestId } = customRender(
-//     WrapperComponent,
-//     <MainSearch />
-//   );
+test("Artists and Songs button appear and when Songs is selected, the user is shown the input with songs category", async () => {
+  const { getByRole, getByTestId, findByTestId } = customRender(
+    WrapperComponent,
+    <MainSearch />
+  );
 
-//   const songsButton = getByRole("button", { name: "Songs" });
+  const songsButton = getByRole("button", { name: "Songs" });
 
-//   expect(songsButton).toBeInTheDocument();
+  expect(songsButton).toBeInTheDocument();
 
-//   await user.click(songsButton);
+  await user.click(songsButton);
 
-//   await chooseCategory(findByTestId, getByTestId, /^songs$/);
-// });
+  await chooseCategory(findByTestId, getByTestId, /^songs$/);
+});
 
-// test("After the user is shown the category they originally selected, when they press the redo button, they are taken back to change the category", async () => {
-//   const { getByRole, getByTestId, findByTestId } = customRender(
-//     WrapperComponent,
-//     <MainSearch />
-//   );
+test("After the user is shown the category they originally selected, when they press the redo button, they are taken back to change the category", async () => {
+  const { getByRole, getByTestId, findByTestId } = customRender(
+    WrapperComponent,
+    <MainSearch />
+  );
 
-//   const artistsButton = getByRole("button", { name: "Artists" });
+  const artistsButton = getByRole("button", { name: "Artists" });
 
-//   expect(artistsButton).toBeInTheDocument();
+  expect(artistsButton).toBeInTheDocument();
 
-//   await user.click(artistsButton);
+  await user.click(artistsButton);
 
-//   await chooseCategory(findByTestId, getByTestId, /^artists$/);
+  await chooseCategory(findByTestId, getByTestId, /^artists$/);
 
-//   await user.click(getByTestId("redo-button"));
+  await user.click(getByTestId("redo-button"));
 
-//   await waitFor(
-//     async () => {
-//       expect(getByRole("button", { name: "Artists" })).toBeInTheDocument();
-//     },
-//     { timeout: 1500 }
-//   );
-// });
+  await waitFor(
+    async () => {
+      expect(getByRole("button", { name: "Artists" })).toBeInTheDocument();
+    },
+    { timeout: 1500 }
+  );
+});
 
-// describe("All possibilities where artists are returned from the Search component", () => {
-//   it("When a search term is entered, submitted, the ArtistList component is mounted and the pathname is /artists and artists are returned and the user can see them", async () => {
-//     const { getByTestId, getByRole, findByTestId, findAllByTitle } =
-//       customRender(
-//         WrapperComponent,
-//         <>
-//           <MainSearch />
-//           <ArtistList />
-//         </>
-//       );
+describe("All possibilities where artists are returned from the Search component", () => {
+  it("When a search term is entered, submitted, the ArtistList component is mounted and the pathname is /artists and artists are returned and the user can see them", async () => {
+    const { getByTestId, getByRole, findByTestId, findAllByTitle } =
+      customRender(
+        WrapperComponent,
+        <>
+          <MainSearch />
+          <ArtistList />
+        </>
+      );
 
-//     const artistsButton = getByRole("button", { name: "Artists" });
+    const artistsButton = getByRole("button", { name: "Artists" });
 
-//     expect(artistsButton).toBeInTheDocument();
+    expect(artistsButton).toBeInTheDocument();
 
-//     await user.click(artistsButton);
+    await user.click(artistsButton);
 
-//     await chooseCategory(findByTestId, getByTestId, /^artists$/);
+    await chooseCategory(findByTestId, getByTestId, /^artists$/);
 
-//     expect(history.location.pathname).toBe("/search");
+    expect(history.location.pathname).toBe("/search");
 
-//     await renderComponentSearched(getByTestId, "search-button");
+    await renderComponentSearched(getByTestId, "search-button");
 
-//     await waitFor(
-//       () => {
-//         expect(history.location.pathname).toBe("/artists");
-//       },
-//       { timeout: 1500 }
-//     );
+    await waitFor(
+      () => {
+        expect(history.location.pathname).toBe("/artists");
+      },
+      { timeout: 1500 }
+    );
 
-//     expect(
-//       (await findAllByTitle("View artist profile")) as HTMLDivElement[]
-//     ).toHaveLength(10);
-//   });
-// });
+    expect(
+      (await findAllByTitle("View artist profile")) as HTMLDivElement[]
+    ).toHaveLength(10);
+  });
+});
 
-// describe("All possibilities where song results are returned from Search component", () => {
-//   beforeEach(() => {
-//     changeHandlers(songResults, artistAndTrackHandlers);
-//   });
+describe("All possibilities where song results are returned from Search component", () => {
+  beforeEach(() => {
+    changeHandlers(songResults, artistAndTrackHandlers);
+  });
 
-//   it("When a search term is entered, submitted, songs are returned and the user can see these and the pathname is now 'tracks'", async () => {
-//     const { getByTestId, getByRole, findByTestId, findAllByTestId } =
-//       customRender(
-//         WrapperComponent,
-//         <>
-//           <MainSearch />
-//           <TrackList />
-//         </>
-//       );
+  it("When a search term is entered, submitted, songs are returned and the user can see these and the pathname is now 'tracks'", async () => {
+    const { getByTestId, getByRole, findByTestId, findAllByTestId } =
+      customRender(
+        WrapperComponent,
+        <>
+          <MainSearch />
+          <TrackList />
+        </>
+      );
 
-//     const songsButton = getByRole("button", { name: "Songs" });
+    const songsButton = getByRole("button", { name: "Songs" });
 
-//     expect(songsButton).toBeInTheDocument();
+    expect(songsButton).toBeInTheDocument();
 
-//     await user.click(songsButton);
+    await user.click(songsButton);
 
-//     await chooseCategory(findByTestId, getByTestId, /^songs$/);
+    await chooseCategory(findByTestId, getByTestId, /^songs$/);
 
-//     expect(history.location.pathname).toBe("/search");
+    expect(history.location.pathname).toBe("/search");
 
-//     await renderComponentSearched(getByTestId, "search-button");
+    await renderComponentSearched(getByTestId, "search-button");
 
-//     await waitFor(() => {
-//       expect(history.location.pathname).toBe("/tracks");
-//     });
+    await waitFor(() => {
+      expect(history.location.pathname).toBe("/tracks");
+    });
 
-//     const cards = await findAllByTestId("song-item");
+    const cards = await findAllByTestId("song-item");
 
-//     expect(cards).toHaveLength(5);
-//   });
-// });
+    expect(cards).toHaveLength(5);
+  });
+});
 
-// describe("All failed network requests and 'no-results from search' modals", () => {
-//   it("Failed network request for post request for token shows Modal with error message", async () => {
-//     const { getByRole, findByTestId, getByTestId, queryByTestId } =
-//       customRender(
-//         WrapperComponent,
-//         <>
-//           <App />
-//         </>
-//       );
+describe("All failed network requests and 'no-results from search' modals", () => {
+  it("Failed network request for post request for token shows Modal with error message", async () => {
+    const { getByRole, findByTestId, getByTestId } = customRender(
+      WrapperComponent,
+      <>
+        <App />
+      </>
+    );
 
-//     const artistsButton = getByRole("button", { name: "Artists" });
+    const artistsButton = getByRole("button", { name: "Artists" });
 
-//     expect(artistsButton).toBeInTheDocument();
+    expect(artistsButton).toBeInTheDocument();
 
-//     changeHandlers(new Error("post error"), artistAndTrackHandlers);
+    changeHandlers(new Error("post error"), artistAndTrackHandlers);
 
-//     await user.click(artistsButton);
+    await user.click(artistsButton);
 
-//     await chooseCategory(findByTestId, getByTestId, /^artists$/);
+    await chooseCategory(findByTestId, getByTestId, /^artists$/);
 
-//     await renderComponentSearched(getByTestId, "search-button");
+    await renderComponentSearched(getByTestId, "search-button");
 
-//     expect(await findByTestId("error-message")).toHaveTextContent(
-//       /^Server error: Request failed with status code 500, please search again$/
-//     );
-//   });
-// });
+    expect(await findByTestId("error-message")).toHaveTextContent(
+      /^Server error: Request failed with status code 500, please search again$/
+    );
+  });
+});
 
-// it("Successful post request but unsuccessful get request for artists/songs", async () => {
-//   const { getByRole, findByTestId, getByTestId, queryByTestId } = customRender(
-//     WrapperComponent,
-//     <>
-//       <App />
-//     </>
-//   );
+it("Successful post request but unsuccessful get request for artists/songs", async () => {
+  const { getByRole, findByTestId, getByTestId, queryByTestId } = customRender(
+    WrapperComponent,
+    <>
+      <App />
+    </>
+  );
 
-//   const songsButton = getByRole("button", { name: "Songs" });
+  const songsButton = getByRole("button", { name: "Songs" });
 
-//   expect(songsButton).toBeInTheDocument();
+  expect(songsButton).toBeInTheDocument();
 
-//   changeHandlers(new Error("get error"), artistAndTrackHandlers);
+  changeHandlers(new Error("get error"), artistAndTrackHandlers);
 
-//   await user.click(songsButton);
+  await user.click(songsButton);
 
-//   await chooseCategory(findByTestId, getByTestId, /^songs$/);
+  await chooseCategory(findByTestId, getByTestId, /^songs$/);
 
-//   await renderComponentSearched(getByTestId, "search-button");
+  await renderComponentSearched(getByTestId, "search-button");
 
-//   expect(await findByTestId("error-message")).toHaveTextContent(
-//     /^Issue during search: Request failed with status code 401 please search again$/
-//   );
-// });
+  expect(await findByTestId("error-message")).toHaveTextContent(
+    /^Issue during search: Request failed with status code 401 please search again$/
+  );
+});
 
-// it("When no results are returned from a search the user is shown the no results modal", async () => {
-//   const { getByRole, findByTestId, getByTestId, queryByTestId } = customRender(
-//     WrapperComponent,
-//     <>
-//       <App />
-//     </>
-//   );
+it("When no results are returned from a search the user is shown the no results modal", async () => {
+  const { getByRole, findByTestId, getByTestId } = customRender(
+    WrapperComponent,
+    <>
+      <App />
+    </>
+  );
 
-//   const artistsButton = getByRole("button", { name: "Artists" });
+  const artistsButton = getByRole("button", { name: "Artists" });
 
-//   expect(artistsButton).toBeInTheDocument();
+  expect(artistsButton).toBeInTheDocument();
 
-//   changeHandlers(artistResultsNone, artistAndTrackHandlers);
+  changeHandlers(artistResultsNone, artistAndTrackHandlers);
 
-//   await user.click(artistsButton);
+  await user.click(artistsButton);
 
-//   await chooseCategory(findByTestId, getByTestId, /^artists$/);
+  await chooseCategory(findByTestId, getByTestId, /^artists$/);
 
-//   await renderComponentSearched(getByTestId, "search-button");
+  await renderComponentSearched(getByTestId, "search-button");
 
-//   expect(await findByTestId("error-heading")).toHaveTextContent(
-//     /^No results found$/
-//   );
-// });
+  expect(await findByTestId("error-heading")).toHaveTextContent(
+    /^No results found$/
+  );
+});

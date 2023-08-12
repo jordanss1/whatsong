@@ -29,6 +29,7 @@ const Spotify = ({
       title={url ? url : ""}
       onClick={() => (url ? window.open(url, "_blank") : {})}
       className={`spotify icon fs-${size} ${className}`}
+      data-testid="spotify-icon"
     />
   );
 };

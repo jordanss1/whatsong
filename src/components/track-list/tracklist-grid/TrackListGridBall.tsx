@@ -6,6 +6,7 @@ import { useMediaQuery } from "../../../hooks/MediaQueryHook";
 type TrackListGridBallPropsType = {
   ballCycle: string;
   dragRef: MutableRefObject<null>;
+  index: number;
   onDrag: (e: React.PointerEvent, end?: boolean) => void;
   pointerFunction: (pointer: boolean) => void;
   expandCycle: string;
@@ -82,6 +83,7 @@ const TrackListGridBall = ({
   dragRef,
   pointerFunction,
   expandCycle,
+  index,
 }: TrackListGridBallPropsType): ReactElement => {
   const is850 = useMediaQuery(850);
 
@@ -101,6 +103,7 @@ const TrackListGridBall = ({
       dragElastic={0.7}
       variants={dragBallVariant}
       dragMomentum={false}
+      index={index}
       initial="hidden"
       animate="visible"
       exit="exit"

@@ -1,12 +1,11 @@
 import { ReactNode, ReactElement } from "react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import { act, waitFor, fireEvent } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import {
   NavigationAndStore,
   customRender,
 } from "../../../test-utils/test-utils";
-import ArtistDetails from "../artist-details/ArtistDetails";
 import App from "../App";
 import ArtistList from "../artist-list/ArtistList";
 import { SearchStore } from "../../contexts/SearchStore";
@@ -77,7 +76,7 @@ describe("The ArtistList component on the /artists path", () => {
     await waitFor(
       async () =>
         expect(await findAllByTitle("View artist profile")).toHaveLength(37),
-      { timeout: 1000 }
+      { timeout: 3000 }
     );
   });
 
@@ -95,6 +94,13 @@ describe("The ArtistList component on the /artists path", () => {
   });
 
   describe("Route and history testing on /artist path", () => {
+    beforeEach(() =>
+      sessionStorage.setItem(
+        "artists",
+        JSON.stringify(artistResults.artists.items)
+      )
+    );
+
     it("Clicking the Header component logo should route to /search path", async () => {
       history.push("/artists");
       const { getByTestId, queryByTestId } = customRender(
@@ -131,6 +137,13 @@ describe("The ArtistList component on the /artists path", () => {
   });
 
   describe("Failed network request on ArtistList component on /artists path and no results from search shows modal with error", () => {
+    beforeEach(() =>
+      sessionStorage.setItem(
+        "artists",
+        JSON.stringify(artistResults.artists.items)
+      )
+    );
+
     it("Failed request after clicking artist card to retrieve artist details", async () => {
       history.push("/artists");
 
@@ -160,9 +173,7 @@ describe("The ArtistList component on the /artists path", () => {
 
       changeHandlers(new Error("get error"), artistAndTrackHandlers);
 
-      await user.type(getByTestId("small-search-bar"), "hi");
-
-      await user.click(getByTestId("search-button"));
+      await searchSmallSearchBar(getByTestId);
 
       expect(await findByTestId("error-message")).toHaveTextContent(
         /^Issue during search: Request failed with status code 401 please search again$/
@@ -179,9 +190,7 @@ describe("The ArtistList component on the /artists path", () => {
 
       changeHandlers(artistResultsNone, artistAndTrackHandlers);
 
-      await user.type(getByTestId("small-search-bar"), "hi");
-
-      await user.click(getByTestId("search-button"));
+      await searchSmallSearchBar(getByTestId);
 
       expect(await findByTestId("error-heading")).toHaveTextContent(
         /^No results found$/

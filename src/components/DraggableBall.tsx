@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import { MotionProps, motion } from "framer-motion";
 
 interface DrabbleBallProps extends MotionProps {
+  index: number;
   className?: string;
   invisibleClass?: string;
   onPointerDown?: () => void;
@@ -30,6 +31,7 @@ const DraggableBall = ({
   onPointerDown,
   onPointerMove,
   style,
+  index,
 }: DrabbleBallProps): ReactElement => {
   return (
     <motion.div
@@ -42,9 +44,6 @@ const DraggableBall = ({
       initial={initial}
       animate={animate}
       exit={exit}
-      onDrag={onDrag}
-      onDragEnd={onDragEnd}
-      whileDrag={whileDrag}
       whileTap={whileTap}
       dragConstraints={dragConstraints}
       dragSnapToOrigin={dragSnapToOrigin}
@@ -54,6 +53,7 @@ const DraggableBall = ({
       className={className}
       custom={custom}
       style={style}
+      data-testid={`draggable-ball-${index}`}
     >
       <motion.div layout className={invisibleClass} />
     </motion.div>

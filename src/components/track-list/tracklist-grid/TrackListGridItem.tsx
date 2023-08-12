@@ -137,6 +137,7 @@ const TrackListGridItem = ({
       onClick={() => cycleBall(ballCycle === "hidden" ? 1 : 0)}
       style={{ ...style, gridTemplateColumns }}
       ref={ref}
+      data-testid={`track-item-${index}`}
     >
       <AnimatePresence mode="wait">
         <TrackListGridBall
@@ -145,6 +146,7 @@ const TrackListGridItem = ({
           ballCycle={ballCycle}
           pointerFunction={pointerFunction}
           expandCycle={expandCycle}
+          index={index}
         />
       </AnimatePresence>
       <AnimatePresence mode="wait">
