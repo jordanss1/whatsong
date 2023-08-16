@@ -12,14 +12,14 @@ const artistDetailMainVariants: Variants = {
   initial: (isOneColumn) => ({
     background:
       "radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
-    gridTemplateColumns: isOneColumn ? "" : "100% 0%",
+    gridTemplateColumns: isOneColumn ? "0% 0%" : "100% 0%",
     justifyItems: isOneColumn ? "" : "center",
     alignItems: isOneColumn ? "" : "center",
   }),
   animate: (isOneColumn) => ({
     background:
       "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)",
-    gridTemplateColumns: isOneColumn ? "" : "50% 50%",
+    gridTemplateColumns: isOneColumn ? "0% 0%" : "50% 50%",
     transition: {
       type: "tween",
       ease: "easeInOut",

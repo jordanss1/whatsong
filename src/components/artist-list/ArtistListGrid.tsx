@@ -112,7 +112,8 @@ const ArtistListGrid = ({ artists }: ArtistListGridPropsType): ReactElement => {
       timer = setTimeout(() => {
         navigate(`/artists/${idRef.current}`);
         idRef.current = null;
-      }, 1000);
+      }, 500);
+
       return;
     }
 

@@ -19,6 +19,8 @@ const artistsNormalVariants: Variants = {
       duration: 0.5,
       staggerChildren: 0.05,
       when: "beforeChildren",
+      type: "tween",
+      ease: "easeInOut",
     },
   },
   exit: {
@@ -49,10 +51,11 @@ const artistDetailVariants: Variants = {
     background:
       "radial-gradient(circle at 100% 0%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
     transition: {
-      delay: 0.5,
-      duration: 0.5,
+      duration: 0.2,
       staggerChildren: 0.05,
       when: "beforeChildren",
+      type: "tween",
+      ease: "easeInOut",
     },
   },
   exit: {
@@ -63,7 +66,7 @@ const artistDetailVariants: Variants = {
     transition: {
       when: "afterChildren",
       staggerChildren: 0.01,
-      duration: 1,
+      duration: 0.5,
       type: "tween",
       ease: "easeInOut",
     },
