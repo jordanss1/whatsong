@@ -73,6 +73,8 @@ const artistDetailVariants: Variants = {
   },
 };
 
+//update
+
 const ArtistList = (): ReactElement => {
   const { artists, setArtistsOrTracks, searched, setProfile, artistDetail } =
     useContext(SearchContext);
