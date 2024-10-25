@@ -1,10 +1,10 @@
+import { AnimatePresence, Variants, motion, useInView } from "framer-motion";
 import { ReactElement, memo, useRef } from "react";
-import { Variants, motion, useInView, AnimatePresence } from "framer-motion";
+import { useMediaQuery } from "../../hooks/MediaQueryHook";
 import { ArtistsType } from "../../types/types";
-import { HandleProfileClickType } from "./ArtistListGrid";
 import ImageCard from "../ImageCard";
 import ImageHeader from "../ImageHeader";
-import { useMediaQuery } from "../../hooks/MediaQueryHook";
+import { HandleProfileClickType } from "./ArtistListGrid";
 import "./styles/artist-list.css";
 
 type ArtistListGridCardPropType = {
@@ -79,6 +79,7 @@ const ArtistListGridCard = ({
 
   const isInView = useInView(ref, {
     amount: 0.2,
+    once: true,
   });
 
   if (!index) modifiedIndex = 0;

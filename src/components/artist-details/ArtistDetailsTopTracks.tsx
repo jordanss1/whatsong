@@ -1,12 +1,12 @@
+import { AnimatePresence, motion, useCycle, Variants } from "framer-motion";
 import { memo, useEffect } from "react";
-import RightArrow from "./arrows/RightArrow";
-import LeftArrow from "./arrows/LeftArrow";
-import CircularImage from "../CircularImage";
-import { TopTracksDetailsType } from "../../types/types";
 import { SetAlbumOrTrackType } from "../../hooks/DetailedArtistResultHooks";
-import { motion, Variants, useCycle, AnimatePresence } from "framer-motion";
-import "./styles/artist-details.css";
+import { TopTracksDetailsType } from "../../types/types";
+import CircularImage from "../CircularImage";
+import LeftArrow from "./Arrows/LeftArrow";
+import RightArrow from "./Arrows/RightArrow";
 import ArtistDetailsTopTrackItem from "./ArtistDetailsTopTrackItem";
+import "./styles/artist-details.css";
 
 type ArtistDetailsTopTracksPropTypes = {
   topTracks: TopTracksDetailsType[] | null;

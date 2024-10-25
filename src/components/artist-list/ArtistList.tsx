@@ -1,9 +1,9 @@
+import { motion, useCycle, useScroll, Variants } from "framer-motion";
 import { ReactElement, useContext, useEffect, useState } from "react";
-import { motion, Variants, useScroll, useCycle } from "framer-motion";
-import Header from "../header/Header";
+import SearchContext from "../../contexts/SearchState";
+import Header from "../Header/Header";
 import ArtistListGrid from "./ArtistListGrid";
 import ArtistListSearchBar from "./ArtistListSearchBar";
-import SearchContext from "../../contexts/SearchState";
 import "./styles/artist-list.css";
 
 const artistsNormalVariants: Variants = {

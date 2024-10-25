@@ -1,12 +1,4 @@
 import {
-  useContext,
-  useEffect,
-  useRef,
-  MutableRefObject,
-  useMemo,
-  useCallback,
-} from "react";
-import {
   AnimatePresence,
   Cycle,
   motion,
@@ -15,14 +7,22 @@ import {
   useScroll,
   Variants,
 } from "framer-motion";
-import Header from "../header/Header";
-import TrackListSelectedContainer from "./tracklist-selected/TrackListSelectedContainer";
-import TrackListGridSearchBar from "./tracklist-grid/TrackListGridSearchBar";
-import TrackListGrid from "./tracklist-grid/TrackListGrid";
+import {
+  MutableRefObject,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import SearchContext from "../../contexts/SearchState";
-import { TopTracksDetailsType } from "../../types/types";
 import { useMediaQuery, useScreenSize } from "../../hooks/MediaQueryHook";
+import { TopTracksDetailsType } from "../../types/types";
+import Header from "../Header/Header";
 import "./styles/track-list.css";
+import TrackListGrid from "./tracklist-grid/TrackListGrid";
+import TrackListGridSearchBar from "./tracklist-grid/TrackListGridSearchBar";
+import TrackListSelectedContainer from "./tracklist-selected/TrackListSelectedContainer";
 
 export type HandleSelectedTrackType = (
   track?: Required<TopTracksDetailsType>

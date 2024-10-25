@@ -1,24 +1,24 @@
 import {
-  MutableRefObject,
-  ReactElement,
-  useRef,
-  useCallback,
-  useEffect,
-} from "react";
-import { TopTracksDetailsType } from "../../../types/types";
-import { HandleDragType } from "../TrackList";
-import {
+  AnimatePresence,
+  MotionStyle,
   Variants,
   motion,
-  useInView,
-  AnimatePresence,
   useCycle,
-  MotionStyle,
+  useInView,
 } from "framer-motion";
-import TrackListGridItemTrack from "./TrackListGridItemTrack";
-import TrackListGridBall from "./TrackListGridBall";
+import {
+  MutableRefObject,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import { useMediaQuery } from "../../../hooks/MediaQueryHook";
+import { TopTracksDetailsType } from "../../../types/types";
 import "../styles/track-list.css";
+import { HandleDragType } from "../TrackList";
+import TrackListGridBall from "./TrackListGridBall";
+import TrackListGridItemTrack from "./TrackListGridItemTrack";
 
 const trackOrchestratedVariant: Variants = {
   initial: (isMobile) => ({
@@ -66,6 +66,7 @@ const TrackListGridItem = ({
 
   const isInView = useInView(ref, {
     amount: 0.2,
+    once: true,
   });
 
   const gridTemplateColumns =

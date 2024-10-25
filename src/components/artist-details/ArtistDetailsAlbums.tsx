@@ -1,10 +1,10 @@
+import { AnimatePresence, motion, useCycle, Variants } from "framer-motion";
 import { memo, ReactElement, useEffect } from "react";
-import LeftArrow from "./arrows/LeftArrow";
-import RightArrow from "./arrows/RightArrow";
-import ArtistDetailsAlbumCard from "./ArtistDetailsAlbumCard";
-import { AlbumDetailsType } from "../../types/types";
 import { SetAlbumOrTrackType } from "../../hooks/DetailedArtistResultHooks";
-import { AnimatePresence, motion, Variants, useCycle } from "framer-motion";
+import { AlbumDetailsType } from "../../types/types";
+import LeftArrow from "./Arrows/LeftArrow";
+import RightArrow from "./Arrows/RightArrow";
+import ArtistDetailsAlbumCard from "./ArtistDetailsAlbumCard";
 import "./styles/artist-details.css";
 
 type ArtistDetailsAlbumsPropsType = {

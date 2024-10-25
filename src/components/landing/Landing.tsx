@@ -1,5 +1,3 @@
-import { useEffect, useState, useContext, ReactElement } from "react";
-import SearchContext from "../../contexts/SearchStore";
 import {
   Variants,
   motion,
@@ -7,11 +5,13 @@ import {
   useCycle,
   usePresence,
 } from "framer-motion";
-import LandingScroll from "./LandingScroll";
+import { ReactElement, useContext, useEffect, useState } from "react";
+import SearchContext from "../../contexts/SearchStore";
+import { useMediaQuery } from "../../hooks/MediaQueryHook";
+import Header from "../Header/Header";
 import LandingButton from "./LandingButton";
 import LandingPowered from "./LandingPowered";
-import Header from "../header/Header";
-import { useMediaQuery } from "../../hooks/MediaQueryHook";
+import LandingScroll from "./LandingScroll";
 import "./styles/landing.css";
 
 const mainVariants: Variants = {
