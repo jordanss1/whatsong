@@ -1,11 +1,6 @@
 import { type CancelTokenSource } from 'axios';
-import {
-  type Target,
-  type TargetAndTransition,
-  type VariantLabels,
-  type Variants,
-} from 'motion/react';
-import { type MockedRequest, type RestHandler } from 'msw';
+
+import { HttpHandler } from 'msw';
 import React, { type RefObject } from 'react';
 import { type ArtistsAndTracksSetterType } from '../hooks/ArtistsAndTracksHook';
 import { type ArtistAndAlbumStateSetter } from '../hooks/DetailedArtistResultHooks';
@@ -77,11 +72,11 @@ export type ArtistDetailsHandlerDataType = AlbumAndTracksTestType | Error;
 
 export type ArtistAndTrackHandlersType = (
   data: ArtistAndTrackHandlerDataType
-) => RestHandler<MockedRequest<ArtistDetailsHandlerDataType>>[];
+) => HttpHandler[];
 
 export type ArtistDetailsHandlerType = (
   data: ArtistDetailsHandlerDataType
-) => RestHandler<MockedRequest<AlbumAndTracksTestType>>[];
+) => HttpHandler[];
 
 export type SpotifyArtistDetailsSearchType = (
   id: string,

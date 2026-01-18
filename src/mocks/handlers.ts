@@ -1,9 +1,9 @@
-import { type Rest } from 'msw';
+import { HttpResponse, http } from 'msw';
 import {
-  ArtistAndTrackHandlerDataType,
-  ArtistAndTrackHandlersType,
-  ArtistDetailsHandlerDataType,
-  ArtistDetailsHandlerType,
+  type ArtistAndTrackHandlerDataType,
+  type ArtistAndTrackHandlersType,
+  type ArtistDetailsHandlerDataType,
+  type ArtistDetailsHandlerType,
 } from '../types/types';
 
 type GetResponseType<T> = { code: number; body: T };
@@ -25,21 +25,16 @@ export const artistAndTrackHandlers: ArtistAndTrackHandlersType = (data) => {
   }
 
   return [
-    rest.post(
-      'https://accounts.spotify.com/api/token',
-      async (req, res, ctx) => {
-        return await res(
-          ctx.status(postResponse.code),
-          ctx.json(postResponse.body)
-        );
-      }
-    ),
+    http.post('https://accounts.spotify.com/api/token', async () => {
+      return HttpResponse.json(postResponse.body, {
+        status: postResponse.code,
+      });
+    }),
 
-    rest.get('https://api.spotify.com/v1/search', async (req, res, ctx) => {
-      return await res(
-        ctx.status(getResponse.code),
-        ctx.json(getResponse.body)
-      );
+    http.get('https://api.spotify.com/v1/search', async () => {
+      return HttpResponse.json(getResponse.body, {
+        status: getResponse.code,
+      });
     }),
   ];
 };
@@ -61,21 +56,18 @@ export const artistDetailsHandler: ArtistDetailsHandlerType = (data) => {
   let resBody = (index: number) => (body instanceof Error ? body : body[index]);
 
   return [
-    rest.post(
-      'https://accounts.spotify.com/api/token',
-      async (req, res, ctx) => {
-        return await res(ctx.status(200, 'success'));
-      }
-    ),
+    http.post('https://accounts.spotify.com/api/token', async () => {
+      return HttpResponse.json('success', { status: 200 });
+    }),
 
-    rest.get(artistAndAlbum[0], async (req, res, ctx) => {
-      return await res(ctx.status(code), ctx.json(resBody(0)));
+    http.get(artistAndAlbum[0], async () => {
+      return HttpResponse.json(resBody(0), { status: code });
     }),
-    rest.get(artistAndAlbum[1], async (req, res, ctx) => {
-      return await res(ctx.status(code), ctx.json(resBody(1)));
+    http.get(artistAndAlbum[1], async () => {
+      return HttpResponse.json(resBody(1), { status: code });
     }),
-    rest.get(artistAndAlbum[2], async (req, res, ctx) => {
-      return await res(ctx.status(code), ctx.json(resBody(2)));
+    http.get(artistAndAlbum[2], async () => {
+      return HttpResponse.json(resBody(2), { status: code });
     }),
   ];
 };
