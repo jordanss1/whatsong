@@ -1,6 +1,6 @@
-import { FormEvent, ReactElement } from "react";
-import { motion, Variants } from "framer-motion";
-import SearchButton from "../searchbar/SearchButton";
+import { motion, type Variants } from 'motion/react';
+import { type FormEvent, type ReactElement } from 'react';
+import SearchButton from '../searchbar/SearchButton';
 
 const wrapperVariants: Variants = {
   initial: {
@@ -11,7 +11,7 @@ const wrapperVariants: Variants = {
     x: 0,
     opacity: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 70,
       duration: 0.2,
       delay: 0.2,

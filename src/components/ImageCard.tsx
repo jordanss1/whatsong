@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { MotionProps, MotionStyle, motion } from "framer-motion";
+import { type MotionProps, type MotionStyle, motion } from 'motion/react';
+import { type ReactElement } from 'react';
 
 interface ImageCardPropsType extends MotionProps {
   onClick?: () => void;
@@ -22,7 +22,7 @@ const ImageCard = ({
   whileHover,
 }: ImageCardPropsType): ReactElement => {
   const handleClick = onClick ? onClick : () => {};
-  icon = icon ?? "fa-solid fa-user";
+  icon = icon ?? 'fa-solid fa-user';
   iconSize = iconSize ?? 36;
 
   return (

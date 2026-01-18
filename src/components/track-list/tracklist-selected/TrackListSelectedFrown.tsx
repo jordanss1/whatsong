@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Variants, motion } from "framer-motion";
+import { type Variants, motion } from 'motion/react';
+import { type ReactElement } from 'react';
 
 const instructionsVariant: Variants = {
   initial: {
@@ -36,7 +36,7 @@ const pathVariants: Variants = {
     transition: {
       delay: 0.3,
       duration: 0.1,
-      type: "spring",
+      type: 'spring',
       stiffness: 200,
     },
   },

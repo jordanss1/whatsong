@@ -1,10 +1,10 @@
-import { ReactElement, memo } from "react";
-import { AnimatePresence, motion, Variants } from "framer-motion";
-import HeaderSearchLogo from "./HeaderSearchLogo";
-import SearchButton from "../searchbar/SearchButton";
-import { useMediaQuery } from "../../hooks/MediaQueryHook";
-import "./styles/header.css";
-import HeaderSearchSearchBar from "./HeaderSearchSearchBar";
+import { AnimatePresence, motion, type Variants } from 'motion/react';
+import { memo, type ReactElement } from 'react';
+import { useMediaQuery } from '../../hooks/MediaQueryHook';
+import SearchButton from '../searchbar/SearchButton';
+import HeaderSearchLogo from './HeaderSearchLogo';
+import HeaderSearchSearchBar from './HeaderSearchSearchBar';
+import './styles/header.css';
 
 const containerVarients: Variants = {
   initial: { opacity: 0 },
@@ -24,7 +24,7 @@ const containerVarients: Variants = {
   },
   transparent: {
     background:
-      "linear-gradient(to right,rgb(0, 3, 55, .5) 10%,rgb(0, 3, 79) 50%,rgb(0, 3, 55, .5) 95%)",
+      'linear-gradient(to right,rgb(0, 3, 55, .5) 10%,rgb(0, 3, 79) 50%,rgb(0, 3, 55, .5) 95%)',
     opacity: 1,
   },
 };
@@ -43,9 +43,9 @@ const HeaderSearch = ({
   const is468 = useMediaQuery(468);
 
   const flex =
-    is468 && headerCycle === "transparent"
-      ? "justify-content-start"
-      : "justify-content-center";
+    is468 && headerCycle === 'transparent'
+      ? 'justify-content-start'
+      : 'justify-content-center';
 
   return (
     <header className="header-search-container w-100 d-flex flex-column align-items-center justify-content-center">
@@ -59,7 +59,7 @@ const HeaderSearch = ({
       >
         <div className={`d-flex ${flex} h-100 align-items-center px-3 w-100`}>
           <HeaderSearchLogo />
-          {headerCycle === "transparent" && (
+          {headerCycle === 'transparent' && (
             <SearchButton
               x={is468 ? 0 : 25}
               size={4}
@@ -69,7 +69,7 @@ const HeaderSearch = ({
         </div>
       </motion.div>
       <AnimatePresence onExitComplete={() => handleClick(true)}>
-        {searchCycle && headerCycle === "transparent" && (
+        {searchCycle && headerCycle === 'transparent' && (
           <HeaderSearchSearchBar />
         )}
       </AnimatePresence>

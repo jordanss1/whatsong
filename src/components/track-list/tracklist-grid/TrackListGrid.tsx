@@ -1,16 +1,21 @@
-import { MutableRefObject, ReactElement, useContext, useEffect } from "react";
-import { AnimatePresence, motion, Variants } from "framer-motion";
-import TrackListGridItem from "./TrackListGridItem";
-import { TopTracksDetailsType } from "../../../types/types";
-import { HandleDragType } from "../TrackList";
-import Popout from "../../popout/Popout";
-import { useMediaQuery } from "../../../hooks/MediaQueryHook";
-import SearchContext from "../../../contexts/SearchState";
-import "../styles/track-list.css";
+import { AnimatePresence, motion, type Variants } from 'motion/react';
+import {
+  type ReactElement,
+  type RefObject,
+  useContext,
+  useEffect,
+} from 'react';
+import SearchContext from '../../../contexts/SearchState';
+import { useMediaQuery } from '../../../hooks/MediaQueryHook';
+import { type TopTracksDetailsType } from '../../../types/types';
+import Popout from '../../popout/Popout';
+import '../styles/track-list.css';
+import { type HandleDragType } from '../TrackList';
+import TrackListGridItem from './TrackListGridItem';
 
 type TrackListGridSelectedProps = {
   tracks: Required<TopTracksDetailsType>[];
-  dragRef: MutableRefObject<null>;
+  dragRef: RefObject<null>;
   handleDrag: HandleDragType;
   expandCycle: string;
 };
@@ -19,26 +24,26 @@ export const popoutContainerVariants: Variants = {
   hidden: {
     y: -20,
     opacity: 0,
-    backgroundColor: "rgba(0,0,0,0.2)",
+    backgroundColor: 'rgba(0,0,0,0.2)',
   },
   visible: (is850) => ({
-    padding: "20px",
-    borderRadius: "20px",
+    padding: '20px',
+    borderRadius: '20px',
     y: is850 ? 0 : -70,
     x: 0,
-    maxWidth: is850 ? "500px" : "650px",
+    maxWidth: is850 ? '500px' : '650px',
     zIndex: 4,
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: 'rgba(0,0,0,0.5)',
     opacity: 1,
     scale: 1.2,
     transition: {
-      ease: "easeOut",
-      type: "tween",
+      ease: 'easeOut',
+      type: 'tween',
       duration: 0.5,
     },
   }),
   exit: {
-    backgroundColor: "rgba(0,0,0,0)",
+    backgroundColor: 'rgba(0,0,0,0)',
     opacity: 0,
     transition: {
       duration: 0.2,
@@ -53,8 +58,8 @@ const popoutVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      ease: "easeOut",
-      type: "tween",
+      ease: 'easeOut',
+      type: 'tween',
       duration: 1,
       delay: 0.5,
     },
@@ -79,11 +84,11 @@ const TrackListGrid = ({
   const is850 = useMediaQuery(850);
 
   useEffect(() => {
-    const visited = localStorage.getItem("tracks-visited");
+    const visited = localStorage.getItem('tracks-visited');
 
     if (visited) return;
 
-    localStorage.setItem("tracks-visited", "tracks-visited");
+    localStorage.setItem('tracks-visited', 'tracks-visited');
     setTimeout(() => setPopout(true), 1200);
   }, []);
 
@@ -91,19 +96,19 @@ const TrackListGrid = ({
     <Popout
       variants={popoutVariants}
       style={{
-        maxWidth: is850 ? "250px" : "350px",
-        width: "100%",
-        fontSize: is850 ? "14px" : "15px",
-        display: "flex",
-        flexDirection: "column",
-        padding: "15px",
-        gap: "10px",
+        maxWidth: is850 ? '250px' : '350px',
+        width: '100%',
+        fontSize: is850 ? '14px' : '15px',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '15px',
+        gap: '10px',
       }}
     >
       <div>Mouse over or click on tracks to reveal orbs.</div>
       <motion.button
         onClick={() => setPopout(false)}
-        whileHover={{ scale: 1.05, color: "rgb(255,255,255)" }}
+        whileHover={{ scale: 1.05, color: 'rgb(255,255,255)' }}
       >
         Ok!
       </motion.button>
@@ -135,9 +140,9 @@ const TrackListGrid = ({
                   expandCycle={expandCycle}
                   style={{
                     x: is850 ? 0 : -35,
-                    maxWidth: "650px",
-                    width: "100%",
-                    minWidth: is850 ? "285px" : "auto",
+                    maxWidth: '650px',
+                    width: '100%',
+                    minWidth: is850 ? '285px' : 'auto',
                   }}
                 />
               </motion.div>

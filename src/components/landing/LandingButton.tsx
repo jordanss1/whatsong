@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Variants, motion } from "framer-motion";
+import { type Variants, motion } from 'motion/react';
+import { type ReactElement } from 'react';
 
 const buttonVariants: Variants = {
   hidden: {
@@ -17,7 +17,7 @@ const buttonVariants: Variants = {
     scale: [null, 1.1],
     transition: {
       duration: 0.5,
-      type: "spring",
+      type: 'spring',
     },
   },
 };

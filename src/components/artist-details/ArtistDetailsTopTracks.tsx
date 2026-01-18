@@ -1,12 +1,17 @@
-import { AnimatePresence, motion, useCycle, Variants } from "framer-motion";
-import { memo, useEffect } from "react";
-import { SetAlbumOrTrackType } from "../../hooks/DetailedArtistResultHooks";
-import { TopTracksDetailsType } from "../../types/types";
-import CircularImage from "../CircularImage";
-import LeftArrow from "./Arrows/LeftArrow";
-import RightArrow from "./Arrows/RightArrow";
-import ArtistDetailsTopTrackItem from "./ArtistDetailsTopTrackItem";
-import "./styles/artist-details.css";
+import {
+  AnimatePresence,
+  motion,
+  useCycle,
+  type Variants,
+} from 'framer-motion';
+import { memo, useEffect } from 'react';
+import { type SetAlbumOrTrackType } from '../../hooks/DetailedArtistResultHooks';
+import { type TopTracksDetailsType } from '../../types/types';
+import CircularImage from '../CircularImage';
+import LeftArrow from './Arrows/LeftArrow';
+import RightArrow from './Arrows/RightArrow';
+import ArtistDetailsTopTrackItem from './ArtistDetailsTopTrackItem';
+import './styles/artist-details.css';
 
 type ArtistDetailsTopTracksPropTypes = {
   topTracks: TopTracksDetailsType[] | null;
@@ -24,16 +29,16 @@ const topTracksVariants: Variants = {
     opacity: 1,
     transition: {
       duration: 0.5,
-      type: "tween",
-      ease: "easeOut",
+      type: 'tween',
+      ease: 'easeOut',
     },
   },
   exit: {
     x: -70,
     opacity: 0,
     transition: {
-      type: "tween",
-      ease: "easeInOut",
+      type: 'tween',
+      ease: 'easeInOut',
     },
   },
 };
@@ -43,7 +48,7 @@ const rightArrowVariants: Variants = {
     topTracks && topTracks?.length > 1
       ? {
           background:
-            "linear-gradient(to right,rgba(255, 255, 255, 0) 25%,rgba(255, 255, 255, 0.22) 100%)",
+            'linear-gradient(to right,rgba(255, 255, 255, 0) 25%,rgba(255, 255, 255, 0.22) 100%)',
           scale: [null, 1.1],
         }
       : {},
@@ -51,7 +56,7 @@ const rightArrowVariants: Variants = {
     topTracks && topTracks?.length > 1
       ? {
           background:
-            "linear-gradient(to right,rgba(255, 255, 255, 0) 60%,rgba(255, 255, 255, 0.15) 100%)",
+            'linear-gradient(to right,rgba(255, 255, 255, 0) 60%,rgba(255, 255, 255, 0.15) 100%)',
           scale: [null, 0.8],
         }
       : {},
@@ -62,7 +67,7 @@ const leftArrowVariants: Variants = {
     topTracks && topTracks?.length > 1
       ? {
           background:
-            "linear-gradient(to right,rgba(255, 255, 255, 0.15) 20%,rgba(255, 255, 255, 0) 70%)",
+            'linear-gradient(to right,rgba(255, 255, 255, 0.15) 20%,rgba(255, 255, 255, 0) 70%)',
           scale: [null, 1.1],
         }
       : {},
@@ -70,7 +75,7 @@ const leftArrowVariants: Variants = {
     topTracks && topTracks?.length > 1
       ? {
           background:
-            "linear-gradient(to right,rgba(255, 255, 255, 0.07) 20%,rgba(255, 255, 255, 0) 60%)",
+            'linear-gradient(to right,rgba(255, 255, 255, 0.07) 20%,rgba(255, 255, 255, 0) 60%)',
           scale: [null, 0.8],
         }
       : {},
@@ -83,25 +88,25 @@ const ArtistDetailsTopTracks = ({
 }: ArtistDetailsTopTracksPropTypes) => {
   const leftClasses = `small-arrows pb-1 ${
     topTracks && topTracks.length > 1
-      ? "left-small-arrow w-100"
-      : "left-small-arrow-disabled"
+      ? 'left-small-arrow w-100'
+      : 'left-small-arrow-disabled'
   }`;
 
   const rightClasses = `small-arrows pb-1 ${
     topTracks && topTracks.length > 1
-      ? "justify-content-end  right-small-arrow  w-100"
-      : "right-small-arrow-disabled"
+      ? 'justify-content-end  right-small-arrow  w-100'
+      : 'right-small-arrow-disabled'
   }`;
 
-  const [direction, cycleDirection] = useCycle<"left" | "right">(
-    "left",
-    "right"
+  const [direction, cycleDirection] = useCycle<'left' | 'right'>(
+    'left',
+    'right'
   );
 
   const [changed, cycleChanged] = useCycle(false, true);
 
   useEffect(() => {
-    let timer: string | number | NodeJS.Timeout | undefined;
+    let timer: number | ReturnType<typeof setTimeout> | undefined;
 
     if (timer) clearTimeout(timer);
 
@@ -114,15 +119,15 @@ const ArtistDetailsTopTracks = ({
     return () => clearTimeout(timer);
   }, [changed]);
 
-  const handleTrack = (direction: "left" | "right") => {
-    let timer: NodeJS.Timeout;
+  const handleTrack = (direction: 'left' | 'right') => {
+    let timer: ReturnType<typeof setTimeout>;
 
     if (topTracks && topTracks?.length > 1) {
-      cycleDirection(direction === "left" ? 0 : 1);
+      cycleDirection(direction === 'left' ? 0 : 1);
 
       timer = setTimeout(() => {
         cycleChanged(1);
-        setTopTrack(direction, "track");
+        setTopTrack(direction, 'track');
       }, 50);
     }
 
@@ -139,7 +144,7 @@ const ArtistDetailsTopTracks = ({
       <hr className="w-100 mt-1" />
       <div
         className={`item w-100 d-flex top-track-item justify-content-center align-items-center p-1 ${
-          !topTrack && "py-2"
+          !topTrack && 'py-2'
         }`}
       >
         <div className="d-flex justify-content-start small-arrow-div">
@@ -148,14 +153,14 @@ const ArtistDetailsTopTracks = ({
             custom={topTracks}
             whileHover="hover"
             whileTap="tap"
-            setAlbumOrTrack={() => handleTrack("left")}
+            setAlbumOrTrack={() => handleTrack('left')}
             testId="smallLeft"
             className={leftClasses}
           />
         </div>
         <motion.div
           className="d-flex align-items-center"
-          style={{ minWidth: "227px", height: "50px" }}
+          style={{ minWidth: '227px', height: '50px' }}
         >
           <AnimatePresence mode="wait">
             {!changed && (
@@ -172,7 +177,7 @@ const ArtistDetailsTopTracks = ({
             custom={topTracks}
             whileHover="hover"
             whileTap="tap"
-            setAlbumOrTrack={() => handleTrack("right")}
+            setAlbumOrTrack={() => handleTrack('right')}
             testId="smallRight"
             className={rightClasses}
           />

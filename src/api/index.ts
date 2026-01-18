@@ -1,28 +1,29 @@
-import axios from "axios";
-import { Buffer } from "buffer";
-import { AlbumDetailsType, ArtistsType } from "../types/types";
+import axios from 'axios';
+import { Buffer } from 'buffer';
 import {
-  SpotifyArtistDetailsSearchType,
-  SpotifyArtistsOrSongsSearchType,
-  SpotifyTokenFunctionType,
-} from "../types/types";
+  type AlbumDetailsType,
+  type ArtistsType,
+  type SpotifyArtistDetailsSearchType,
+  type SpotifyArtistsOrSongsSearchType,
+  type SpotifyTokenFunctionType,
+} from '../types/types';
 
-const clientId = process.env.REACT_APP_ID;
-const clientSecret = process.env.REACT_APP_SECRET;
+const clientId = import.meta.env.VITE_APP_ID;
+const clientSecret = import.meta.env.VITE_APP_SECRET;
 
 export const clientMix =
-  "Basic " + Buffer.from(clientId + ":" + clientSecret).toString("base64");
+  'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64');
 
 const spotifyToken = axios.create({
-  baseURL: "https://accounts.spotify.com/api/token",
+  baseURL: 'https://accounts.spotify.com/api/token',
   headers: { Authorization: clientMix },
 });
 
 const spotifyQuery = axios.create({
-  baseURL: "https://api.spotify.com/v1",
+  baseURL: 'https://api.spotify.com/v1',
 });
 
-const paramData = new URLSearchParams({ grant_type: "client_credentials" });
+const paramData = new URLSearchParams({ grant_type: 'client_credentials' });
 
 const spotifyTokenFunction: SpotifyTokenFunctionType = async (cancelToken) => {
   cancelToken.current = axios.CancelToken.source();
@@ -30,21 +31,21 @@ const spotifyTokenFunction: SpotifyTokenFunctionType = async (cancelToken) => {
   let promiseReturn: string | Error | null = null;
 
   try {
-    const { data } = await spotifyToken.post("", paramData, {
+    const { data } = await spotifyToken.post('', paramData, {
       cancelToken: cancelToken.current.token,
     });
 
     promiseReturn = `Bearer ${data.access_token}`;
   } catch (err) {
     if (axios.isCancel(err)) {
-      console.error("cancelled due to duplicate request", err);
+      console.error('cancelled due to duplicate request', err);
     }
 
     if (!axios.isCancel(err) && err instanceof Error) {
       promiseReturn = new Error(
         `Server error: ${err.message}, please search again`
       );
-      throw new Error("Issue retrieving token", err);
+      throw new Error('Issue retrieving token', err);
     }
   } finally {
     cancelToken.current = null;
@@ -104,11 +105,11 @@ export const spotifyArtistDetailsSearch: SpotifyArtistDetailsSearchType =
       setArtistDetails(responses[0].data, albums, topTracks);
     } catch (err) {
       if (axios.isCancel(err)) {
-        console.log("cancelled due to duplicate request", err);
+        console.log('cancelled due to duplicate request', err);
       }
 
       if (!axios.isCancel(err) && err instanceof Error) {
-        console.log("error", err);
+        console.log('error', err);
 
         const error = new Error(
           `Issue retrieving artist detail: ${err.message} please search again`
@@ -145,7 +146,7 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
     cancelToken.current = axios.CancelToken.source();
 
     try {
-      const { data } = await spotifyQuery.get("/search", {
+      const { data } = await spotifyQuery.get('/search', {
         cancelToken: cancelToken.current?.token,
         headers: {
           Authorization: accessToken,
@@ -153,7 +154,7 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
         params: { q: query, type: typeOfSearch, limit: 50 },
       });
 
-      if (searchType === "artists") {
+      if (searchType === 'artists') {
         const sortedArtists = data[searchType].items.sort(
           (a: ArtistsType, b: ArtistsType) =>
             b.followers.total - a.followers.total
@@ -165,11 +166,11 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
       }
     } catch (err) {
       if (axios.isCancel(err)) {
-        console.log("cancelled due to duplicate request", err);
+        console.log('cancelled due to duplicate request', err);
       }
 
       if (!axios.isCancel(err) && err instanceof Error) {
-        console.log("error", err);
+        console.log('error', err);
 
         const error = new Error(
           `Issue during search: ${err.message} please search again`

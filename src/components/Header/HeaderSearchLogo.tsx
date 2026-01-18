@@ -1,8 +1,8 @@
-import { ReactElement } from "react";
-import { NavLink } from "react-router-dom";
-import { motion, useMotionValue } from "framer-motion";
-import LandingCircles from "../landing/LandingCircles";
-import { useMediaQuery } from "../../hooks/MediaQueryHook";
+import { motion, useMotionValue } from 'motion/react';
+import { type ReactElement } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useMediaQuery } from '../../hooks/MediaQueryHook';
+import LandingCircles from '../landing/LandingCircles';
 
 const HeaderSearchLogo = (): ReactElement => {
   const is468 = useMediaQuery(468);
@@ -10,18 +10,18 @@ const HeaderSearchLogo = (): ReactElement => {
   const x = useMotionValue(0);
   const opacity = useMotionValue(0);
 
-  const color = useMotionValue("rgba(30, 215, 96)");
+  const color = useMotionValue('rgba(30, 215, 96)');
 
-  x.on("change", (latest) => {
+  x.on('change', (latest) => {
     if (Math.round(latest) >= 45) {
-      color.set("rgba(30, 215, 96)");
+      color.set('rgba(30, 215, 96)');
     } else {
-      color.set("rgba(30, 215, 96, 0.5)");
+      color.set('rgba(30, 215, 96, 0.5)');
     }
   });
 
   return (
-    <NavLink className="text-uppercase text-decoration-none" to={"/search"}>
+    <NavLink className="text-uppercase text-decoration-none" to={'/search'}>
       <motion.div
         style={{ scale: is468 ? 0.8 : 0.9, maxWidth: is468 ? 240 : 260 }}
         whileHover={{ scale: is468 ? 0.85 : 0.95 }}
@@ -84,7 +84,7 @@ const HeaderSearchLogo = (): ReactElement => {
           style={{ color }}
           className="spotify icon mb-1 pe-1 spotifyIconList"
         ></motion.i>
-        <LandingCircles x={x} containerStyle={{ bottom: 0, right: "45px" }} />
+        <LandingCircles x={x} containerStyle={{ bottom: 0, right: '45px' }} />
       </motion.div>
     </NavLink>
   );

@@ -1,27 +1,27 @@
 import {
   AnimatePresence,
-  Cycle,
-  Variants,
+  type Cycle,
+  type Variants,
   motion,
   useMotionValue,
   useTransform,
-} from "framer-motion";
-import LandingCircles from "./LandingCircles";
-import { ReactElement } from "react";
+} from 'motion/react';
+import { type ReactElement } from 'react';
+import LandingCircles from './LandingCircles';
 
 const boxVariants: Variants = {
   hidden: {
     opacity: 0,
     y: -100,
-    border: "1px solid rgb(255, 255, 255, 0)",
+    border: '1px solid rgb(255, 255, 255, 0)',
   },
   visible: {
     opacity: 1,
     y: [null, 0],
-    border: "1px solid rgb(255,255,255, .7)",
+    border: '1px solid rgb(255,255,255, .7)',
     transition: {
       duration: 0.3,
-      when: "beforeChildren",
+      when: 'beforeChildren',
       staggerChildren: 0.1,
     },
   },
@@ -42,13 +42,13 @@ const LandingPowered = ({
   poweredCycle: string;
 }): ReactElement => {
   const x = useMotionValue(0);
-  const color = useMotionValue("rgba(30, 215, 96)");
+  const color = useMotionValue('rgba(30, 215, 96)');
 
-  x.on("change", (latest) => {
+  x.on('change', (latest) => {
     if (Math.round(latest) >= 45) {
-      color.set("rgba(30, 215, 96)");
+      color.set('rgba(30, 215, 96)');
     } else {
-      color.set("rgba(30, 215, 96, 0.5)");
+      color.set('rgba(30, 215, 96, 0.5)');
     }
   });
 

@@ -1,37 +1,37 @@
-import { ReactElement } from "react";
-import { Variants, motion } from "framer-motion";
-import { AlbumDetailsType } from "../../types/types";
-import ImageCard from "../ImageCard";
-import ImageHeader from "../ImageHeader";
-import "./styles/artist-details.css";
+import { type Variants, motion } from 'motion/react';
+import { type ReactElement } from 'react';
+import { type AlbumDetailsType } from '../../types/types';
+import ImageCard from '../ImageCard';
+import ImageHeader from '../ImageHeader';
+import './styles/artist-details.css';
 
 type ArtistDetailsAlbumCardPropsType = {
   album: AlbumDetailsType | null;
-  direction: "left" | "right";
+  direction: 'left' | 'right';
 };
 
 export const trackAndAlbumVariants: Variants = {
   initial: (direction) => ({
     scale: 0.9,
     opacity: 0,
-    x: direction === "left" ? 80 : -80,
+    x: direction === 'left' ? 80 : -80,
   }),
   animate: {
     opacity: 1,
     x: 0,
     scale: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 120,
       duration: 0.1,
     },
   },
   exit: (direction) => ({
     opacity: 0,
-    x: direction === "left" ? [null, -80] : [null, 80],
+    x: direction === 'left' ? [null, -80] : [null, 80],
     scale: [null, 0.9],
     transition: {
-      type: "tween",
+      type: 'tween',
       duration: 0.15,
     },
   }),

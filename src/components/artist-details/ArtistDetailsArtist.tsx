@@ -1,11 +1,11 @@
-import { ReactNode, ReactElement } from "react";
-import { ArtistsType } from "../../types/types";
-import { NavigateFunction } from "react-router-dom";
-import { AnimatePresence, Variants, motion } from "framer-motion";
-import Spotify from "../Spotify";
-import Exit from "../Exit";
-import Seperator from "../Seperator";
-import "./styles/artist-details.css";
+import { AnimatePresence, type Variants, motion } from 'motion/react';
+import { type ReactElement, type ReactNode } from 'react';
+import { type NavigateFunction } from 'react-router-dom';
+import { type ArtistsType } from '../../types/types';
+import Exit from '../Exit';
+import Seperator from '../Seperator';
+import Spotify from '../Spotify';
+import './styles/artist-details.css';
 
 type PropTypes = {
   artistDetail: ArtistsType;
@@ -17,17 +17,17 @@ type PropTypes = {
 
 const leftVariants: Variants = {
   initial: {
-    width: "50%",
-    height: "100%",
+    width: '50%',
+    height: '100%',
     opacity: 0,
   },
   animate: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     opacity: 1,
     transition: {
-      type: "tween",
-      ease: "easeInOut",
+      type: 'tween',
+      ease: 'easeInOut',
       delay: 1.5,
       duration: 1,
       opacity: {
@@ -42,8 +42,8 @@ const leftVariants: Variants = {
     transition: {
       delay: 0.5,
       duration: 0.5,
-      type: "tween",
-      ease: "easeInOut",
+      type: 'tween',
+      ease: 'easeInOut',
     },
   },
 };
@@ -55,7 +55,7 @@ const headerVariants: Variants = {
   animate: {
     opacity: 1,
     transition: {
-      type: "tween",
+      type: 'tween',
       duration: 1,
     },
   },
@@ -63,22 +63,22 @@ const headerVariants: Variants = {
     x: -70,
     opacity: 0,
     transition: {
-      type: "tween",
-      ease: "easeInOut",
+      type: 'tween',
+      ease: 'easeInOut',
     },
   },
 };
 
 const artistInfoVariants: Variants = {
   initial: {
-    display: "none",
+    display: 'none',
   },
   animate: (isOneColumn) => ({
-    display: "grid",
+    display: 'grid',
     transition: {
       delay: isOneColumn ? 1.2 : 1.7,
       duration: 0.5,
-      when: "beforeChildren",
+      when: 'beforeChildren',
       staggerChildren: 0.4,
     },
   }),
@@ -121,8 +121,8 @@ const ArtistDetailsArtist = ({
       <Spotify className="pe-5 me-3" url={external_urls.spotify} />
       <Seperator sharp={false} width="1px" height="100%" />
       <h2 className="fs-5 pt-1 ps-4">
-        {followers.total?.toLocaleString("US")}
-        {followers.total === 1 ? " follower" : " followers"}
+        {followers.total?.toLocaleString('US')}
+        {followers.total === 1 ? ' follower' : ' followers'}
       </h2>
     </div>
   );
@@ -152,7 +152,7 @@ const ArtistDetailsArtist = ({
           className="d-flex flex-column align-items-center justify-content-center artist-heading"
         >
           <div className="w-100 d-flex justify-content-end pe-5">
-            <Exit handleClick={() => navigate("artists")} size={1} />
+            <Exit handleClick={() => navigate('artists')} size={1} />
           </div>
           {renderArtistHeader}
           <hr className="w-50 mt-1" />

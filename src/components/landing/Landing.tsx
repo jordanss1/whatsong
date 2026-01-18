@@ -1,27 +1,27 @@
 import {
-  Variants,
+  type Variants,
   motion,
   useAnimate,
   useCycle,
   usePresence,
-} from "framer-motion";
-import { ReactElement, useContext, useEffect, useState } from "react";
-import SearchContext from "../../contexts/SearchStore";
-import { useMediaQuery } from "../../hooks/MediaQueryHook";
-import Header from "../Header/Header";
-import LandingButton from "./LandingButton";
-import LandingPowered from "./LandingPowered";
-import LandingScroll from "./LandingScroll";
-import "./styles/landing.css";
+} from 'motion/react';
+import { type ReactElement, useContext, useEffect, useState } from 'react';
+import SearchContext from '../../contexts/SearchStore';
+import { useMediaQuery } from '../../hooks/MediaQueryHook';
+import Header from '../Header/Header';
+import LandingButton from './LandingButton';
+import LandingPowered from './LandingPowered';
+import LandingScroll from './LandingScroll';
+import './styles/landing.css';
 
 const mainVariants: Variants = {
   initial: {
     background:
-      "radial-gradient(circle at 0 0,rgb(0, 5, 133, .5)5%, rgb(255,255,255, 0),transparent 90%)",
+      'radial-gradient(circle at 0 0,rgb(0, 5, 133, .5)5%, rgb(255,255,255, 0),transparent 90%)',
   },
   intro: (intro) => ({
     background:
-      "radial-gradient(circle at 0 70px,rgb(0, 5, 133, 1) 10%, rgb(255,255,255, 0),transparent 90%)",
+      'radial-gradient(circle at 0 70px,rgb(0, 5, 133, 1) 10%, rgb(255,255,255, 0),transparent 90%)',
     transition: {
       duration: intro ? 1.5 : 0.5,
       delay: intro ? 0.5 : 0,
@@ -29,7 +29,7 @@ const mainVariants: Variants = {
   }),
   prepare: {
     background:
-      "radial-gradient(circle at 0 -100px,rgb(0, 5, 133, 1) 1%, rgb(255,255,255, 0),transparent 99%)",
+      'radial-gradient(circle at 0 -100px,rgb(0, 5, 133, 1) 1%, rgb(255,255,255, 0),transparent 99%)',
     transition: {
       duration: 0.2,
     },
@@ -39,10 +39,10 @@ const mainVariants: Variants = {
 const mainLeaveVariants: Variants = {
   blastOff: {
     background: [
-      "radial-gradient(circle at 0px 70px, rgb(0, 5, 133, 1) 0%, rgb(0, 5, 133, 1) 10%,rgb(255,255,255, 1) 11%,transparent 12%)",
-      "radial-gradient(circle at 0px 170px, rgb(0, 5, 133, 0) 20%, rgb(0, 5, 133, .5) 30%,rgb(255,255,255, 1) 31%,transparent 32%)",
-      "radial-gradient(circle at 0px 170px, rgb(0, 5, 133, 0) 30%, rgb(0, 5, 133, 0) 35%,rgb(255,255,255, 1) 36%,transparent 35%)",
-      "radial-gradient(circle at 0px 170px, rgb(0, 5, 133, 0) 60%, rgb(0, 5, 133, 0) 80%,rgb(255,255,255, 0) 81%,transparent 82%)",
+      'radial-gradient(circle at 0px 70px, rgb(0, 5, 133, 1) 0%, rgb(0, 5, 133, 1) 10%,rgb(255,255,255, 1) 11%,transparent 12%)',
+      'radial-gradient(circle at 0px 170px, rgb(0, 5, 133, 0) 20%, rgb(0, 5, 133, .5) 30%,rgb(255,255,255, 1) 31%,transparent 32%)',
+      'radial-gradient(circle at 0px 170px, rgb(0, 5, 133, 0) 30%, rgb(0, 5, 133, 0) 35%,rgb(255,255,255, 1) 36%,transparent 35%)',
+      'radial-gradient(circle at 0px 170px, rgb(0, 5, 133, 0) 60%, rgb(0, 5, 133, 0) 80%,rgb(255,255,255, 0) 81%,transparent 82%)',
     ],
     transition: {
       duration: 2,
@@ -57,8 +57,8 @@ const Landing = (): ReactElement => {
 
   const is600 = useMediaQuery(600);
 
-  const [mainCycle, cycleMain] = useCycle("intro", "prepare", "blastOff");
-  const [poweredCycle, cyclePowered] = useCycle("hidden", "visible");
+  const [mainCycle, cycleMain] = useCycle('intro', 'prepare', 'blastOff');
+  const [poweredCycle, cyclePowered] = useCycle('hidden', 'visible');
   const [isPresent, safeToRemove] = usePresence();
   const [scope, animate] = useAnimate();
 
@@ -69,7 +69,7 @@ const Landing = (): ReactElement => {
 
   useEffect(() => {
     if (finalAnimation) {
-      navigate("/search");
+      navigate('/search');
     }
   }, [finalAnimation]);
 
@@ -78,12 +78,12 @@ const Landing = (): ReactElement => {
       const exitAnimation = async () => {
         cycleMain(2);
 
-        const calcX = is600 ? "calc(100vw - 65%)" : "calc(100vw - 90%)";
+        const calcX = is600 ? 'calc(100vw - 65%)' : 'calc(100vw - 90%)';
 
         await animate(
-          ".landing-content",
+          '.landing-content',
           {
-            x: ["calc(100vw - 100%)", calcX, calcX, "calc(100vw - 0%)"],
+            x: ['calc(100vw - 100%)', calcX, calcX, 'calc(100vw - 0%)'],
 
             opacity: [1, 1, 0.3, 0],
           },
@@ -101,7 +101,7 @@ const Landing = (): ReactElement => {
   }, [isPresent]);
 
   const handleHover = (hovered: boolean) => {
-    if (mainCycle === "intro" && intro && hovered) {
+    if (mainCycle === 'intro' && intro && hovered) {
       setIntro(false);
       cyclePowered(1);
     }

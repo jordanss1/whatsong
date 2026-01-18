@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { motion } from "framer-motion";
+import { motion } from 'motion/react';
+import { type ReactElement } from 'react';
 
 type CircularImagePropsType = {
   image?: string;
@@ -15,7 +15,7 @@ const CircularImage = ({
   iconSize,
 }: CircularImagePropsType): ReactElement => {
   size = size ?? 2;
-  icon = icon ?? "fa-solid fa-user";
+  icon = icon ?? 'fa-solid fa-user';
 
   if (image) {
     return (

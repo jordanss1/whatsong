@@ -1,9 +1,9 @@
-import { ReactElement, useContext, useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import Caret from "../Caret";
-import Magnifier from "../Magnifier";
-import SearchContext from "../../contexts/SearchState";
-import "./styles/searchbar.css";
+import { AnimatePresence, motion } from 'motion/react';
+import { type ReactElement, useContext, useEffect, useState } from 'react';
+import SearchContext from '../../contexts/SearchState';
+import Caret from '../Caret';
+import Magnifier from '../Magnifier';
+import './styles/searchbar.css';
 
 type SearchButtonPropsTypes = {
   searchTerm?: string;
@@ -25,7 +25,7 @@ const SearchButton = ({
   x = x ?? 0;
 
   const classes1 =
-    searchTerm === undefined ? "search-button-nav" : "search-button";
+    searchTerm === undefined ? 'search-button-nav' : 'search-button';
 
   useEffect(() => {
     if (!modal && searchTerm === undefined) setClicked(false);

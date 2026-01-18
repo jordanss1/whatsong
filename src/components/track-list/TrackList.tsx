@@ -1,28 +1,28 @@
 import {
   AnimatePresence,
-  Cycle,
+  type Cycle,
   motion,
   useCycle,
   useMotionValue,
   useScroll,
-  Variants,
-} from "framer-motion";
+  type Variants,
+} from 'framer-motion';
 import {
-  MutableRefObject,
+  type RefObject,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useRef,
-} from "react";
-import SearchContext from "../../contexts/SearchState";
-import { useMediaQuery, useScreenSize } from "../../hooks/MediaQueryHook";
-import { TopTracksDetailsType } from "../../types/types";
-import Header from "../Header/Header";
-import "./styles/track-list.css";
-import TrackListGrid from "./tracklist-grid/TrackListGrid";
-import TrackListGridSearchBar from "./tracklist-grid/TrackListGridSearchBar";
-import TrackListSelectedContainer from "./tracklist-selected/TrackListSelectedContainer";
+} from 'react';
+import SearchContext from '../../contexts/SearchState';
+import { useMediaQuery, useScreenSize } from '../../hooks/MediaQueryHook';
+import { type TopTracksDetailsType } from '../../types/types';
+import Header from '../Header/Header';
+import './styles/track-list.css';
+import TrackListGrid from './tracklist-grid/TrackListGrid';
+import TrackListGridSearchBar from './tracklist-grid/TrackListGridSearchBar';
+import TrackListSelectedContainer from './tracklist-selected/TrackListSelectedContainer';
 
 export type HandleSelectedTrackType = (
   track?: Required<TopTracksDetailsType>
@@ -31,32 +31,32 @@ export type HandleSelectedTrackType = (
 const trackContainerVariants: Variants = {
   initial: {
     background:
-      "radial-gradient(circle at 110% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at -10% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%)",
+      'radial-gradient(circle at 110% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at -10% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%)',
   },
   animate: {
     background:
-      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%)",
+      'radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%)',
     transition: {
       delay: 0.5,
       duration: 0.5,
       staggerChildren: 0.1,
-      when: "beforeChildren",
+      when: 'beforeChildren',
     },
   },
   exit: {
     background: [
-      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%)",
-      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)",
-      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
+      'radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%)',
+      'radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)',
+      'radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)',
     ],
     transition: {
       duration: 0.5,
-      when: "afterChildren",
+      when: 'afterChildren',
       staggerChildren: 0.01,
       background: {
         duration: 1,
-        type: "tween",
-        ease: "easeInOut",
+        type: 'tween',
+        ease: 'easeInOut',
       },
     },
   },
@@ -65,7 +65,7 @@ const trackContainerVariants: Variants = {
 export type HandleDragType = (
   e: React.PointerEvent,
   cycleBall: Cycle,
-  ref: MutableRefObject<boolean>,
+  ref: RefObject<boolean>,
   end?: boolean,
   track?: Required<TopTracksDetailsType>
 ) => void;
@@ -91,9 +91,9 @@ const TrackList = () => {
 
   const { scrollY } = useScroll();
 
-  const [headerCycle, cycleHeader] = useCycle("animate", "transparent");
+  const [headerCycle, cycleHeader] = useCycle('animate', 'transparent');
   const [dragCycle, cycleDrag] = useCycle(false, true);
-  const [expandCycle, cycleExpand] = useCycle("normal", "expanded");
+  const [expandCycle, cycleExpand] = useCycle('normal', 'expanded');
 
   const ballX = useMotionValue(100000);
   const ballY = useMotionValue(100000);
@@ -105,7 +105,7 @@ const TrackList = () => {
   const ballCoords = useMemo(() => coords, [x, y]);
 
   useEffect(() => {
-    scrollY.on("change", async () => {
+    scrollY.on('change', async () => {
       if (scrollY.get() > 55) {
         cycleHeader(1);
       } else {
@@ -124,9 +124,9 @@ const TrackList = () => {
   }, [modal, selectedTrack]);
 
   useEffect(() => {
-    let tracks = sessionStorage.getItem("tracks");
+    let tracks = sessionStorage.getItem('tracks');
 
-    if (tracks && typeof tracks === "string" && !noResults) {
+    if (tracks && typeof tracks === 'string' && !noResults) {
       setArtistsOrTracks(undefined, JSON.parse(tracks));
     }
   }, [noResults]);
@@ -167,7 +167,7 @@ const TrackList = () => {
         : top > 235 && top < 422;
 
       if (ref.current) {
-        document.documentElement.addEventListener("touchmove", handleTouch);
+        document.documentElement.addEventListener('touchmove', handleTouch);
         ballX.set(left);
         ballY.set(top);
         cycleBall(1);
@@ -175,14 +175,14 @@ const TrackList = () => {
       }
 
       if (end && xDone && yDone) {
-        document.documentElement.removeEventListener("touchmove", handleTouch);
+        document.documentElement.removeEventListener('touchmove', handleTouch);
         cycleExpand(1);
         cycleBall(0);
         handleSelectedTrack(track);
       }
 
       if (end && (!xDone || !yDone)) {
-        document.documentElement.removeEventListener("touchmove", handleTouch);
+        document.documentElement.removeEventListener('touchmove', handleTouch);
         cycleBall(0);
         cycleDrag(0);
       }
@@ -190,21 +190,21 @@ const TrackList = () => {
     [ballX, ballY, cycleDrag, cycleExpand]
   );
 
-  const gridVariants = {
+  const gridVariants: Variants = {
     normal: {
-      gridTemplateColumns: "250px auto",
+      gridTemplateColumns: '250px auto',
       transition: {
-        type: "tween",
+        type: 'tween',
         duration: 1,
-        ease: "easeInOut",
+        ease: 'easeInOut',
       },
     },
     expanded: {
-      gridTemplateColumns: "400px auto",
+      gridTemplateColumns: '400px auto',
       transition: {
-        type: "tween",
+        type: 'tween',
         duration: 1,
-        ease: "easeInOut",
+        ease: 'easeInOut',
       },
     },
   };
@@ -224,7 +224,7 @@ const TrackList = () => {
           <div className="filler-div" />
           <motion.section
             animate={
-              expandCycle === "normal"
+              expandCycle === 'normal'
                 ? gridVariants.normal
                 : gridVariants.expanded
             }

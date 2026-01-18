@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Variants, motion } from "framer-motion";
+import { type Variants, motion } from 'motion/react';
+import { type ReactElement } from 'react';
 
 const containerVarients: Variants = {
   initial: { opacity: 1 },
@@ -28,7 +28,7 @@ const boxVariants: Variants = {
     scale: 1,
     transition: {
       duration: 1,
-      when: "beforeChildren",
+      when: 'beforeChildren',
     },
   },
 };

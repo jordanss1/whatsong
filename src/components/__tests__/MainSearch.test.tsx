@@ -1,30 +1,30 @@
-import { ReactNode } from "react";
-import { waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import userEvent from "@testing-library/user-event";
-import { SearchStore } from "../../contexts/SearchStore";
-import MainSearch from "../main-search/MainSearch";
-import ArtistList from "../artist-list/ArtistList";
-import TrackList from "../track-list/TrackList";
-import server from "../../mocks/server";
-import { HandlerUnion, artistAndTrackHandlers } from "../../mocks/handlers";
+import '@testing-library/jest-dom';
+import { waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import 'intersection-observer';
+import { type ReactNode } from 'react';
+import { history } from '../../../test-utils';
+import {
+  NavigationAndStore,
+  customRender,
+} from '../../../test-utils/test-utils';
+import App from '../../App';
+import { SearchStore } from '../../contexts/SearchStore';
+import {
+  AllTestResultsUnionType,
+  artistResultsNone,
+  songResults,
+} from '../../mocks/api';
+import { HandlerUnion, artistAndTrackHandlers } from '../../mocks/handlers';
+import server from '../../mocks/server';
 import {
   ArtistAndTrackHandlerDataType,
   ArtistAndTrackHandlersType,
   ArtistDetailsHandlerDataType,
-} from "../../types/types";
-import { history } from "../../../test-utils";
-import {
-  artistResultsNone,
-  songResults,
-  AllTestResultsUnionType,
-} from "../../mocks/api";
-import {
-  NavigationAndStore,
-  customRender,
-} from "../../../test-utils/test-utils";
-import "intersection-observer";
-import App from "../App";
+} from '../../types/types';
+import ArtistList from '../artist-list/ArtistList';
+import MainSearch from '../main-search/MainSearch';
+import TrackList from '../track-list/TrackList';
 
 type ChangeHandlerFuncType = (
   arrayOrError: AllTestResultsUnionType,
@@ -45,10 +45,10 @@ export const renderComponentSearched = async (
   query: (testId: string) => HTMLElement,
   button: string
 ): Promise<void> => {
-  const input = query("main-search-input") as HTMLInputElement;
+  const input = query('main-search-input') as HTMLInputElement;
   const submitButton = query(button) as HTMLButtonElement;
 
-  await user.type(input, "hi");
+  await user.type(input, 'hi');
 
   await user.click(submitButton);
 };
@@ -60,9 +60,9 @@ export const chooseCategory = async (
 ) => {
   await waitFor(
     async () => {
-      let input = await findBy("main-search-input");
-      let redoButton = getBy("redo-button");
-      let category = getBy("redo-category");
+      let input = await findBy('main-search-input');
+      let redoButton = getBy('redo-button');
+      let category = getBy('redo-category');
 
       expect(input).toBeInTheDocument();
       expect(redoButton).toBeInTheDocument();
@@ -75,7 +75,7 @@ export const chooseCategory = async (
 const isHandlerArtistAndTrackHandler = (
   handler: HandlerUnion
 ): handler is ArtistAndTrackHandlersType => {
-  return handler.name === "artistAndTrackHandlers";
+  return handler.name === 'artistAndTrackHandlers';
 };
 
 export const changeHandlers: ChangeHandlerFuncType = (
@@ -91,15 +91,15 @@ export const changeHandlers: ChangeHandlerFuncType = (
   }
 };
 
-beforeEach(() => history.push("/search"));
+beforeEach(() => history.push('/search'));
 
-test("Artists and Songs button appear and when Artists is selected, the user is shown the input with artists category", async () => {
+test('Artists and Songs button appear and when Artists is selected, the user is shown the input with artists category', async () => {
   const { getByRole, getByTestId, findByTestId } = customRender(
     WrapperComponent,
     <MainSearch />
   );
 
-  const artistsButton = getByRole("button", { name: "Artists" });
+  const artistsButton = getByRole('button', { name: 'Artists' });
 
   expect(artistsButton).toBeInTheDocument();
 
@@ -108,13 +108,13 @@ test("Artists and Songs button appear and when Artists is selected, the user is 
   await chooseCategory(findByTestId, getByTestId, /^artists$/);
 });
 
-test("Artists and Songs button appear and when Songs is selected, the user is shown the input with songs category", async () => {
+test('Artists and Songs button appear and when Songs is selected, the user is shown the input with songs category', async () => {
   const { getByRole, getByTestId, findByTestId } = customRender(
     WrapperComponent,
     <MainSearch />
   );
 
-  const songsButton = getByRole("button", { name: "Songs" });
+  const songsButton = getByRole('button', { name: 'Songs' });
 
   expect(songsButton).toBeInTheDocument();
 
@@ -123,13 +123,13 @@ test("Artists and Songs button appear and when Songs is selected, the user is sh
   await chooseCategory(findByTestId, getByTestId, /^songs$/);
 });
 
-test("After the user is shown the category they originally selected, when they press the redo button, they are taken back to change the category", async () => {
+test('After the user is shown the category they originally selected, when they press the redo button, they are taken back to change the category', async () => {
   const { getByRole, getByTestId, findByTestId } = customRender(
     WrapperComponent,
     <MainSearch />
   );
 
-  const artistsButton = getByRole("button", { name: "Artists" });
+  const artistsButton = getByRole('button', { name: 'Artists' });
 
   expect(artistsButton).toBeInTheDocument();
 
@@ -137,18 +137,18 @@ test("After the user is shown the category they originally selected, when they p
 
   await chooseCategory(findByTestId, getByTestId, /^artists$/);
 
-  await user.click(getByTestId("redo-button"));
+  await user.click(getByTestId('redo-button'));
 
   await waitFor(
     async () => {
-      expect(getByRole("button", { name: "Artists" })).toBeInTheDocument();
+      expect(getByRole('button', { name: 'Artists' })).toBeInTheDocument();
     },
     { timeout: 1500 }
   );
 });
 
-describe("All possibilities where artists are returned from the Search component", () => {
-  it("When a search term is entered, submitted, the ArtistList component is mounted and the pathname is /artists and artists are returned and the user can see them", async () => {
+describe('All possibilities where artists are returned from the Search component', () => {
+  it('When a search term is entered, submitted, the ArtistList component is mounted and the pathname is /artists and artists are returned and the user can see them', async () => {
     const { getByTestId, getByRole, findByTestId, findAllByTitle } =
       customRender(
         WrapperComponent,
@@ -158,7 +158,7 @@ describe("All possibilities where artists are returned from the Search component
         </>
       );
 
-    const artistsButton = getByRole("button", { name: "Artists" });
+    const artistsButton = getByRole('button', { name: 'Artists' });
 
     expect(artistsButton).toBeInTheDocument();
 
@@ -166,24 +166,24 @@ describe("All possibilities where artists are returned from the Search component
 
     await chooseCategory(findByTestId, getByTestId, /^artists$/);
 
-    expect(history.location.pathname).toBe("/search");
+    expect(history.location.pathname).toBe('/search');
 
-    await renderComponentSearched(getByTestId, "search-button");
+    await renderComponentSearched(getByTestId, 'search-button');
 
     await waitFor(
       () => {
-        expect(history.location.pathname).toBe("/artists");
+        expect(history.location.pathname).toBe('/artists');
       },
       { timeout: 1500 }
     );
 
     expect(
-      (await findAllByTitle("View artist profile")) as HTMLDivElement[]
+      (await findAllByTitle('View artist profile')) as HTMLDivElement[]
     ).toHaveLength(10);
   });
 });
 
-describe("All possibilities where song results are returned from Search component", () => {
+describe('All possibilities where song results are returned from Search component', () => {
   beforeEach(() => {
     changeHandlers(songResults, artistAndTrackHandlers);
   });
@@ -198,7 +198,7 @@ describe("All possibilities where song results are returned from Search componen
         </>
       );
 
-    const songsButton = getByRole("button", { name: "Songs" });
+    const songsButton = getByRole('button', { name: 'Songs' });
 
     expect(songsButton).toBeInTheDocument();
 
@@ -206,22 +206,22 @@ describe("All possibilities where song results are returned from Search componen
 
     await chooseCategory(findByTestId, getByTestId, /^songs$/);
 
-    expect(history.location.pathname).toBe("/search");
+    expect(history.location.pathname).toBe('/search');
 
-    await renderComponentSearched(getByTestId, "search-button");
+    await renderComponentSearched(getByTestId, 'search-button');
 
     await waitFor(() => {
-      expect(history.location.pathname).toBe("/tracks");
+      expect(history.location.pathname).toBe('/tracks');
     });
 
-    const cards = await findAllByTestId("song-item");
+    const cards = await findAllByTestId('song-item');
 
     expect(cards).toHaveLength(5);
   });
 });
 
 describe("All failed network requests and 'no-results from search' modals", () => {
-  it("Failed network request for post request for token shows Modal with error message", async () => {
+  it('Failed network request for post request for token shows Modal with error message', async () => {
     const { getByRole, findByTestId, getByTestId } = customRender(
       WrapperComponent,
       <>
@@ -229,25 +229,25 @@ describe("All failed network requests and 'no-results from search' modals", () =
       </>
     );
 
-    const artistsButton = getByRole("button", { name: "Artists" });
+    const artistsButton = getByRole('button', { name: 'Artists' });
 
     expect(artistsButton).toBeInTheDocument();
 
-    changeHandlers(new Error("post error"), artistAndTrackHandlers);
+    changeHandlers(new Error('post error'), artistAndTrackHandlers);
 
     await user.click(artistsButton);
 
     await chooseCategory(findByTestId, getByTestId, /^artists$/);
 
-    await renderComponentSearched(getByTestId, "search-button");
+    await renderComponentSearched(getByTestId, 'search-button');
 
-    expect(await findByTestId("error-message")).toHaveTextContent(
+    expect(await findByTestId('error-message')).toHaveTextContent(
       /^Server error: Request failed with status code 500, please search again$/
     );
   });
 });
 
-it("Successful post request but unsuccessful get request for artists/songs", async () => {
+it('Successful post request but unsuccessful get request for artists/songs', async () => {
   const { getByRole, findByTestId, getByTestId, queryByTestId } = customRender(
     WrapperComponent,
     <>
@@ -255,24 +255,24 @@ it("Successful post request but unsuccessful get request for artists/songs", asy
     </>
   );
 
-  const songsButton = getByRole("button", { name: "Songs" });
+  const songsButton = getByRole('button', { name: 'Songs' });
 
   expect(songsButton).toBeInTheDocument();
 
-  changeHandlers(new Error("get error"), artistAndTrackHandlers);
+  changeHandlers(new Error('get error'), artistAndTrackHandlers);
 
   await user.click(songsButton);
 
   await chooseCategory(findByTestId, getByTestId, /^songs$/);
 
-  await renderComponentSearched(getByTestId, "search-button");
+  await renderComponentSearched(getByTestId, 'search-button');
 
-  expect(await findByTestId("error-message")).toHaveTextContent(
+  expect(await findByTestId('error-message')).toHaveTextContent(
     /^Issue during search: Request failed with status code 401 please search again$/
   );
 });
 
-it("When no results are returned from a search the user is shown the no results modal", async () => {
+it('When no results are returned from a search the user is shown the no results modal', async () => {
   const { getByRole, findByTestId, getByTestId } = customRender(
     WrapperComponent,
     <>
@@ -280,7 +280,7 @@ it("When no results are returned from a search the user is shown the no results 
     </>
   );
 
-  const artistsButton = getByRole("button", { name: "Artists" });
+  const artistsButton = getByRole('button', { name: 'Artists' });
 
   expect(artistsButton).toBeInTheDocument();
 
@@ -290,9 +290,9 @@ it("When no results are returned from a search the user is shown the no results 
 
   await chooseCategory(findByTestId, getByTestId, /^artists$/);
 
-  await renderComponentSearched(getByTestId, "search-button");
+  await renderComponentSearched(getByTestId, 'search-button');
 
-  expect(await findByTestId("error-heading")).toHaveTextContent(
+  expect(await findByTestId('error-heading')).toHaveTextContent(
     /^No results found$/
   );
 });

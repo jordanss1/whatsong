@@ -1,17 +1,17 @@
+import { AnimatePresence, type Variants, motion } from 'motion/react';
 import {
-  ReactElement,
-  useEffect,
-  useContext,
-  useRef,
+  type ReactElement,
   useCallback,
-} from "react";
-import ArtistListGridCard from "./ArtistListGridCard";
-import Popout from "../popout/Popout";
-import { AnimatePresence, Variants, motion } from "framer-motion";
-import { ArtistsType } from "../../types/types";
-import SearchContext from "../../contexts/SearchState";
-import { useMediaQuery } from "../../hooks/MediaQueryHook";
-import "./styles/artist-list.css";
+  useContext,
+  useEffect,
+  useRef,
+} from 'react';
+import SearchContext from '../../contexts/SearchState';
+import { useMediaQuery } from '../../hooks/MediaQueryHook';
+import { type ArtistsType } from '../../types/types';
+import Popout from '../popout/Popout';
+import ArtistListGridCard from './ArtistListGridCard';
+import './styles/artist-list.css';
 
 type ArtistListGridPropsType = {
   artists: ArtistsType[];
@@ -23,25 +23,25 @@ const popoutContainerVariants: Variants = {
   hidden: {
     y: -50,
     opacity: 0,
-    backgroundColor: "rgba(0,0,0,0.2)",
+    backgroundColor: 'rgba(0,0,0,0.2)',
   },
   visible: {
-    padding: "20px",
-    borderRadius: "20px",
+    padding: '20px',
+    borderRadius: '20px',
     y: -100,
     x: 50,
     zIndex: 4,
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: 'rgba(0,0,0,0.5)',
     opacity: 1,
     scale: 1.2,
     transition: {
-      type: "tween",
-      ease: "easeOut",
+      type: 'tween',
+      ease: 'easeOut',
       duration: 0.5,
     },
   },
   exit: {
-    backgroundColor: "rgba(0,0,0,0)",
+    backgroundColor: 'rgba(0,0,0,0)',
     opacity: 0,
     transition: {
       duration: 0.2,
@@ -56,8 +56,8 @@ const popoutVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      ease: "easeOut",
-      type: "tween",
+      ease: 'easeOut',
+      type: 'tween',
       duration: 1,
       delay: 0.5,
     },
@@ -89,23 +89,23 @@ const ArtistListGrid = ({ artists }: ArtistListGridPropsType): ReactElement => {
 
   const idRef = useRef<string | null>(null);
 
-  const gridClass = artists.length < 6 ? "artist-grid-less" : "artist-grid";
+  const gridClass = artists.length < 6 ? 'artist-grid-less' : 'artist-grid';
 
   useEffect(() => {
-    const visited = localStorage.getItem("artist-visited");
+    const visited = localStorage.getItem('artist-visited');
 
     if (visited) return;
 
-    localStorage.setItem("artist-visited", "artist-visited");
+    localStorage.setItem('artist-visited', 'artist-visited');
     setTimeout(() => setPopout(true), 1200);
   }, []);
 
   useEffect(() => {
-    let timer: string | number | NodeJS.Timeout | undefined;
+    let timer: number | ReturnType<typeof setTimeout> | undefined;
 
     if (albums && topTracks && idRef.current && !error) {
       sessionStorage.setItem(
-        "artist-details",
+        'artist-details',
         JSON.stringify([artistDetail, albums, topTracks])
       );
 
@@ -126,18 +126,18 @@ const ArtistListGrid = ({ artists }: ArtistListGridPropsType): ReactElement => {
     <Popout
       variants={popoutVariants}
       style={{
-        width: is389 ? "150px" : "225px",
-        fontSize: is389 ? "12px" : "15px",
-        display: "flex",
-        flexDirection: "column",
-        padding: "15px",
-        gap: "10px",
+        width: is389 ? '150px' : '225px',
+        fontSize: is389 ? '12px' : '15px',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '15px',
+        gap: '10px',
       }}
     >
       <div>Click an artist to be taken to their details</div>
       <motion.button
         onClick={() => setPopout(false)}
-        whileHover={{ scale: 1.05, color: "rgb(255,255,255)" }}
+        whileHover={{ scale: 1.05, color: 'rgb(255,255,255)' }}
       >
         Ok!
       </motion.button>

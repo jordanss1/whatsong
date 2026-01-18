@@ -1,6 +1,10 @@
-import React, { CSSProperties } from "react";
-import { MotionStyle, MotionValue, Variants, motion } from "framer-motion";
-import { Style } from "util";
+import {
+  type MotionStyle,
+  MotionValue,
+  type Variants,
+  motion,
+} from 'framer-motion';
+import React, { CSSProperties } from 'react';
 
 const circle1Variants: Variants = {
   spinning: {
@@ -9,8 +13,8 @@ const circle1Variants: Variants = {
     opacity: [0, 0, 1, 1, 0],
     transition: {
       repeat: Infinity,
-      type: "tween",
-      ease: "easeInOut",
+      type: 'tween',
+      ease: 'easeInOut',
       duration: 3,
     },
   },
@@ -23,8 +27,8 @@ const circle2Variants: Variants = {
     opacity: [0, 0, 1, 1, 0],
     transition: {
       repeat: Infinity,
-      type: "tween",
-      ease: "easeInOut",
+      type: 'tween',
+      ease: 'easeInOut',
       duration: 3,
     },
   },

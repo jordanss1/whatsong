@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { MotionProps, motion } from "framer-motion";
+import { type MotionProps, motion } from 'motion/react';
+import { type ReactElement } from 'react';
 
 interface SeperatorPropsType extends MotionProps {
   width: string;
@@ -22,8 +22,8 @@ const Seperator = ({
   custom,
   className,
 }: SeperatorPropsType): ReactElement => {
-  const backgroundColor = color ?? "rgb(255,255,255)";
-  const borderRadius = sharp ? "0" : "10px";
+  const backgroundColor = color ?? 'rgb(255,255,255)';
+  const borderRadius = sharp ? '0' : '10px';
 
   return (
     <div>

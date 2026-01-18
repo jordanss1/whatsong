@@ -1,5 +1,5 @@
-import { ReactElement, useState, useEffect } from "react";
-import { Variants, motion, useCycle } from "framer-motion";
+import { type Variants, motion, useCycle } from 'motion/react';
+import { type ReactElement, useEffect, useState } from 'react';
 
 const containerVariants: Variants = {
   initial: {
@@ -10,7 +10,7 @@ const containerVariants: Variants = {
     y: 0,
     opacity: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 120,
       duration: 0.5,
     },
@@ -23,8 +23,8 @@ const containerVariants: Variants = {
           transition: {
             delay: 0.2,
             duration: 0.5,
-            ease: "easeInOut",
-            type: "tween",
+            ease: 'easeInOut',
+            type: 'tween',
           },
         }
       : {},
@@ -37,7 +37,7 @@ const textVariant: Variants = {
   hover: {
     x: -4,
     scale: 1.05,
-    color: "rgb(255, 255, 255)",
+    color: 'rgb(255, 255, 255)',
     transition: {
       duration: 0.2,
     },
@@ -52,10 +52,10 @@ const iconVariants: Variants = {
     scale: 1,
   },
   hover: {
-    color: "rgb(255, 255, 255)",
+    color: 'rgb(255, 255, 255)',
   },
   click: {
-    color: "rgb(255, 255, 255)",
+    color: 'rgb(255, 255, 255)',
     rotate: -90,
     x: -5,
     y: 4,
@@ -75,9 +75,9 @@ const MainSearchHeader = ({
   handleClick,
 }: MainSearchHeaderPropTypes): ReactElement => {
   const [confirmRedo, setConfirmRedo] = useState(false);
-  const [iconCycle, cycleIcon] = useCycle("animate", "click");
+  const [iconCycle, cycleIcon] = useCycle('animate', 'click');
 
-  category = category === "artist" ? "artists" : "songs";
+  category = category === 'artist' ? 'artists' : 'songs';
 
   useEffect(() => {
     setConfirmRedo(false);
@@ -99,12 +99,16 @@ const MainSearchHeader = ({
             cycleIcon(1);
           }}
           data-testid="redo-button"
-          className="redo d-flex"
+          className="redo d-flex align-items-center"
         >
-          <motion.div data-testid="redo-category" variants={textVariant} className="pe-2 redo-category">
+          <motion.div
+            data-testid="redo-category"
+            variants={textVariant}
+            className="pe-2  redo-category"
+          >
             {category}
           </motion.div>
-          <button className="redo-button">
+          <button className="redo-button p-1">
             <motion.i
               variants={iconVariants}
               animate={iconCycle}

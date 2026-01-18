@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { motion, Variants } from "framer-motion";
+import { motion, type Variants } from 'motion/react';
+import { type ReactElement } from 'react';
 
 type MagniferPropsType = {
   size: number;
@@ -12,7 +12,7 @@ const searchIconVariant: Variants = {
   animate: { opacity: 1, transition: { delay: 0.2 } },
   exit: { opacity: 0 },
   hover: {
-    color: "rgba(255, 255, 255)",
+    color: 'rgba(255, 255, 255)',
   },
 };
 

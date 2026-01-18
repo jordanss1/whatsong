@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { MotionProps, motion } from "framer-motion";
+import { type MotionProps, motion } from 'motion/react';
+import { type ReactElement } from 'react';
 
 interface SpotifyPropsType extends MotionProps {
   url?: string;
@@ -26,8 +26,8 @@ const Spotify = ({
       animate={animate}
       exit={exit}
       style={style}
-      title={url ? url : ""}
-      onClick={() => (url ? window.open(url, "_blank") : {})}
+      title={url ? url : ''}
+      onClick={() => (url ? window.open(url, '_blank') : {})}
       className={`spotify icon fs-${size} ${className}`}
       data-testid="spotify-icon"
     />

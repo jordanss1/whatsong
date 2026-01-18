@@ -1,20 +1,19 @@
-import React, { MutableRefObject } from "react";
-import { CancelTokenSource } from "axios";
-import { ArtistAndAlbumStateSetter } from "../hooks/DetailedArtistResultHooks";
+import { type CancelTokenSource } from 'axios';
 import {
-  ArtistResultsTestType,
-  SongResultsTestType,
-  AlbumAndTracksTestType,
-} from "../mocks/api";
-import { RestHandler, MockedRequest } from "msw";
-import { ArtistsAndTracksSetterType } from "../hooks/ArtistsAndTracksHook";
+  type Target,
+  type TargetAndTransition,
+  type VariantLabels,
+  type Variants,
+} from 'motion/react';
+import { type MockedRequest, type RestHandler } from 'msw';
+import React, { type RefObject } from 'react';
+import { type ArtistsAndTracksSetterType } from '../hooks/ArtistsAndTracksHook';
+import { type ArtistAndAlbumStateSetter } from '../hooks/DetailedArtistResultHooks';
 import {
-  Target,
-  VariantLabels,
-  AnimationControls,
-  TargetAndTransition,
-  Variants,
-} from "framer-motion";
+  type AlbumAndTracksTestType,
+  type ArtistResultsTestType,
+  type SongResultsTestType,
+} from '../mocks/api';
 
 export type ArtistsType = {
   external_urls: { spotify: string };
@@ -86,19 +85,19 @@ export type ArtistDetailsHandlerType = (
 
 export type SpotifyArtistDetailsSearchType = (
   id: string,
-  cancelToken: MutableRefObject<CancelTokenSource | null>,
+  cancelToken: RefObject<CancelTokenSource | null>,
   setArtistDetails: ArtistAndAlbumStateSetter,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => Promise<void>;
 
 export type SpotifyArtistsOrSongsSearchType = (
   query: string,
-  cancelToken: MutableRefObject<CancelTokenSource | null>,
+  cancelToken: RefObject<CancelTokenSource | null>,
   typeOfSearch: string,
   setArtistOrTracks: ArtistsAndTracksSetterType,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => void;
 
 export type SpotifyTokenFunctionType = (
-  CancelToken: MutableRefObject<CancelTokenSource | null>
+  CancelToken: RefObject<CancelTokenSource | null>
 ) => Promise<string | Error | null>;

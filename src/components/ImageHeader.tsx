@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { motion, MotionStyle } from "framer-motion";
+import { motion, type MotionStyle } from 'motion/react';
+import { type ReactElement } from 'react';
 
 type ImageHeaderPropsType = {
   motionStyle?: MotionStyle;

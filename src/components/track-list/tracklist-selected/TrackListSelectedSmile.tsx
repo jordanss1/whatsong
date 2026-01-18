@@ -1,12 +1,12 @@
-import { ReactElement, memo } from "react";
 import {
-  Variants,
-  motion,
   MotionValue,
-  useTransform,
+  type Variants,
+  motion,
   useMotionTemplate,
-} from "framer-motion";
-import { useMediaQuery, useScreenSize } from "../../../hooks/MediaQueryHook";
+  useTransform,
+} from 'motion/react';
+import { type ReactElement, memo } from 'react';
+import { useMediaQuery, useScreenSize } from '../../../hooks/MediaQueryHook';
 
 const svgSmileVariants: Variants = {
   initial: {
@@ -16,7 +16,7 @@ const svgSmileVariants: Variants = {
     y: is850 ? 20 : 40,
     transition: {
       duration: 0.3,
-      type: "spring",
+      type: 'spring',
       stiffness: 200,
     },
   }),
@@ -36,7 +36,7 @@ const borderSVGVariants: Variants = {
     y: is850 ? -150 : -130,
     transition: {
       duration: 0.3,
-      type: "spring",
+      type: 'spring',
       stiffness: 200,
     },
   }),
@@ -56,7 +56,7 @@ const smileVariants: Variants = {
     pathLength: 1,
     transition: {
       duration: 0.3,
-      type: "spring",
+      type: 'spring',
       stiffness: 200,
     },
   },
@@ -74,7 +74,7 @@ const borderVariants: Variants = {
   animate: {
     transition: {
       duration: 0.3,
-      type: "spring",
+      type: 'spring',
       stiffness: 200,
     },
   },

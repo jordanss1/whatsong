@@ -1,27 +1,27 @@
-import { ReactNode, ReactElement } from "react";
-import "@testing-library/jest-dom";
-import userEvent from "@testing-library/user-event";
-import { waitFor } from "@testing-library/react";
+import '@testing-library/jest-dom';
+import { waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import 'intersection-observer';
+import { type ReactNode, ReactElement } from 'react';
+import { history } from '../../../test-utils';
 import {
   NavigationAndStore,
   customRender,
-} from "../../../test-utils/test-utils";
-import App from "../App";
-import ArtistList from "../artist-list/ArtistList";
-import { SearchStore } from "../../contexts/SearchStore";
-import { history } from "../../../test-utils";
+} from '../../../test-utils/test-utils';
+import App from '../../App';
+import { SearchStore } from '../../contexts/SearchStore';
+import {
+  albumAndTracks,
+  artistResults,
+  artistResultsFull,
+  artistResultsNone,
+} from '../../mocks/api';
 import {
   artistAndTrackHandlers,
   artistDetailsHandler,
-} from "../../mocks/handlers";
-import {
-  artistResultsFull,
-  artistResults,
-  artistResultsNone,
-  albumAndTracks,
-} from "../../mocks/api";
-import { changeHandlers } from "./MainSearch.test";
-import "intersection-observer";
+} from '../../mocks/handlers';
+import ArtistList from '../artist-list/ArtistList';
+import { changeHandlers } from './MainSearch.test';
 
 type SearchComponentFuncType = (
   getByTestId: (testId: string) => HTMLElement
@@ -44,30 +44,30 @@ const user = userEvent.setup();
 export const searchSmallSearchBar: SearchComponentFuncType = async (
   getByTestId
 ) => {
-  const input = getByTestId("small-search-bar");
-  const button = getByTestId("search-button");
+  const input = getByTestId('small-search-bar');
+  const button = getByTestId('search-button');
 
-  await user.type(input, "hi");
+  await user.type(input, 'hi');
   await user.click(button);
 };
 
-describe("The ArtistList component on the /artists path", () => {
+describe('The ArtistList component on the /artists path', () => {
   beforeEach(() =>
     sessionStorage.setItem(
-      "artists",
+      'artists',
       JSON.stringify(artistResults.artists.items)
     )
   );
 
-  it("The input in ArtistList makes a search and returns artists", async () => {
-    history.push("/artists");
+  it('The input in ArtistList makes a search and returns artists', async () => {
+    history.push('/artists');
 
     const { findAllByTitle, getByTestId } = customRender(
       WrapperComponent,
       <ArtistList />
     );
 
-    expect(await findAllByTitle("View artist profile")).toHaveLength(10);
+    expect(await findAllByTitle('View artist profile')).toHaveLength(10);
 
     changeHandlers(artistResultsFull, artistAndTrackHandlers);
 
@@ -75,113 +75,113 @@ describe("The ArtistList component on the /artists path", () => {
 
     await waitFor(
       async () =>
-        expect(await findAllByTitle("View artist profile")).toHaveLength(37),
+        expect(await findAllByTitle('View artist profile')).toHaveLength(37),
       { timeout: 3000 }
     );
   });
 
-  it("The header is the correct version for the ArtistList/search pages", async () => {
-    history.push("/artists");
+  it('The header is the correct version for the ArtistList/search pages', async () => {
+    history.push('/artists');
 
     const { getByTestId, queryByTestId } = customRender(
       WrapperComponent,
       <App />
     );
 
-    expect(queryByTestId("header-landing")).not.toBeInTheDocument();
+    expect(queryByTestId('header-landing')).not.toBeInTheDocument();
 
-    expect(getByTestId("header-search")).toBeInTheDocument();
+    expect(getByTestId('header-search')).toBeInTheDocument();
   });
 
-  describe("Route and history testing on /artist path", () => {
+  describe('Route and history testing on /artist path', () => {
     beforeEach(() =>
       sessionStorage.setItem(
-        "artists",
+        'artists',
         JSON.stringify(artistResults.artists.items)
       )
     );
 
-    it("Clicking the Header component logo should route to /search path", async () => {
-      history.push("/artists");
+    it('Clicking the Header component logo should route to /search path', async () => {
+      history.push('/artists');
       const { getByTestId, queryByTestId } = customRender(
         WrapperComponent,
         <App />
       );
-      const header = getByTestId("header-search");
+      const header = getByTestId('header-search');
 
       expect(header).toBeInTheDocument();
 
-      expect(history.location.pathname).toBe("/artists");
+      expect(history.location.pathname).toBe('/artists');
 
       await user.click(header);
 
-      expect(history.location.pathname).toBe("/search");
+      expect(history.location.pathname).toBe('/search');
     });
 
-    it("Clicking on the artist card opens the /artist/:id path", async () => {
-      history.push("/artists");
+    it('Clicking on the artist card opens the /artist/:id path', async () => {
+      history.push('/artists');
 
       changeHandlers(albumAndTracks, artistDetailsHandler);
 
       const { getByText } = customRender(WrapperComponent, <App />);
 
-      expect(history.location.pathname).toBe("/artists");
+      expect(history.location.pathname).toBe('/artists');
 
-      await user.click(getByText("Test 1"));
+      await user.click(getByText('Test 1'));
 
       await waitFor(
-        () => expect(history.location.pathname).toBe("/artists/1"),
+        () => expect(history.location.pathname).toBe('/artists/1'),
         { timeout: 2000 }
       );
     });
   });
 
-  describe("Failed network request on ArtistList component on /artists path and no results from search shows modal with error", () => {
+  describe('Failed network request on ArtistList component on /artists path and no results from search shows modal with error', () => {
     beforeEach(() =>
       sessionStorage.setItem(
-        "artists",
+        'artists',
         JSON.stringify(artistResults.artists.items)
       )
     );
 
-    it("Failed request after clicking artist card to retrieve artist details", async () => {
-      history.push("/artists");
+    it('Failed request after clicking artist card to retrieve artist details', async () => {
+      history.push('/artists');
 
       const { findByTestId, getByText } = customRender(
         WrapperComponent,
         <App />
       );
 
-      changeHandlers(new Error("get error"), artistDetailsHandler);
+      changeHandlers(new Error('get error'), artistDetailsHandler);
 
-      expect(history.location.pathname).toBe("/artists");
+      expect(history.location.pathname).toBe('/artists');
 
-      await user.click(getByText("Test 1"));
+      await user.click(getByText('Test 1'));
 
-      expect(await findByTestId("error-message")).toHaveTextContent(
+      expect(await findByTestId('error-message')).toHaveTextContent(
         /^Issue retrieving artist detail: Request failed with status code 401 please search again$/
       );
     });
 
-    it("Failed request after using search input shows error modal on ArtistList component", async () => {
-      history.push("/artists");
+    it('Failed request after using search input shows error modal on ArtistList component', async () => {
+      history.push('/artists');
 
       const { findByTestId, getByTestId } = customRender(
         WrapperComponent,
         <App />
       );
 
-      changeHandlers(new Error("get error"), artistAndTrackHandlers);
+      changeHandlers(new Error('get error'), artistAndTrackHandlers);
 
       await searchSmallSearchBar(getByTestId);
 
-      expect(await findByTestId("error-message")).toHaveTextContent(
+      expect(await findByTestId('error-message')).toHaveTextContent(
         /^Issue during search: Request failed with status code 401 please search again$/
       );
     });
 
-    it("No results shows no results modal after using search input on ArtistList component", async () => {
-      history.push("/artists");
+    it('No results shows no results modal after using search input on ArtistList component', async () => {
+      history.push('/artists');
 
       const { findByTestId, getByTestId } = customRender(
         WrapperComponent,
@@ -192,7 +192,7 @@ describe("The ArtistList component on the /artists path", () => {
 
       await searchSmallSearchBar(getByTestId);
 
-      expect(await findByTestId("error-heading")).toHaveTextContent(
+      expect(await findByTestId('error-heading')).toHaveTextContent(
         /^No results found$/
       );
     });

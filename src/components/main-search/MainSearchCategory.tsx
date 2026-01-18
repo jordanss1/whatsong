@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
-import { HandleCategoryHoverType } from "./MainSearch";
-import { motion, Variants } from "framer-motion";
-import Seperator from "../Seperator";
+import { motion, type Variants } from 'motion/react';
+import { type ReactElement } from 'react';
+import Seperator from '../Seperator';
+import { type HandleCategoryHoverType } from './MainSearch';
 
 const buttonVariants: Variants = {
   initialArtist: {
@@ -18,7 +18,7 @@ const buttonVariants: Variants = {
     transition: {
       delay: 0.5,
       duration: 1,
-      type: "spring",
+      type: 'spring',
       stiffness: 120,
     },
   },
@@ -44,7 +44,7 @@ const buttonVariants: Variants = {
   },
   hover: {
     scale: 1.2,
-    color: "rgba(255, 255, 255, 0.9)",
+    color: 'rgba(255, 255, 255, 0.9)',
     transition: { duration: 0.2 },
   },
 };
@@ -58,7 +58,7 @@ const separatorVariants: Variants = {
     y: 0,
     opacity: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 120,
       duration: 0.5,
     },
@@ -93,9 +93,9 @@ const MainSearchCategory = ({
           exit="exitArtist"
           variants={buttonVariants}
           whileHover="hover"
-          onMouseEnter={() => handleHover("artists")}
+          onMouseEnter={() => handleHover('artists')}
           onMouseLeave={() => handleHover()}
-          onClick={() => handleClick("artist")}
+          onClick={() => handleClick('artist')}
         >
           Artists
         </motion.button>
@@ -115,9 +115,9 @@ const MainSearchCategory = ({
           exit="exitSongs"
           variants={buttonVariants}
           whileHover="hover"
-          onMouseEnter={() => handleHover("songs")}
+          onMouseEnter={() => handleHover('songs')}
           onMouseLeave={() => handleHover()}
-          onClick={() => handleClick("track")}
+          onClick={() => handleClick('track')}
         >
           Songs
         </motion.button>

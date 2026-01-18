@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { motion } from "framer-motion";
-import "./styles/modal.css";
+import { motion } from 'motion/react';
+import { type ReactElement } from 'react';
+import './styles/modal.css';
 
 export const errorVariants = {
   hidden: {
@@ -32,9 +32,9 @@ const ModalError = ({
   error,
   handleClick,
 }: ModalErrorPropTypes): ReactElement => {
-  const heading = error ? error.name : "No results found";
-  const message = error ? error.message : "Please try to search again";
-  const button = error ? "Retry" : "Search again";
+  const heading = error ? error.name : 'No results found';
+  const message = error ? error.message : 'Please try to search again';
+  const button = error ? 'Retry' : 'Search again';
 
   return (
     <div className="error-container w-100 d-flex align-items-center justify-content-center px-3">
@@ -50,7 +50,7 @@ const ModalError = ({
         </span>
         <motion.button
           onClick={() => handleClick()}
-          whileHover={{ scale: 1.1, backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          whileHover={{ scale: 1.1, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
           whileTap={{ scale: 1 }}
           className="error-button"
         >

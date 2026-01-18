@@ -1,10 +1,10 @@
-import { ReactElement, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import SearchBar from "../../searchbar/SearchBar";
+import { AnimatePresence, motion } from 'motion/react';
+import { type ReactElement, useEffect } from 'react';
 import {
-  searchBarVariants,
   searchBarContainerVariants,
-} from "../../artist-list/ArtistListSearchBar";
+  searchBarVariants,
+} from '../../artist-list/ArtistListSearchBar';
+import SearchBar from '../../searchbar/SearchBar';
 
 type TrackListGridSearchBarPropsType = {
   cycle: string;
@@ -16,7 +16,7 @@ const TrackListGridSearchBar = ({
   searched,
 }: TrackListGridSearchBarPropsType): ReactElement => {
   useEffect(() => {
-    if (!searched && cycle === "transparent") {
+    if (!searched && cycle === 'transparent') {
       window.scrollTo({ top: 0 });
     }
   }, [searched]);
@@ -27,7 +27,7 @@ const TrackListGridSearchBar = ({
       className="d-flex align-items-center justify-content-end w-100 track-list-search"
     >
       <AnimatePresence mode="wait">
-        {cycle === "animate" && (
+        {cycle === 'animate' && (
           <motion.div
             variants={searchBarVariants}
             initial="initial"

@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Variants, motion } from "framer-motion";
+import { type Variants, motion } from 'motion/react';
+import { type ReactElement } from 'react';
 
 const loaderVariant: Variants = {
   hidden: {
@@ -11,7 +11,7 @@ const loaderVariant: Variants = {
     transition: {
       rotateY: {
         repeat: Infinity,
-        type: "spring",
+        type: 'spring',
         duration: 1,
       },
     },
@@ -26,17 +26,17 @@ const loaderVariant: Variants = {
 
 const bgVariant: Variants = {
   hidden: {
-    background: "rgba(0, 0, 0, 0)",
+    background: 'rgba(0, 0, 0, 0)',
   },
   visible: {
-    background: "rgba(0, 0, 0, 0.6)",
+    background: 'rgba(0, 0, 0, 0.6)',
     transition: {
       duration: 0.2,
       delay: 1,
     },
   },
   exit: {
-    background: "rgba(0, 0, 0, 0)",
+    background: 'rgba(0, 0, 0, 0)',
     transition: {
       duration: 0.2,
     },

@@ -1,14 +1,14 @@
-import { ReactElement, useContext } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
-import MainSearch from "./main-search/MainSearch";
-import ArtistList from "./artist-list/ArtistList";
-import ArtistDetails from "./artist-details/ArtistDetails";
-import Modal from "./modal/Modal";
-import Landing from "./landing/Landing";
-import SearchContext from "../contexts/SearchState";
-import TrackList from "./track-list/TrackList";
-import "../styles/all.css";
+import { AnimatePresence } from 'motion/react';
+import { type ReactElement, useContext } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import ArtistDetails from './components/artist-details/ArtistDetails';
+import ArtistList from './components/artist-list/ArtistList';
+import Landing from './components/landing/Landing';
+import MainSearch from './components/main-search/MainSearch';
+import Modal from './components/modal/Modal';
+import TrackList from './components/track-list/TrackList';
+import SearchContext from './contexts/SearchState';
+import './styles/all.css';
 
 const App = (): ReactElement => {
   const location = useLocation();

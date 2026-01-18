@@ -1,10 +1,15 @@
-import { ReactElement } from "react";
-import { motion, MotionProps, MotionStyle, Variants } from "framer-motion";
-import { TopTracksDetailsType } from "../types/types";
-import Seperator from "./Seperator";
-import ImageCard from "./ImageCard";
-import TrackDetailLine from "./TrackDetailLine";
-import { useScreenSize } from "../hooks/MediaQueryHook";
+import {
+  motion,
+  type MotionProps,
+  type MotionStyle,
+  type Variants,
+} from 'motion/react';
+import { type ReactElement } from 'react';
+import { useScreenSize } from '../hooks/MediaQueryHook';
+import { type TopTracksDetailsType } from '../types/types';
+import ImageCard from './ImageCard';
+import Seperator from './Seperator';
+import TrackDetailLine from './TrackDetailLine';
 
 interface TrackDetailPropsType extends MotionProps {
   selectedTrack: Required<TopTracksDetailsType>;
@@ -25,9 +30,9 @@ const TrackDetail = ({
     const minutes = Math.floor((duration_ms / 1000 / 60) % 60);
 
     return [
-      minutes.toString().padStart(2, "0"),
-      seconds.toString().padStart(2, "0"),
-    ].join(":");
+      minutes.toString().padStart(2, '0'),
+      seconds.toString().padStart(2, '0'),
+    ].join(':');
   };
 
   const songLength = durationConvert();
@@ -35,34 +40,34 @@ const TrackDetail = ({
   let artist = artists
     .map((artist) => artist.name)
     .toString()
-    .replaceAll(",", ", ");
+    .replaceAll(',', ', ');
 
   const releaseDate = album.release_date.slice(0, 4);
   const trackOf = `Track ${track_number} of ${album.total_tracks}`;
   const albumImage = album.images[0].url;
-  const albumType = album.album_type === "single" ? "Single" : album.name;
-  const albumDetail = album.album_type === "single" ? releaseDate : trackOf;
+  const albumType = album.album_type === 'single' ? 'Single' : album.name;
+  const albumDetail = album.album_type === 'single' ? releaseDate : trackOf;
 
   const lineStyle: MotionStyle = {
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   };
 
   const albumStyle: MotionStyle =
-    album.album_type === "single"
+    album.album_type === 'single'
       ? {
-          minWidth: "100px",
-          textAlign: "end",
+          minWidth: '100px',
+          textAlign: 'end',
         }
       : {
-          maxWidth: screenWidth < 851 ? "350px" : "180px",
-          minWidth: "100px",
-          textAlign: "center",
-          display: "-webkit-box",
+          maxWidth: screenWidth < 851 ? '350px' : '180px',
+          minWidth: '100px',
+          textAlign: 'center',
+          display: '-webkit-box',
           WebkitLineClamp: 2,
-          WebkitBoxOrient: "vertical",
-          overflow: "hidden",
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
         };
 
   return (
@@ -73,21 +78,21 @@ const TrackDetail = ({
         animate="animate"
         exit="exit"
         whileHover="hover"
-        style={{ borderRadius: "20px" }}
+        style={{ borderRadius: '20px' }}
         custom={albumImage}
         url={albumImage}
         iconSize={100}
       />
       <motion.div
-        style={{ height: "230px" }}
+        style={{ height: '230px' }}
         className={`pt-4 pb-4 d-flex flex-column justify-content-evenly w-100 ${
-          screenWidth < 851 && "px-4"
+          screenWidth < 851 && 'px-4'
         }`}
       >
         <TrackDetailLine variants={lineVariants} custom={0.1}>
           <motion.span
             style={{
-              maxWidth: screenWidth < 851 ? "450px" : "379px",
+              maxWidth: screenWidth < 851 ? '450px' : '379px',
               ...lineStyle,
             }}
             className="fw-bold fs-2 text-center"
@@ -100,8 +105,8 @@ const TrackDetail = ({
             style={
               screenWidth > 850
                 ? {
-                    minWidth: "100px",
-                    maxWidth: "250px",
+                    minWidth: '100px',
+                    maxWidth: '250px',
                     ...lineStyle,
                   }
                 : albumStyle
@@ -111,22 +116,22 @@ const TrackDetail = ({
             {name}
           </motion.span>
           <Seperator sharp={false} width="2px" height="25px" />
-          <motion.span style={{ minWidth: "100px" }} className="ps-3">
+          <motion.span style={{ minWidth: '100px' }} className="ps-3">
             {songLength}
           </motion.span>
         </TrackDetailLine>
         <TrackDetailLine variants={lineVariants} custom={0.3}>
           <motion.span
             style={albumStyle}
-            className={`pe-${album.album_type === "album" && 1}`}
+            className={`pe-${album.album_type === 'album' && 1}`}
           >
             {albumType}
           </motion.span>
-          {albumType === "Single" && (
+          {albumType === 'Single' && (
             <motion.span
               style={{
-                minWidth: "30px",
-                textAlign: "center",
+                minWidth: '30px',
+                textAlign: 'center',
               }}
             >
               -
@@ -134,10 +139,10 @@ const TrackDetail = ({
           )}
           <motion.span
             style={{
-              minWidth: "110px",
-              textAlign: albumType === "Single" ? "start" : "center",
+              minWidth: '110px',
+              textAlign: albumType === 'Single' ? 'start' : 'center',
             }}
-            className={`ps-${album.album_type === "album" && 3}`}
+            className={`ps-${album.album_type === 'album' && 3}`}
           >
             {albumDetail}
           </motion.span>

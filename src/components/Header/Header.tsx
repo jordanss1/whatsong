@@ -1,9 +1,9 @@
-import { ReactElement, useEffect, useContext, useCallback } from "react";
-import HeaderLanding from "./HeaderLanding";
-import HeaderSearch from "./HeaderSearch";
-import { AnimatePresence, useCycle } from "framer-motion";
-import SearchContext from "../../contexts/SearchState";
-import "./styles/header.css";
+import { AnimatePresence, useCycle } from 'motion/react';
+import { type ReactElement, useCallback, useContext, useEffect } from 'react';
+import SearchContext from '../../contexts/SearchState';
+import HeaderLanding from './HeaderLanding';
+import HeaderSearch from './HeaderSearch';
+import './styles/header.css';
 
 type HeaderPropsType = {
   headerCycle?: string;
@@ -29,13 +29,13 @@ const Header = ({ headerCycle }: HeaderPropsType): ReactElement => {
   }, [modal]);
 
   useEffect(() => {
-    if (!searched && headerCycle === "transparent") cycleSearch(0);
+    if (!searched && headerCycle === 'transparent') cycleSearch(0);
   }, [headerCycle, searched]);
 
   return (
     <AnimatePresence mode="sync" onExitComplete={() => handleClick(true)}>
-      {pathname === "/" && <HeaderLanding key="landing" />}
-      {(pathname === "/artists" || pathname === "/tracks") && headerCycle && (
+      {pathname === '/' && <HeaderLanding key="landing" />}
+      {(pathname === '/artists' || pathname === '/tracks') && headerCycle && (
         <HeaderSearch
           key="search"
           headerCycle={headerCycle}

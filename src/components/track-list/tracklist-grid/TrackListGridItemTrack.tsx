@@ -1,9 +1,9 @@
-import { ReactElement } from "react";
-import CircularImage from "../../CircularImage";
-import Track from "../../Track";
-import { motion, MotionStyle, Variants } from "framer-motion";
-import { useScreenSize } from "../../../hooks/MediaQueryHook";
-import { TopTracksDetailsType } from "../../../types/types";
+import { motion, type MotionStyle, type Variants } from 'motion/react';
+import { type ReactElement } from 'react';
+import { useScreenSize } from '../../../hooks/MediaQueryHook';
+import { type TopTracksDetailsType } from '../../../types/types';
+import CircularImage from '../../CircularImage';
+import Track from '../../Track';
 
 type TrackListGridItemTrackPropsType = {
   isMobile: boolean;

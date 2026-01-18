@@ -1,6 +1,6 @@
-import { ReactElement, ReactNode } from "react";
-import { MotionProps, motion } from "framer-motion";
-import "./styles/popout.css";
+import { type MotionProps, motion } from 'motion/react';
+import { type ReactElement, ReactNode } from 'react';
+import './styles/popout.css';
 
 interface PopoutPropsType extends MotionProps {
   children: ReactNode;

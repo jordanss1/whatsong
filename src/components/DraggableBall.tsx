@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { MotionProps, motion } from "framer-motion";
+import { type MotionProps, motion } from 'motion/react';
+import { type ReactElement } from 'react';
 
 interface DrabbleBallProps extends MotionProps {
   index: number;

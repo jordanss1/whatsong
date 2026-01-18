@@ -1,34 +1,34 @@
-import { useContext, ReactElement, useEffect } from "react";
-import { useMediaQuery } from "../../hooks/MediaQueryHook";
-import { gradient1, gradient2 } from "../../styles/inline";
-import ArtistDetailsArtist from "./ArtistDetailsArtist";
-import ArtistDetailsAlbums from "./ArtistDetailsAlbums";
-import ArtistDetailsTopTracks from "./ArtistDetailsTopTracks";
-import SearchContext from "../../contexts/SearchState";
-import { Variants, motion } from "framer-motion";
-import "./styles/artist-details.css";
+import { type Variants, motion } from 'framer-motion';
+import { type ReactElement, useContext, useEffect } from 'react';
+import SearchContext from '../../contexts/SearchState';
+import { useMediaQuery } from '../../hooks/MediaQueryHook';
+import { gradient1, gradient2 } from '../../styles/inline';
+import ArtistDetailsAlbums from './ArtistDetailsAlbums';
+import ArtistDetailsArtist from './ArtistDetailsArtist';
+import ArtistDetailsTopTracks from './ArtistDetailsTopTracks';
+import './styles/artist-details.css';
 
 const artistDetailMainVariants: Variants = {
   initial: (isOneColumn) => ({
     background:
-      "radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
-    gridTemplateColumns: isOneColumn ? "0% 0%" : "100% 0%",
-    justifyItems: isOneColumn ? "" : "center",
-    alignItems: isOneColumn ? "" : "center",
+      'radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)',
+    gridTemplateColumns: isOneColumn ? '0% 0%' : '100% 0%',
+    justifyItems: isOneColumn ? '' : 'center',
+    alignItems: isOneColumn ? '' : 'center',
   }),
   animate: (isOneColumn) => ({
     background:
-      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)",
-    gridTemplateColumns: isOneColumn ? "0% 0%" : "50% 50%",
+      'radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)',
+    gridTemplateColumns: isOneColumn ? '0% 0%' : '50% 50%',
     transition: {
-      type: "tween",
-      ease: "easeInOut",
+      type: 'tween',
+      ease: 'easeInOut',
       gridTemplateColumns: {
         delay: 1.5,
         duration: 0.8,
       },
       background: {
-        when: "beforeChildren",
+        when: 'beforeChildren',
         delay: 0.5,
         duration: 0.5,
       },
@@ -36,15 +36,15 @@ const artistDetailMainVariants: Variants = {
   }),
   exit: {
     background: [
-      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)",
-      "radial-gradient(circle at 100% 0%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
-      "radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
+      'radial-gradient(circle at 100% 0%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0) 20%,transparent 90%)',
+      'radial-gradient(circle at 100% 0%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)',
+      'radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)',
     ],
     transition: {
-      when: "afterChildren",
+      when: 'afterChildren',
       duration: 1,
-      type: "tween",
-      ease: "easeInOut",
+      type: 'tween',
+      ease: 'easeInOut',
     },
   },
 };
@@ -66,8 +66,8 @@ const backgroundVariants: Variants = {
     transition: {
       delay: 0.5,
       duration: 0.5,
-      type: "tween",
-      ease: "easeInOut",
+      type: 'tween',
+      ease: 'easeInOut',
     },
   },
 };
@@ -87,9 +87,9 @@ const ArtistDetails = (): ReactElement => {
   const is992 = useMediaQuery(992);
 
   useEffect(() => {
-    let artistDetails = sessionStorage.getItem("artist-details");
+    let artistDetails = sessionStorage.getItem('artist-details');
 
-    if (artistDetails && typeof artistDetails === "string") {
+    if (artistDetails && typeof artistDetails === 'string') {
       const [artistDetail, albums, topTracks] = JSON.parse(artistDetails);
       setProfile(artistDetail, albums, topTracks);
     }
@@ -98,8 +98,8 @@ const ArtistDetails = (): ReactElement => {
   const isOneColumn = !artistDetail?.images[0]?.url || is992;
 
   const containerClasses = isOneColumn
-    ? "artist-page-one-column"
-    : "artist-page";
+    ? 'artist-page-one-column'
+    : 'artist-page';
 
   const styles = {
     background: `${is992 ? gradient2 : gradient1} url(${

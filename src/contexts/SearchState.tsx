@@ -1,16 +1,16 @@
-import { useState, createContext, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { type CancelTokenSource } from 'axios';
+import { createContext, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  spotifyArtistsOrSongsSearch,
   spotifyArtistDetailsSearch,
-} from "../api";
+  spotifyArtistsOrSongsSearch,
+} from '../api';
+import { useArtistsOrTracks } from '../hooks/ArtistsAndTracksHook';
 import {
-  useArtistResults,
   artistInitState,
-} from "../hooks/DetailedArtistResultHooks";
-import { TopTracksDetailsType } from "../types/types";
-import { useArtistsOrTracks } from "../hooks/ArtistsAndTracksHook";
-import { CancelTokenSource } from "axios";
+  useArtistResults,
+} from '../hooks/DetailedArtistResultHooks';
+import { type TopTracksDetailsType } from '../types/types';
 
 export const SearchState = () => {
   const [selectedTrack, setSelectedTrack] =
@@ -113,7 +113,7 @@ const initSearchContextState: UseSearchStateContext = {
   setAlbumOrTrack: () => {},
   popout: false,
   setPopout: () => {},
-  pathname: "",
+  pathname: '',
   modal: false,
   setModal: () => {},
   searched: false,

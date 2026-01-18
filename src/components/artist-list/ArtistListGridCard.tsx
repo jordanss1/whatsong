@@ -1,11 +1,16 @@
-import { AnimatePresence, Variants, motion, useInView } from "framer-motion";
-import { ReactElement, memo, useRef } from "react";
-import { useMediaQuery } from "../../hooks/MediaQueryHook";
-import { ArtistsType } from "../../types/types";
-import ImageCard from "../ImageCard";
-import ImageHeader from "../ImageHeader";
-import { HandleProfileClickType } from "./ArtistListGrid";
-import "./styles/artist-list.css";
+import {
+  AnimatePresence,
+  type Variants,
+  motion,
+  useInView,
+} from 'motion/react';
+import { type ReactElement, memo, useRef } from 'react';
+import { useMediaQuery } from '../../hooks/MediaQueryHook';
+import { type ArtistsType } from '../../types/types';
+import ImageCard from '../ImageCard';
+import ImageHeader from '../ImageHeader';
+import { type HandleProfileClickType } from './ArtistListGrid';
+import './styles/artist-list.css';
 
 type ArtistListGridCardPropType = {
   artist: ArtistsType;
@@ -91,7 +96,7 @@ const ArtistListGridCard = ({
   if (index % 4) modifiedIndex = 4;
   if (index % 5) modifiedIndex = 5;
 
-  let transform = isInView ? "translateX(0)" : "translateX(-75px)";
+  let transform = isInView ? 'translateX(0)' : 'translateX(-75px)';
   let opacity = isInView ? 1 : 0;
 
   return (

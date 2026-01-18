@@ -1,9 +1,14 @@
-import { ReactElement, memo, useEffect } from "react";
-import TrackListSelectedSmile from "./TrackListSelectedSmile";
-import TrackListSelectedFrown from "./TrackListSelectedFrown";
-import { AnimatePresence, Variants, motion, MotionValue } from "framer-motion";
-import { useMediaQuery } from "../../../hooks/MediaQueryHook";
-import "../styles/track-list.css";
+import {
+  AnimatePresence,
+  MotionValue,
+  type Variants,
+  motion,
+} from 'motion/react';
+import { type ReactElement, memo, useEffect } from 'react';
+import { useMediaQuery } from '../../../hooks/MediaQueryHook';
+import '../styles/track-list.css';
+import TrackListSelectedFrown from './TrackListSelectedFrown';
+import TrackListSelectedSmile from './TrackListSelectedSmile';
 
 type TrackListSelectedNone = {
   dragging: boolean;

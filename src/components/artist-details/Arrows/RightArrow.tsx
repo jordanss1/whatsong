@@ -1,11 +1,11 @@
-import { memo, ReactElement } from "react";
-import { motion, MotionProps } from "framer-motion";
-import "../styles/artist-details.css";
+import { motion, type MotionProps } from 'framer-motion';
+import { memo, type ReactElement } from 'react';
+import '../styles/artist-details.css';
 
 interface RightArrowPropsType extends MotionProps {
   setAlbumOrTrack: () => void;
   className: string;
-  testId: "smallRight" | "bigRight";
+  testId: 'smallRight' | 'bigRight';
 }
 
 type RightArrowType = (props: RightArrowPropsType) => ReactElement;

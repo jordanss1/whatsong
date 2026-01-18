@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { motion } from "framer-motion";
+import { motion } from 'motion/react';
+import { type ReactElement } from 'react';
 
 const Caret = ({ handleClick }: { handleClick: () => void }): ReactElement => {
   return (
@@ -10,7 +10,7 @@ const Caret = ({ handleClick }: { handleClick: () => void }): ReactElement => {
       animate={{ opacity: 1, transition: { delay: 0.2 } }}
       exit={{ opacity: 0, transition: { delay: 0.2 } }}
       whileHover={{
-        color: "rgba(255,255,255)",
+        color: 'rgba(255,255,255)',
       }}
       className="caret down icon caret-icon fs-4"
     />

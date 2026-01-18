@@ -41,7 +41,7 @@
   caret-color: white;
   padding: 0px 20px;
   font-size: 20px;
-  font-family: "Varela Round", sans-serif !important;
+  font-family: 'Varela Round', sans-serif !important;
   color: rgb(255, 255, 255, 0.7);
   overflow: hidden;
   border: none;
@@ -60,12 +60,13 @@
   border: none;
   width: 60px;
   color: rgb(255, 255, 255, 0.5);
+  padding: 0px;
 }
 
 .search-header {
   max-width: 600px;
   width: 100%;
-  font-family: "Varela Round", sans-serif !important;
+  font-family: 'Varela Round', sans-serif !important;
   font-size: 24px;
 }
 
@@ -96,7 +97,7 @@
 }
 
 .category-container {
-  font-family: "Varela Round", sans-serif !important;
+  font-family: 'Varela Round', sans-serif !important;
 }
 
 .category-separator {
@@ -110,7 +111,7 @@
 }
 
 .category-choices button {
-  font-family: "Varela Round", sans-serif;
+  font-family: 'Varela Round', sans-serif;
   font-size: 43px;
   color: rgba(200, 200, 200);
   cursor: pointer;

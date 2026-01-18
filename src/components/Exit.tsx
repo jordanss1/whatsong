@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { type ReactElement } from 'react';
 
 type ExitPropsType = {
   handleClick: () => void;

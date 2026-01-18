@@ -1,5 +1,5 @@
-import { ReactElement, ReactNode } from "react";
-import { MotionProps, motion } from "framer-motion";
+import { type MotionProps, motion } from 'motion/react';
+import { type ReactElement, ReactNode } from 'react';
 
 interface TrackDetailLinePropsType extends MotionProps {
   size?: number;
@@ -7,7 +7,7 @@ interface TrackDetailLinePropsType extends MotionProps {
   children: ReactNode;
 }
 
-const   TrackDetailLine = ({
+const TrackDetailLine = ({
   size,
   className,
   variants,

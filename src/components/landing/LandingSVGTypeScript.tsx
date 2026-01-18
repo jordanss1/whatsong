@@ -1,11 +1,11 @@
-import { ReactElement } from "react";
 import {
   motion,
-  useTransform,
-  useMotionValue,
   useMotionTemplate,
-} from "framer-motion";
-import "./styles/landing.css";
+  useMotionValue,
+  useTransform,
+} from 'motion/react';
+import { type ReactElement } from 'react';
+import './styles/landing.css';
 
 const LandingSVGTypeScript = (): ReactElement => {
   const x = useMotionValue(0);

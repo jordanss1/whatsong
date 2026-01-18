@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { Variants, motion } from "framer-motion";
-import SearchBar from "../searchbar/SearchBar";
+import { type Variants, motion } from 'motion/react';
+import { type ReactElement } from 'react';
+import SearchBar from '../searchbar/SearchBar';
 
 const searchBarVariants: Variants = {
   initial: { y: -20, opacity: 0 },

@@ -1,12 +1,12 @@
-import { ReactElement } from "react";
-import CircularImage from "../CircularImage";
-import { motion } from "framer-motion";
-import { TopTracksDetailsType } from "../../types/types";
-import { trackAndAlbumVariants } from "./ArtistDetailsAlbumCard";
+import { motion } from 'motion/react';
+import { type ReactElement } from 'react';
+import { type TopTracksDetailsType } from '../../types/types';
+import CircularImage from '../CircularImage';
+import { trackAndAlbumVariants } from './ArtistDetailsAlbumCard';
 
 type ArtistDetailsTopTrackItemPropsType = {
   topTrack: TopTracksDetailsType | null;
-  direction: "left" | "right";
+  direction: 'left' | 'right';
 };
 
 const ArtistDetailsTopTrackItem = ({

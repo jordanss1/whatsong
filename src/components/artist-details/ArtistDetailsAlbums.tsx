@@ -1,11 +1,11 @@
-import { AnimatePresence, motion, useCycle, Variants } from "framer-motion";
-import { memo, ReactElement, useEffect } from "react";
-import { SetAlbumOrTrackType } from "../../hooks/DetailedArtistResultHooks";
-import { AlbumDetailsType } from "../../types/types";
-import LeftArrow from "./Arrows/LeftArrow";
-import RightArrow from "./Arrows/RightArrow";
-import ArtistDetailsAlbumCard from "./ArtistDetailsAlbumCard";
-import "./styles/artist-details.css";
+import { AnimatePresence, motion, useCycle, type Variants } from 'motion/react';
+import { memo, type ReactElement, useEffect } from 'react';
+import { type SetAlbumOrTrackType } from '../../hooks/DetailedArtistResultHooks';
+import { type AlbumDetailsType } from '../../types/types';
+import LeftArrow from './Arrows/LeftArrow';
+import RightArrow from './Arrows/RightArrow';
+import ArtistDetailsAlbumCard from './ArtistDetailsAlbumCard';
+import './styles/artist-details.css';
 
 type ArtistDetailsAlbumsPropsType = {
   album: AlbumDetailsType | null;
@@ -23,16 +23,16 @@ const albumsVariants: Variants = {
     opacity: 1,
     transition: {
       duration: 0.5,
-      type: "tween",
-      ease: "easeOut",
+      type: 'tween',
+      ease: 'easeOut',
     },
   },
   exit: {
     x: 70,
     opacity: 0,
     transition: {
-      type: "tween",
-      ease: "easeInOut",
+      type: 'tween',
+      ease: 'easeInOut',
     },
   },
 };
@@ -42,7 +42,7 @@ const rightArrowVariants: Variants = {
     albums && albums?.length > 1
       ? {
           background:
-            "linear-gradient(to right,rgba(255, 255, 255, 0) 20%,rgba(255, 255, 255, 0.35)100%)",
+            'linear-gradient(to right,rgba(255, 255, 255, 0) 20%,rgba(255, 255, 255, 0.35)100%)',
           scale: [null, 1.1],
         }
       : {},
@@ -50,7 +50,7 @@ const rightArrowVariants: Variants = {
     albums && albums?.length > 1
       ? {
           background:
-            "linear-gradient(to right,rgba(255, 255, 255, 0) 70%,rgba(255, 255, 255, 0.1)100%)",
+            'linear-gradient(to right,rgba(255, 255, 255, 0) 70%,rgba(255, 255, 255, 0.1)100%)',
           scale: [null, 0.8],
         }
       : {},
@@ -61,7 +61,7 @@ const leftArrowVariants: Variants = {
     albums && albums?.length > 1
       ? {
           background:
-            "linear-gradient(to left, rgba(255, 255, 255, 0) 10%,rgba(255, 255, 255, 0.35) 100%)",
+            'linear-gradient(to left, rgba(255, 255, 255, 0) 10%,rgba(255, 255, 255, 0.35) 100%)',
           scale: [null, 1.1],
         }
       : {},
@@ -69,7 +69,7 @@ const leftArrowVariants: Variants = {
     albums && albums?.length > 1
       ? {
           background:
-            "linear-gradient(to left,rgba(255, 255, 255, 0) 70%,rgba(255, 255, 255, 0.1) 100%)",
+            'linear-gradient(to left,rgba(255, 255, 255, 0) 70%,rgba(255, 255, 255, 0.1) 100%)',
           scale: [null, 0.8],
         }
       : {},
@@ -81,22 +81,22 @@ const ArtistDetailsAlbums = ({
   albums,
 }: ArtistDetailsAlbumsPropsType): ReactElement => {
   const leftClasses = `justify-content-start arrows ${
-    album && albums ? "left-arrow" : "left-arrow-disabled"
+    album && albums ? 'left-arrow' : 'left-arrow-disabled'
   }`;
 
   const rightClasses = `justify-content-end arrows ${
-    album && albums ? "right-arrow" : "right-arrow-disabled"
+    album && albums ? 'right-arrow' : 'right-arrow-disabled'
   }`;
 
-  const [direction, cycleDirection] = useCycle<"left" | "right">(
-    "left",
-    "right"
+  const [direction, cycleDirection] = useCycle<'left' | 'right'>(
+    'left',
+    'right'
   );
 
   const [changed, cycleChanged] = useCycle(false, true);
 
   useEffect(() => {
-    let timer: string | number | NodeJS.Timeout | undefined;
+    let timer: number | ReturnType<typeof setTimeout> | undefined;
 
     if (timer) clearTimeout(timer);
 
@@ -109,15 +109,15 @@ const ArtistDetailsAlbums = ({
     return () => clearTimeout(timer);
   }, [changed]);
 
-  const handleAlbum = (direction: "left" | "right") => {
-    let timer: NodeJS.Timeout;
+  const handleAlbum = (direction: 'left' | 'right') => {
+    let timer: ReturnType<typeof setTimeout>;
 
     if (albums && albums?.length > 1) {
-      cycleDirection(direction === "left" ? 0 : 1);
+      cycleDirection(direction === 'left' ? 0 : 1);
 
       timer = setTimeout(() => {
         cycleChanged(1);
-        setAlbum(direction, "album");
+        setAlbum(direction, 'album');
       }, 50);
     }
 
@@ -135,11 +135,11 @@ const ArtistDetailsAlbums = ({
         custom={albums}
         whileHover="hover"
         whileTap="tap"
-        setAlbumOrTrack={() => handleAlbum("left")}
+        setAlbumOrTrack={() => handleAlbum('left')}
         testId="bigLeft"
         className={leftClasses}
       />
-      <motion.div style={{ minWidth: "170px" }}>
+      <motion.div style={{ minWidth: '170px' }}>
         <AnimatePresence mode="wait">
           {!changed && (
             <ArtistDetailsAlbumCard direction={direction} album={album} />
@@ -151,7 +151,7 @@ const ArtistDetailsAlbums = ({
         custom={albums}
         whileHover="hover"
         whileTap="tap"
-        setAlbumOrTrack={() => handleAlbum("right")}
+        setAlbumOrTrack={() => handleAlbum('right')}
         testId="bigRight"
         className={rightClasses}
       />

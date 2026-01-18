@@ -1,17 +1,17 @@
-import { rest } from "msw";
+import { type Rest } from 'msw';
 import {
+  ArtistAndTrackHandlerDataType,
   ArtistAndTrackHandlersType,
   ArtistDetailsHandlerDataType,
-  ArtistAndTrackHandlerDataType,
   ArtistDetailsHandlerType,
-} from "../types/types";
+} from '../types/types';
 
 type GetResponseType<T> = { code: number; body: T };
 
 export const artistAndTrackHandlers: ArtistAndTrackHandlersType = (data) => {
   type PostResponseType = { code: number; body: string | typeof data };
 
-  let postResponse: PostResponseType = { code: 200, body: "ok" };
+  let postResponse: PostResponseType = { code: 200, body: 'ok' };
 
   let getResponse: GetResponseType<ArtistAndTrackHandlerDataType> = {
     code: 200,
@@ -19,14 +19,14 @@ export const artistAndTrackHandlers: ArtistAndTrackHandlersType = (data) => {
   };
 
   if (data instanceof Error) {
-    data.message.includes("post")
+    data.message.includes('post')
       ? (postResponse = { code: 500, body: data })
       : (getResponse = { code: 401, body: data });
   }
 
   return [
     rest.post(
-      "https://accounts.spotify.com/api/token",
+      'https://accounts.spotify.com/api/token',
       async (req, res, ctx) => {
         return await res(
           ctx.status(postResponse.code),
@@ -35,7 +35,7 @@ export const artistAndTrackHandlers: ArtistAndTrackHandlersType = (data) => {
       }
     ),
 
-    rest.get("https://api.spotify.com/v1/search", async (req, res, ctx) => {
+    rest.get('https://api.spotify.com/v1/search', async (req, res, ctx) => {
       return await res(
         ctx.status(getResponse.code),
         ctx.json(getResponse.body)
@@ -62,9 +62,9 @@ export const artistDetailsHandler: ArtistDetailsHandlerType = (data) => {
 
   return [
     rest.post(
-      "https://accounts.spotify.com/api/token",
+      'https://accounts.spotify.com/api/token',
       async (req, res, ctx) => {
-        return await res(ctx.status(200, "success"));
+        return await res(ctx.status(200, 'success'));
       }
     ),
 

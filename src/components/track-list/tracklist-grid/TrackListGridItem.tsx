@@ -1,24 +1,24 @@
 import {
   AnimatePresence,
-  MotionStyle,
-  Variants,
+  type MotionStyle,
+  type Variants,
   motion,
   useCycle,
   useInView,
-} from "framer-motion";
+} from 'motion/react';
 import {
-  MutableRefObject,
-  ReactElement,
+  type ReactElement,
+  type RefObject,
   useCallback,
   useEffect,
   useRef,
-} from "react";
-import { useMediaQuery } from "../../../hooks/MediaQueryHook";
-import { TopTracksDetailsType } from "../../../types/types";
-import "../styles/track-list.css";
-import { HandleDragType } from "../TrackList";
-import TrackListGridBall from "./TrackListGridBall";
-import TrackListGridItemTrack from "./TrackListGridItemTrack";
+} from 'react';
+import { useMediaQuery } from '../../../hooks/MediaQueryHook';
+import { type TopTracksDetailsType } from '../../../types/types';
+import '../styles/track-list.css';
+import { type HandleDragType } from '../TrackList';
+import TrackListGridBall from './TrackListGridBall';
+import TrackListGridItemTrack from './TrackListGridItemTrack';
 
 const trackOrchestratedVariant: Variants = {
   initial: (isMobile) => ({
@@ -41,7 +41,7 @@ type TrackListGridItemPropTypes = {
   track: Required<TopTracksDetailsType>;
   index: number;
   searched: boolean;
-  dragRef: MutableRefObject<null>;
+  dragRef: RefObject<null>;
   expandCycle: string;
   handleDrag?: HandleDragType;
   style?: MotionStyle;
@@ -62,7 +62,7 @@ const TrackListGridItem = ({
   const isMobile = useMediaQuery(480);
   const is850 = useMediaQuery(850);
 
-  const [ballCycle, cycleBall] = useCycle("hidden", "visible", "drag");
+  const [ballCycle, cycleBall] = useCycle('hidden', 'visible', 'drag');
 
   const isInView = useInView(ref, {
     amount: 0.2,
@@ -70,9 +70,9 @@ const TrackListGridItem = ({
   });
 
   const gridTemplateColumns =
-    is850 && ballCycle !== "hidden" ? "0px auto" : "auto";
+    is850 && ballCycle !== 'hidden' ? '0px auto' : 'auto';
 
-  let transform = isInView ? "translateX(0)" : "translateX(-100px)";
+  let transform = isInView ? 'translateX(0)' : 'translateX(-100px)';
   let opacity = isInView ? 1 : 0;
 
   let modifiedIndex = 0;
@@ -83,7 +83,7 @@ const TrackListGridItem = ({
   if (index > 30) modifiedIndex = index * 0.005;
 
   useEffect(() => {
-    const visited = localStorage.getItem("tracks-visited");
+    const visited = localStorage.getItem('tracks-visited');
 
     if (!visited) cycleBall(0);
   }, []);
@@ -109,14 +109,14 @@ const TrackListGridItem = ({
   );
 
   const handleMouseEvent = (enter?: boolean) => {
-    if (enter && ballCycle !== "drag" && ballCycle === "hidden" && !is850) {
+    if (enter && ballCycle !== 'drag' && ballCycle === 'hidden' && !is850) {
       cycleBall(1);
       return;
     }
 
     if (
-      ballCycle !== "drag" &&
-      ballCycle === "visible" &&
+      ballCycle !== 'drag' &&
+      ballCycle === 'visible' &&
       !pointerRef.current &&
       !is850
     ) {
@@ -135,7 +135,7 @@ const TrackListGridItem = ({
       custom={isMobile}
       onMouseEnter={() => handleMouseEvent(true)}
       onMouseLeave={() => handleMouseEvent()}
-      onClick={() => cycleBall(ballCycle === "hidden" ? 1 : 0)}
+      onClick={() => cycleBall(ballCycle === 'hidden' ? 1 : 0)}
       style={{ ...style, gridTemplateColumns }}
       ref={ref}
       data-testid={`track-item-${index}`}

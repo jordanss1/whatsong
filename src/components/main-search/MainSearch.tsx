@@ -1,48 +1,48 @@
 import {
-  useContext,
-  useEffect,
-  ReactElement,
-  useState,
-  FormEvent,
-} from "react";
-import SearchContext from "../../contexts/SearchStore";
-import {
   AnimatePresence,
-  Variants,
   motion,
+  useAnimate,
   useCycle,
   usePresence,
-  useAnimate,
-} from "framer-motion";
-import { UseSearchStateContext } from "../../contexts/SearchState";
-import MainSearchCategory from "./MainSearchCategory";
-import MainSearchInput from "./MainSearchInput";
-import "./styles/main-search.css";
-import MainSearchHeader from "./MainSearchHeader";
+  type Variants,
+} from 'motion/react';
+import {
+  useContext,
+  useEffect,
+  useState,
+  type FormEvent,
+  type ReactElement,
+} from 'react';
+import { type UseSearchStateContext } from '../../contexts/SearchState';
+import SearchContext from '../../contexts/SearchStore';
+import MainSearchCategory from './MainSearchCategory';
+import MainSearchHeader from './MainSearchHeader';
+import MainSearchInput from './MainSearchInput';
+import './styles/main-search.css';
 
 const categoryVarients: Variants = {
   initial: (length) => ({
     background: length
-      ? "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)"
-      : "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, 0) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
+      ? 'radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)'
+      : 'radial-gradient(circle at 100% 10%,rgba(222, 90, 174, 0) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133, 0) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)',
   }),
   intro: {
     background:
-      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)",
+      'radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 0.2) 20%,transparent 90%)',
     transition: {
       duration: 1,
     },
   },
   artists: {
     background:
-      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 110%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 90%)",
+      'radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .3) 0%,rgba(222, 90, 174, 0) 15%,transparent 90%), radial-gradient(circle at 0% 110%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 90%)',
     transition: {
       duration: 0.5,
     },
   },
   songs: {
     background:
-      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .3) 15%,transparent 70%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, .2) 20%,transparent 90%)",
+      'radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .3) 15%,transparent 70%), radial-gradient(circle at 0% 100%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, .2) 20%,transparent 90%)',
     transition: {
       duration: 0.5,
     },
@@ -52,7 +52,7 @@ const categoryVarients: Variants = {
 const searchVarients: Variants = {
   awaitingInput: {
     background:
-      "radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at 0% 110%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)",
+      'radial-gradient(circle at 100% 10%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at 0% 110%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)',
     transition: {
       duration: 1,
       delay: 0.5,
@@ -60,23 +60,23 @@ const searchVarients: Variants = {
   },
   searchComplete: (category) => ({
     background:
-      category === "artist"
-        ? "radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)"
-        : "radial-gradient(circle at 110% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at -10% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%)",
+      category === 'artist'
+        ? 'radial-gradient(circle at 100% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%), radial-gradient(circle at 0% 50%,rgb(0, 5, 133) 0%,rgba(0, 5, 133, 1) 10%,transparent 60%)'
+        : 'radial-gradient(circle at 110% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%), radial-gradient(circle at -10% 50%,rgba(222, 90, 174, .2) 0%,rgba(222, 90, 174, .2) 15%,transparent 50%)',
     transition: {
       duration: 1,
-      ease: "easeInOut",
-      type: "tween",
+      ease: 'easeInOut',
+      type: 'tween',
     },
   }),
 };
 
 export type HandleButtonClickType = (
-  category: "artist" | "track",
+  category: 'artist' | 'track',
   term: string
 ) => void;
 
-export type HandleCategoryHoverType = (hovered?: "artists" | "songs") => void;
+export type HandleCategoryHoverType = (hovered?: 'artists' | 'songs') => void;
 
 const MainSearch = (): ReactElement => {
   const {
@@ -91,27 +91,27 @@ const MainSearch = (): ReactElement => {
     setLoading,
   } = useContext<UseSearchStateContext>(SearchContext);
 
-  const [category, setCategory] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [category, setCategory] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const [isPresent, safeToRemove] = usePresence();
   const [scope, animate] = useAnimate();
 
   const [mainCycle, cycleMain] = useCycle(
-    "intro",
-    "artists",
-    "songs",
-    "awaitingInput",
-    "searchComplete"
+    'intro',
+    'artists',
+    'songs',
+    'awaitingInput',
+    'searchComplete'
   );
 
   const [redo, cycleRedo] = useCycle(false, true);
 
   useEffect(() => {
-    resetModalOrSpotify("spotify");
+    resetModalOrSpotify('spotify');
     setSelectedTrack(null);
     setLoading(false);
-    const category = sessionStorage.getItem("category");
+    const category = sessionStorage.getItem('category');
 
     if (category) {
       setCategory(category);
@@ -125,18 +125,18 @@ const MainSearch = (): ReactElement => {
       return;
     }
 
-    setSearchTerm("");
+    setSearchTerm('');
   }, [error, noResults]);
 
   useEffect(() => {
     const item = artists ? artists : tracks;
-    const key = artists ? "artists" : "tracks";
+    const key = artists ? 'artists' : 'tracks';
 
     if ((artists || tracks) && !error && category) {
       sessionStorage.clear();
-      setSearchTerm("");
+      setSearchTerm('');
       sessionStorage.setItem(key, JSON.stringify(item));
-      navigate(artists ? "/artists" : "/tracks");
+      navigate(artists ? '/artists' : '/tracks');
     }
   }, [tracks, artists, error]);
 
@@ -147,7 +147,7 @@ const MainSearch = (): ReactElement => {
       const exitAnimation = async () => {
         cycleMain(mainCycle);
         animate(
-          ".main-input",
+          '.main-input',
           {
             x: -200,
             opacity: 0,
@@ -157,7 +157,7 @@ const MainSearch = (): ReactElement => {
           }
         );
         await animate(
-          ".redo",
+          '.redo',
           tracks || artists
             ? {
                 x: 200,
@@ -182,9 +182,9 @@ const MainSearch = (): ReactElement => {
   }, [isPresent]);
 
   const handleCategoryHover: HandleCategoryHoverType = (hovered) => {
-    if (hovered === "artists") {
+    if (hovered === 'artists') {
       cycleMain(1);
-    } else if (hovered === "songs") {
+    } else if (hovered === 'songs') {
       cycleMain(2);
     } else if (!hovered) {
       cycleMain(0);
@@ -192,15 +192,15 @@ const MainSearch = (): ReactElement => {
   };
 
   const handleCategoryClick = (category: string) => {
-    sessionStorage.setItem("category", category);
+    sessionStorage.setItem('category', category);
     setCategory(category);
     cycleMain(3);
     cycleRedo(0);
   };
 
   const handleResetCategoryClick = () => {
-    sessionStorage.removeItem("category");
-    setCategory("");
+    sessionStorage.removeItem('category');
+    setCategory('');
     cycleMain(0);
     cycleRedo(1);
   };
@@ -221,7 +221,7 @@ const MainSearch = (): ReactElement => {
       key="search"
     >
       <AnimatePresence mode="wait">
-        {category || sessionStorage.getItem("category") ? (
+        {category || sessionStorage.getItem('category') ? (
           <div className="actual-search-box d-flex flex-column gap-4 px-4 w-100">
             <MainSearchHeader
               key="header"

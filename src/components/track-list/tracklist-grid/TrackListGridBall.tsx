@@ -1,11 +1,11 @@
-import { ReactElement, MutableRefObject, memo } from "react";
-import { motion, Variants } from "framer-motion";
-import DraggableBall from "../../DraggableBall";
-import { useMediaQuery } from "../../../hooks/MediaQueryHook";
+import { motion, type Variants } from 'motion/react';
+import { memo, type ReactElement, type RefObject } from 'react';
+import { useMediaQuery } from '../../../hooks/MediaQueryHook';
+import DraggableBall from '../../DraggableBall';
 
 type TrackListGridBallPropsType = {
   ballCycle: string;
-  dragRef: MutableRefObject<null>;
+  dragRef: RefObject<null>;
   index: number;
   onDrag: (e: React.PointerEvent, end?: boolean) => void;
   pointerFunction: (pointer: boolean) => void;
@@ -21,12 +21,12 @@ const dragBallVariant: Variants = {
     x: 0,
     opacity: 1,
     scale: [0.95, 1.3, 1.6, 0.95],
-    borderRadius: ["50%", "20%", "20%", "50%"],
+    borderRadius: ['50%', '20%', '20%', '50%'],
     boxShadow: [
-      "0px 0px 2px 2px rgba(222, 90, 174)",
-      "0px 0px 5px 2px rgba(222, 90, 174)",
-      "0px 0px 5px 2px rgba(222, 90, 174)",
-      "0px 0px 2px 2px rgba(222, 90, 174)",
+      '0px 0px 2px 2px rgba(222, 90, 174)',
+      '0px 0px 5px 2px rgba(222, 90, 174)',
+      '0px 0px 5px 2px rgba(222, 90, 174)',
+      '0px 0px 2px 2px rgba(222, 90, 174)',
     ],
     rotate: [0, 720, 0, 720],
     transition: {
@@ -66,10 +66,10 @@ const dragBallVariant: Variants = {
     },
   },
   whileTap: (is850) => ({
-    borderRadius: "50%",
-    boxShadow: [null, "0px 0px 5px 3px rgba(222, 90, 174)"],
+    borderRadius: '50%',
+    boxShadow: [null, '0px 0px 5px 3px rgba(222, 90, 174)'],
     scale: [null, is850 ? 3.5 : 1.5],
-    backgroundColor: "rgba(255,255,255)",
+    backgroundColor: 'rgba(255,255,255)',
     rotate: [null, 0],
     transition: {
       duration: 0.5,
@@ -115,15 +115,15 @@ const TrackListGridBall = ({
   );
 
   if (is850) {
-    return <>{ballCycle === "hidden" ? <></> : renderBall}</>;
+    return <>{ballCycle === 'hidden' ? <></> : renderBall}</>;
   } else {
     return (
       <>
-        {expandCycle === "normal" &&
-        (ballCycle === "visible" || ballCycle === "drag") ? (
+        {expandCycle === 'normal' &&
+        (ballCycle === 'visible' || ballCycle === 'drag') ? (
           renderBall
         ) : (
-          <motion.div style={{ width: "17px", zIndex: 3 }} />
+          <motion.div style={{ width: '17px', zIndex: 3 }} />
         )}
       </>
     );

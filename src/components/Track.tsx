@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { MotionStyle, motion } from "framer-motion";
-import "../styles/all.css";
+import { type MotionStyle, motion } from 'motion/react';
+import { type ReactElement } from 'react';
+import '../styles/all.css';
 
 type TrackPropsType = {
   artist: string;

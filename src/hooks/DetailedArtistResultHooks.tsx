@@ -1,20 +1,20 @@
 import {
   useCallback,
-  useReducer,
-  useState,
   useEffect,
-  useRef,
   useMemo,
-} from "react";
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import {
-  AlbumDetailsType,
-  ArtistsType,
-  TopTracksDetailsType,
-} from "../types/types";
+  type AlbumDetailsType,
+  type ArtistsType,
+  type TopTracksDetailsType,
+} from '../types/types';
 
 const REDUCER_ACTION_TYPES = {
-  ADD: "ADD",
-  EMPTY_DETAILS: "EMPTY_DETAILS",
+  ADD: 'ADD',
+  EMPTY_DETAILS: 'EMPTY_DETAILS',
 };
 
 const artistArray = [...Object.values(REDUCER_ACTION_TYPES)] as const;
@@ -50,8 +50,8 @@ export type ArtistAndAlbumStateSetter = (
 export type EmptyDetailsType = () => void;
 
 export type SetAlbumOrTrackType = (
-  direction: "right" | "left",
-  type: "album" | "track"
+  direction: 'right' | 'left',
+  type: 'album' | 'track'
 ) => void;
 
 type SetIndexLogicType = (
@@ -62,14 +62,14 @@ type SetIndexLogicType = (
 export const useArtistResults = () => {
   const [albumIndex, setAlbumIndex] = useState<number>(0);
   const [trackIndex, setTrackIndex] = useState<number>(0);
-  const timeoutId = useRef<NodeJS.Timeout[] | number[]>([]);
+  const timeoutId = useRef<(typeof setTimeout)[] | number[]>([]);
 
   const [artistDetails, dispatch] = useReducer(
     (state: ReducerStateType, action: ReducerAction): ReducerStateType => {
       switch (action.type) {
         case REDUCER_ACTION_TYPES.ADD: {
           if (!action.payload) {
-            throw new Error("ADD action requires a payload");
+            throw new Error('ADD action requires a payload');
           }
 
           if (action.payload.artistDetailError) {
@@ -138,22 +138,22 @@ export const useArtistResults = () => {
   const { artistDetail, albums, topTracks, artistDetailError } = artistDetails;
 
   const setAlbumOrTrack: SetAlbumOrTrackType = (direction, type) => {
-    const array = type === "album" ? albums : topTracks;
-    const setIndex = type === "album" ? setAlbumIndex : setTrackIndex;
+    const array = type === 'album' ? albums : topTracks;
+    const setIndex = type === 'album' ? setAlbumIndex : setTrackIndex;
 
     const setIndexLogic: SetIndexLogicType = (prevIndex, array) => {
-      if (direction === "right") {
+      if (direction === 'right') {
         return prevIndex === array.length - 1 ? 0 : prevIndex + 1;
       } else {
         return prevIndex === 0 ? array.length - 1 : prevIndex - 1;
       }
     };
 
-    if (type === "album" && array && array?.length > 1) {
+    if (type === 'album' && array && array?.length > 1) {
       setIndex((prevIndex) => setIndexLogic(prevIndex, array));
     }
 
-    if (type === "track" && array && array?.length > 1) {
+    if (type === 'track' && array && array?.length > 1) {
       setIndex((prevIndex) => setIndexLogic(prevIndex, array));
     }
   };
