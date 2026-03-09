@@ -173,7 +173,7 @@ export const spotifyArtistsOrSongsSearch: SpotifyArtistsOrSongsSearchType =
         console.log('error', err);
 
         const error = new Error(
-          `Issue during search: ${err.message} please search again`
+          `Spotify has revoked access to their API unless you pay for Spotify Premium (yeah right). This app will have to be re-thought in the future. Sorry!`
         );
 
         setArtistOrTracks(undefined, undefined, error);
